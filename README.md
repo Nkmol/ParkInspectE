@@ -28,12 +28,14 @@ Voor een pull request gelden dezelfde criteria als voor een commit.
 Je maakt ook alleen maar een pull request aan voor werkende code. Controleer dus zelf of je code werkt!
 
 ### Goedkeuring ###
-
 Iedereen kan een pull request nakijken. Wanneer je een request hebt nagekeken en je kan **geen** fouter in de Pull request vinden, geef dat aan met een duimpje omhoog.
 
 ![Goedkeuring Pull request](http://i64.tinypic.com/29uwy95.png)
 
 Indien je een fout tegenkomt in de Pull request, beschrijf dan duidelijk wat er fout is via een comment. Maak het de auteur zo makkelijk mogelijk door bijvoorbeeld direct naar de code te wijzen met een link of een Line-code comment. Als je een duidelijke oplossing ziet, geef dit aan met **suggest change**.
+
+## Issues ##
+Issues hebben altijd betrekking op de `dev` branche van het project. Wanneer je een issue aanmaakt, geef dan duidelijk aan wat er fout is en wat je verwachtingen zijn. Gebruik juiste `tags` bij het submitten van een issue, zodat het duidelijke is of het bijvoorbeeld over een bug of improvement gaat.
 
 ## Communication
 [Slack](https://parkinspecte.slack.com) als hoofdcommunicatiemiddel.
