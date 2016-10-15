@@ -28,9 +28,7 @@ Voor een pull request gelden dezelfde criteria als voor een commit.
 Je maakt ook alleen maar een pull request aan voor werkende code. Controleer dus zelf of je code werkt!
 
 ### Goedkeuring ###
-Iedereen kan een pull request nakijken. Wanneer je een request hebt nagekeken en je kunt geen fouten in de Pull request vinden, geef dat aan met een duimpje omhoog als goedkeuring.
-
-![Goedkeuring Pull request](http://i64.tinypic.com/29uwy95.png)
+Iedereen kan een pull request nakijken. Wanneer je een request hebt nagekeken en je kunt geen fouten in de Pull request vinden, geef dat aan met een **approve review**.
 
 Indien je een fout tegenkomt in de Pull request, beschrijf dan duidelijk wat er fout is via een comment. Maak het de auteur zo makkelijk mogelijk door bijvoorbeeld direct naar de code te wijzen met een link of een Line-code comment. Als je een duidelijke oplossing ziet, geef dit aan met **suggest change**.
 
