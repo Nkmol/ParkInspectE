@@ -1,10 +1,17 @@
 # ParkInspectE
-Avans Project of ParkInspect of group E
+Avans Project van ParkInspect group E
+
+##Libraries
+- MVVM Light
+- Entity Framework
+- [MahApps](http://mahapps.com/) zorgt voor nieuwe controls
+- [MaterialDesign](http://materialdesigninxaml.net/) Design voor controls + MahApps controls
 
 ##Code conventions
 Code en comments zijn **altijd** in het Engels.
 
 Voor de code convention regels voor C# kijk je op deze [pagina](https://msdn.microsoft.com/en-us/library/ff926074.aspx).
+We hanteren hiervoor C# 6.0, dus zorg ervoor dat je **VS2015** gebruikt!
 
 ## Branch naming
 Branches beginnen met het woord feature of fix, gevolgd door een korte beschrijving **in het Engels**.
