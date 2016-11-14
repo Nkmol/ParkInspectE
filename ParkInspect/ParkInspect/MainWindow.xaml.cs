@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
 using ParkInspect.ViewModel;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace ParkInspect
 {
@@ -16,6 +17,11 @@ namespace ParkInspect
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
+        }
+
+        private void ShowLoginDialog(object sender, RoutedEventArgs e)
+        {
+            ViewModelLocator.Main.showLoginDialog(this);
         }
     }
 }

@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkInspect", "ParkInspect\ParkInspect.csproj", "{92D3CEF6-FBD2-451F-8D58-7DF2FAA140EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecuteExpressSync", "ExecuteExpressSync\ExecuteExpressSync.csproj", "{8EAA5CCF-D8B4-4CEE-8371-185BBD06CA10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkInspect.Domain", "ParkInspect.Domain\ParkInspect.Domain.csproj", "{3A171EFC-1B72-467B-B0C2-6313015322A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{92D3CEF6-FBD2-451F-8D58-7DF2FAA140EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92D3CEF6-FBD2-451F-8D58-7DF2FAA140EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92D3CEF6-FBD2-451F-8D58-7DF2FAA140EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EAA5CCF-D8B4-4CEE-8371-185BBD06CA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAA5CCF-D8B4-4CEE-8371-185BBD06CA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAA5CCF-D8B4-4CEE-8371-185BBD06CA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAA5CCF-D8B4-4CEE-8371-185BBD06CA10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A171EFC-1B72-467B-B0C2-6313015322A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A171EFC-1B72-467B-B0C2-6313015322A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A171EFC-1B72-467B-B0C2-6313015322A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A171EFC-1B72-467B-B0C2-6313015322A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

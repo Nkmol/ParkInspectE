@@ -1,5 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
+using MahApps.Metro.Controls.Dialogs;
+using ParkInspect.Domain;
 using ParkInspect.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ParkInspect.ViewModel
 {
@@ -19,6 +25,8 @@ namespace ParkInspect.ViewModel
         public const string WelcomeTitlePropertyName = "WelcomeTitle";
 
         private string _welcomeTitle = string.Empty;
+
+        public ObservableCollection<Users> klanten;
 
         /// <summary>
         /// Gets the WelcomeTitle property.
@@ -53,6 +61,47 @@ namespace ParkInspect.ViewModel
 
                     WelcomeTitle = item.Title;
                 });
+
+            klanten = new ObservableCollection<Users>();
+        }
+
+        public async void showLoginDialog(MainWindow window)
+        {
+            bool logged = false;
+            while (!logged)
+            {
+                LoginDialogData result = await window.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = window.MetroDialogOptions.ColorScheme });
+                if (result != null)
+                {
+                    int rs = login(result.Username, result.Password);
+
+                    if (rs == 0)
+                    {
+                        MessageDialogResult messageResult = await window.ShowMessageAsync("Error", "Incorrect username/password");
+                    }
+                    else if (rs == 1)
+                    {
+                        logged = true;
+                        MessageDialogResult messageResult = await window.ShowMessageAsync("Welkom: " + result.Username, "Have a nice day!");                      
+                    }
+                }
+            }
+        }
+
+        public int login(string username, string password)
+        {
+            using (var context = new Entities())
+            {
+                List<Users> list = context.Users.ToList();
+                foreach(Users u in list)
+                {
+                    if(u.Username.Equals(username) && u.Password.Equals(password))
+                    {
+                        return 1;
+                    }
+                }
+            }
+            return 0;
         }
 
         ////public override void Cleanup()

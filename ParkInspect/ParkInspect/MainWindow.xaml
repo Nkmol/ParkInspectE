@@ -7,10 +7,10 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d ignore"
         Height="300"
-        Width="300"
+        Width="400"
         Title="MVVM Light Application"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,5 +30,11 @@
                    TextWrapping="Wrap" />
 
     </Grid>
-</controls:MetroWindow>
 
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands ShowLastSeparator="False">
+            <Button Click="ShowLoginDialog" Content="Login" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+</controls:MetroWindow>
