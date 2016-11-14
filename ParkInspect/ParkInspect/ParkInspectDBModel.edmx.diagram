@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="70a60c7282d14c7ebe28f907cbf19aa1" Name="Diagram1">
+        <EntityTypeShape EntityType="ParkInspectModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Afbeelding" Width="1.5" PointX="12.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Afwezigheid" Width="1.5" PointX="8.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Contactpersoon" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Datatype" Width="1.5" PointX="6.75" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Inspectie" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Klant" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Opdracht" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Parkeerplaats" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Rapportage" Width="1.5" PointX="10.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.RapportVeldType" Width="1.5" PointX="6.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Regio" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Rol" Width="1.5" PointX="3.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Status" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Template" Width="1.5" PointX="3.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Veld" Width="1.5" PointX="9" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Vragenlijst" Width="1.5" PointX="6" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Vragenlijstveld" Width="1.5" PointX="11.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Werknemer" Width="1.5" PointX="6" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Werknemer_Status" Width="1.5" PointX="3.75" PointY="15.5" IsExpanded="true" />
+        <AssociationConnector Association="ParkInspectModel.FK_Afbeelding_Rapportage" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Afwezigheid_Werknemer" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Contactpersoon_Klant" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Veld_Datatype" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Inspectie" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Opdracht" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Parkeerplaats" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Vragenlijst" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Rapportage_Inspectie" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Opdracht_Klant" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Opdracht_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Parkeerplaats_Regio" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Veld_RapportVeldType" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Werknemer_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Veld_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Vragenlijst_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Vragenlijstveld_Vragenlijst" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Vragenlijstveld_Veld_vregenlijst_id" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Werknemer_werknemer_status" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.Inspecteur" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.Inspecteur_has_Inspectie" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
