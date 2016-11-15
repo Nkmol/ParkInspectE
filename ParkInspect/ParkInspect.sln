@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkInspect", "ParkInspect\ParkInspect.csproj", "{92D3CEF6-FBD2-451F-8D58-7DF2FAA140EE}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "..\..\..\Database\Database\Database.sqlproj", "{1F24FAB1-AAAF-4ACD-B034-0F3BCD454E9F}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{1F24FAB1-AAAF-4ACD-B034-0F3BCD454E9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
