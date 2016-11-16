@@ -1,0 +1,50 @@
+﻿<controls:MetroWindow x:Class="ParkInspect.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"            
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="using:ParkInspect.View.UserControls"
+        xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
+        mc:Ignorable="d ignore"
+        Height="500"
+        Width="800"
+        Title="MVVM Light Application"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <TabControl>
+            <TabItem Header="Klanten">
+              <userControls:KlantControl />
+            </TabItem>    
+            <TabItem Header="Parkeerplaatsen">
+              <userControls:ParkeerplaatsControl />
+            </TabItem>
+            <TabItem Header="Opdrachten">
+              <userControls:OpdrachtControl />
+            </TabItem>    
+            <TabItem Header="Inspectie"> 
+              <userControls:InspectieControl />  
+            </TabItem>
+            <TabItem Header="Vragenlijst">
+              <userControls:VragenlijstControl />
+            </TabItem>
+            <TabItem Header="Personeel">
+              <userControls:PersoneelControl />
+            </TabItem>
+            <TabItem Header="Rapportage">
+              <userControls:RapportageControl />  
+            </TabItem>
+        </TabControl>
+    </Grid>
+</controls:MetroWindow>
+

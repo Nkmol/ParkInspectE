@@ -13,6 +13,9 @@ namespace ParkInspect.ViewModel
     {
         private readonly IDataService _dataService;
 
+        public int Height = 100;
+        public int Width = 100;
+
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.
         /// </summary>
