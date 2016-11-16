@@ -111,6 +111,8 @@
     <Compile Include="Contactpersoon.cs">
       <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\ParkInspectRepository.cs" />
+    <Compile Include="Services\KlantService.cs" />
     <Compile Include="C__RefactorLog.cs">
       <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
     </Compile>
@@ -157,6 +159,10 @@
     <Compile Include="Regio.cs">
       <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
+    <Compile Include="Repository\EntityFrameworkRepository.cs" />
+    <Compile Include="Repository\IReadOnlyRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Rol.cs">
       <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
     </Compile>
@@ -169,6 +175,7 @@
     <Compile Include="Veld.cs">
       <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\KlantViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Vragenlijst.cs">

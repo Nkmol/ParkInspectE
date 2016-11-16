@@ -19,9 +19,9 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="LayoutRoot">
+    <DockPanel x:Name="LayoutRoot">
 
-        <TextBlock FontSize="36"
+        <TextBlock DockPanel.Dock="Top" FontSize="36"
                    FontWeight="Bold"
                    Foreground="Purple"
                    Text="{Binding WelcomeTitle}"
@@ -29,6 +29,7 @@
                    HorizontalAlignment="Center"
                    TextWrapping="Wrap" />
 
-    </Grid>
+            <DataGrid DockPanel.Dock="Bottom" DataContext="{Binding Klant, Source={StaticResource Locator}}" ItemsSource="{Binding Klanten}"></DataGrid>
+    </DockPanel>
 </controls:MetroWindow>
 

@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
+using ParkInspect.Repository;
 
 namespace ParkInspect.ViewModel
 {
@@ -39,6 +40,9 @@ namespace ParkInspect.ViewModel
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectModels>(new ParkInspectModels()));
+
+            SimpleIoc.Default.Register<KlantViewModel>();
         }
 
         /// <summary>
@@ -54,6 +58,9 @@ namespace ParkInspect.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
+
+        public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
+        public KlantViewModel Klant => ServiceLocator.Current.GetInstance<KlantViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.
