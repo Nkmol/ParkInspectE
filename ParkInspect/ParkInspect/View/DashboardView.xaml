@@ -10,8 +10,8 @@
         mc:Ignorable="d ignore"
         Height="500"
         Width="800"
-        Title="MVVM Light Application"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        Title="ParkInspect"
+        DataContext="{Binding Dashboard, Source={StaticResource Locator}}">
     
     <Window.Resources>
         <ResourceDictionary>

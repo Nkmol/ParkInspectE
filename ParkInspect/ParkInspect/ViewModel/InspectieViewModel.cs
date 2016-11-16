@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 
 namespace ParkInspect.ViewModel
 {
@@ -10,6 +12,8 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class InspectieViewModel : ViewModelBase
     {
+        public ObservableCollection<Object> InspectieCollection { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the InspectieViewModel class.
         /// </summary>

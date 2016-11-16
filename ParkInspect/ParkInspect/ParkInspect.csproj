@@ -103,13 +103,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Helper\CustomCommand.cs" />
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
-    <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="Model\WindowManager.cs" />
+    <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\InspectieViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\OpdrachtViewModel.cs" />
     <Compile Include="ViewModel\ParkeerplaatsViewModel.cs" />
     <Compile Include="ViewModel\PersoneelViewModel.cs" />
@@ -136,7 +138,7 @@
     <Compile Include="View\UserControls\VragenlijstControl.xaml.cs">
       <DependentUpon>VragenlijstControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="View\DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -145,8 +147,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\VragenlijstViewModel.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Skins\MainSkin.xaml">
@@ -210,9 +212,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
