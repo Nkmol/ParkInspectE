@@ -12,17 +12,12 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Datatype
+    public partial class Absence
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Datatype()
-        {
-            this.Field = new HashSet<Field>();
-        }
+        public System.DateTime start_date { get; set; }
+        public int employee_id { get; set; }
+        public Nullable<System.DateTime> end_date { get; set; }
     
-        public string datatype { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

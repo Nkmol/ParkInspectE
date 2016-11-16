@@ -12,22 +12,32 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Template
+    public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Template()
+        public Employee()
         {
-            this.Field = new HashSet<Field>();
-            this.Questionair = new HashSet<Questionair>();
+            this.Absence = new HashSet<Absence>();
+            this.Inspection = new HashSet<Inspection>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
-        public string version_number { get; set; }
+        public string employee_status { get; set; }
+        public string job { get; set; }
+        public string firstname { get; set; }
+        public string lastname { get; set; }
+        public bool active { get; set; }
+        public string phonenumber { get; set; }
+        public System.DateTime in_service_date { get; set; }
+        public Nullable<System.DateTime> out_service_date { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual ICollection<Absence> Absence { get; set; }
+        public virtual Employee_Status Employee_Status1 { get; set; }
+        public virtual Job Job1 { get; set; }
+        public virtual Region Region { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Questionair> Questionair { get; set; }
+        public virtual ICollection<Inspection> Inspection { get; set; }
     }
 }

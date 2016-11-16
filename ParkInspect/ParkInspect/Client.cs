@@ -12,22 +12,23 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Template
+    public partial class Client
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Template()
+        public Client()
         {
-            this.Field = new HashSet<Field>();
-            this.Questionair = new HashSet<Questionair>();
+            this.Asignment = new HashSet<Asignment>();
+            this.Contactman = new HashSet<Contactman>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
-        public string version_number { get; set; }
+        public string phonenumber { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual ICollection<Asignment> Asignment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Questionair> Questionair { get; set; }
+        public virtual ICollection<Contactman> Contactman { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Template]
 (
 	[id] INT NOT NULL PRIMARY KEY, 
-    [naam] VARCHAR(50) NULL, 
-    [versienummer] VARCHAR(50) NULL
+    [name] VARCHAR(50) NULL, 
+    [version_number] VARCHAR(50) NULL
 )
