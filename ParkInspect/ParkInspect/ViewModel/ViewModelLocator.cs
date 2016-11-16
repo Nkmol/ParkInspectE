@@ -38,7 +38,13 @@ namespace ParkInspect.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<DashboardViewModel>();
+            SimpleIoc.Default.Register<PersoneelViewModel>();
+            SimpleIoc.Default.Register<InspectieViewModel>();
+            SimpleIoc.Default.Register<RapportageViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
+
         }
 
         /// <summary>
@@ -47,13 +53,18 @@ namespace ParkInspect.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
+        public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
+
+        public PersoneelViewModel Personeel => ServiceLocator.Current.GetInstance<PersoneelViewModel>();
+
+        public InspectieViewModel Inspecties => ServiceLocator.Current.GetInstance<InspectieViewModel>();
+
+        public RapportageViewModel Rapportages => ServiceLocator.Current.GetInstance<RapportageViewModel>();
+
+        public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
+
+        public ParkeerplaatsViewModel Parkeerplaatsen => ServiceLocator.Current.GetInstance<ParkeerplaatsViewModel>();
+
 
         /// <summary>
         /// Cleans up all the resources.
