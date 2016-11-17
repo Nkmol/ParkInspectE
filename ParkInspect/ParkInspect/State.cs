@@ -12,20 +12,20 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Status
+    public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Status()
+        public State()
         {
-            this.Asignment = new HashSet<Asignment>();
-            this.Inspection = new HashSet<Inspection>();
+            this.Asignments = new HashSet<Asignment>();
+            this.Inspections = new HashSet<Inspection>();
         }
     
-        public string status { get; set; }
+        public string state1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignment> Asignment { get; set; }
+        public virtual ICollection<Asignment> Asignments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<Inspection> Inspections { get; set; }
     }
 }

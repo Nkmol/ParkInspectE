@@ -12,19 +12,19 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Raport
+    public partial class Report
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Raport()
+        public Report()
         {
-            this.Image = new HashSet<Image>();
+            this.Images = new HashSet<Image>();
         }
     
         public int inspection_id { get; set; }
-        public string extra { get; set; }
+        public string clarifaction { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Image { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
         public virtual Inspection Inspection { get; set; }
     }
 }

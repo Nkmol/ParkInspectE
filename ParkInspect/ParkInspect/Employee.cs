@@ -17,13 +17,13 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Absence = new HashSet<Absence>();
-            this.Inspection = new HashSet<Inspection>();
+            this.Absences = new HashSet<Absence>();
+            this.Inspections = new HashSet<Inspection>();
         }
     
         public int id { get; set; }
         public string employee_status { get; set; }
-        public string job { get; set; }
+        public string role { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
         public bool active { get; set; }
@@ -31,13 +31,14 @@ namespace ParkInspect
         public System.DateTime in_service_date { get; set; }
         public Nullable<System.DateTime> out_service_date { get; set; }
         public string email { get; set; }
+        public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Absence> Absence { get; set; }
+        public virtual ICollection<Absence> Absences { get; set; }
         public virtual Employee_Status Employee_Status1 { get; set; }
-        public virtual Job Job1 { get; set; }
+        public virtual Role Role1 { get; set; }
         public virtual Region Region { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<Inspection> Inspections { get; set; }
     }
 }

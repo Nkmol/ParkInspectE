@@ -17,8 +17,8 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Client()
         {
-            this.Asignment = new HashSet<Asignment>();
-            this.Contactman = new HashSet<Contactman>();
+            this.Asignments = new HashSet<Asignment>();
+            this.Contactmen = new HashSet<Contactman>();
         }
     
         public int id { get; set; }
@@ -27,8 +27,8 @@ namespace ParkInspect
         public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignment> Asignment { get; set; }
+        public virtual ICollection<Asignment> Asignments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contactman> Contactman { get; set; }
+        public virtual ICollection<Contactman> Contactmen { get; set; }
     }
 }
