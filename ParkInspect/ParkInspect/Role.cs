@@ -12,17 +12,17 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Job
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Job()
+        public Role()
         {
-            this.Employee = new HashSet<Employee>();
+            this.Employees = new HashSet<Employee>();
         }
     
-        public string job { get; set; }
+        public string role1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

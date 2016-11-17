@@ -17,18 +17,18 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Field()
         {
-            this.QuestionairField = new HashSet<QuestionairField>();
+            this.Formfields = new HashSet<Formfield>();
         }
     
         public string title { get; set; }
         public int template_id { get; set; }
         public string datatype { get; set; }
-        public string rapportFieldType_title { get; set; }
+        public string repportFieldType_title { get; set; }
     
         public virtual Datatype Datatype1 { get; set; }
-        public virtual RaportFieldType RaportFieldType { get; set; }
+        public virtual ReportFieldType ReportFieldType { get; set; }
         public virtual Template Template { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QuestionairField> QuestionairField { get; set; }
+        public virtual ICollection<Formfield> Formfields { get; set; }
     }
 }

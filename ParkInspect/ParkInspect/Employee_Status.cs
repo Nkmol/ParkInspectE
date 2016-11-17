@@ -17,12 +17,12 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee_Status()
         {
-            this.Employee = new HashSet<Employee>();
+            this.Employees = new HashSet<Employee>();
         }
     
-        public string employee_status { get; set; }
+        public string employee_status1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

@@ -12,14 +12,17 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class QuestionairField
+    public partial class ReportFieldType
     {
-        public int questionair_id { get; set; }
-        public string field_title { get; set; }
-        public int field_template_id { get; set; }
-        public string value { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ReportFieldType()
+        {
+            this.Fields = new HashSet<Field>();
+        }
     
-        public virtual Field Field { get; set; }
-        public virtual Questionair Questionair { get; set; }
+        public string title { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Field> Fields { get; set; }
     }
 }

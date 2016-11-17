@@ -14,9 +14,9 @@ namespace ParkInspect
     
     public partial class Absence
     {
-        public System.DateTime start_date { get; set; }
+        public System.DateTime start { get; set; }
         public int employee_id { get; set; }
-        public Nullable<System.DateTime> end_date { get; set; }
+        public Nullable<System.DateTime> end { get; set; }
     
         public virtual Employee Employee { get; set; }
     }

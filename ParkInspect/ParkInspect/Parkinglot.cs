@@ -17,7 +17,7 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Parkinglot()
         {
-            this.Inspection = new HashSet<Inspection>();
+            this.Inspections = new HashSet<Inspection>();
         }
     
         public int id { get; set; }
@@ -25,10 +25,10 @@ namespace ParkInspect
         public string zipcode { get; set; }
         public Nullable<int> number { get; set; }
         public string name { get; set; }
-        public string extra { get; set; }
+        public string clarification { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<Inspection> Inspections { get; set; }
         public virtual Region Region { get; set; }
     }
 }

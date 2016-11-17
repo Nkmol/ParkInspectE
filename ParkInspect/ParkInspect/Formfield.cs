@@ -12,17 +12,14 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class RaportFieldType
+    public partial class Formfield
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RaportFieldType()
-        {
-            this.Field = new HashSet<Field>();
-        }
+        public int form_id { get; set; }
+        public string field_title { get; set; }
+        public int field_template_id { get; set; }
+        public string value { get; set; }
     
-        public string title { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual Field Field { get; set; }
+        public virtual Form Form { get; set; }
     }
 }

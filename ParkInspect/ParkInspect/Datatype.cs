@@ -17,12 +17,12 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Datatype()
         {
-            this.Field = new HashSet<Field>();
+            this.Fields = new HashSet<Field>();
         }
     
-        public string datatype { get; set; }
+        public string datatype1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual ICollection<Field> Fields { get; set; }
     }
 }

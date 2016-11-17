@@ -12,20 +12,22 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Questionair
+    public partial class Form
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Questionair()
+        public Form()
         {
-            this.Inspection = new HashSet<Inspection>();
+            this.Inspections = new HashSet<Inspection>();
+            this.Formfields = new HashSet<Formfield>();
         }
     
         public int id { get; set; }
         public int template_id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
         public virtual Template Template { get; set; }
-        public virtual QuestionairField QuestionairField { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Inspection> Inspections { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Formfield> Formfields { get; set; }
     }
 }

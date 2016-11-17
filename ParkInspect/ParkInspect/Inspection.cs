@@ -18,29 +18,29 @@ namespace ParkInspect
         public Inspection()
         {
             this.Inspection1 = new HashSet<Inspection>();
-            this.Employee = new HashSet<Employee>();
+            this.Employees = new HashSet<Employee>();
         }
     
         public int id { get; set; }
-        public int parkeerplaats_id { get; set; }
-        public Nullable<int> vragenlijst_id { get; set; }
-        public Nullable<int> vervolg_inspectie_id { get; set; }
-        public string status { get; set; }
+        public int parking_id { get; set; }
+        public Nullable<int> form_id { get; set; }
+        public Nullable<int> follow_up_id { get; set; }
+        public string state { get; set; }
         public Nullable<System.DateTime> deadline { get; set; }
-        public Nullable<System.DateTime> datum { get; set; }
-        public string toelichting { get; set; }
-        public int opdracht_klant_id { get; set; }
-        public int opdracht_id { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public string clarification { get; set; }
+        public int assigment_client_id { get; set; }
+        public int assignment_id { get; set; }
     
         public virtual Asignment Asignment { get; set; }
+        public virtual Form Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inspection> Inspection1 { get; set; }
         public virtual Inspection Inspection2 { get; set; }
         public virtual Parkinglot Parkinglot { get; set; }
-        public virtual Status Status1 { get; set; }
-        public virtual Questionair Questionair { get; set; }
-        public virtual Raport Raport { get; set; }
+        public virtual State State1 { get; set; }
+        public virtual Report Report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }
