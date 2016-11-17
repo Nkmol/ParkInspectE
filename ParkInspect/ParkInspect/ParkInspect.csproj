@@ -144,12 +144,6 @@
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
-    <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
-    <Compile Include="Repository\EntityFrameworkRepository.cs" />
-    <Compile Include="Repository\IReadOnlyRepository.cs" />
-    <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Services\ClientService.cs" />
-    <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Parkinglot.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -177,15 +171,21 @@
     <Compile Include="ReportFieldType.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
+    <Compile Include="Repository\EntityFrameworkRepository.cs" />
+    <Compile Include="Repository\IReadOnlyRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\ClientService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\InspectieViewModel.cs" />

@@ -39,7 +39,7 @@ namespace ParkInspect.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
-            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<Entities>(new Entities()));
+            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities1>(new ParkInspectEntities1()));
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
@@ -70,7 +70,7 @@ namespace ParkInspect.ViewModel
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
-        public ClientViewModel Klant => ServiceLocator.Current.GetInstance<ClientViewModel>();
+        public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

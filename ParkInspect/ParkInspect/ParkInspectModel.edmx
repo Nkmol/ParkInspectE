@@ -1070,7 +1070,7 @@
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ParkInspectEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Absences" EntityType="Self.Absence" />
           <EntitySet Name="Asignments" EntityType="Self.Asignment" />
           <EntitySet Name="Clients" EntityType="Self.Client" />
@@ -1184,7 +1184,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ParkInspectModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="ParkInspectModelStoreContainer" CdmEntityContainer="ParkInspectEntities1">
           <EntitySetMapping Name="Absences">
             <EntityTypeMapping TypeName="ParkInspectModel.Absence">
               <MappingFragment StoreEntitySet="Absence">

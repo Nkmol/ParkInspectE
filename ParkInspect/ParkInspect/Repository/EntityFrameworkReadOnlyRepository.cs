@@ -54,7 +54,6 @@ namespace ParkInspect.Repository
             return query;
         }
 
-
         public IEnumerable<TEntity> GetAll<TEntity>(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
             string includeProperties = null, 

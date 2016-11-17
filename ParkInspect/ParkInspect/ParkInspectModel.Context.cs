@@ -13,10 +13,10 @@ namespace ParkInspect
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class ParkInspectEntities1 : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public ParkInspectEntities1()
+            : base("name=ParkInspectEntities1")
         {
         }
     
