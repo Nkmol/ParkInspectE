@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
+using ParkInspect.Repository;
 
 namespace ParkInspect.ViewModel
 {
@@ -38,13 +39,15 @@ namespace ParkInspect.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
+            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities1>(new ParkInspectEntities1()));
+
+            SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
             SimpleIoc.Default.Register<PersoneelViewModel>();
             SimpleIoc.Default.Register<InspectieViewModel>();
             SimpleIoc.Default.Register<RapportageViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
-
         }
 
         /// <summary>
@@ -65,6 +68,9 @@ namespace ParkInspect.ViewModel
 
         public ParkeerplaatsViewModel Parkeerplaatsen => ServiceLocator.Current.GetInstance<ParkeerplaatsViewModel>();
 
+        public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
+
+        public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

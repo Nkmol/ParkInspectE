@@ -171,16 +171,21 @@
     <Compile Include="ReportFieldType.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
+    <Compile Include="Repository\EntityFrameworkRepository.cs" />
+    <Compile Include="Repository\IReadOnlyRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\ClientService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
@@ -302,7 +307,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -319,7 +323,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
