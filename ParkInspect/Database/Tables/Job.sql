@@ -1,4 +1,0 @@
-﻿CREATE TABLE [dbo].[Job]
-(
-	[job] VARCHAR(50) NOT NULL PRIMARY KEY
-)
