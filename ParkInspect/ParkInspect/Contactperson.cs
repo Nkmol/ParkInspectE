@@ -12,7 +12,7 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Contactman
+    public partial class Contactperson
     {
         public int id { get; set; }
         public int client_id { get; set; }
