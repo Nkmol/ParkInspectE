@@ -22,13 +22,10 @@ namespace ParkInspect.Repository
         protected virtual IQueryable<TEntity> GetQueryable<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>  orderBy = null,
-            string includeproperties = null,
-            int? skip = null,
-            int? take = null
+            params Expression<Func<TEntity, object>>[] nagiationProperties 
         )
             where TEntity : class
         {
-            includeproperties = includeproperties ?? string.Empty; // Needs string format
             IQueryable<TEntity> query = Context.Set<TEntity>();
 
             // Assign where claus
@@ -36,8 +33,7 @@ namespace ParkInspect.Repository
                 query = query.Where(filter);
 
             //load includes
-            foreach (
-                var includeProperty in includeproperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var includeProperty in nagiationProperties)
             {
                 query = query.Include(includeProperty);
             }
@@ -45,46 +41,36 @@ namespace ParkInspect.Repository
             if (orderBy != null)
                 query = orderBy(query);
 
-            if (skip.HasValue)
-                query = query.Skip(skip.Value);
-
-            if (take.HasValue)
-                query = query.Take(take.Value);
-
             return query;
         }
 
         public IEnumerable<TEntity> GetAll<TEntity>(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
-            string includeProperties = null, 
-            int? skip = null, 
-            int? take = null
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] nagiationProperties
         ) 
             where TEntity : class
         {
-            return GetQueryable<TEntity>(null, orderBy, includeProperties, skip, take).ToList();
+            return GetQueryable<TEntity>(null, orderBy, nagiationProperties).ToList();
         }
 
         public IEnumerable<TEntity> Get<TEntity>(
             Expression<Func<TEntity, bool>> filter = null, 
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
-            string includeProperties = null,
-            int? skip = null, 
-            int? take = null
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] nagiationProperties
         ) 
             where TEntity : class
         {
-            return GetQueryable<TEntity>(filter, orderBy, includeProperties, skip, take).ToList();
+            return GetQueryable<TEntity>(filter, orderBy, nagiationProperties).ToList();
         }
 
         public TEntity GetOne<TEntity>(
-            Expression<Func<TEntity, bool>> filter = null, 
-            string includeProperties = null
+            Expression<Func<TEntity, bool>> filter = null,
+            params Expression<Func<TEntity, object>>[] nagiationProperties
         ) 
             where TEntity : class
         {
             // Returns the entity or default (is NULL)
-            return GetQueryable<TEntity>(filter, null, includeProperties).SingleOrDefault();
+            return GetQueryable<TEntity>(filter, null, nagiationProperties).SingleOrDefault();
         }
     }
 }

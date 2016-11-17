@@ -13,9 +13,7 @@ namespace ParkInspect.Repository
     {
         IEnumerable<TEntity> GetAll<TEntity>(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
-            int? skip = null,
-            int? take = null
+            params Expression<Func<TEntity, object>>[] nagiationProperties
         )
             where TEntity : class
         ;
@@ -23,16 +21,14 @@ namespace ParkInspect.Repository
         IEnumerable<TEntity> Get<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
-            int? skip = null,
-            int? take = null
+            params Expression<Func<TEntity, object>>[] nagiationProperties
         )
             where TEntity : class
         ;
 
         TEntity GetOne<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
-            string includeProperties = null
+            params Expression<Func<TEntity, object>>[] nagiationProperties
         )
             where TEntity : class
         ;
