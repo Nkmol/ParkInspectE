@@ -13,9 +13,9 @@ namespace ParkInspect.Services
             _context = context;
         }
 
-        public IEnumerable<Klant> GetKlantsWithName(string name)
-        {
-            return _context.GetAll<Klant>().Where(k => k.naam == name);
-        }
+//        public IEnumerable<Klant> GetKlantsWithName(string name)
+//        {
+//            return _context.GetAll<Klant>().Where(k => k.naam == name);
+//        }
     }
 }
