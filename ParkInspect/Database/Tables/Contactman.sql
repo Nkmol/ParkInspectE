@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Contactman]
 (
-	[id] INT NOT NULL , 
+	[id] INT NOT NULL IDENTITY , 
     [client_id] INT NOT NULL, 
     [firstname] VARCHAR(50) NOT NULL, 
     [lastname] VARCHAR(50) NOT NULL, 

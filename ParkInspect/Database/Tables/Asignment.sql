@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Asignment]
 (
 	[client_id] INT NOT NULL, 
-    [id] INT NOT NULL, 
+    [id] INT NOT NULL IDENTITY, 
     [date] DATE NULL, 
     [deadine] DATETIME NOT NULL, 
     [state] VARCHAR(45) NOT NULL, 

@@ -539,4 +539,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="assignment_id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="560d0188-127d-42ce-978b-f39404e9a7a9" ChangeDateTime="11/17/2016 16:24:53">
+    <Property Name="ElementName" Value="[dbo].[Parkinglot].[extra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Parkinglot]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="clarification" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="490c63f8-4485-4d1b-8d1f-3d384a8946cc" ChangeDateTime="11/17/2016 16:26:51">
+    <Property Name="ElementName" Value="[dbo].[Formfield].[questionair_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Formfield]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="form_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b452f4b0-6b5b-4759-9819-0e8986df4740" ChangeDateTime="11/17/2016 16:28:13">
+    <Property Name="ElementName" Value="[dbo].[Raport].[extra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Raport]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="clarifaction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bd785e0d-b5a4-4808-9a62-f35dd49c5404" ChangeDateTime="11/17/2016 16:29:09">
+    <Property Name="ElementName" Value="[dbo].[Field].[rapportFieldType_title]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Field]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="repportFieldType_title" />
+  </Operation>
 </Operations>
