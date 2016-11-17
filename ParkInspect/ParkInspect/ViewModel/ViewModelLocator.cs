@@ -39,7 +39,7 @@ namespace ParkInspect.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
-//            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectModels>(new ParkInspectModels()));
+            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectModel>(new ParkInspectModel()));
 
             SimpleIoc.Default.Register<KlantViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
