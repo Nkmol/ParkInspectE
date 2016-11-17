@@ -1,4 +1,0 @@
-﻿CREATE TABLE [dbo].[Regio]
-(
-	[naam] VARCHAR(50) NOT NULL PRIMARY KEY
-)

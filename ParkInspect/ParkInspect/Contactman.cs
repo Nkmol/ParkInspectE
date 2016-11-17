@@ -12,17 +12,13 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Datatype
+    public partial class Contactman
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Datatype()
-        {
-            this.Field = new HashSet<Field>();
-        }
+        public int id { get; set; }
+        public int client_id { get; set; }
+        public string firstname { get; set; }
+        public string lastname { get; set; }
     
-        public string datatype { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

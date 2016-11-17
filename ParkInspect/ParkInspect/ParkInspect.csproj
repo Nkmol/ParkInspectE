@@ -102,94 +102,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Afbeelding.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Afwezigheid.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Contactpersoon.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\ParkInspectRepository.cs" />
-    <Compile Include="Services\KlantService.cs" />
-    <Compile Include="C__RefactorLog.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Datatype.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Design\DesignDataService.cs" />
-    <Compile Include="Inspectie.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Klant.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
-    <Compile Include="Opdracht.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Parkeerplaats.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ParkInspectDBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ParkInspectDBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ParkInspectDBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ParkInspectDBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ParkInspectDBModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Rapportage.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RapportVeldType.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Regio.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
     <Compile Include="Repository\EntityFrameworkRepository.cs" />
     <Compile Include="Repository\IReadOnlyRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Rol.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Status.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Template.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Veld.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\KlantViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Vragenlijst.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Vragenlijstveld.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Werknemer.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Werknemer_Status.cs">
-      <DependentUpon>ParkInspectDBModel.tt</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -226,13 +148,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <EntityDeploy Include="ParkInspectDBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ParkInspectDBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="ParkInspectDBModel.edmx.diagram">
-      <DependentUpon>ParkInspectDBModel.edmx</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -241,18 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ParkInspectDBModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ParkInspectDBModel.edmx</DependentUpon>
-      <LastGenOutput>ParkInspectDBModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ParkInspectDBModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ParkInspectDBModel.edmx</DependentUpon>
-      <LastGenOutput>ParkInspectDBModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

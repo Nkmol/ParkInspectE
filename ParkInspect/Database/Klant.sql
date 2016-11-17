@@ -1,4 +1,0 @@
-﻿CREATE TABLE [dbo].[Klant]
-(
-	[Id] INT NOT NULL PRIMARY KEY
-)

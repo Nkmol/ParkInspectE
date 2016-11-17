@@ -13,10 +13,10 @@ namespace ParkInspect
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ParkInspectModels : DbContext
+    public partial class DatabaseTestEntities : DbContext
     {
-        public ParkInspectModels()
-            : base("name=ParkInspectModels")
+        public DatabaseTestEntities()
+            : base("name=DatabaseTestEntities")
         {
         }
     
@@ -25,25 +25,24 @@ namespace ParkInspect
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<Afbeelding> Afbeelding { get; set; }
-        public virtual DbSet<Afwezigheid> Afwezigheid { get; set; }
-        public virtual DbSet<Contactpersoon> Contactpersoon { get; set; }
+        public virtual DbSet<Absence> Absence { get; set; }
+        public virtual DbSet<Asignment> Asignment { get; set; }
+        public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<Contactman> Contactman { get; set; }
         public virtual DbSet<Datatype> Datatype { get; set; }
-        public virtual DbSet<Inspectie> Inspectie { get; set; }
-        public virtual DbSet<Klant> Klant { get; set; }
-        public virtual DbSet<Opdracht> Opdracht { get; set; }
-        public virtual DbSet<Parkeerplaats> Parkeerplaats { get; set; }
-        public virtual DbSet<Rapportage> Rapportage { get; set; }
-        public virtual DbSet<RapportVeldType> RapportVeldType { get; set; }
-        public virtual DbSet<Regio> Regio { get; set; }
-        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Employee_Status> Employee_Status { get; set; }
+        public virtual DbSet<Field> Field { get; set; }
+        public virtual DbSet<Image> Image { get; set; }
+        public virtual DbSet<Inspection> Inspection { get; set; }
+        public virtual DbSet<Job> Job { get; set; }
+        public virtual DbSet<Parkinglot> Parkinglot { get; set; }
+        public virtual DbSet<Questionair> Questionair { get; set; }
+        public virtual DbSet<QuestionairField> QuestionairField { get; set; }
+        public virtual DbSet<Raport> Raport { get; set; }
+        public virtual DbSet<RaportFieldType> RaportFieldType { get; set; }
+        public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Template> Template { get; set; }
-        public virtual DbSet<Veld> Veld { get; set; }
-        public virtual DbSet<Vragenlijst> Vragenlijst { get; set; }
-        public virtual DbSet<Vragenlijstveld> Vragenlijstveld { get; set; }
-        public virtual DbSet<Werknemer> Werknemer { get; set; }
-        public virtual DbSet<Werknemer_Status> Werknemer_Status { get; set; }
     }
 }

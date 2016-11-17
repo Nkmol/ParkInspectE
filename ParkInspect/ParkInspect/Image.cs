@@ -12,17 +12,11 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Datatype
+    public partial class Image
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Datatype()
-        {
-            this.Field = new HashSet<Field>();
-        }
+        public string image { get; set; }
+        public int inspection_id { get; set; }
     
-        public string datatype { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual Raport Raport { get; set; }
     }
 }
