@@ -10,6 +10,7 @@
     [in_service_date] DATETIME NOT NULL, 
     [out_service_date] DATETIME NULL, 
     [email] VARCHAR(50) NOT NULL, 
+    [password] VARCHAR(50) NULL, 
     CONSTRAINT [FK_Employee_Job] FOREIGN KEY ([role]) REFERENCES [Role]([role]), 
     CONSTRAINT [FK_Employee_Employee_status] FOREIGN KEY (employee_status) REFERENCES Employee_status(employee_status)
 )
