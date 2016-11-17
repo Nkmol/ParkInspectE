@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absence">
           <Key>
             <PropertyRef Name="start" />
@@ -35,7 +35,7 @@
           <Property Name="phonenumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Contactman">
+        <EntityType Name="Contactperson">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="client_id" />
@@ -225,14 +225,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Client_Contactman">
+        <Association Name="FK_Client_Contactperson">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="Contactman" Type="Self.Contactman" Multiplicity="*" />
+          <End Role="Contactperson" Type="Self.Contactperson" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Client">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Contactman">
+            <Dependent Role="Contactperson">
               <PropertyRef Name="client_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -485,7 +485,7 @@
           <EntitySet Name="Absence" EntityType="Self.Absence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Asignment" EntityType="Self.Asignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Contactman" EntityType="Self.Contactman" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contactperson" EntityType="Self.Contactperson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Datatype" EntityType="Self.Datatype" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" Schema="dbo" store:Type="Tables" />
@@ -515,9 +515,9 @@
             <End Role="State" EntitySet="State" />
             <End Role="Asignment" EntitySet="Asignment" />
           </AssociationSet>
-          <AssociationSet Name="FK_Client_Contactman" Association="Self.FK_Client_Contactman">
+          <AssociationSet Name="FK_Client_Contactperson" Association="Self.FK_Client_Contactperson">
             <End Role="Client" EntitySet="Client" />
-            <End Role="Contactman" EntitySet="Contactman" />
+            <End Role="Contactperson" EntitySet="Contactperson" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Employee_status" Association="Self.FK_Employee_Employee_status">
             <End Role="Employee_Status" EntitySet="Employee_Status" />
@@ -600,8 +600,7 @@
             <End Role="Formfield" EntitySet="Formfield" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ParkInspectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -639,18 +638,7 @@
           <Property Name="phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Asignments" Relationship="Self.FK_Asignment_Client" FromRole="Client" ToRole="Asignment" />
-          <NavigationProperty Name="Contactmen" Relationship="Self.FK_Client_Contactman" FromRole="Client" ToRole="Contactman" />
-        </EntityType>
-        <EntityType Name="Contactman">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="client_id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="client_id" Type="Int32" Nullable="false" />
-          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Contactman" FromRole="Contactman" ToRole="Client" />
+          <NavigationProperty Name="Contactpersons" Relationship="ParkInspectModel.FK_Client_Contactperson" FromRole="Client" ToRole="Contactperson" />
         </EntityType>
         <EntityType Name="Datatype">
           <Key>
@@ -868,18 +856,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Client_Contactman">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="Contactman" Type="Self.Contactman" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Contactman">
-              <PropertyRef Name="client_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Field_Datatype">
           <End Role="Datatype" Type="Self.Datatype" Multiplicity="1" />
           <End Role="Field" Type="Self.Field" Multiplicity="*" />
@@ -1074,7 +1050,6 @@
           <EntitySet Name="Absences" EntityType="Self.Absence" />
           <EntitySet Name="Asignments" EntityType="Self.Asignment" />
           <EntitySet Name="Clients" EntityType="Self.Client" />
-          <EntitySet Name="Contactmen" EntityType="Self.Contactman" />
           <EntitySet Name="Datatypes" EntityType="Self.Datatype" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
@@ -1105,10 +1080,6 @@
           <AssociationSet Name="FK_Inspectie_Opdracht" Association="Self.FK_Inspectie_Opdracht">
             <End Role="Asignment" EntitySet="Asignments" />
             <End Role="Inspection" EntitySet="Inspections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Client_Contactman" Association="Self.FK_Client_Contactman">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="Contactman" EntitySet="Contactmen" />
           </AssociationSet>
           <AssociationSet Name="FK_Field_Datatype" Association="Self.FK_Field_Datatype">
             <End Role="Datatype" EntitySet="Datatypes" />
@@ -1178,7 +1149,35 @@
             <End Role="Inspection" EntitySet="Inspections" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
+          <EntitySet Name="Contactpersons" EntityType="ParkInspectModel.Contactperson" />
+          <AssociationSet Name="FK_Client_Contactperson" Association="ParkInspectModel.FK_Client_Contactperson">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Contactperson" EntitySet="Contactpersons" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Contactperson">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="ParkInspectModel.FK_Client_Contactperson" FromRole="Contactperson" ToRole="Client" />
+        </EntityType>
+        <Association Name="FK_Client_Contactperson">
+          <End Type="ParkInspectModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="ParkInspectModel.Contactperson" Role="Contactperson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Contactperson">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1213,16 +1212,6 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
                 <ScalarProperty Name="email" ColumnName="email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contactmen">
-            <EntityTypeMapping TypeName="ParkInspectModel.Contactman">
-              <MappingFragment StoreEntitySet="Contactman">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="client_id" ColumnName="client_id" />
-                <ScalarProperty Name="firstname" ColumnName="firstname" />
-                <ScalarProperty Name="lastname" ColumnName="lastname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1382,6 +1371,16 @@
               <ScalarProperty Name="id" ColumnName="employee_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Contactpersons">
+            <EntityTypeMapping TypeName="ParkInspectModel.Contactperson">
+              <MappingFragment StoreEntitySet="Contactperson">
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
