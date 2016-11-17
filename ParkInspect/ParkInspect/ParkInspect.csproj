@@ -79,6 +79,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -102,10 +104,83 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Absence.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Asignment.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contactman.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datatype.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Employee.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employee_Status.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Field.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Form.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Formfield.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Image.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inspection.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Parkinglot.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ParkInspectModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParkInspectModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ParkInspectModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ParkInspectModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Region.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Report.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportFieldType.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\InspectieViewModel.cs" />
@@ -202,6 +277,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <EntityDeploy Include="ParkInspectModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ParkInspectModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ParkInspectModel.edmx.diagram">
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -212,7 +294,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helper\" />
+<<<<<<< HEAD
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ParkInspectModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <LastGenOutput>ParkInspectModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ParkInspectModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -221,5 +316,4 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  -->
 </Project>
