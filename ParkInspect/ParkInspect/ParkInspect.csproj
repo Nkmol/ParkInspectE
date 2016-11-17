@@ -148,8 +148,8 @@
     <Compile Include="Repository\EntityFrameworkRepository.cs" />
     <Compile Include="Repository\IReadOnlyRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Services\KlantService.cs" />
-    <Compile Include="ViewModel\KlantViewModel.cs" />
+    <Compile Include="Services\ClientService.cs" />
+    <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Parkinglot.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
