@@ -567,4 +567,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="repportFieldType_title" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="94d0e8c3-52df-41ea-9da2-98fd9f6d0086" ChangeDateTime="11/18/2016 15:14:11">
+    <Property Name="ElementName" Value="[dbo].[Field].[repportFieldType_title]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Field]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="reportFieldType_title" />
+  </Operation>
 </Operations>
