@@ -15,5 +15,6 @@
     CONSTRAINT [FK_Inspectie_Inspectie] FOREIGN KEY ([follow_up_id]) REFERENCES [Inspection]([id]), 
     CONSTRAINT [FK_Inspectie_Status] FOREIGN KEY ([state]) REFERENCES [State]([state]), 
     CONSTRAINT [FK_Inspectie_Opdracht] FOREIGN KEY ([assigment_client_id], [assignment_id]) REFERENCES [Asignment]([client_id], [id]),
-	CONSTRAINT [CHK_date_before_deadline] CHECK ([deadline] < [date])
+	CONSTRAINT [CHK_inspection_date_before_deadline] CHECK ([deadline] < [date]),
+	CONSTRAINT [CHK_inspection_assigment_date] CHECK(dbo.CheckInspectionDates(assignment_id, [date], deadline) = 1)
 )

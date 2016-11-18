@@ -5,5 +5,5 @@
     [end] DATETIME NULL , 
 	PRIMARY KEY ([start], [employee_id]),
     CONSTRAINT [FK_Absence_Employee] FOREIGN KEY ([employee_id]) REFERENCES [Employee]([id]),
-	CONSTRAINT [CHK_start_not_before_end] CHECK ([end] > [start]) 
+	CONSTRAINT [CHK_start_before_end] CHECK ([start] <= [end]) 
 )

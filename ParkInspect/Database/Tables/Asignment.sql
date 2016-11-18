@@ -9,5 +9,5 @@
 	PRIMARY KEY ([client_id],[id]),
     CONSTRAINT [FK_Asignment_Client] FOREIGN KEY ([client_id]) REFERENCES [Client]([id]), 
     CONSTRAINT [FK_Asignment_Status] FOREIGN KEY ([state]) REFERENCES [State]([state]),
-	CONSTRAINT [CHK_date_before_deadline] CHECK ([deadline] < [date])
+	CONSTRAINT [CHK_assignment_date_before_deadline] CHECK ([deadine] <= [date])
 )
