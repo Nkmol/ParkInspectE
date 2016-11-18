@@ -15,7 +15,7 @@ BEGIN
 	DECLARE @assignment_deadline datetime;
 
 	 -- !!Careful when returning more as 1 result!!
-	INSERT INTO @assignment SELECT [date], deadine FROM Asignment WHERE id = @assignment_id;
+	INSERT INTO @assignment SELECT [date], [deadline] FROM Asignment WHERE id = @assignment_id;
 	SET @assignment_date = (SELECT [date] FROM @assignment);
 	SET @assignment_deadline = (SELECT deadline FROM @assignment);
 

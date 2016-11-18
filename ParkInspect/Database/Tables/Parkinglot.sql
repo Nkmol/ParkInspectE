@@ -2,7 +2,7 @@
 (
 	[id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [region_name] VARCHAR(50) NULL, 
-    [zipcode] VARCHAR(50) NULL, 
+    [zipcode] VARCHAR(10) NULL, 
     [number] INT NULL, 
     [name] VARCHAR(50) NULL, 
     [clarification] TEXT NOT NULL, 
