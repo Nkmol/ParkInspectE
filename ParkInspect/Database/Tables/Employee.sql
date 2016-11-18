@@ -12,5 +12,6 @@
     [email] VARCHAR(50) NOT NULL, 
     [password] VARCHAR(50) NULL, 
     CONSTRAINT [FK_Employee_Job] FOREIGN KEY ([role]) REFERENCES [Role]([role]), 
-    CONSTRAINT [FK_Employee_Employee_status] FOREIGN KEY (employee_status) REFERENCES Employee_status(employee_status)
+    CONSTRAINT [FK_Employee_Employee_status] FOREIGN KEY (employee_status) REFERENCES Employee_status(employee_status),
+	CONSTRAINT [CHK_out_not_before_in] CHECK ([out_service_date] > [in_service_date])
 )
