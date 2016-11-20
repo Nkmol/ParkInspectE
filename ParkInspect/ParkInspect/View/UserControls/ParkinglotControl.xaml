@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ParkInspect.View.UserControls.ParkeerplaatsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Overview">
+                <DataGrid ItemsSource="{Binding Parkinglots}">
+
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Management">
+                <Grid>
+                    <Label x:Name="nameLabel" Content="Name:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="zipLabel" Content="ZIP Code:" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="regioLabel" Content="Regio:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="numberLabel" Content="Number:" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="clarificationLabel" Content="Clarification:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="23" Margin="94,18,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="zipBox" HorizontalAlignment="Left" Height="23" Margin="94,58,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="regioBox" HorizontalAlignment="Left" Height="23" Margin="94,98,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="numberBox" HorizontalAlignment="Left" Height="23" Margin="94,138,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="clarificationBox" HorizontalAlignment="Left" Height="23" Margin="94,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
+                    <Button x:Name="saveButton" Content="Save Parkinglot" Command="{Binding }" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="274"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
