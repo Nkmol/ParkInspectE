@@ -44,6 +44,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<RapportageViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
+            SimpleIoc.Default.Register<VragenlijstViewModel>();
 
         }
 
@@ -65,6 +66,8 @@ namespace ParkInspect.ViewModel
 
         public ParkeerplaatsViewModel Parkeerplaatsen => ServiceLocator.Current.GetInstance<ParkeerplaatsViewModel>();
 
+        public VragenlijstViewModel Vragenlijsten => ServiceLocator.Current.GetInstance<VragenlijstViewModel>();
+        
 
         /// <summary>
         /// Cleans up all the resources.

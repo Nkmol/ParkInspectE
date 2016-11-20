@@ -111,6 +111,7 @@
     <Compile Include="ViewModel\InspectieViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\NewTemplateViewModel.cs" />
     <Compile Include="ViewModel\OpdrachtViewModel.cs" />
     <Compile Include="ViewModel\ParkeerplaatsViewModel.cs" />
     <Compile Include="ViewModel\PersoneelViewModel.cs" />
