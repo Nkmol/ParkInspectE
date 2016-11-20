@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ParkInspect.Repository;
+using System.Collections.ObjectModel;
 
 namespace ParkInspect.Services
 {
@@ -12,6 +13,16 @@ namespace ParkInspect.Services
         {
             _context = context;
         }
+        public void addClient(Client c)
+        {
+            _context.Create(c);
+            _context.Save();
+        }
+
+        public IEnumerable<Client> GetAllClients()
+        {
+            return _context.GetAll<Client>(null, c => c.Contactpersons, c => c.Asignments);
+        }       
 
         public IEnumerable<Client> GetClientWithName(string name)
         {

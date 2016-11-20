@@ -23,6 +23,8 @@ namespace ParkInspect.View.UserControls
         public KlantControl()
         {
             InitializeComponent();
+
+            
         }
     }
 }
