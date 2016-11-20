@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Windows;
+using System.Collections;
+using System.Collections.Generic;
 
 
 namespace ParkInspect.ViewModel
@@ -36,10 +38,10 @@ namespace ParkInspect.ViewModel
         public RelayCommand EditTemplateCommand { get; set; }
         public RelayCommand NewListCommand { get; set; }
 
-        //public Template selectedTemplate;
-        //public IEnumerable<Template> templates;
-        //public IEnumerable<double> templateVersions{ get; set; }
-        //
+        public Template selectedTemplate;
+        public List<Template> templates { get; set; }
+        public List<double> templateVersions{get; set; }
+        
 
         public NewTemplateViewModel NewTemplateViewModel { get; set; }
         
@@ -51,25 +53,25 @@ namespace ParkInspect.ViewModel
 
         public void disableEditor()
         {
-            EditorVisibility = Visibility.Hidden;
             if (SelectedTab == 2)
             {
-                selectedTab = 1;
+                SelectedTab = 1;
             }
+            EditorVisibility = Visibility.Hidden;
         }
 
         public void newTemplate()
         {
             // create new template
             enableEditor();
-            NewTemplateViewModel.setTemplate();
+            NewTemplateViewModel.setTemplate(new Template());
         }
 
         public void editTemplate()
         {
             // edit from template
             enableEditor();
-            NewTemplateViewModel.setTemplate();
+            //NewTemplateViewModel.setTemplate();
         }
 
         public VragenlijstViewModel()

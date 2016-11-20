@@ -30,26 +30,29 @@
                 </Grid>
             </Custom:MetroTabItem>
             <Custom:MetroTabItem Header="Template editor" Visibility="{Binding EditorVisibility}" >
-                <Grid Background="#aaaaaa" DataContext="{Binding Vragenlijsten.NewTemplateViewModel}">
+                <Grid Background="#aaaaaa" DataContext="{Binding NewTemplateViewModel}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="162*"/>
                         <RowDefinition Height="91*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dataGrid_Copy" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="382,10,0,0" VerticalAlignment="Top" Height="233" Width="237" Grid.RowSpan="2">
+                    <DataGrid x:Name="dataGrid_Copy" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="382,10,0,0" VerticalAlignment="Top" Height="233" Width="237" Grid.RowSpan="2" ItemsSource="{Binding Fields }" SelectedItem="{Binding SelectedField}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Veld label"/>
-                            <DataGridTextColumn Header="Veld type"/>
+                            <DataGridTextColumn Header="Veld label" Binding="{Binding title}"/>
+                            <DataGridTextColumn Header="Veld type" Binding="{Binding datatype}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="confirm" Content="Opslaan" HorizontalAlignment="Left" Margin="624,55.75,0,0" VerticalAlignment="Top" Width="110" Grid.Row="1"/>
-                    <Button x:Name="confirm_Copy" Content="Veld verwijderen" HorizontalAlignment="Left" Margin="624,10,0,0" VerticalAlignment="Top" Width="110"/>
-                    <Button x:Name="button" Content="Veld Toevoegen" HorizontalAlignment="Left" Margin="143,73,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="9" Margin="79,11,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="164"/>
-                    <Label x:Name="label1" Content="Veld label:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="label2" Content="Veld type:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="79,42,0,0" VerticalAlignment="Top" Width="164"/>
+                    <Button x:Name="confirm" Command="{Binding SaveTemplateCommand}" Content="Opslaan" HorizontalAlignment="Left" Margin="624,55.75,0,0" VerticalAlignment="Top" Width="110" Grid.Row="1"/>
+                    <Button x:Name="removeField" Command="{Binding RemoveFieldCommand}" Content="Veld verwijderen" HorizontalAlignment="Left" Margin="624,10,0,0" VerticalAlignment="Top" Width="110"/>
+                    <Button x:Name="addField" Command="{Binding AddFieldCommand}" Content="Veld Toevoegen" HorizontalAlignment="Left" Margin="178,113,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="9" Margin="114,51,0,0" TextWrapping="Wrap" Text="{Binding FieldLabel, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="164"/>
+                    <Label x:Name="label1" Content="Veld label:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="label2" Content="Veld type:" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="114,82,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding FieldTypes}" SelectedItem="{Binding SelectedFieldType}"/>
+                    <Label x:Name="label3" Content="Template naam" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <TextBox Text="{Binding TemplateName, UpdateSourceTrigger=PropertyChanged}" x:Name="templateName" HorizontalAlignment="Left" Height="9" Margin="114,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="164"/>
                 </Grid>
             </Custom:MetroTabItem>
+            <Button x:Name="button" Content="Button" Height="100" Width="75"/>
         </TabControl>
     </Grid>
 </UserControl>
