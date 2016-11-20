@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using MahApps.Metro.Controls.Dialogs;
-using ParkInspect.Domain;
 using ParkInspect.Model;
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace ParkInspect.ViewModel
 
         private string _welcomeTitle = string.Empty;
 
-        public ObservableCollection<Users> klanten;
+        //public ObservableCollection<Users> klanten;
 
         /// <summary>
         /// Gets the WelcomeTitle property.
@@ -65,7 +64,7 @@ namespace ParkInspect.ViewModel
                     WelcomeTitle = item.Title;
                 });
 
-            klanten = new ObservableCollection<Users>();
+            //klanten = new ObservableCollection<Users>();
         }
 
         public async void showLoginDialog(MainWindow window)
@@ -93,7 +92,7 @@ namespace ParkInspect.ViewModel
 
         public int login(string username, string password)
         {
-            using (var context = new Entities())
+            /*using (var context = new Entities())
             {
                 List<Users> list = context.Users.ToList();
                 foreach(Users u in list)
@@ -103,7 +102,7 @@ namespace ParkInspect.ViewModel
                         return 1;
                     }
                 }
-            }
+            }*/
             return 0;
         }
 

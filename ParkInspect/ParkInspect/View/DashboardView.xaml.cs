@@ -21,7 +21,7 @@ namespace ParkInspect
 
         private void ShowLoginDialog(object sender, RoutedEventArgs e)
         {
-            ViewModelLocator.Main.showLoginDialog(this);
+            //ViewModelLocator.Main.showLoginDialog(this);
         }
     }
 }
