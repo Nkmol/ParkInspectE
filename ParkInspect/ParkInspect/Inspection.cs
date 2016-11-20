@@ -18,7 +18,7 @@ namespace ParkInspect
         public Inspection()
         {
             this.Inspection1 = new HashSet<Inspection>();
-            this.Employees = new HashSet<Employee>();
+            this.Employee = new HashSet<Employee>();
         }
     
         public int id { get; set; }
@@ -41,6 +41,6 @@ namespace ParkInspect
         public virtual State State1 { get; set; }
         public virtual Report Report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

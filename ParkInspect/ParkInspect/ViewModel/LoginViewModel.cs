@@ -1,4 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
+using MahApps.Metro.Controls.Dialogs;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ParkInspect.ViewModel
 {
@@ -15,6 +18,23 @@ namespace ParkInspect.ViewModel
         /// </summary>
         public LoginViewModel()
         {
+
+        }
+
+        public int login(string username, string password)
+        {
+            using (var context = new ParkInspectEntities())
+            {
+                List<Employee> list = context.Employee.ToList();
+                foreach (Employee u in list)
+                {
+                    if (u.email.Equals(username) && u.password.Equals(password))
+                    {
+                        return 1;
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

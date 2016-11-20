@@ -7,6 +7,7 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
+        xmlns:viewModel="clr-namespace:ParkInspect.ViewModel"
         mc:Ignorable="d ignore"
         Height="500"
         Width="800"
@@ -15,6 +16,7 @@
     
     <Window.Resources>
         <ResourceDictionary>
+            <viewModel:LoginViewModel x:Key="LoginViewModel"></viewModel:LoginViewModel>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -46,5 +48,11 @@
             </TabItem>
         </TabControl>
     </Grid>
+    
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands ShowLastSeparator="False">
+            <Button Click="ShowLoginDialog" Content="Login" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 </controls:MetroWindow>
 

@@ -12,17 +12,8 @@ namespace ParkInspect
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class C__RefactorLog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
-        {
-            this.Employee = new HashSet<Employee>();
-        }
-    
-        public string role1 { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public System.Guid OperationKey { get; set; }
     }
 }
