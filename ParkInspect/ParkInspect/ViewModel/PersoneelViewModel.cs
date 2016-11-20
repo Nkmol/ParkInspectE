@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using ParkInspect.Repository;
+using ParkInspect.Services;
 
 namespace ParkInspect.ViewModel
 {
@@ -13,14 +17,41 @@ namespace ParkInspect.ViewModel
     public class PersoneelViewModel : ViewModelBase
     {
 
-        public ObservableCollection<Object> PersoneelCollection { get; set; }
+        //Data Emplooyees
+        public ObservableCollection<Employee> Employees { get; set; }
+        public EmployeeService Service { get; set; }
+        public Employee SelectedEmployee { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the PersoneelViewModel class.
-        /// </summary>
-        public PersoneelViewModel()
+        //Commands
+        public  ICommand CreateItemCommand { get; set; }
+
+        
+        public PersoneelViewModel(IRepository context)
         {
+            Service = new EmployeeService(context);
+            Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
 
+            CreateItemCommand = new RelayCommand(CreateNewEmployee);
+        }
+
+        private void CreateNewEmployee()
+        {
+            DateTime testDateTime = new DateTime();
+            testDateTime = DateTime.Today;
+            Employee newEmployee = new Employee();
+            
+            newEmployee.firstname = "FREEK";
+            newEmployee.lastname = "WAZAA";
+            newEmployee.employee_status = "beschikbaar";
+            newEmployee.in_service_date = testDateTime;
+            newEmployee.out_service_date = null;
+            newEmployee.role = "manager";
+            newEmployee.password = "test";
+            newEmployee.email = "freekwazaa@parkinspect.nl";
+            newEmployee.phonenumber = "01234567891";
+            newEmployee.active = true;
+
+            Service.InsertEntity(newEmployee);
         }
     }
 }
