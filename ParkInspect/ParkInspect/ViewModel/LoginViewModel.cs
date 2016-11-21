@@ -1,5 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
+using ParkInspect.Repository;
+using ParkInspect.Services;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,25 +19,45 @@ namespace ParkInspect.ViewModel
         /// <summary>
         /// Initializes a new instance of the LoginViewModel class.
         /// </summary>
-        public LoginViewModel()
-        {
+        /// 
+        protected EmployeeService Service;
 
+        public LoginViewModel(IRepository context)
+        {
+            Service = new EmployeeService(context);
         }
 
-        public int login(string username, string password)
+        public async void showLoginDialog(MainWindow window)
         {
-            using (var context = new ParkInspectEntities())
+            bool logged = false;
+
+            while (!logged)
             {
-                List<Employee> list = context.Employee.ToList();
-                foreach (Employee u in list)
+                LoginDialogData result = await window.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = window.MetroDialogOptions.ColorScheme });
+                if (result != null)
                 {
-                    if (u.email.Equals(username) && u.password.Equals(password))
+                    bool rs = login(result.Username, result.Password);
+
+                    if (rs)
                     {
-                        return 1;
+                        logged = true;
+                        MessageDialogResult messageResult = await window.ShowMessageAsync("Welcome: " + result.Username, "Have a nice day!");                      
+                    }
+                    else
+                    {
+                        MessageDialogResult messageResult = await window.ShowMessageAsync("Error", "Incorrect username/password");
                     }
                 }
             }
-            return 0;
+        }
+
+        public bool login(string email, string password)
+        {
+            if(Service.GetEmployee(email, password) != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
