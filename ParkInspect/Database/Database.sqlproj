@@ -58,6 +58,8 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Seed" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Asignment.sql" />
@@ -94,5 +96,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish-Script.publish.xml" />
+    <None Include="Scripts\Seed\Region.sql" />
+    <None Include="Database.publish.xml" />
+    <None Include="Scripts\Seed\Client.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
