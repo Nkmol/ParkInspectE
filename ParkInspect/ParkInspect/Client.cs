@@ -18,7 +18,7 @@ namespace ParkInspect
         public Client()
         {
             this.Asignment = new HashSet<Asignment>();
-            this.Contactman = new HashSet<Contactman>();
+            this.Contactperson = new HashSet<Contactperson>();
         }
     
         public int id { get; set; }
@@ -29,6 +29,6 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asignment> Asignment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contactman> Contactman { get; set; }
+        public virtual ICollection<Contactperson> Contactperson { get; set; }
     }
 }

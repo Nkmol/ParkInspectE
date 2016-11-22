@@ -1,47 +1,19 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 
 namespace ParkInspect.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
-        public ObservableCollection<Client> Clients { get; set; }
-
-        protected ClientService Service;
+        private Client _client;
 
         private Client _selectedClient;
 
-        public Client SelectedClient
-        {
-            get
-            {
-                return _selectedClient;
-            }
-            set
-            {
-                Set(ref _selectedClient, value);
-            }
-        }
-
-        public ICommand CompleteClientCommand { get; set; }
-
-        private Client _client;
-
-        public Client Client
-        {
-            get
-            {
-                return _client;
-            }
-            set
-            {
-                Set(ref _client, value);
-            }
-        }
+        protected ClientService Service;
 
         public ClientViewModel(IRepository context)
         {
@@ -50,6 +22,22 @@ namespace ParkInspect.ViewModel
             Client = new Client();
 
             CompleteClientCommand = new RelayCommand(CompleteClient);
+        }
+
+        public ObservableCollection<Client> Clients { get; set; }
+
+        public Client SelectedClient
+        {
+            get { return _selectedClient; }
+            set { Set(ref _selectedClient, value); }
+        }
+
+        public ICommand CompleteClientCommand { get; set; }
+
+        public Client Client
+        {
+            get { return _client; }
+            set { Set(ref _client, value); }
         }
 
         private void CompleteClient()

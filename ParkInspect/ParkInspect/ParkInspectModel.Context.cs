@@ -28,7 +28,7 @@ namespace ParkInspect
         public virtual DbSet<Absence> Absence { get; set; }
         public virtual DbSet<Asignment> Asignment { get; set; }
         public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<Contactman> Contactman { get; set; }
+        public virtual DbSet<Contactperson> Contactperson { get; set; }
         public virtual DbSet<Datatype> Datatype { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Employee_Status> Employee_Status { get; set; }
