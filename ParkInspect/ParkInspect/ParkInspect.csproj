@@ -113,7 +113,7 @@
     <Compile Include="Client.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Contactperson.cs">
+    <Compile Include="Contactman.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Datatype.cs">
