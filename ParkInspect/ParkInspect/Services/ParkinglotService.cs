@@ -17,10 +17,35 @@ namespace ParkInspect.Services
             _context = context;
         }
 
-        public void AddParkinglot(Parkinglot p)
+        public bool AddParkinglot(Parkinglot p)
         {
-            _context.Create(p);
-            _context.Save();
+
+            try
+            {
+                _context.Create(p);
+                _context.Save();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }
+
+        public bool UpdateParkinglot(Parkinglot p)
+        {
+            try
+            {
+                _context.Update(p);
+                _context.Save();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         public IEnumerable<Parkinglot> GetAllParkinglots()

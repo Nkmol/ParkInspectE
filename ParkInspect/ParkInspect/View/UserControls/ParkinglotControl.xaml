@@ -4,29 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
     <Grid>
-        <TabControl>
+        <TabControl Name="Tabs">
             <TabItem Header="Overview">
-                <DataGrid ItemsSource="{Binding Parkinglots}">
-
+                <DataGrid ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
+                    
                 </DataGrid>
             </TabItem>
             <TabItem Header="Management">
                 <Grid>
-                    <Label x:Name="nameLabel" Content="Name:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="zipLabel" Content="ZIP Code:" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="regioLabel" Content="Regio:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="numberLabel" Content="Number:" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="clarificationLabel" Content="Clarification:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="23" Margin="94,18,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="zipBox" HorizontalAlignment="Left" Height="23" Margin="94,58,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="regioBox" HorizontalAlignment="Left" Height="23" Margin="94,98,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="numberBox" HorizontalAlignment="Left" Height="23" Margin="94,138,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="clarificationBox" HorizontalAlignment="Left" Height="23" Margin="94,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
-                    <Button x:Name="saveButton" Content="Save Parkinglot" Command="{Binding }" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="274"/>
+                    <Label x:Name="NameLabel" Content="Name:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="ZipLabel" Content="ZIP Code:" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="RegioLabel" Content="Regio:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="NumberLabel" Content="Number:" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="ClarificationLabel" Content="Clarification:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="94,18,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" Margin="94,58,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.zipcode, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="RegioBox" HorizontalAlignment="Left" Height="23" Margin="94,98,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.region_name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" Margin="94,138,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                    <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" Margin="94,178,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                    <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="274"/>
                 </Grid>
             </TabItem>
         </TabControl>
