@@ -14,18 +14,25 @@
                 <DataGrid 
                     ItemsSource="{Binding Clients}" 
                     SelectedItem="{Binding SelectedClient}"
+                    AutoGenerateColumns="False"
                     IsReadOnly="True">
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="100" Header="Name" Binding="{Binding name}"/>
+                        <DataGridTextColumn Width="100" Header="Telnr" Binding="{Binding phonenumber}"/>
+                        <DataGridTextColumn Width="100" Header="Email" Binding="{Binding email}"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
 
             <TabItem Header="Management">
                 <Grid>
-                    <Label x:Name="nameLabel" Content="Name:" Margin="89,43,196.4,185.2"/>
-                    <Label x:Name="telnrLabel" Content="Telefoonnummer:" Margin="89,75,196.4,154.2"/>
-                    <Label x:Name="emailLabel" Content="Email:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
-                    <TextBox x:Name="name" Text="{Binding SelectedClient.name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="91"/>
-                    <TextBox x:Name="telnr" Text="{Binding SelectedClient.phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="91"/>
-                    <TextBox x:Name="email" Text="{Binding SelectedClient.email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="91"/>
+                    <Label x:Name="NameLabel" Content="Name:" Margin="89,43,196.4,185.2"/>
+                    <Label x:Name="TelnrLabel" Content="Telefoonnummer:" Margin="89,75,196.4,154.2"/>
+                    <Label x:Name="EmailLabel" Content="Email:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
+                    <TextBox x:Name="Name" Text="{Binding SelectedClient.name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="91"/>
+                    <TextBox x:Name="Telnr" Text="{Binding SelectedClient.phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="91"/>
+                    <TextBox x:Name="Email" Text="{Binding SelectedClient.email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="91"/>
                 </Grid>
             </TabItem>
 

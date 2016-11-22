@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using ParkInspect.Repository;
 using ParkInspect.Services;
@@ -59,7 +54,7 @@ namespace ParkInspect.ViewModel
 
         private void CompleteClient()
         {
-            Service.addClient(Client);
+            Service.AddClient(Client);
         }
     }
 }
