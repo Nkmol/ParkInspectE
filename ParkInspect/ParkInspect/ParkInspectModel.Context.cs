@@ -25,7 +25,6 @@ namespace ParkInspect
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Absence> Absence { get; set; }
         public virtual DbSet<Asignment> Asignment { get; set; }
         public virtual DbSet<Client> Client { get; set; }

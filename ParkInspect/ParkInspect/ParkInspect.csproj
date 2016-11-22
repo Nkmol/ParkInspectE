@@ -113,89 +113,86 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Absence.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Asignment.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Client.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Contactperson.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="C__RefactorLog.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Datatype.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="Employee.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Employee_Status.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Field.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Form.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Formfield.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Image.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Inspection.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Parkinglot.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ParkInspectEntities.Context.cs">
+    <Compile Include="ParkInspectModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ParkInspectEntities.Context.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ParkInspectEntities.cs">
+    <Compile Include="ParkInspectModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ParkInspectEntities.Designer.cs">
+    <Compile Include="ParkInspectModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ParkInspectEntities.edmx</DependentUpon>
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Region.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Report.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportFieldType.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
     <Compile Include="Repository\EntityFrameworkRepository.cs" />
     <Compile Include="Repository\IReadOnlyRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Role.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="State.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Template.cs">
-      <DependentUpon>ParkInspectEntities.tt</DependentUpon>
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
@@ -294,12 +291,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <EntityDeploy Include="ParkInspectEntities.edmx">
+    <EntityDeploy Include="ParkInspectModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ParkInspectEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>ParkInspectModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ParkInspectEntities.edmx.diagram">
-      <DependentUpon>ParkInspectEntities.edmx</DependentUpon>
+    <None Include="ParkInspectModel.edmx.diagram">
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -314,15 +311,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ParkInspectEntities.Context.tt">
+    <Content Include="ParkInspectModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ParkInspectEntities.edmx</DependentUpon>
-      <LastGenOutput>ParkInspectEntities.Context.cs</LastGenOutput>
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <LastGenOutput>ParkInspectModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ParkInspectEntities.tt">
+    <Content Include="ParkInspectModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ParkInspectEntities.edmx</DependentUpon>
-      <LastGenOutput>ParkInspectEntities.cs</LastGenOutput>
+      <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\jordi\Documents\school\blok 6\project\ParkInspectE\ParkInspect\ParkInspect\ParkInspectEntities.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\jordi\Documents\school\blok 6\project\ParkInspectE\ParkInspect\ParkInspect\ParkInspectModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

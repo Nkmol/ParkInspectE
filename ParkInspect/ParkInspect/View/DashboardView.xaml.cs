@@ -1,8 +1,5 @@
-﻿using System.Windows;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using ParkInspect.ViewModel;
-using MahApps.Metro.Controls.Dialogs;
-using System.Collections;
 
 namespace ParkInspect
 {
