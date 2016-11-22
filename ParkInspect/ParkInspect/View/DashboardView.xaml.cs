@@ -21,12 +21,5 @@ namespace ParkInspect
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
         }
-
-        private void ShowLoginDialog(object sender, RoutedEventArgs e)
-        {
-            var vm = (LoginViewModel)Resources["LoginViewModel"];
-
-            vm.showLoginDialog(this);
-        }
     }
 }

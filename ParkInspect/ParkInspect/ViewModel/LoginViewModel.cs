@@ -1,10 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace ParkInspect.ViewModel
 {
@@ -22,18 +24,32 @@ namespace ParkInspect.ViewModel
         /// 
         protected EmployeeService Service;
 
-        public LoginViewModel(IRepository context)
+        private readonly IDialogCoordinator _dialogCoordinator;
+
+        private ICommand _showLoginDialogCommand;
+
+        public ICommand ShowLoginDialogCommand
         {
+            get
+            {
+                return _showLoginDialogCommand
+                       ?? (_showLoginDialogCommand = new RelayCommand(showLoginDialog));
+            }
+        }
+
+        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context)
+        {
+            this._dialogCoordinator = dialogCoordinator;
             Service = new EmployeeService(context);
         }
 
-        public async void showLoginDialog(MainWindow window)
+        public async void showLoginDialog()
         {
             bool logged = false;
 
             while (!logged)
             {
-                LoginDialogData result = await window.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = window.MetroDialogOptions.ColorScheme });
+                LoginDialogData result = await _dialogCoordinator.ShowLoginAsync(this, "Authentication", "Enter your credentials");
                 if (result != null)
                 {
                     bool rs = login(result.Username, result.Password);
@@ -41,11 +57,11 @@ namespace ParkInspect.ViewModel
                     if (rs)
                     {
                         logged = true;
-                        MessageDialogResult messageResult = await window.ShowMessageAsync("Welcome: " + result.Username, "Have a nice day!");                      
+                        MessageDialogResult messageResult = await _dialogCoordinator.ShowMessageAsync(this, "Welcome: " + result.Username, "Have a nice day!");                      
                     }
                     else
                     {
-                        MessageDialogResult messageResult = await window.ShowMessageAsync("Error", "Incorrect username/password");
+                        MessageDialogResult messageResult = await _dialogCoordinator.ShowMessageAsync(this, "Error", "Incorrect username/password");
                     }
                 }
             }
@@ -53,7 +69,8 @@ namespace ParkInspect.ViewModel
 
         public bool login(string email, string password)
         {
-            if(Service.GetEmployee(email, password) != null)
+            IEnumerable<Employee> e = Service.GetEmployee(email, password);
+            if (e.Count() != 0)
             {
                 return true;
             }
