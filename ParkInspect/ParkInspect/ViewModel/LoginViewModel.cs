@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -18,20 +19,9 @@ namespace ParkInspect.ViewModel
     {
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private string _loginName;
-        public string LoginName
-        {
-            get { return _loginName; }
-            set { Set(ref _loginName, value); }
-        }
-
         private bool _loginButtonEnabled;
 
-        public bool LoginButtonEnabled
-        {
-            get { return _loginButtonEnabled; }
-            set { Set(ref _loginButtonEnabled, value); }
-        }
+        private string _loginName;
 
         private ICommand _showLoginDialogCommand;
 
@@ -48,6 +38,18 @@ namespace ParkInspect.ViewModel
             LoginButtonEnabled = true;
         }
 
+        public string LoginName
+        {
+            get { return _loginName; }
+            set { Set(ref _loginName, value); }
+        }
+
+        public bool LoginButtonEnabled
+        {
+            get { return _loginButtonEnabled; }
+            set { Set(ref _loginButtonEnabled, value); }
+        }
+
         public ICommand ShowLoginDialogCommand
         {
             get
@@ -59,7 +61,14 @@ namespace ParkInspect.ViewModel
 
         public async void ShowLoginDialog()
         {
-            var result = await _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in");
+            var loginDialogSettings = new LoginDialogSettings
+            {
+                UsernameWatermark = "Emailadres...",
+                PasswordWatermark = "Wachtwoord...",
+                NegativeButtonVisibility = Visibility.Visible
+            };
+
+            var result = await _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in", loginDialogSettings);
 
             if (result == null)
                 return;
@@ -68,7 +77,7 @@ namespace ParkInspect.ViewModel
 
             if (!rs)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, "Error", "Ongeldig email/wachtwoord");
+                await _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan", "Ongeldig email/wachtwoord");
             }
             else
             {
