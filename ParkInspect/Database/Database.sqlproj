@@ -99,6 +99,8 @@
     <None Include="Scripts\Seed\Region.sql" />
     <None Include="Database.publish.xml" />
     <None Include="Scripts\Seed\Client.sql" />
+    <None Include="Scripts\Seed\Role.sql" />
+    <None Include="Scripts\Seed\State.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

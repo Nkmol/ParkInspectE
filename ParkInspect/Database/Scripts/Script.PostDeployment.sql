@@ -13,3 +13,5 @@ Post-Deployment Script Template
 
 :r .\Seed\Region.sql
 :r .\Seed\Client.sql
+:r .\Seed\Role.sql
+:r .\Seed\State.sql
