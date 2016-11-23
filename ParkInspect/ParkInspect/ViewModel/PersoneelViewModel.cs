@@ -227,6 +227,7 @@ namespace ParkInspect.ViewModel
             StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
 
             Started = DateTime.Today;
+            Ended = DateTime.Today;
             
             CreateItemCommand = new RelayCommand(CreateNewEmployee, CanCreate);
             DeleteItemCommand = new RelayCommand(DeleteEmployee, CanDelete);
@@ -236,32 +237,8 @@ namespace ParkInspect.ViewModel
         //CRUD METHODS
         private void CreateNewEmployee()
         {
-            Employee newEmployee = new Employee();
-            
-            newEmployee.firstname = Firstname;
-            newEmployee.lastname = Lastname;
-            newEmployee.employee_status = Status;
-            newEmployee.in_service_date = Started;
-
-            if (!Active)
-            {
-                newEmployee.out_service_date = Ended;
-            }
-            else
-            {
-                newEmployee.out_service_date = null;
-            }
-
-            newEmployee.role = Role;
-            newEmployee.password = Password;
-            newEmployee.email = Emailadres;
-            newEmployee.phonenumber = PhoneNumber;
-            newEmployee.active = Active;
-
-            Service.InsertEntity(newEmployee);
-            Notification = "De medewerker is opgeslagen";
-            UpdateDataGrid();
-        } 
+            CreateOrUpdate(true);
+        }
 
         private bool CanCreate()
         {
@@ -281,36 +258,59 @@ namespace ParkInspect.ViewModel
 
         private void EditEmployee()
         {
-            Employee editEmployee = SelectedEmployee;
-
-            editEmployee.firstname = Firstname;
-            editEmployee.lastname = Lastname;
-            editEmployee.employee_status = Status;
-            editEmployee.in_service_date = Started;
-
-            if (!Active)
-            {
-                editEmployee.out_service_date = Ended;
-            }
-            else
-            {
-                editEmployee.out_service_date = null;
-            }
-
-            editEmployee.role = Role;
-            editEmployee.password = Password;
-            editEmployee.email = Emailadres;
-            editEmployee.phonenumber = PhoneNumber;
-            editEmployee.active = Active;
-
-            Service.UpdateEntity(editEmployee);
-            Notification = "De medewerker is aangepast";
-            UpdateDataGrid();
+            CreateOrUpdate(false);
         }
 
         private bool CanEdit()
         {
             return SelectedEmployee != null;
+        }
+
+        private void CreateOrUpdate(bool create)
+        {
+            Employee employee;
+
+            if (create)
+            {
+                employee = new Employee();
+            }
+            else
+            {
+                employee = SelectedEmployee;
+            }
+
+            employee.firstname = Firstname;
+            employee.lastname = Lastname;
+            employee.employee_status = Status;
+            employee.in_service_date = Started;
+
+            //Checking if out-of-service date has to be set in the database
+            if (!Active)
+            {
+                employee.out_service_date = Ended;
+            }
+            else
+            {
+                employee.out_service_date = null;
+            }
+
+            employee.role = Role;
+            employee.password = Password;
+            employee.email = Emailadres;
+            employee.phonenumber = PhoneNumber;
+            employee.active = Active;
+
+            if (create)
+            {
+                Service.InsertEntity(employee);
+                Notification = "De medewerker is opgeslagen";
+            }
+            else
+            {
+                Service.UpdateEntity(employee);
+                Notification = "De medewerker is aangepast";
+            }
+            UpdateDataGrid();
         }
 
         //OTHER METHODS

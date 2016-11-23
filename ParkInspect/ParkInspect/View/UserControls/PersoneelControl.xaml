@@ -15,8 +15,8 @@
                         <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
                         <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
                         <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
-                        <DataGridTextColumn Header="In dienst" Binding="{Binding in_service_date}" />
-                        <DataGridTextColumn Header="Uit dienst" Binding="{Binding out_service_date}"/>
+                        <DataGridTextColumn Header="In dienst" Binding="{Binding in_service_date, StringFormat={}{0:dd/MM/yyyy}}" />
+                        <DataGridTextColumn Header="Uit dienst" Binding="{Binding out_service_date, StringFormat={}{0:dd/MM/yyyy}}"/>
                         <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
                         <DataGridTextColumn Header="Actief" Binding="{Binding active}" />
                         <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
