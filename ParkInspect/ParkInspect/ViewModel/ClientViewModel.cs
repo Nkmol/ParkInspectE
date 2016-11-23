@@ -9,8 +9,6 @@ namespace ParkInspect.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
-        private Client _client;
-
         private Client _selectedClient;
 
         protected ClientService Service;
@@ -19,9 +17,10 @@ namespace ParkInspect.ViewModel
         {
             Service = new ClientService(context);
             Clients = new ObservableCollection<Client>(Service.GetAllClients());
-            Client = new Client();
 
             CompleteClientCommand = new RelayCommand(CompleteClient);
+            ResetButtonCommand = new RelayCommand(Reset);
+            UpdateButtonCommand = new RelayCommand(UpdateClient);
         }
 
         public ObservableCollection<Client> Clients { get; set; }
@@ -29,20 +28,33 @@ namespace ParkInspect.ViewModel
         public Client SelectedClient
         {
             get { return _selectedClient; }
-            set { Set(ref _selectedClient, value); }
+            set
+            {
+                Set(ref _selectedClient, value);
+                RaisePropertyChanged();
+            }
         }
 
         public ICommand CompleteClientCommand { get; set; }
-
-        public Client Client
-        {
-            get { return _client; }
-            set { Set(ref _client, value); }
-        }
+        public ICommand ResetButtonCommand { get; set; }
+        public ICommand UpdateButtonCommand { get; set; }
 
         private void CompleteClient()
         {
-            Service.AddClient(Client);
+            if (SelectedClient.name == null || SelectedClient.phonenumber == null || SelectedClient.email == null)
+                return;
+            Service.AddClient(SelectedClient);
+            Clients.Add(SelectedClient);
+        }
+
+        private void Reset()
+        {
+            SelectedClient = new Client();
+        }
+
+        private void UpdateClient()
+        {
+            Service.UpdateClient(SelectedClient);
         }
     }
 }

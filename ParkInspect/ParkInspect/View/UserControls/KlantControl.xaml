@@ -17,21 +17,24 @@
                     IsReadOnly="True">
                     
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="100" Header="Name" Binding="{Binding name}"/>
-                        <DataGridTextColumn Width="100" Header="Telnr" Binding="{Binding phonenumber}"/>
-                        <DataGridTextColumn Width="100" Header="Email" Binding="{Binding email}"/>
+                        <DataGridTextColumn Width="150" Header="Naam" Binding="{Binding name}"/>
+                        <DataGridTextColumn Width="150" Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
+                        <DataGridTextColumn Width="150" Header="Emailadres" Binding="{Binding email}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
 
             <TabItem Header="Management" DataContext="{Binding SelectedClient}">
                 <Grid>
-                    <Label x:Name="NameLabel" Content="Name:" Margin="89,43,196.4,185.2"/>
+                    <Label x:Name="NameLabel" Content="Naam:" Margin="89,43,196.4,185.2"/>
                     <Label x:Name="TelnrLabel" Content="Telefoonnummer:" Margin="89,75,196.4,154.2"/>
-                    <Label x:Name="EmailLabel" Content="Email:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
-                    <TextBox x:Name="Name" Text="{Binding name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="91"/>
-                    <TextBox x:Name="Telnr" Text="{Binding phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="91"/>
-                    <TextBox x:Name="Email" Text="{Binding email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="91"/>
+                    <Label x:Name="EmailLabel" Content="Emailadres:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
+                    <TextBox x:Name="Name" Text="{Binding name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="150"/>
+                    <TextBox x:Name="Telnr" Text="{Binding phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="150"/>
+                    <TextBox x:Name="Email" Text="{Binding email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="150"/>
+                    <Button DataContext="{Binding Client, Source={StaticResource Locator}}" Command="{Binding CompleteClientCommand}" Margin="140,208,147.4,22.2" Content="Maak nieuwe klant aan"></Button>
+                    <Button DataContext="{Binding Client, Source={StaticResource Locator}}" Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left" Height="25" Margin="10,208,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Button DataContext="{Binding Client, Source={StaticResource Locator}}" Command="{Binding UpdateButtonCommand}" Content="Update klant" HorizontalAlignment="Left" Height="25" Margin="273,208,0,0" VerticalAlignment="Top" Width="100"/>
                 </Grid>
             </TabItem>
         </TabControl>
