@@ -261,7 +261,7 @@ namespace ParkInspect.ViewModel
             Service.InsertEntity(newEmployee);
             Notification = "De medewerker is opgeslagen";
             UpdateDataGrid();
-        }
+        } 
 
         private bool CanCreate()
         {
