@@ -17,6 +17,8 @@ namespace ParkInspect.ViewModel
         {
             Service = new ClientService(context);
             Clients = new ObservableCollection<Client>(Service.GetAllClients());
+            Assignments = new ObservableCollection<Asignment>(SelectedClient.Assignments);
+            Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
 
             CompleteClientCommand = new RelayCommand(CompleteClient);
             ResetButtonCommand = new RelayCommand(Reset);
@@ -24,6 +26,10 @@ namespace ParkInspect.ViewModel
         }
 
         public ObservableCollection<Client> Clients { get; set; }
+
+        public ObservableCollection<Asignment> Assignments { get; set; }
+
+        public ObservableCollection<Contactperson> Contactpersons { get; set; }
 
         public Client SelectedClient
         {
