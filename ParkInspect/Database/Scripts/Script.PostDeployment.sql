@@ -10,9 +10,6 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-DBCC CHECKIDENT ('Inspection', RESEED, 0)
-
-
 :r .\Seed\Region.sql
 :r .\Seed\Client.sql
 :r .\Seed\Role.sql
