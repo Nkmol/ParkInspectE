@@ -12,7 +12,7 @@
         Width="800"
         Title="ParkInspect"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}">
-    
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,27 +24,29 @@
     <Grid x:Name="LayoutRoot">
         <TabControl>
             <TabItem Header="Klanten">
-              <userControls:KlantControl />
-            </TabItem>    
+                <userControls:KlantControl />
+            </TabItem>
             <TabItem Header="Parkeerplaatsen">
-              <userControls:ParkeerplaatsControl />
+                <userControls:ParkeerplaatsControl />
             </TabItem>
             <TabItem Header="Opdrachten">
-              <userControls:OpdrachtControl />
-            </TabItem>    
-            <TabItem Header="Inspectie"> 
-              <userControls:InspectieControl />  
+                <userControls:OpdrachtControl />
+            </TabItem>
+            <TabItem Header="Inspectie">
+                <userControls:InspectieControl />
             </TabItem>
             <TabItem Header="Vragenlijst">
-              <userControls:VragenlijstControl />
+                <userControls:VragenlijstControl />
             </TabItem>
             <TabItem Header="Personeel">
-              <userControls:PersoneelControl />
+                <userControls:PersoneelControl />
             </TabItem>
             <TabItem Header="Rapportage">
-              <userControls:RapportageControl />  
+                <userControls:RapportageControl />
+            </TabItem>
+            <TabItem Header="Contactpersoon">
+                <userControls:ContactpersoonControl/>
             </TabItem>
         </TabControl>
     </Grid>
 </controls:MetroWindow>
-

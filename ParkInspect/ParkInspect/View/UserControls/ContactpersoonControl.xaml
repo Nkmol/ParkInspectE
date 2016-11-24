@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="ParkInspect.View.UserControls.ContactpersoonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400"
+             DataContext="{Binding Contactperson, Source={StaticResource Locator}}">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Overview">
+                <DataGrid ItemsSource="{Binding Contactpersons}" IsReadOnly="True" AutoGenerateColumns="False"
+                          SelectedItem="{Binding SelectedContactperson}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="150" Header="Voornaam" Binding="{Binding firstname}" />
+                        <DataGridTextColumn Width="150" Header="Achternaam" Binding="{Binding lastname}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Management" DataContext="{Binding SelectedContactperson}">
+                <Grid>
+                    <Label x:Name="NameLabel" Content="Voornaam:" Margin="89,43,196.4,185.2" />
+                    <Label x:Name="TelnrLabel" Content="Achternaam:" Margin="89,75,196.4,154.2" />
+                    <TextBox x:Name="Voornaam" Text="{Binding firstname}" HorizontalAlignment="Left" Height="23"
+                             Margin="204,47,0,0" VerticalAlignment="Top" Width="150" />
+                    <TextBox x:Name="Telnr" Text="{Binding lastname}" HorizontalAlignment="Left" Height="23"
+                             Margin="204,75,0,0" VerticalAlignment="Top" Width="150" />
+                    <Button DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                            Command="{Binding CompleteContactpersonCommand}" Margin="140,208,147.4,22.2"
+                            Content="Maak nieuw contactpersoon aan" />
+                    <Button DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                            Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
+                            Height="25" Margin="10,208,0,0" VerticalAlignment="Top" Width="100" />
+                    <Button DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                            Command="{Binding UpdateButtonCommand}" Content="Update contactpersoon"
+                            HorizontalAlignment="Left" Height="25" Margin="273,208,0,0" VerticalAlignment="Top"
+                            Width="100" />
+                    <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
+                           VerticalAlignment="Top" Width="109" />
+                    <ComboBox HorizontalAlignment="Left" Height="27" Margin="205,105,0,0" VerticalAlignment="Top"
+                              Width="149" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                              ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

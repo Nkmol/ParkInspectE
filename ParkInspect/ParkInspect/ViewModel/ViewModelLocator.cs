@@ -48,6 +48,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<RapportageViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
+            SimpleIoc.Default.Register<ContactpersonViewModel>();
         }
 
         /// <summary>
@@ -71,6 +72,8 @@ namespace ParkInspect.ViewModel
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
+
+        public ContactpersonViewModel Contactperson => ServiceLocator.Current.GetInstance<ContactpersonViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.
