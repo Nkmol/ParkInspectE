@@ -12,13 +12,9 @@ USING (values
 	('Available', 'Employee', 'Cedric', 'Almond', 1, '06-9997634', '10-11-2012', null, 'c.a@parkinspect.nl', 'abc123'),
 	('Available', 'Employee', 'Bob', 'Huizes', 1, '06-456566464', '10-11-2014', null, 'b.h@parkinspect.nl', 'abc123'),
 	('Available', 'Employee', 'Jordi', 'Bencks', 1, '06-943543', '10-11-2013', null, 'j.b@parkinspect.nl', 'abc123'),
-
 	('Available', 'Inspector', 'Bram', 'Potjes', 1, '06-7644334', '10-11-2010', null, 'b.pt@parkinspect.nl', 'wit'),
 	('Available', 'Inspector', 'Jasper', 'Rozen', 1, '06-97834234', '10-11-2010', null, 'j.r@parkinspect.nl', 'lasagna'),
 	('Available', 'Inspector', 'Thomas', 'Bosch', 1, '06-79868764', '10-11-2010', null, 't.b@parkinspect.nl', 'test123')
-
-
-
 ) AS Source ([employee_status], [role], [firstname], [lastname], [active], [phonenumber], [in_service_date], [out_service_date], [email], [password])  
 ON Target.[firstname] = Source.[firstname] 
 WHEN NOT MATCHED BY TARGET THEN  

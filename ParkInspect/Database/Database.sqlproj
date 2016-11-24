@@ -110,6 +110,10 @@
     <None Include="Scripts\Seed\Employee.sql" />
     <None Include="Scripts\Seed\Inspector.sql" />
     <None Include="Scripts\Seed\Assignment.sql" />
+    <None Include="Scripts\Seed\Form.sql" />
+    <None Include="Scripts\Seed\Inspection.sql" />
+    <None Include="Scripts\Seed\Inspector_has_Inspection.sql" />
+    <None Include="Scripts\Seed\Absence.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

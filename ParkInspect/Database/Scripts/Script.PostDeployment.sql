@@ -24,3 +24,8 @@ Post-Deployment Script Template
 :r .\Seed\Employee.sql
 :r .\Seed\Inspector.sql
 :r .\Seed\Assignment.sql
+:r .\Seed\Form.sql
+:r .\Seed\Inspection.sql
+:r .\Seed\Inspector_has_Inspection.sql
+:r .\Seed\Absence.sql
+:r .\Seed\Report.sql
