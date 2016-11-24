@@ -15,3 +15,9 @@ Post-Deployment Script Template
 :r .\Seed\Client.sql
 :r .\Seed\Role.sql
 :r .\Seed\State.sql
+:r .\Seed\Employee_Status.sql
+:r .\Seed\Template.sql
+:r .\Seed\Datatype.sql
+:r .\Seed\ReportFieldType.sql
+:r .\Seed\Contactperson.sql
+:r .\Seed\Parkinglot.sql

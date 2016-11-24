@@ -1,8 +1,8 @@
 ﻿MERGE INTO dbo.[Role] AS Target  
 USING (values 
-	('Inspecteur'),
+	('Inspector'),
 	('Manager'),
-	('Werknemer')
+	('Employee')
 ) AS Source ([role])  
 ON Target.[role] = Source.[role]  
 WHEN NOT MATCHED BY TARGET THEN  

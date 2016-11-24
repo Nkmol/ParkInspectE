@@ -101,6 +101,12 @@
     <None Include="Scripts\Seed\Client.sql" />
     <None Include="Scripts\Seed\Role.sql" />
     <None Include="Scripts\Seed\State.sql" />
+    <None Include="Scripts\Seed\Employee_Status.sql" />
+    <None Include="Scripts\Seed\Template.sql" />
+    <None Include="Scripts\Seed\Datatype.sql" />
+    <None Include="Scripts\Seed\ReportFieldType.sql" />
+    <None Include="Scripts\Seed\Contactperson.sql" />
+    <None Include="Scripts\Seed\Parkinglot.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
