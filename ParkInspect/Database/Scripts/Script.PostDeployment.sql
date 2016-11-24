@@ -10,6 +10,8 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+DBCC CHECKIDENT ('Inspection', RESEED, 0)
+
 
 :r .\Seed\Region.sql
 :r .\Seed\Client.sql
@@ -29,3 +31,4 @@ Post-Deployment Script Template
 :r .\Seed\Inspector_has_Inspection.sql
 :r .\Seed\Absence.sql
 :r .\Seed\Report.sql
+:r .\Seed\Field.sql

@@ -1,6 +1,6 @@
 ﻿MERGE INTO dbo.Datatype AS Target  
 USING (values 
-	('Text'),
+	('String'),
 	('Integer'),
 	('Boolean'),
 	('Double'), 
