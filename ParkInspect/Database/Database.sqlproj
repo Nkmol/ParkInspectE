@@ -107,6 +107,9 @@
     <None Include="Scripts\Seed\ReportFieldType.sql" />
     <None Include="Scripts\Seed\Contactperson.sql" />
     <None Include="Scripts\Seed\Parkinglot.sql" />
+    <None Include="Scripts\Seed\Employee.sql" />
+    <None Include="Scripts\Seed\Inspector.sql" />
+    <None Include="Scripts\Seed\Assignment.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

@@ -10,10 +10,10 @@ USING (values
 
 
 ) AS Source (region_name, zipcode, number, name, clarification)  
-ON Target.region_name = Source.region_name 
+ON Target.name = Source.name 
 WHEN NOT MATCHED BY TARGET THEN  
  INSERT (region_name, zipcode, number, name, clarification)  
  VALUES (region_name, zipcode, number, name, clarification)  
 WHEN MATCHED THEN
  UPDATE SET
-  region_name = Source.region_name;
+  name = Source.name;

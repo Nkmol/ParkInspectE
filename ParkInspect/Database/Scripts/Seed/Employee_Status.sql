@@ -1,7 +1,6 @@
 ﻿MERGE INTO dbo.Employee_Status AS Target  
 USING (values 
 	('Available'),
-	('Deceased'),
 	('On Non-Pay Leave'),
 	('Retired'),
 	('Terminated'),

@@ -21,3 +21,6 @@ Post-Deployment Script Template
 :r .\Seed\ReportFieldType.sql
 :r .\Seed\Contactperson.sql
 :r .\Seed\Parkinglot.sql
+:r .\Seed\Employee.sql
+:r .\Seed\Inspector.sql
+:r .\Seed\Assignment.sql
