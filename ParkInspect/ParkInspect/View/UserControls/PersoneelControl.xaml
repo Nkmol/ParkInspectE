@@ -10,7 +10,12 @@
     <Grid>
         <TabControl>
             <TabItem Header="Overview">
-                <DataGrid SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
+                <DataGrid ScrollViewer.CanContentScroll="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                              SelectionMode="Single" AutoGenerateColumns="False" 
+                              IsReadOnly="True" ItemsSource="{Binding Employees}" 
+                              SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
                         <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
@@ -46,11 +51,11 @@
             	                    VerticalAlignment="Top"/>
                         
                         <TextBlock Text="Actief" />
-                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Active, Mode=TwoWay}"></CheckBox>
+                        <CheckBox Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding Active, Mode=TwoWay}"></CheckBox>
                         <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" Text="{Binding BoundMessage}"></TextBlock>
                         
                         <TextBlock Text="Datum uit dienst:" />
-                        <DatePicker SelectedDate="{Binding Ended, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                        <DatePicker IsEnabled="{Binding Active, Mode=TwoWay}" SelectedDate="{Binding Ended, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
             	                    Margin="0,0,0,10"
             	                    VerticalAlignment="Top"/>
 
@@ -63,10 +68,9 @@
                         <TextBlock Text="Wachtwoord" />
                         <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding Password, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
 
-                        <Button HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding DeleteItemCommand}" Margin="0,5" Content="Verwijder"/>
                         <Button HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding EditItemCommand}" Margin="0,5" Content="Bewerken"/>
                         <Button HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding CreateItemCommand}" Margin="0,5" Content="Voeg toe"/>
-                    
+                        <Button HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Width="150" Height="30" Margin="0,5" Content="Deselecteer medewerker"/>
                         <TextBlock Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                     </StackPanel>
                 </ScrollViewer>

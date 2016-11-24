@@ -160,19 +160,16 @@ namespace ParkInspect.ViewModel
         const string Msg2 = "Niet actief, voer datum uit dienst correct in.";
      
         private bool _active = false;
+
         public bool Active
         {
-            get
-            {
-                return _active;
-            }
+            get { return _active; }
             set
             {
-                if(_active == value) return;;
-
                 _active = value;
                 BoundMessage = _active ? Msg1 : Msg2;
-                base.RaisePropertyChanged(()=> BoundMessage);
+                base.RaisePropertyChanged(() => BoundMessage);
+                base.RaisePropertyChanged("Actice");
             }
         }
 
@@ -213,9 +210,9 @@ namespace ParkInspect.ViewModel
 
         //Commands
         public ICommand CreateItemCommand { get; set; }
-        public ICommand DeleteItemCommand { get; set; }
         public ICommand EditItemCommand { get; set; }
-        
+        public ICommand DeselectEmployeeCommand { get; set; }
+
         public PersoneelViewModel(IRepository context)
         {
             //Service and employees
@@ -230,11 +227,11 @@ namespace ParkInspect.ViewModel
             Ended = DateTime.Today;
             
             CreateItemCommand = new RelayCommand(CreateNewEmployee, CanCreate);
-            DeleteItemCommand = new RelayCommand(DeleteEmployee, CanDelete);
             EditItemCommand = new RelayCommand(EditEmployee, CanEdit);
+            DeselectEmployeeCommand = new RelayCommand(DeselectItem, CanDeselect);
         }
 
-        //CRUD METHODS
+        //CRU METHODS
         private void CreateNewEmployee()
         {
             CreateOrUpdate(true);
@@ -243,17 +240,6 @@ namespace ParkInspect.ViewModel
         private bool CanCreate()
         {
             return SelectedEmployee == null;
-        }
-
-        private void DeleteEmployee()
-        {
-            Service.DeleteEntity(SelectedEmployee);
-            UpdateDataGrid();
-
-        }
-        private bool CanDelete()
-        {
-            return SelectedEmployee != null;
         }
 
         private void EditEmployee()
@@ -287,7 +273,10 @@ namespace ParkInspect.ViewModel
             //Checking if out-of-service date has to be set in the database
             if (!Active)
             {
-                employee.out_service_date = Ended;
+                if (Started < Ended)
+                {
+                    employee.out_service_date = Ended;
+                }
             }
             else
             {
@@ -314,6 +303,17 @@ namespace ParkInspect.ViewModel
         }
 
         //OTHER METHODS
+        private void DeselectItem()
+        {
+            SelectedEmployee = null;
+            ResetProperties();
+        }
+
+        private bool CanDeselect()
+        {
+            return SelectedEmployee != null;
+        }
+
         private void UpdateDataGrid()
         {
             SelectedEmployee = null;
