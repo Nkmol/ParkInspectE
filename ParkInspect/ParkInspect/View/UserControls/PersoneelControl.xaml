@@ -29,49 +29,48 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Management">
+            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
                 <ScrollViewer>
                     <StackPanel Margin="15,5" Height="680">
 
                         <TextBlock Text="Voornaam:" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50"  Text="{Binding Firstname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50"  Text="{Binding firstname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
 
                         <TextBlock Text="Achternaam:" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding Lastname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding lastname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
 
                         <TextBlock Text="Rol:" />
-                        <ComboBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding Role, Mode=TwoWay}" Text="Selecteer Rol"/>
+                        <ComboBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" DataContext="{Binding Personeel, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
 
                         <TextBlock Text="Status:" />
-                        <ComboBox Width="150" HorizontalAlignment="Left" Margin="0,0,0,10" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding Status, Mode=TwoWay}" Text="Selecteer Rol"/>
+                        <ComboBox Width="150" HorizontalAlignment="Left" Margin="0,0,0,10" DataContext="{Binding Personeel, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
 
                         <TextBlock Text="Datum in dienst:" />
-                        <DatePicker SelectedDate="{Binding Started, Mode=TwoWay}"  HorizontalAlignment="Left"
+                        <DatePicker SelectedDate="{Binding in_service_date, Mode=TwoWay}"  HorizontalAlignment="Left"
             	                    Margin="0,0,0,10"
             	                    VerticalAlignment="Top"/>
                         
                         <TextBlock Text="Actief" />
-                        <CheckBox Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding Active, Mode=TwoWay}"></CheckBox>
-                        <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" Text="{Binding BoundMessage}"></TextBlock>
-                        
+                        <CheckBox Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding active, Mode=TwoWay}"></CheckBox>
+
                         <TextBlock Text="Datum uit dienst:" />
-                        <DatePicker IsEnabled="{Binding Active, Mode=TwoWay}" SelectedDate="{Binding Ended, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                        <DatePicker SelectedDate="{Binding out_service_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
             	                    Margin="0,0,0,10"
             	                    VerticalAlignment="Top"/>
 
                         <TextBlock Text="Emailadres"/>
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding Emailadres, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding email, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
 
                         <TextBlock Text="Telefoonnummer" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding PhoneNumber, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding phonenumber, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
 
                         <TextBlock Text="Wachtwoord" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding Password, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding password, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
 
-                        <Button HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding EditItemCommand}" Margin="0,5" Content="Bewerken"/>
-                        <Button HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding CreateItemCommand}" Margin="0,5" Content="Voeg toe"/>
-                        <Button HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Width="150" Height="30" Margin="0,5" Content="Deselecteer medewerker"/>
-                        <TextBlock Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
+                        <Button DataContext="{Binding Personeel, Source={StaticResource Locator}}" HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding EditItemCommand}" Margin="0,5" Content="Bewerken"/>
+                        <Button DataContext="{Binding Personeel, Source={StaticResource Locator}}" HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding CreateItemCommand}" Margin="0,5" Content="Voeg toe"/>
+                        <Button DataContext="{Binding Personeel, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Width="150" Height="30" Margin="0,5" Content="Deselecteer medewerker"/>
+                        <TextBlock DataContext="{Binding Personeel, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

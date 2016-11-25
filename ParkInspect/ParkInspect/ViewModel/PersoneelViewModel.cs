@@ -19,161 +19,12 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class PersoneelViewModel : ViewModelBase
     {
-        #region fields_and_properties
-        //Fields and Properties employee
-        private int _id;
-        public int Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
+        //Service
+        protected EmployeeService Service { get; set; }
 
-        private string _firstname;
-        public string Firstname
-        {
-            get
-            {
-                return _firstname;
-            }
-            set
-            {
-                _firstname = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _lastname;
-        public string Lastname
-        {
-            get
-            {
-                return _lastname;
-            }
-            set
-            {
-                _lastname = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _phoneNumber;
-        public string PhoneNumber
-        {
-            get
-            {
-                return _phoneNumber;
-            }
-            set
-            {
-                _phoneNumber = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _emailadres;
-        public string Emailadres
-        {
-            get
-            {
-                return _emailadres;
-            }
-            set
-            {
-                _emailadres = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _password;
-
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; base.RaisePropertyChanged(); }
-        }
-
-        private DateTime _started;
-        public DateTime Started
-        {
-            get
-            {
-                return _started;
-            }
-            set
-            {
-                _started = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private DateTime _ended;
-        public DateTime Ended
-        {
-            get
-            {
-                return _ended;
-            }
-            set
-            {
-                _ended = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _role;
-        public string Role
-        {
-            get
-            {
-                return _role;
-            }
-            set
-            {
-                _role = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _status;
-        public string Status
-        {
-            get
-            {
-                return _status;
-            }
-            set
-            {
-                _status = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        public string BoundMessage { get; set; }
-
-        const string Msg1 = "Actief, datum uit dienst wordt niet verwerkt.";
-        const string Msg2 = "Niet actief, voer datum uit dienst correct in.";
-     
-        private bool _active = false;
-
-        public bool Active
-        {
-            get { return _active; }
-            set
-            {
-                _active = value;
-                BoundMessage = _active ? Msg1 : Msg2;
-                base.RaisePropertyChanged(() => BoundMessage);
-                base.RaisePropertyChanged("Actice");
-            }
-        }
-
+        //Fields and Properties
         private string _notification;
+
         public string Notification
         {
             get { return _notification; }
@@ -183,7 +34,6 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-    #endregion
 
         //Data for comboBoxes
         public ObservableCollection<Role> RoleCollection { get; set; }
@@ -192,8 +42,15 @@ namespace ParkInspect.ViewModel
         //Data Employees
         private ObservableCollection<Employee> _employees;
         public ObservableCollection<Employee> Employees
-        { get { return _employees; } set { _employees = value; base.RaisePropertyChanged(); } }
-        public EmployeeService Service { get; set; }
+        {
+            get { return _employees; }
+            set
+            {
+                _employees = value;
+                base.RaisePropertyChanged();
+            }
+        }
+        
 
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
@@ -201,10 +58,8 @@ namespace ParkInspect.ViewModel
             get { return _selectedEmployee; }
             set
             {
-                if (_selectedEmployee == value) return;
-
-                _selectedEmployee = value;
-                UpdateSelectedItem();
+                Set(ref _selectedEmployee, value);
+                base.RaisePropertyChanged();
             }
         }
 
@@ -219,142 +74,63 @@ namespace ParkInspect.ViewModel
             Service = new EmployeeService(context);
             Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
 
+            SelectedEmployee = new Employee();
+
             //Collections for comboboxes
             RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
             StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
-
-            Started = DateTime.Today;
-            Ended = DateTime.Today;
             
-            CreateItemCommand = new RelayCommand(CreateNewEmployee, CanCreate);
-            EditItemCommand = new RelayCommand(EditEmployee, CanEdit);
-            DeselectEmployeeCommand = new RelayCommand(DeselectItem, CanDeselect);
+            CreateItemCommand = new RelayCommand(CreateNewEmployee);
+            EditItemCommand = new RelayCommand(EditEmployee);
+            DeselectEmployeeCommand = new RelayCommand(DeselectItem);
         }
 
         //CRU METHODS
         private void CreateNewEmployee()
         {
-            CreateOrUpdate(true);
-        }
+            if(SelectedEmployee.firstname == null || SelectedEmployee.lastname == null || 
+                SelectedEmployee.email == null || SelectedEmployee.role == null || 
+                SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
+                SelectedEmployee.phonenumber == null)
+                return;
 
-        private bool CanCreate()
-        {
-            return SelectedEmployee == null;
+            if (SelectedEmployee.active)
+                SelectedEmployee.out_service_date = null;
+
+            Service.InsertEntity(SelectedEmployee);
+            Notification = "De medewerker is opgeslagen";
+            UpdateDataGrid();
         }
 
         private void EditEmployee()
         {
-            CreateOrUpdate(false);
-        }
+            if (SelectedEmployee.firstname == null || SelectedEmployee.lastname == null ||
+                SelectedEmployee.email == null || SelectedEmployee.role == null ||
+                SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
+                SelectedEmployee.phonenumber == null)
+                return;
 
-        private bool CanEdit()
-        {
-            return SelectedEmployee != null;
-        }
+            if (SelectedEmployee.active)
+                SelectedEmployee.out_service_date = null;
 
-        private void CreateOrUpdate(bool create)
-        {
-            Employee employee;
-
-            if (create)
-            {
-                employee = new Employee();
-            }
-            else
-            {
-                employee = SelectedEmployee;
-            }
-
-            employee.firstname = Firstname;
-            employee.lastname = Lastname;
-            employee.employee_status = Status;
-            employee.in_service_date = Started;
-
-            //Checking if out-of-service date has to be set in the database
-            if (!Active)
-            {
-                if (Started < Ended)
-                {
-                    employee.out_service_date = Ended;
-                }
-            }
-            else
-            {
-                employee.out_service_date = null;
-            }
-
-            employee.role = Role;
-            employee.password = Password;
-            employee.email = Emailadres;
-            employee.phonenumber = PhoneNumber;
-            employee.active = Active;
-
-            if (create)
-            {
-                Service.InsertEntity(employee);
-                Notification = "De medewerker is opgeslagen";
-            }
-            else
-            {
-                Service.UpdateEntity(employee);
-                Notification = "De medewerker is aangepast";
-            }
+            Service.UpdateEntity(SelectedEmployee);
+            Notification = "De medewerker is aangepast";
             UpdateDataGrid();
         }
 
         //OTHER METHODS
         private void DeselectItem()
         {
-            SelectedEmployee = null;
-            ResetProperties();
-        }
-
-        private bool CanDeselect()
-        {
-            return SelectedEmployee != null;
+            SelectedEmployee = new Employee();
         }
 
         private void UpdateDataGrid()
         {
-            SelectedEmployee = null;
+            SelectedEmployee = new Employee();
              _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
             var temp = Employees;
             Employees = null;
             Employees = temp;
-            ResetProperties();
-        }
-
-        private void UpdateSelectedItem()
-        {
-            if (SelectedEmployee != null)
-            {
-                Firstname = SelectedEmployee.firstname;
-                Lastname = SelectedEmployee.lastname;
-                Password = SelectedEmployee.password;
-                Started = SelectedEmployee.in_service_date;
-
-                if (SelectedEmployee.out_service_date != null)
-                {
-                    Ended = SelectedEmployee.out_service_date.Value;
-                }
-
-                Active = SelectedEmployee.active;
-                Emailadres = SelectedEmployee.email;
-                PhoneNumber = SelectedEmployee.phonenumber;
-                Role = SelectedEmployee.role;
-                Status = SelectedEmployee.employee_status;
-            }
-        }
-
-        private void ResetProperties()
-        {
-            Firstname = string.Empty;
-            Lastname = string.Empty;
-            Started = DateTime.Today;
-            Emailadres = string.Empty;
-            PhoneNumber = string.Empty;
-            Active = false;
-            Password = string.Empty;
         }
     }
 }
