@@ -4,7 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a6f4bda419564c77a9781a55fc8ca756" Name="Diagram1">
+      <Diagram DiagramId="6defa260645242ea9e1601132ddea79d" Name="Diagram1">
+        <EntityTypeShape EntityType="ParkInspectModel.C__RefactorLog" Width="1.5" PointX="7.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Absence" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Asignment" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Client" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />

@@ -17,8 +17,9 @@ namespace ParkInspect.ViewModel
         {
             Service = new ClientService(context);
             Clients = new ObservableCollection<Client>(Service.GetAllClients());
-            Assignments = new ObservableCollection<Asignment>(SelectedClient.Assignments);
-            Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
+            SelectedClient = new Client();
+            Assignments = new ObservableCollection<Asignment>(SelectedClient.Asignment);
+            Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactperson);
 
             CompleteClientCommand = new RelayCommand(CompleteClient);
             ResetButtonCommand = new RelayCommand(Reset);
