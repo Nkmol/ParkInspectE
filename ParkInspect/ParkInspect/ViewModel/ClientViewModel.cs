@@ -48,7 +48,7 @@ namespace ParkInspect.ViewModel
 
         private void CompleteClient()
         {
-            if (SelectedClient.name == null || SelectedClient.phonenumber == null || SelectedClient.email == null)
+            if (SelectedClient.name.Length == 0 || SelectedClient.phonenumber.Length == 0 || SelectedClient.email.Length == 0)
                 return;
             Service.AddClient(SelectedClient);
             Clients.Add(SelectedClient);
@@ -61,6 +61,8 @@ namespace ParkInspect.ViewModel
 
         private void UpdateClient()
         {
+            if (SelectedClient.name.Length == 0 || SelectedClient.phonenumber.Length == 0 || SelectedClient.email.Length == 0)
+                return;
             Service.UpdateClient(SelectedClient);
         }
     }
