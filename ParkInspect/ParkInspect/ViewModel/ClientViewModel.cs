@@ -38,6 +38,7 @@ namespace ParkInspect.ViewModel
 
         public Client Client
         {
+<<<<<<< HEAD
             get
             {
                 return _client;
@@ -46,6 +47,12 @@ namespace ParkInspect.ViewModel
             {
                 Set(ref _client, value);
             }
+=======
+            if (SelectedClient.name.Length == 0 || SelectedClient.phonenumber.Length == 0 || SelectedClient.email.Length == 0)
+                return;
+            Service.AddClient(SelectedClient);
+            Clients.Add(SelectedClient);
+>>>>>>> 95f3cdc... Empty fields checks
         }
 
         public ClientViewModel(IRepository context)
@@ -59,7 +66,13 @@ namespace ParkInspect.ViewModel
 
         private void CompleteClient()
         {
+<<<<<<< HEAD
             Service.addClient(Client);
+=======
+            if (SelectedClient.name.Length == 0 || SelectedClient.phonenumber.Length == 0 || SelectedClient.email.Length == 0)
+                return;
+            Service.UpdateClient(SelectedClient);
+>>>>>>> 95f3cdc... Empty fields checks
         }
     }
 }
