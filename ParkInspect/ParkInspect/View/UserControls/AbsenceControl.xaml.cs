@@ -24,5 +24,15 @@ namespace ParkInspect.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void scrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void scrollBar_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }

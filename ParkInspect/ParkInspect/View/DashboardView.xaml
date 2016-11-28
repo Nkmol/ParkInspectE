@@ -44,6 +44,9 @@
             <TabItem Header="Rapportage">
               <userControls:RapportageControl />  
             </TabItem>
+            <TabItem Header="Afwezigheid">
+                <userControls:AbsenceControl />
+            </TabItem>
         </TabControl>
     </Grid>
 </controls:MetroWindow>

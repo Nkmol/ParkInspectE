@@ -178,6 +178,7 @@
     <Compile Include="Role.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AbsenceService.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>

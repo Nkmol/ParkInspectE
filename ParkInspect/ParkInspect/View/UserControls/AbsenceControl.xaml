@@ -5,15 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Height="Auto" Width="Auto"
+             DataContext="{Binding Absence, Source={StaticResource Locator}}">
+    
+             
+
     <Grid>
-        <TabControl>
+        
+        <TabControl Margin="0,0,-0.2,0">
             <TabItem Header="Overview">
-                <Label Content="Overview goes here..." />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                        <Label x:Name="label3" Content="Afwezigheid" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"/>
+                    <DataGrid ItemsSource="{Binding Absences}" IsReadOnly="True" Grid.Row="1"/>
+
+                </Grid>
+
             </TabItem>
-            <TabItem Header="Management">
-                <Label Content="Management goes here..." />
+            <TabItem  Header="Afwezigheid invoeren">
+                <Grid>
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label x:Name="label" Grid.Row="0" Grid.Column="1" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <DatePicker  Grid.Row="1" Grid.Column="1" SelectedDate="{Binding NewAbsence.start , Mode=OneWayToSource}" />
+                    <!-- this datetime can not be null, look at asignment branch for examples on how to handle datetimes.-->
+                    
+                    <Label x:Name="label2" Grid.Row="2" Grid.Column="1"  Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                    <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding NewAbsence.end}"/>
+
+                    <ListBox ScrollViewer.CanContentScroll="True" SelectedItem="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Grid.Row="0" ItemsSource="{Binding Employees}" x:Name="listBox" Grid.RowSpan="5" Grid.Column="0" HorizontalAlignment="Stretch" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Top" Width="Auto">
+                        
+                    </ListBox>
+                    <TextBlock Grid.Column="1" Grid.Row="4" DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
+                    <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button" Grid.Row="4" Grid.Column="1" Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
+                  
+                </Grid>
             </TabItem>
-        </TabControl>     
+
+        </TabControl>
     </Grid>
 </UserControl>
