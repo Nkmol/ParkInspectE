@@ -18,6 +18,8 @@ namespace ParkInspect.ViewModel
     {
 
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
+        public ObservableCollection<Region> Regions { get; set; }
+        public ObservableCollection<Inspection> Inspections { get; set; }
         protected ParkinglotService Service { get; set; }
         private Parkinglot _parkinglot;
 
@@ -30,10 +32,12 @@ namespace ParkInspect.ViewModel
             set
             {
                 _parkinglot = value;
-                RaisePropertyChanged();
+                RaisePropertyChanged("Parkinglot");
                 SaveCommand.RaiseCanExecuteChanged();
             }
         }
+
+        public string SelectedRegion { get; set; }
 
 
 
@@ -47,6 +51,8 @@ namespace ParkInspect.ViewModel
             NewCommand = new RelayCommand(NewParkinglot);
             Service = new ParkinglotService(context);
             Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
+            Regions = new ObservableCollection<Region>(Service.GetAllRegions());
+            NewParkinglot();
            
         }
 
@@ -54,12 +60,16 @@ namespace ParkInspect.ViewModel
         {
 
             Parkinglot = new Parkinglot();
+            RaisePropertyChanged("Parkinglot");
             Parkinglot.id = -1;
 
         }
 
         private void Save()
         {
+
+
+            Parkinglot.region_name = SelectedRegion;
 
             if (Parkinglot.id < 0)
             {

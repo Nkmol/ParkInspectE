@@ -12,7 +12,7 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">
-                <DataGrid ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
+                <DataGrid Name="DataGrid" ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
                     
                 </DataGrid>
             </TabItem>
@@ -25,10 +25,12 @@
                     <Label x:Name="ClarificationLabel" Content="Clarification:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="94,18,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
                     <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" Margin="94,58,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.zipcode, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="RegioBox" HorizontalAlignment="Left" Height="23" Margin="94,98,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.region_name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                    <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Parkinglot.region_name}" HorizontalAlignment="Left" Margin="94,97,0,0" VerticalAlignment="Top" Width="190"/>
                     <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" Margin="94,138,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
                     <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" Margin="94,178,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
                     <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="274"/>
+                    <Button x:Name="NewButton" Content="New Parkinglot" PreviewMouseDown="Unselect" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,260,0,0" VerticalAlignment="Top" Width="274"/>
+                    
                 </Grid>
             </TabItem>
         </TabControl>

@@ -53,6 +53,16 @@ namespace ParkInspect.Services
             return _context.GetAll<Parkinglot>();
         }
 
+        public IEnumerable<Region> GetAllRegions()
+        {
+            return _context.GetAll<Region>();
+        }
+
+        public IEnumerable<Inspection> GetAllInspections()
+        {
+            return _context.GetAll<Inspection>();
+        }
+
         public IEnumerable<Parkinglot> GetParkinglotByName(string name)
         {
             return _context.GetAll<Parkinglot>().Where(p => p.name == name);
