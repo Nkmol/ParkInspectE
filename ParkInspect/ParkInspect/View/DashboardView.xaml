@@ -49,12 +49,16 @@
     </Grid>
 
     <controls:MetroWindow.RightWindowCommands>
-        <controls:WindowCommands ShowLastSeparator="False">
-            <Button Name="LoginButton" 
-                    DataContext="{Binding Login, Source={StaticResource Locator}}"
-                    Command="{Binding ShowLoginDialogCommand}" 
-                    Content="{Binding LoginName}" 
+        <controls:WindowCommands ShowLastSeparator="False"
+                                 DataContext="{Binding Login, Source={StaticResource Locator}}">
+            <Label Content="{Binding LoginName}" />
+            <Button Command="{Binding ShowLoginDialogCommand}"
+                    Content="Login"
                     IsEnabled="{Binding LoginButtonEnabled}" />
+            <Button Command="{Binding LogoutCommand}"
+                    Content="Logout"
+                    IsEnabled="{Binding LogoutButtonEnabled}" />
+
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 </controls:MetroWindow>

@@ -23,7 +23,11 @@ namespace ParkInspect.ViewModel
 
         private string _loginName;
 
+        private bool _logoutButtonEnabled;
+
         private ICommand _showLoginDialogCommand;
+
+        private ICommand _logoutCommand;
 
         /// <summary>
         ///     Initializes a new instance of the LoginViewModel class.
@@ -34,8 +38,8 @@ namespace ParkInspect.ViewModel
         {
             _dialogCoordinator = dialogCoordinator;
             Service = new EmployeeService(context);
-            LoginName = "Login";
             LoginButtonEnabled = true;
+            LogoutButtonEnabled = false;
         }
 
         public string LoginName
@@ -50,14 +54,17 @@ namespace ParkInspect.ViewModel
             set { Set(ref _loginButtonEnabled, value); }
         }
 
-        public ICommand ShowLoginDialogCommand
+        public bool LogoutButtonEnabled
         {
-            get
-            {
-                return _showLoginDialogCommand
-                       ?? (_showLoginDialogCommand = new RelayCommand(ShowLoginDialog));
-            }
+            get { return _logoutButtonEnabled; }
+            set { Set(ref _logoutButtonEnabled, value); }
         }
+
+        public ICommand ShowLoginDialogCommand => _showLoginDialogCommand
+                                                  ?? (_showLoginDialogCommand = new RelayCommand(ShowLoginDialog));
+
+        public ICommand LogoutCommand => _logoutCommand
+                                                  ?? (_logoutCommand = new RelayCommand(Logout));
 
         public async void ShowLoginDialog()
         {
@@ -65,26 +72,52 @@ namespace ParkInspect.ViewModel
             {
                 UsernameWatermark = "Emailadres...",
                 PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Visible
+                NegativeButtonVisibility = Visibility.Visible,
+                RememberCheckBoxVisibility = Visibility.Visible
             };
 
-            var result = await _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in", loginDialogSettings);
+            var logged = false;
 
-            if (result == null)
-                return;
-
-            var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
-
-            if (!rs)
+            while (!logged)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan", "Ongeldig email/wachtwoord");
+                var result =
+                    await
+                        _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in",
+                            loginDialogSettings);
+
+                if (result == null)
+                    return;
+
+                var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
+
+                if (!rs)
+                {
+                    if (result.ShouldRemember)
+                    {
+                        loginDialogSettings.InitialUsername = result.Username;
+                    }
+
+                    await
+                        _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
+                            "Ongeldig email/wachtwoord");
+
+                }
+                else
+                {
+                    await _dialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
+                    logged = true;
+                    LoginName = result.Username;
+                    LoginButtonEnabled = false;
+                    LogoutButtonEnabled = true;
+                }
             }
-            else
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
-                LoginName = result.Username;
-                LoginButtonEnabled = false;
-            }
+        }
+
+        private void Logout()
+        {
+            LoginName = "";
+            LoginButtonEnabled = true;
+            LogoutButtonEnabled = false;
         }
     }
 }
