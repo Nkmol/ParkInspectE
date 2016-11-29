@@ -11,11 +11,36 @@
 
         <TabControl>
             <TabItem Header="Overview">
-                <DataGrid ItemsSource="{Binding Clients}"></DataGrid>
+                <DataGrid 
+                    ItemsSource="{Binding Clients}" 
+                    SelectedItem="{Binding SelectedClient}"
+                    IsReadOnly="True">
+                </DataGrid>
             </TabItem>
+
             <TabItem Header="Management">
-                <Label Content="Management goes here..." />
+                <Grid>
+                    <Label x:Name="nameLabel" Content="Name:" Margin="89,43,196.4,185.2"/>
+                    <Label x:Name="telnrLabel" Content="Telefoonnummer:" Margin="89,75,196.4,154.2"/>
+                    <Label x:Name="emailLabel" Content="Email:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
+                    <TextBox x:Name="name" Text="{Binding SelectedClient.name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="91"/>
+                    <TextBox x:Name="telnr" Text="{Binding SelectedClient.phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="91"/>
+                    <TextBox x:Name="email" Text="{Binding SelectedClient.email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="91"/>
+                </Grid>
             </TabItem>
+
+            <TabItem Header="Add client">
+                <Grid>
+                    <Label x:Name="newNameLabel" Content="Name:" Margin="89,43,196.4,185.2"/>
+                    <Label x:Name="newTelnrLabel" Content="Telefoonnummer:" Margin="89,75,196.4,154.2"/>
+                    <Label x:Name="newEmailLabel" Content="Email:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
+                    <TextBox x:Name="newName" Text="{Binding Client.name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="91"/>
+                    <TextBox x:Name="newTelnr" Text="{Binding Client.phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="91"/>
+                    <TextBox x:Name="newEmail" Text="{Binding Client.email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="91"/>
+                    <Button x:Name="complete" Content="Complete client" Command="{Binding CompleteClientCommand}" CommandParameter="{Binding CompleteClientCommand}" HorizontalAlignment="Left" Height="12" Margin="138,162,0,0" VerticalAlignment="Top" Width="115"/>
+                </Grid>
+            </TabItem>
+
         </TabControl>
 
     </Grid>
