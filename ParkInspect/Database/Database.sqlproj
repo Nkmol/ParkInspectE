@@ -59,6 +59,8 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Snapshots" />
+	<Folder Include="Scripts" />
+	<Folder Include="Scripts\Seed" />
   </ItemGroup>
    <ItemGroup>
    <None Include="Publish-Script.publish.xml" />		 
