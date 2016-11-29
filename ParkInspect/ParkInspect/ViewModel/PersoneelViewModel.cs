@@ -75,6 +75,8 @@ namespace ParkInspect.ViewModel
             Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
 
             SelectedEmployee = new Employee();
+            SelectedEmployee.in_service_date = DateTime.Today;
+            SelectedEmployee.out_service_date = DateTime.Today;
 
             //Collections for comboboxes
             RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
@@ -121,7 +123,10 @@ namespace ParkInspect.ViewModel
         //OTHER METHODS
         private void DeselectItem()
         {
-            SelectedEmployee = new Employee();
+            Employee e = new Employee();
+            e.in_service_date = DateTime.Today;
+            e.out_service_date = DateTime.Today;
+            SelectedEmployee = e;
         }
 
         private void UpdateDataGrid()
