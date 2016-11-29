@@ -58,9 +58,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
-	    <Folder Include="Snapshots" /
-	  <Folder Include="Scripts" />
-    <Folder Include="Scripts\Seed" />
+    <Folder Include="Snapshots" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Asignment.sql" />
@@ -97,6 +95,6 @@
     <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish-Script.publish.xml" />
+    <None Include="Snapshots\Database_20161118_16-41-16.dacpac" />
   </ItemGroup>
 </Project>
