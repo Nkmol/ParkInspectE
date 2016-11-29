@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+using ParkInspect.ViewModel;
 
 namespace ParkInspect.View.UserControls
 {
@@ -24,5 +26,25 @@ namespace ParkInspect.View.UserControls
         {
             InitializeComponent();
         }
+
+        public void Update(object sender, MouseButtonEventArgs e)
+        {
+
+            foreach (TabItem ti in Tabs.GetChildObjects())
+            {
+                if (ti.Header.Equals("Management"))
+                {
+                    Dispatcher.BeginInvoke((Action)(() => Tabs.SelectedItem = ti));
+                    return;
+                }
+            }
+
+        }
+
+        public void Unselect(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid.UnselectAll();
+        }
+
     }
 }

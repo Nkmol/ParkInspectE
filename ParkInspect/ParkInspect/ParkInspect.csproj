@@ -179,6 +179,7 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\ParkinglotService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -192,7 +193,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\OpdrachtViewModel.cs" />
-    <Compile Include="ViewModel\ParkeerplaatsViewModel.cs" />
+    <Compile Include="ViewModel\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\PersoneelViewModel.cs" />
     <Compile Include="ViewModel\RapportageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -205,8 +206,8 @@
     <Compile Include="View\UserControls\OpdrachtControl.xaml.cs">
       <DependentUpon>OpdrachtControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\ParkeerplaatsControl.xaml.cs">
-      <DependentUpon>ParkeerplaatsControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\ParkinglotControl.xaml.cs">
+      <DependentUpon>ParkinglotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\PersoneelControl.xaml.cs">
       <DependentUpon>PersoneelControl.xaml</DependentUpon>
@@ -246,7 +247,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\ParkeerplaatsControl.xaml">
+    <Page Include="View\UserControls\ParkinglotControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
