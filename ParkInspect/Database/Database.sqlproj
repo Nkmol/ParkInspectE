@@ -91,6 +91,7 @@
     <Build Include="Tables\State.sql" />
     <Build Include="CheckInspectionDates.sql" />
   </ItemGroup>
+  <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   <ItemGroup>
     <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
