@@ -17,8 +17,8 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Template()
         {
-            this.Fields = new HashSet<Field>();
-            this.Forms = new HashSet<Form>();
+            this.Field = new HashSet<Field>();
+            this.Form = new HashSet<Form>();
         }
     
         public int id { get; set; }
@@ -26,8 +26,8 @@ namespace ParkInspect
         public string version_number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Fields { get; set; }
+        public virtual ICollection<Field> Field { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Form> Forms { get; set; }
+        public virtual ICollection<Form> Form { get; set; }
     }
 }

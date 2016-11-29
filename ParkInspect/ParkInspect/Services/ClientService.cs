@@ -15,7 +15,7 @@ namespace ParkInspect.Services
 
         public IEnumerable<Client> GetClientWithName(string name)
         {
-            return _context.GetAll<Client>(null, c => c.Contactpersons, c => c.Asignments)
+            return _context.GetAll<Client>(null, c => c.Contactperson, c => c.Asignment)
                 .Where(k => k.name == name);
         }
     }

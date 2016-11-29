@@ -17,7 +17,7 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Asignment()
         {
-            this.Inspections = new HashSet<Inspection>();
+            this.Inspection = new HashSet<Inspection>();
         }
     
         public int client_id { get; set; }
@@ -30,6 +30,6 @@ namespace ParkInspect
         public virtual Client Client { get; set; }
         public virtual State State1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspections { get; set; }
+        public virtual ICollection<Inspection> Inspection { get; set; }
     }
 }

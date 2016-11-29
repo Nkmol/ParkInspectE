@@ -17,15 +17,15 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public State()
         {
-            this.Asignments = new HashSet<Asignment>();
-            this.Inspections = new HashSet<Inspection>();
+            this.Asignment = new HashSet<Asignment>();
+            this.Inspection = new HashSet<Inspection>();
         }
     
         public string state1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignment> Asignments { get; set; }
+        public virtual ICollection<Asignment> Asignment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspections { get; set; }
+        public virtual ICollection<Inspection> Inspection { get; set; }
     }
 }

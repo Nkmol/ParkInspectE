@@ -17,8 +17,8 @@ namespace ParkInspect
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Absences = new HashSet<Absence>();
-            this.Inspections = new HashSet<Inspection>();
+            this.Absence = new HashSet<Absence>();
+            this.Inspection = new HashSet<Inspection>();
         }
     
         public int id { get; set; }
@@ -34,11 +34,11 @@ namespace ParkInspect
         public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Absence> Absences { get; set; }
+        public virtual ICollection<Absence> Absence { get; set; }
         public virtual Employee_Status Employee_Status1 { get; set; }
         public virtual Role Role1 { get; set; }
         public virtual Region Region { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspections { get; set; }
+        public virtual ICollection<Inspection> Inspection { get; set; }
     }
 }
