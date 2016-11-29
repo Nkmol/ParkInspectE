@@ -14,47 +14,49 @@
         
         <TabControl Margin="0,0,-0.2,0">
             <TabItem Header="Overview">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                        <Label x:Name="label3" Content="Afwezigheid" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"/>
-                    <DataGrid ItemsSource="{Binding Absences}" IsReadOnly="True" Grid.Row="1"/>
+                <ScrollViewer>
+                <StackPanel>
+                    <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Start Datum" Binding="{Binding start}"  />
+                        <DataGridTextColumn Header="Eind Datum" Binding="{Binding end}" />
+                        <DataGridTextColumn Header="ID" Binding="{Binding employee_id}"/>
+                        
+                    </DataGrid.Columns>
+                        </DataGrid>
 
-                </Grid>
+                    <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
 
+                </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem  Header="Afwezigheid invoeren">
-                <Grid>
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Label x:Name="label" Grid.Row="0" Grid.Column="1" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <DatePicker  Grid.Row="1" Grid.Column="1" SelectedDate="{Binding NewAbsence.start , Mode=OneWayToSource}" />
-                    <!-- this datetime can not be null, look at asignment branch for examples on how to handle datetimes.-->
-                    
-                    <Label x:Name="label2" Grid.Row="2" Grid.Column="1"  Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-                    <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding NewAbsence.end}"/>
+                
+                    <ScrollViewer>
+                  <StackPanel>
+                      
+                       <Label x:Name="label" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <DatePicker DisplayDateStart=""  SelectedDate="{Binding NewAbsence.start , Mode=OneWayToSource}" />
+                      
 
-                    <ListBox ScrollViewer.CanContentScroll="True" SelectedItem="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Grid.Row="0" ItemsSource="{Binding Employees}" x:Name="listBox" Grid.RowSpan="5" Grid.Column="0" HorizontalAlignment="Stretch" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Top" Width="Auto">
-                        
-                    </ListBox>
-                    <TextBlock Grid.Column="1" Grid.Row="4" DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
-                    <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button" Grid.Row="4" Grid.Column="1" Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
-                  
-                </Grid>
+                        <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                         <DatePicker  SelectedDate="{Binding NewAbsence.end}">
+
+                        </DatePicker>
+                    <DockPanel>
+
+                            <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedEmployee}" DisplayMemberPath="firstname" ItemsSource="{Binding Employees}" x:Name="listBox"  HorizontalAlignment="Stretch" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Stretch">
+
+                            </ListBox>
+                            <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
+                    </DockPanel>
+                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button"  Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
+
+
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
+            
 
         </TabControl>
     </Grid>

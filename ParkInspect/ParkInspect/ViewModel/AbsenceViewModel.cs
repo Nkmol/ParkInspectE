@@ -16,13 +16,25 @@ namespace ParkInspect.ViewModel
 {
     public class AbsenceViewModel : ViewModelBase
     {
-        public ObservableCollection<Absence> Absences { get; set; }
+        private ObservableCollection<Absence> _absences;
+        public ObservableCollection<Absence> Absences {
+            get
+            {
+                return _absences; 
+            }
+            set
+            {
+                _absences = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
         public ObservableCollection<Employee> Employees { get; set; }
        
         protected AbsenceService Service;
 
         public ICommand SaveNewAbsenceCommand { get; set; }
-        public ICommand UpdateAbsenceCommand { get; set; }
+        public ICommand DeleteAbsenceCommand { get; set; }
 
         private string _notification;
 
@@ -33,6 +45,19 @@ namespace ParkInspect.ViewModel
             set
             {
                 _notification = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private Absence _selectedAbsence;
+
+        public Absence SelectedAbsence
+        {
+            get { return _selectedAbsence; }
+
+            set
+            {
+                _selectedAbsence = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -66,17 +91,17 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        private Absence _absence;
+        private Absence _newAbsence;
 
         public Absence NewAbsence
         {
             get
             {
-                return _absence;
+                return _newAbsence;
             }
             set
             {
-                _absence = value;
+                _newAbsence = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -93,24 +118,41 @@ namespace ParkInspect.ViewModel
             Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
-            UpdateAbsenceCommand = new RelayCommand(UpdateAbsenceMethod);
+            DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod);
+        }
+
+        private void DeleteAbsenceMethod()
+        {
+            if (SelectedAbsence == null)
+            {
+                Notification = "Selecteer een afwezigheid";
+                return;
+            }
+            
+            Service.DeleteAbsence(SelectedAbsence);
+            Absences.Remove(SelectedAbsence);
+            
+            base.RaisePropertyChanged();
         }
 
         private void SaveNewAbsenceMethod()
         {
             if (SelectedEmployee == null)
-            return;
-            if (NewAbsence == null) return;
+            {
+                Notification = "Selecteer een werknemer.";
+                return;
+            }
 
-            // validation
-            Service.InsertAbsence(NewAbsence);
-            
-            Notification = "Nieuwe afwezigheid is opgeslagen!";
+            if (NewAbsence.start == null || NewAbsence.end == null)
+            {
+                Notification = "Onjuiste gegevens.";
+                return;
+            }
+                Service.InsertAbsence(NewAbsence);
+                Notification = "Nieuwe afwezigheid is opgeslagen!";
+                Absences.Add(NewAbsence);
+                base.RaisePropertyChanged();
         }
 
-        private void UpdateAbsenceMethod()
-        {
-            Notification = "Afwezigheid is geupdate!";
-        }
     }
 }

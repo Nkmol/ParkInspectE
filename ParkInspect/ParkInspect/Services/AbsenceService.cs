@@ -33,9 +33,9 @@ namespace ParkInspect.Services
             _context.Save();
         }
 
-        public void UpdateAbsence(Absence a)
+        public void DeleteAbsence(Absence a)
         {
-            _context.Update(a);
+            _context.Delete(a);
             _context.Save();
         }
 
