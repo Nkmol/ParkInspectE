@@ -12,26 +12,47 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">
-                <DataGrid Name="DataGrid" ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
-                    
+                <DataGrid Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding name}" />
+                        <DataGridTextColumn Header="Zip code" Binding="{Binding zipcode}" />
+                        <DataGridTextColumn Header="Number" Binding="{Binding number}" />
+                        <DataGridTextColumn Header="Region" Binding="{Binding region_name}" />
+                        <DataGridTextColumn Header="Clarification" Binding="{Binding clarification}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
             <TabItem Header="Management">
+
                 <Grid>
-                    <Label x:Name="NameLabel" Content="Name:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="ZipLabel" Content="ZIP Code:" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="RegioLabel" Content="Regio:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="NumberLabel" Content="Number:" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="ClarificationLabel" Content="Clarification:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="94,18,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" Margin="94,58,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.zipcode, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                    <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Parkinglot.region_name}" HorizontalAlignment="Left" Margin="94,97,0,0" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" Margin="94,138,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" Margin="94,178,0,0" TextWrapping="Wrap" Text="{Binding Parkinglot.clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                    <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="274"/>
-                    <Button x:Name="NewButton" Content="New Parkinglot" PreviewMouseDown="Unselect" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,260,0,0" VerticalAlignment="Top" Width="274"/>
                     
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="248*"/>
+                        <ColumnDefinition Width="269*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <Label x:Name="NameLabel" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="ZipLabel" Content="ZIP Code:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="RegioLabel" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="NumberLabel" Content="Number:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="ClarificationLabel" Content="Clarification:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                        <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Zip, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
+                        <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                        <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                        <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="274"/>
+                        <Button x:Name="NewButton" Content="New Parkinglot" PreviewMouseDown="Unselect" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="274"/>
+                        <Label x:Name="MessageLabel" Content="{Binding Message}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                    </StackPanel>
+
                 </Grid>
+                
+
             </TabItem>
         </TabControl>
     </Grid>

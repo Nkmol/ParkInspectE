@@ -17,11 +17,14 @@ namespace ParkInspect.ViewModel
     public class ParkinglotViewModel : ViewModelBase
     {
 
+        public string Message { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
         public ObservableCollection<Region> Regions { get; set; }
         public ObservableCollection<Inspection> Inspections { get; set; }
         protected ParkinglotService Service { get; set; }
         private Parkinglot _parkinglot;
+        public RelayCommand SaveCommand { get; set; }
+        public RelayCommand NewCommand { get; set; }
 
         public Parkinglot Parkinglot
         {
@@ -33,16 +36,69 @@ namespace ParkInspect.ViewModel
             {
                 _parkinglot = value;
                 RaisePropertyChanged("Parkinglot");
+                RaisePropertyChanged(("Name"));
+                RaisePropertyChanged(("Zip"));
+                RaisePropertyChanged(("Region"));
+                RaisePropertyChanged(("Number"));
+                RaisePropertyChanged(("Clarification"));
                 SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public string SelectedRegion { get; set; }
+        public string Name
+        {
+            get { return _parkinglot?.name; }
+            set
+            {
+                _parkinglot.name = value;
+                RaisePropertyChanged(("Name"));
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
 
+        public string Zip
+        {
+            get { return _parkinglot?.zipcode; }
+            set
+            {
+                _parkinglot.zipcode = value;
+                RaisePropertyChanged(("Zip"));
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
 
+        public string Region
+        {
+            get { return _parkinglot?.region_name; }
+            set
+            {
+                _parkinglot.region_name = value;
+                RaisePropertyChanged(("Region"));
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public RelayCommand SaveCommand { get; set; }
-        public RelayCommand NewCommand { get; set; }
+        public int Number
+        {
+            get { return (_parkinglot == null ? 0 :_parkinglot.number.GetValueOrDefault()); }
+            set
+            {
+                _parkinglot.number = value;
+                RaisePropertyChanged(("Number"));
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public string Clarification
+        {
+            get { return _parkinglot?.clarification; }
+            set
+            {
+                _parkinglot.clarification = value;
+                RaisePropertyChanged(("Clarification"));
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         public ParkinglotViewModel(IRepository context)
         {
@@ -59,6 +115,7 @@ namespace ParkInspect.ViewModel
         private void NewParkinglot()
         {
 
+            Message = "Add a new Parkinglot";
             Parkinglot = new Parkinglot();
             RaisePropertyChanged("Parkinglot");
             Parkinglot.id = -1;
@@ -68,58 +125,36 @@ namespace ParkInspect.ViewModel
         private void Save()
         {
 
-
-            Parkinglot.region_name = SelectedRegion;
-
             if (Parkinglot.id < 0)
             {
-                if (Service.AddParkinglot(Parkinglot))
-                {
-                    MessageBox.Show("Success");
-                }
-                else
-                {
-                    MessageBox.Show("Fail");
-                }
-
+                Message = (Service.AddParkinglot(Parkinglot) ? "The parkinglot was added!" : "Something went wrong.");
             }
             else
-
             {
-                if (Service.UpdateParkinglot(Parkinglot))
-                {
-                    MessageBox.Show("Success");
-                }
-                else
-                {
-                    MessageBox.Show("Fail");
-                }
+                Message = (Service.UpdateParkinglot(Parkinglot) ? "The parkinglot was updated!" : "Something went wrong.");
             }
+
+            RaisePropertyChanged("Message");
+            Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
+            RaisePropertyChanged("Parkinglots");
         }
 
         private bool CanSave()
         {
 
-            if (Parkinglot == null)
+            if (Parkinglot?.name == null || Parkinglot.name.Equals(""))
                 return false;
 
-            if (Parkinglot.name == null || Parkinglot.name.Equals(""))
+            if (Parkinglot?.region_name == null || Parkinglot.region_name.Equals(""))
                 return false;
 
-            if (Parkinglot.region_name == null || Parkinglot.region_name.Equals(""))
+            if (Parkinglot?.clarification == null || Parkinglot.clarification.Equals(""))
                 return false;
 
-            if (Parkinglot.clarification == null || Parkinglot.clarification.Equals(""))
+            if (Parkinglot?.zipcode == null || Parkinglot.zipcode.Equals(""))
                 return false;
 
-            if (Parkinglot.zipcode == null || Parkinglot.zipcode.Equals(""))
-                return false;
-
-            if (Parkinglot.number == null || Parkinglot.number < 1)
-                return false;
-
-            return true;
-
+            return (Parkinglot?.number != null && Parkinglot.number > 0);
 
         }
 
