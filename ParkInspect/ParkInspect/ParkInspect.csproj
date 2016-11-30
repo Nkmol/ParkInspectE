@@ -126,6 +126,7 @@
     <Compile Include="Employee_Status.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ExportFactory.cs" />
     <Compile Include="Field.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>

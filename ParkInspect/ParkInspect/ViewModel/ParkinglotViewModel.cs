@@ -131,12 +131,15 @@ namespace ParkInspect.ViewModel
             }
             else
             {
-                Message = (Service.UpdateParkinglot(Parkinglot) ? "The parkinglot was updated!" : "Something went wrong.");
+                Message = (Service.UpdateParkinglot(Parkinglot)
+                    ? "The parkinglot was updated!"
+                    : "Something went wrong.");
             }
 
             RaisePropertyChanged("Message");
             Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
             RaisePropertyChanged("Parkinglots");
+            ExportFactory.ExportCsv(Service.GetAllParkinglots(), new string[] {"name", "region_name"});
         }
 
         private bool CanSave()
