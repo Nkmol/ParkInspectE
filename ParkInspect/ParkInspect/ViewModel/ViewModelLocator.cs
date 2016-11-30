@@ -47,8 +47,8 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<InspectieViewModel>();
             SimpleIoc.Default.Register<RapportageViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
-            SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
             SimpleIoc.Default.Register<ContactpersonViewModel>();
+            SimpleIoc.Default.Register<ParkinglotViewModel>();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace ParkInspect.ViewModel
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
-        public ParkeerplaatsViewModel Parkeerplaatsen => ServiceLocator.Current.GetInstance<ParkeerplaatsViewModel>();
+        public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
