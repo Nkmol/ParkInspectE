@@ -111,7 +111,7 @@ namespace ParkInspect.ViewModel
         {
             Service = new AbsenceService(context);
             // look at asignment feature for datetime examples.
-            NewAbsence = new Absence();
+            Reset(); // Create default absence
             NewAbsence.start = DateTime.Now;
            
             Absences = new ObservableCollection<Absence>(Service.GetAllAbsences());
@@ -151,7 +151,17 @@ namespace ParkInspect.ViewModel
                 Service.InsertAbsence(NewAbsence);
                 Notification = "Nieuwe afwezigheid is opgeslagen!";
                 Absences.Add(NewAbsence);
+                Reset();
                 base.RaisePropertyChanged();
+        }
+
+        public void Reset()
+        {
+            NewAbsence = new Absence
+            {
+                start = DateTime.Now,
+                end = DateTime.Now
+            };
         }
 
     }

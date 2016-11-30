@@ -36,7 +36,7 @@
                   <StackPanel>
                       
                        <Label x:Name="label" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <DatePicker DisplayDateStart=""  SelectedDate="{Binding NewAbsence.start , Mode=OneWayToSource}" />
+                        <DatePicker SelectedDate="{Binding NewAbsence.start}" />
                       
 
                         <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
