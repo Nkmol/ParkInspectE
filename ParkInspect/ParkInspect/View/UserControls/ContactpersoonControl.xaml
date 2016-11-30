@@ -24,23 +24,27 @@
                 <Grid>
                     <Label x:Name="NameLabel" Content="Voornaam:" Margin="89,43,196.4,185.2" />
                     <Label x:Name="TelnrLabel" Content="Achternaam:" Margin="89,75,196.4,154.2" />
+                    <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
+                           VerticalAlignment="Top" Width="109" />
                     <TextBox x:Name="Voornaam" Text="{Binding firstname}" HorizontalAlignment="Left" Height="23"
                              Margin="204,47,0,0" VerticalAlignment="Top" Width="150" />
                     <TextBox x:Name="Telnr" Text="{Binding lastname}" HorizontalAlignment="Left" Height="23"
                              Margin="204,75,0,0" VerticalAlignment="Top" Width="150" />
                     <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
                            VerticalAlignment="Top" Width="109" />
-                    <ComboBox HorizontalAlignment="Left" Height="27" Margin="205,105,0,0" VerticalAlignment="Top"
+                        <ComboBox HorizontalAlignment="Left" Height="27" Margin="205,105,0,0" VerticalAlignment="Top"
                               Width="149" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                              ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" />
+                              ItemsSource="{Binding Clients}" DisplayMemberPath="name" SelectedItem="{Binding SelectedClient}" />
                     
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" DataContext="{Binding Contactperson, Source={StaticResource Locator}}" Height="148" Margin="0,191,0.4,1">
-                        <Button Command="{Binding CompleteContactpersonCommand}"
-                                Content="Maak nieuw contactpersoon aan" Margin="30,0,0,0" Height="78" Width="195"/>
-                        <Button Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
-                                VerticalAlignment="Top" Margin="70,35,0,0" Height="78" Width="195" />
-                        <Button Command="{Binding UpdateButtonCommand}" Content="Update contactpersoon"
-                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,35,0,0" Height="78" Width="195"/>
+                            <Button Command="{Binding CompleteContactpersonCommand}"
+                                Content="Maak nieuw contactpersoon aan" Margin="10,0,0,0" Height="78" Width="210"/>
+                            <Button Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" Margin="30,35,0,0" Height="78" Width="100" />
+                            <Button Command="{Binding UpdateButtonCommand}" Content="Update contactpersoon"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78" Width="195"/>
+                            <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijder contactpersoon"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78" Width="195"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

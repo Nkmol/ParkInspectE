@@ -9,7 +9,7 @@ namespace ParkInspect.ViewModel
 {
     public class ContactpersonViewModel : ViewModelBase
     {
-        private string _selectedClient;
+        private Client _selectedClient;
 
         private Contactperson _selectedContactperson;
 
@@ -19,15 +19,17 @@ namespace ParkInspect.ViewModel
         {
             Service = new ContactpersonService(context);
             Contactpersons = new ObservableCollection<Contactperson>(Service.GetAllContactpersons());
-            Clients = new ObservableCollection<string>(Service.GetAllClients());
+            Clients = new ObservableCollection<Client>(Service.GetAllClients());
             CompleteContactpersonCommand = new RelayCommand(CompleteContactperson);
             ResetButtonCommand = new RelayCommand(Reset);
             UpdateButtonCommand = new RelayCommand(UpdateContactperson);
+            DeleteContactpersonCommand = new RelayCommand(DeleteContactperson);
+            SelectedClient = new Client();
             SelectedContactperson = new Contactperson();
         }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
-        public ObservableCollection<string> Clients { get; set; }
+        public ObservableCollection<Client> Clients { get; set; }
 
         public Contactperson SelectedContactperson
         {
@@ -35,11 +37,15 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedContactperson, value);
+
+                if (_selectedContactperson?.Client != null)
+                    SelectedClient = _selectedContactperson.Client;
+
                 RaisePropertyChanged();
             }
         }
 
-        public string SelectedClient
+        public Client SelectedClient
         {
             get { return _selectedClient; }
             set
@@ -52,13 +58,15 @@ namespace ParkInspect.ViewModel
         public ICommand CompleteContactpersonCommand { get; set; }
         public ICommand ResetButtonCommand { get; set; }
         public ICommand UpdateButtonCommand { get; set; }
+        public ICommand DeleteContactpersonCommand { get; set; }
 
         private void CompleteContactperson()
         {
-            if ((SelectedContactperson.firstname == null) || (SelectedContactperson.lastname == null))
+            if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
+                (SelectedClient == null))
                 return;
 
-            SelectedContactperson.client_id = Service.GetClientIdFromName(SelectedClient);
+            SelectedContactperson.client_id = SelectedClient.id;
             Service.AddContactperson(SelectedContactperson);
             Contactpersons.Add(SelectedContactperson);
         }
@@ -70,7 +78,19 @@ namespace ParkInspect.ViewModel
 
         private void UpdateContactperson()
         {
+            if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
+                (SelectedClient == null))
+                return;
+
+            SelectedContactperson.client_id = SelectedClient.id;
             Service.UpdateContactperson(SelectedContactperson);
+        }
+
+        private void DeleteContactperson()
+        {
+            Service.DeleteContactpeson(SelectedContactperson);
+            Contactpersons.Remove(SelectedContactperson);
+            Reset();
         }
     }
 }

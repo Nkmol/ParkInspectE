@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using ParkInspect.Repository;
 
 namespace ParkInspect.Services
@@ -18,6 +17,11 @@ namespace ParkInspect.Services
             return _context.GetAll<Contactperson>();
         }
 
+        public IEnumerable<Client> GetAllClients()
+        {
+            return _context.GetAll<Client>();
+        }
+
         public void AddContactperson(Contactperson c)
         {
             _context.Create(c);
@@ -30,14 +34,10 @@ namespace ParkInspect.Services
             _context.Save();
         }
 
-        public IEnumerable<string> GetAllClients()
+        public void DeleteContactpeson(Contactperson c)
         {
-            return _context.GetAll<Client>().Select(c => c.name);
-        }
-
-        public int GetClientIdFromName(string name)
-        {
-            return _context.Get<Client>().Single(c => c.name == name).id;
+            _context.Delete(c);
+            _context.Save();
         }
     }
 }
