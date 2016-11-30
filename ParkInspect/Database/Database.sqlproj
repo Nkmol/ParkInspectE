@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Asignment.sql" />
-    <Build Include="Tables\Contactman.sql" />
+    <Build Include="Tables\Contactperson.sql" />
     <Build Include="Tables\Inspection.sql" />
     <Build Include="Tables\Inspector.sql" />
     <Build Include="Tables\Absence.sql" />
