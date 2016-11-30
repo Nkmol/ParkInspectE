@@ -139,10 +139,7 @@ namespace ParkInspect.ViewModel
             RaisePropertyChanged("Message");
             Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
             RaisePropertyChanged("Parkinglots");
-            ExportFactory.ExportPdf(
-                Service.GetAllParkinglots(),
-                new string[] {"name", "region_name"},
-                new string[] {"Parkinglot", "Region"});
+
         }
 
         private bool CanSave()
