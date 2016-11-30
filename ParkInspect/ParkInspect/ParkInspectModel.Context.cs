@@ -13,10 +13,10 @@ namespace ParkInspect
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ParkInspectEntities1 : DbContext
+    public partial class ParkInspectEntities : DbContext
     {
-        public ParkInspectEntities1()
-            : base("name=ParkInspectEntities1")
+        public ParkInspectEntities()
+            : base("name=ParkInspectEntities")
         {
         }
     
@@ -28,6 +28,7 @@ namespace ParkInspect
         public virtual DbSet<Absence> Absences { get; set; }
         public virtual DbSet<Asignment> Asignments { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Contactperson> Contactpersons { get; set; }
         public virtual DbSet<Datatype> Datatypes { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Employee_Status> Employee_Status { get; set; }
@@ -43,6 +44,5 @@ namespace ParkInspect
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
-        public virtual DbSet<Contactperson> Contactpersons { get; set; }
     }
 }

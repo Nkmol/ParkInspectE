@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absence">
           <Key>
             <PropertyRef Name="start" />
@@ -16,7 +16,6 @@
         </EntityType>
         <EntityType Name="Asignment">
           <Key>
-            <PropertyRef Name="client_id" />
             <PropertyRef Name="id" />
           </Key>
           <Property Name="client_id" Type="int" Nullable="false" />
@@ -81,7 +80,7 @@
           <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="template_id" Type="int" Nullable="false" />
           <Property Name="datatype" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="repportFieldType_title" Type="varchar" MaxLength="50" />
+          <Property Name="reportFieldType_title" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Form">
           <Key>
@@ -121,7 +120,6 @@
           <Property Name="deadline" Type="datetime" />
           <Property Name="date" Type="datetime" />
           <Property Name="clarification" Type="text" />
-          <Property Name="assigment_client_id" Type="int" Nullable="false" />
           <Property Name="assignment_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inspector">
@@ -281,7 +279,7 @@
               <PropertyRef Name="title" />
             </Principal>
             <Dependent Role="Field">
-              <PropertyRef Name="repportFieldType_title" />
+              <PropertyRef Name="reportFieldType_title" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -362,11 +360,9 @@
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Asignment">
-              <PropertyRef Name="client_id" />
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Inspection">
-              <PropertyRef Name="assigment_client_id" />
               <PropertyRef Name="assignment_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -600,7 +596,8 @@
             <End Role="Formfield" EntitySet="Formfield" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ParkInspectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -616,7 +613,6 @@
         </EntityType>
         <EntityType Name="Asignment">
           <Key>
-            <PropertyRef Name="client_id" />
             <PropertyRef Name="id" />
           </Key>
           <Property Name="client_id" Type="Int32" Nullable="false" />
@@ -638,7 +634,18 @@
           <Property Name="phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Asignments" Relationship="Self.FK_Asignment_Client" FromRole="Client" ToRole="Asignment" />
-          <NavigationProperty Name="Contactpersons" Relationship="ParkInspectModel.FK_Client_Contactperson" FromRole="Client" ToRole="Contactperson" />
+          <NavigationProperty Name="Contactpersons" Relationship="Self.FK_Client_Contactperson" FromRole="Client" ToRole="Contactperson" />
+        </EntityType>
+        <EntityType Name="Contactperson">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Contactperson" FromRole="Contactperson" ToRole="Client" />
         </EntityType>
         <EntityType Name="Datatype">
           <Key>
@@ -683,7 +690,7 @@
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="template_id" Type="Int32" Nullable="false" />
           <Property Name="datatype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="repportFieldType_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reportFieldType_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Datatype1" Relationship="Self.FK_Field_Datatype" FromRole="Field" ToRole="Datatype" />
           <NavigationProperty Name="ReportFieldType" Relationship="Self.FK_Field_RapportFieldType" FromRole="Field" ToRole="ReportFieldType" />
           <NavigationProperty Name="Template" Relationship="Self.FK_Field_Template" FromRole="Field" ToRole="Template" />
@@ -733,7 +740,6 @@
           <Property Name="deadline" Type="DateTime" Precision="3" />
           <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="assigment_client_id" Type="Int32" Nullable="false" />
           <Property Name="assignment_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Asignment" Relationship="Self.FK_Inspectie_Opdracht" FromRole="Inspection" ToRole="Asignment" />
           <NavigationProperty Name="Form" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Inspection" ToRole="Form" />
@@ -847,12 +853,22 @@
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Asignment">
-              <PropertyRef Name="client_id" />
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Inspection">
-              <PropertyRef Name="assigment_client_id" />
               <PropertyRef Name="assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Contactperson">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Contactperson" Type="Self.Contactperson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Contactperson">
+              <PropertyRef Name="client_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -900,7 +916,7 @@
               <PropertyRef Name="title" />
             </Principal>
             <Dependent Role="Field">
-              <PropertyRef Name="repportFieldType_title" />
+              <PropertyRef Name="reportFieldType_title" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1046,10 +1062,11 @@
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ParkInspectEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ParkInspectEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Absences" EntityType="Self.Absence" />
           <EntitySet Name="Asignments" EntityType="Self.Asignment" />
           <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Contactpersons" EntityType="Self.Contactperson" />
           <EntitySet Name="Datatypes" EntityType="Self.Datatype" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
@@ -1080,6 +1097,10 @@
           <AssociationSet Name="FK_Inspectie_Opdracht" Association="Self.FK_Inspectie_Opdracht">
             <End Role="Asignment" EntitySet="Asignments" />
             <End Role="Inspection" EntitySet="Inspections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Contactperson" Association="Self.FK_Client_Contactperson">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Contactperson" EntitySet="Contactpersons" />
           </AssociationSet>
           <AssociationSet Name="FK_Field_Datatype" Association="Self.FK_Field_Datatype">
             <End Role="Datatype" EntitySet="Datatypes" />
@@ -1149,41 +1170,13 @@
             <End Role="Inspection" EntitySet="Inspections" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <EntitySet Name="Contactpersons" EntityType="ParkInspectModel.Contactperson" />
-          <AssociationSet Name="FK_Client_Contactperson" Association="ParkInspectModel.FK_Client_Contactperson">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="Contactperson" EntitySet="Contactpersons" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Contactperson">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="client_id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="client_id" Type="Int32" Nullable="false" />
-          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Client" Relationship="ParkInspectModel.FK_Client_Contactperson" FromRole="Contactperson" ToRole="Client" />
-        </EntityType>
-        <Association Name="FK_Client_Contactperson">
-          <End Type="ParkInspectModel.Client" Role="Client" Multiplicity="1" />
-          <End Type="ParkInspectModel.Contactperson" Role="Contactperson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Contactperson">
-              <PropertyRef Name="client_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ParkInspectModelStoreContainer" CdmEntityContainer="ParkInspectEntities1">
+        <EntityContainerMapping StorageEntityContainer="ParkInspectModelStoreContainer" CdmEntityContainer="ParkInspectEntities">
           <EntitySetMapping Name="Absences">
             <EntityTypeMapping TypeName="ParkInspectModel.Absence">
               <MappingFragment StoreEntitySet="Absence">
@@ -1212,6 +1205,16 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
                 <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contactpersons">
+            <EntityTypeMapping TypeName="ParkInspectModel.Contactperson">
+              <MappingFragment StoreEntitySet="Contactperson">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1252,7 +1255,7 @@
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="template_id" ColumnName="template_id" />
                 <ScalarProperty Name="datatype" ColumnName="datatype" />
-                <ScalarProperty Name="repportFieldType_title" ColumnName="repportFieldType_title" />
+                <ScalarProperty Name="reportFieldType_title" ColumnName="reportFieldType_title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1293,7 +1296,6 @@
                 <ScalarProperty Name="deadline" ColumnName="deadline" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="clarification" ColumnName="clarification" />
-                <ScalarProperty Name="assigment_client_id" ColumnName="assigment_client_id" />
                 <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1371,16 +1373,6 @@
               <ScalarProperty Name="id" ColumnName="employee_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Contactpersons">
-            <EntityTypeMapping TypeName="ParkInspectModel.Contactperson">
-              <MappingFragment StoreEntitySet="Contactperson">
-                <ScalarProperty Name="lastname" ColumnName="lastname" />
-                <ScalarProperty Name="firstname" ColumnName="firstname" />
-                <ScalarProperty Name="client_id" ColumnName="client_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
