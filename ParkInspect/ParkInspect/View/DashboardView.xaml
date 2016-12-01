@@ -8,8 +8,8 @@
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
-        Height="500"
-        Width="800"
+        Height="600"
+        Width="1000"
         Title="ParkInspect"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}">
     
