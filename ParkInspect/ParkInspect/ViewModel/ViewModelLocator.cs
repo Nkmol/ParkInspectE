@@ -49,6 +49,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<ParkinglotViewModel>();
+            SimpleIoc.Default.Register<ExportViewModel>();
         }
 
         /// <summary>
@@ -68,6 +69,8 @@ namespace ParkInspect.ViewModel
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
         public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
+
+        public ExportViewModel Exports => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
