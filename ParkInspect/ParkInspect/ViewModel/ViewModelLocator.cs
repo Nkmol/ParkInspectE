@@ -43,9 +43,9 @@ namespace ParkInspect.ViewModel
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
-            SimpleIoc.Default.Register<EmployeeViewModel>();
-            SimpleIoc.Default.Register<InspectionViewModel>();
-            SimpleIoc.Default.Register<ReportViewModel>();
+            SimpleIoc.Default.Register<PersoneelViewModel>();
+            SimpleIoc.Default.Register<InspectieViewModel>();
+            SimpleIoc.Default.Register<RapportageViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkinglotViewModel>();
         }
@@ -58,11 +58,11 @@ namespace ParkInspect.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
 
-        public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
+        public PersoneelViewModel Personeel => ServiceLocator.Current.GetInstance<PersoneelViewModel>();
 
-        public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
+        public InspectieViewModel Inspecties => ServiceLocator.Current.GetInstance<InspectieViewModel>();
 
-        public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
+        public RapportageViewModel Rapportages => ServiceLocator.Current.GetInstance<RapportageViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
