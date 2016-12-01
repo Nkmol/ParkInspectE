@@ -66,45 +66,17 @@ namespace ParkInspect
         public static void ExportPdf<T>(IEnumerable<T> data, string[] columns, string[] headers = null)
         {
 
-            if (PromptSave("PDF (*.pdf)"))
-            {
-                Type t = typeof(T);
+            if (!PromptSave("PDF Files | *.pdf"))
+                return;
 
-                string applicationDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                string rootPath = Directory.GetParent(applicationDirectory).Parent.FullName;
+            string applicationDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string rootPath = Directory.GetParent(applicationDirectory).Parent.FullName;
 
+            var builder = new PdfBuilder(_stream);
+            builder.AddImage(rootPath + "/ParkInspect.png", 447, 204, PdfAlignment.CENTER);
+            builder.AddTable(data, columns, headers, PdfAlignment.CENTER);
+            builder.Build();
 
-                Document doc = new Document();
-                PdfWriter writer = PdfWriter.GetInstance(doc, _stream);
-                doc.Open();
-
-                iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(rootPath + "/ParkInspect.png");
-                img.ScaleAbsolute(449, 204);
-                doc.Add(img);
-
-                PdfPTable table = new PdfPTable(columns.Length);
-
-                foreach (var column in columns)
-                {
-                    table.AddCell(column);
-                }
-
-                foreach (var item in data)
-                {
-
-                    foreach (var column in columns)
-                    {
-                        PropertyInfo p = t.GetProperty(column);
-                        table.AddCell((string)p.GetValue(item));
-                    }
-
-                }
-
-                doc.Add(table);
-                writer.Flush();
-                doc.Close();
-
-            }
         }
 
         private static string WriteHeaders(string[] columns)

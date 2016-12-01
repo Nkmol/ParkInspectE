@@ -167,6 +167,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PdfBuilder.cs" />
     <Compile Include="Region.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -194,6 +195,7 @@
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
+    <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectieViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
