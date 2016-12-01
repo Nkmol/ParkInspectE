@@ -4,10 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="466db429869248fcad320d81c2159823" Name="Diagram1">
+      <Diagram DiagramId="6defa260645242ea9e1601132ddea79d" Name="Diagram1">
+        <EntityTypeShape EntityType="ParkInspectModel.C__RefactorLog" Width="1.5" PointX="7.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Absence" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Asignment" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Client" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Contactperson" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Datatype" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Employee" Width="1.5" PointX="7.5" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Employee_Status" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
@@ -15,7 +17,7 @@
         <EntityTypeShape EntityType="ParkInspectModel.Form" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Formfield" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Image" Width="1.5" PointX="9.75" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ParkInspectModel.Inspection" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Inspection" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Parkinglot" Width="1.5" PointX="12" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Region" Width="1.5" PointX="9.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Report" Width="1.5" PointX="7.5" PointY="16.375" IsExpanded="true" />
@@ -27,6 +29,7 @@
         <AssociationConnector Association="ParkInspectModel.FK_Asignment_Client" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Asignment_Status" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Opdracht" ManuallyRouted="false" />
+        <AssociationConnector Association="ParkInspectModel.FK_Client_Contactperson" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Field_Datatype" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Employee_Employee_status" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Employee_Job" ManuallyRouted="false" />
@@ -44,8 +47,6 @@
         <AssociationConnector Association="ParkInspectModel.FK_Parkinglot_Region" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.Inspector" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.Inspector_has_Inspection" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ParkInspectModel.Contactperson" Width="1.5" PointX="3" PointY="14.5" />
-        <AssociationConnector Association="ParkInspectModel.FK_Client_Contactperson" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

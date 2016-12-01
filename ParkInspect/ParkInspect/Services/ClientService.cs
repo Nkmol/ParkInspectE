@@ -27,7 +27,7 @@ namespace ParkInspect.Services
         public IEnumerable<Client> GetAllClients()
         {
             return _context.GetAll<Client>(null, c => c.Contactperson, c => c.Asignment);
-        }
+        }       
 
         public IEnumerable<Client> GetClientsWithName(string name)
         {
