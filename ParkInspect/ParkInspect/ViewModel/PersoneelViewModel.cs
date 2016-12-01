@@ -131,7 +131,11 @@ namespace ParkInspect.ViewModel
 
         private void UpdateDataGrid()
         {
-            SelectedEmployee = new Employee();
+            Employee e = new Employee();
+            e.in_service_date = DateTime.Today;
+            e.out_service_date = DateTime.Today;
+            
+            SelectedEmployee = e;
              _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
             var temp = Employees;
             Employees = null;
