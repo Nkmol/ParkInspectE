@@ -201,7 +201,9 @@ namespace ParkInspect.ViewModel
             }
             else
             {
-                Message = (Service.UpdateParkinglot(Parkinglot) ? "The parkinglot was updated!" : "Something went wrong.");
+                Message = (Service.UpdateParkinglot(Parkinglot)
+                    ? "The parkinglot was updated!"
+                    : "Something went wrong.");
             }
 
             RaisePropertyChanged("Message");
