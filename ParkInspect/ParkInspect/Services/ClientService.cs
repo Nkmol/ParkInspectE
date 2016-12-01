@@ -12,10 +12,26 @@ namespace ParkInspect.Services
         {
             _context = context;
         }
-
-        public IEnumerable<Client> GetClientWithName(string name)
+        public void AddClient(Client c)
         {
-            return _context.GetAll<Client>(null, c => c.Contactpersons, c => c.Asignments)
+            _context.Create(c);
+            _context.Save();
+        }
+
+        public void UpdateClient(Client c)
+        {
+            _context.Update(c);
+            _context.Save();
+        }
+
+        public IEnumerable<Client> GetAllClients()
+        {
+            return _context.GetAll<Client>(null, c => c.Contactperson, c => c.Asignment);
+        }       
+
+        public IEnumerable<Client> GetClientsWithName(string name)
+        {
+            return _context.GetAll<Client>(null, c => c.Contactperson, c => c.Asignment)
                 .Where(k => k.name == name);
         }
     }
