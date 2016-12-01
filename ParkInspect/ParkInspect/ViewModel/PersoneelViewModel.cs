@@ -84,7 +84,7 @@ namespace ParkInspect.ViewModel
             
             CreateItemCommand = new RelayCommand(CreateNewEmployee);
             EditItemCommand = new RelayCommand(EditEmployee);
-            DeselectEmployeeCommand = new RelayCommand(DeselectItem);
+            DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
         }
 
         //CRU METHODS
@@ -121,7 +121,7 @@ namespace ParkInspect.ViewModel
         }
 
         //OTHER METHODS
-        private void DeselectItem()
+        private void SetNewEmployee()
         {
             Employee e = new Employee();
             e.in_service_date = DateTime.Today;
@@ -131,11 +131,7 @@ namespace ParkInspect.ViewModel
 
         private void UpdateDataGrid()
         {
-            Employee e = new Employee();
-            e.in_service_date = DateTime.Today;
-            e.out_service_date = DateTime.Today;
-            
-            SelectedEmployee = e;
+            SetNewEmployee();
              _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
             var temp = Employees;
             Employees = null;
