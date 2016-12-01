@@ -8,12 +8,12 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class RapportageViewModel : ViewModelBase
+    public class ReportViewModel : ViewModelBase
     {
         /// <summary>
         /// Initializes a new instance of the RapportageViewModel class.
         /// </summary>
-        public RapportageViewModel()
+        public ReportViewModel()
         {
 
         }
