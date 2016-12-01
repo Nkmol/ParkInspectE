@@ -171,12 +171,14 @@ namespace ParkInspect.ViewModel
         private void UpdateParkinglots()
         {
 
-            var filters = new Dictionary<string, string>();
-            filters.Add("name", NameFilter);
-            filters.Add("region_name", Region);
-            filters.Add("number", NumberFilter);
-            filters.Add("zipcode", ZipFilter);
-            filters.Add("clarification", ClarificationFilter);
+            var filters = new Dictionary<string, string>()
+            {
+                {"name", NameFilter},
+                {"region_name", RegionFilter },
+                {"number", NumberFilter },
+                {"zipcode", ZipFilter },
+                {"clarification", ClarificationFilter }
+            };
 
             Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglotsWhere(filters));
             RaisePropertyChanged("Parkinglots");
