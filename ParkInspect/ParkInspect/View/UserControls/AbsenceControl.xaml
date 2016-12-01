@@ -20,9 +20,11 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Start Datum" Binding="{Binding start}"  />
                         <DataGridTextColumn Header="Eind Datum" Binding="{Binding end}" />
+                        <DataGridTextColumn Header="Voornaam" Binding="{Binding Employee.firstname}"/>
+                        <DataGridTextColumn Header="Achternaam" Binding="{Binding Employee.lastname}"/>
                         <DataGridTextColumn Header="ID" Binding="{Binding employee_id}"/>
-                        
-                    </DataGrid.Columns>
+
+                            </DataGrid.Columns>
                         </DataGrid>
 
                     <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
@@ -44,10 +46,9 @@
 
                         </DatePicker>
                     <DockPanel>
+                            <ComboBox ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Text="Selecteer Personeel"> </ComboBox>
 
-                            <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedEmployee}" DisplayMemberPath="firstname" ItemsSource="{Binding Employees}" x:Name="listBox"  HorizontalAlignment="Stretch" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Stretch">
 
-                            </ListBox>
                             <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                     </DockPanel>
                         <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button"  Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
