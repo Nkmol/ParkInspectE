@@ -140,10 +140,6 @@ namespace ParkInspect.ViewModel
             Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
             RaisePropertyChanged("Parkinglots");
 
-            ExportFactory.ExportPdf(Service.GetAllParkinglots(),
-                new string[] {"name", "region_name"},
-                new string[] {"Name", "Region"});
-
         }
 
         private bool CanSave()
