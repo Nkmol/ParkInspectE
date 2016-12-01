@@ -189,13 +189,13 @@
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
-    <Compile Include="ViewModel\InspectionViewModel.cs" />
+    <Compile Include="ViewModel\InspectieViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
-    <Compile Include="ViewModel\AssignmentViewModel.cs" />
+    <Compile Include="ViewModel\OpdrachtViewModel.cs" />
     <Compile Include="ViewModel\ParkinglotViewModel.cs" />
-    <Compile Include="ViewModel\EmployeeViewModel.cs" />
-    <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\PersoneelViewModel.cs" />
+    <Compile Include="ViewModel\RapportageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\UserControls\InspectieControl.xaml.cs">
       <DependentUpon>InspectieControl.xaml</DependentUpon>
@@ -226,7 +226,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\FormViewModel.cs" />
+    <Compile Include="ViewModel\VragenlijstViewModel.cs" />
     <Compile Include="View\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
       <SubType>Code</SubType>

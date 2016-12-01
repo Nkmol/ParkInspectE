@@ -10,17 +10,15 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class EmployeeViewModel : ViewModelBase
+    public class InspectieViewModel : ViewModelBase
     {
-
-        public ObservableCollection<Object> EmployeeCollection { get; set; }
+        public ObservableCollection<Object> InspectieCollection { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the PersoneelViewModel class.
+        /// Initializes a new instance of the InspectieViewModel class.
         /// </summary>
-        public EmployeeViewModel()
+        public InspectieViewModel()
         {
-
         }
     }
 }
