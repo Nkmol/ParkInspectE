@@ -197,26 +197,26 @@
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\UserControls\InspectieControl.xaml.cs">
-      <DependentUpon>InspectieControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\InspectionControl.xaml.cs">
+      <DependentUpon>InspectionControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\KlantControl.xaml.cs">
-      <DependentUpon>KlantControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\CustomerControl.xaml.cs">
+      <DependentUpon>CustomerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\OpdrachtControl.xaml.cs">
-      <DependentUpon>OpdrachtControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
+      <DependentUpon>AssignmentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ParkinglotControl.xaml.cs">
       <DependentUpon>ParkinglotControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\PersoneelControl.xaml.cs">
-      <DependentUpon>PersoneelControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
+      <DependentUpon>EmployeeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\RapportageControl.xaml.cs">
-      <DependentUpon>RapportageControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\ReportControl.xaml.cs">
+      <DependentUpon>ReportControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\VragenlijstControl.xaml.cs">
-      <DependentUpon>VragenlijstControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\FormControl.xaml.cs">
+      <DependentUpon>FormControl.xaml</DependentUpon>
     </Compile>
     <Page Include="View\DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -235,15 +235,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\InspectieControl.xaml">
+    <Page Include="View\UserControls\InspectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\KlantControl.xaml">
+    <Page Include="View\UserControls\CustomerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\OpdrachtControl.xaml">
+    <Page Include="View\UserControls\AssignmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -251,15 +251,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\PersoneelControl.xaml">
+    <Page Include="View\UserControls\EmployeeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\RapportageControl.xaml">
+    <Page Include="View\UserControls\ReportControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\VragenlijstControl.xaml">
+    <Page Include="View\UserControls\FormControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
