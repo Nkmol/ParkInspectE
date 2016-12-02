@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ParkInspect.Repository;
 
 namespace ParkInspect.Services
@@ -20,6 +21,11 @@ namespace ParkInspect.Services
         public IEnumerable<Client> GetAllClients()
         {
             return _context.GetAll<Client>();
+        }
+
+        public IEnumerable<Contactperson> GetContactperson(Contactperson c)
+        {
+            return _context.Get<Contactperson>().Where(cp => cp == c);
         }
 
         public void AddContactperson(Contactperson c)

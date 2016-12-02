@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -62,13 +63,20 @@ namespace ParkInspect.ViewModel
 
         private void CompleteContactperson()
         {
-            if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
-                (SelectedClient == null))
+            if (string.IsNullOrEmpty(SelectedContactperson.firstname) ||
+                string.IsNullOrEmpty(SelectedContactperson.lastname) ||
+                SelectedClient == null || string.IsNullOrWhiteSpace(SelectedContactperson.firstname) ||
+                string.IsNullOrWhiteSpace(SelectedContactperson.lastname))
+            {
+                MessageBox.Show("Een of meerdere velden is/zijn niet correct ingevuld");
                 return;
+            }
 
             SelectedContactperson.client_id = SelectedClient.id;
             Service.AddContactperson(SelectedContactperson);
             Contactpersons.Add(SelectedContactperson);
+
+            MessageBox.Show("Contactpersoon toegevoegd");
         }
 
         private void Reset()
@@ -79,18 +87,34 @@ namespace ParkInspect.ViewModel
         private void UpdateContactperson()
         {
             if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
-                (SelectedClient == null))
+                SelectedClient == null || string.IsNullOrWhiteSpace(SelectedContactperson.firstname) ||
+                string.IsNullOrWhiteSpace(SelectedContactperson.lastname) || Service.GetContactperson(SelectedContactperson) == null)
+            {
+                MessageBox.Show("Een of meerdere velden is/zijn niet correct ingevuld");
                 return;
+            }
 
             SelectedContactperson.client_id = SelectedClient.id;
             Service.UpdateContactperson(SelectedContactperson);
+
+            MessageBox.Show("Contactpersoon geupdate");
         }
 
         private void DeleteContactperson()
         {
+            if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
+                SelectedClient == null || string.IsNullOrWhiteSpace(SelectedContactperson.firstname) ||
+                string.IsNullOrWhiteSpace(SelectedContactperson.lastname) || Service.GetContactperson(SelectedContactperson) == null)
+            {
+                MessageBox.Show("Een of meerdere velden is/zijn niet correct ingevuld");
+                return;
+            }
+
             Service.DeleteContactpeson(SelectedContactperson);
             Contactpersons.Remove(SelectedContactperson);
             Reset();
+
+            MessageBox.Show("Contactpersoon verwijderd");
         }
     }
 }
