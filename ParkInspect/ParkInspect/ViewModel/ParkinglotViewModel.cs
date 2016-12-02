@@ -100,10 +100,13 @@ namespace ParkInspect.ViewModel
             }
         }
 
+
         public ParkinglotViewModel(IRepository context)
         {
 
-            SaveCommand = new RelayCommand(Save, () => CanSave());
+            //SaveCommand = new RelayCommand(Save, () => CanSave());
+            SaveCommand = new RelayCommand(Save);
+
             NewCommand = new RelayCommand(NewParkinglot);
             Service = new ParkinglotService(context);
             Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
@@ -145,19 +148,21 @@ namespace ParkInspect.ViewModel
         private bool CanSave()
         {
 
-            if (Parkinglot?.name == null || Parkinglot.name.Equals(""))
-                return false;
+            return false;
 
-            if (Parkinglot?.region_name == null || Parkinglot.region_name.Equals(""))
-                return false;
+            //if (Parkinglot?.name == null || Parkinglot.name.Equals(""))
+            //    return false;
 
-            if (Parkinglot?.clarification == null || Parkinglot.clarification.Equals(""))
-                return false;
+            //if (Parkinglot?.region_name == null || Parkinglot.region_name.Equals(""))
+            //    return false;
 
-            if (Parkinglot?.zipcode == null || Parkinglot.zipcode.Equals(""))
-                return false;
+            //if (Parkinglot?.clarification == null || Parkinglot.clarification.Equals(""))
+            //    return false;
 
-            return (Parkinglot?.number != null && Parkinglot.number > 0);
+            //if (Parkinglot?.zipcode == null || Parkinglot.zipcode.Equals(""))
+            //    return false;
+
+            //return (Parkinglot?.number != null && Parkinglot.number > 0);
 
         }
 
