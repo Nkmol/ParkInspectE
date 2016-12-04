@@ -30,7 +30,7 @@ namespace ParkInspect.Services
             {
                 return false;
             }
-
+            
         }
 
         public bool UpdateParkinglot(Parkinglot p)
@@ -63,25 +63,15 @@ namespace ParkInspect.Services
             return _context.GetAll<Inspection>();
         }
 
-        public IEnumerable<Parkinglot> GetAllParkinglotsWhere(Dictionary<string, string> filters)
+        public IEnumerable<Parkinglot> GetParkinglotByName(string name)
         {
-
-            var query = _context.GetAll<Parkinglot>();
-
-            foreach (var property in filters.Keys)
-            {
-                var filter = filters[property];
-                filter = filter?.ToLower() ?? "";
-
-                query = query.Where(x => 
-                    (x.GetType().GetProperty(property).GetValue(x) == typeof(int) 
-                    ? Convert.ToInt32(x.GetType().GetProperty(property).GetValue(x)) == Convert.ToInt32(filter) 
-                    : Convert.ToString(x.GetType().GetProperty(property).GetValue(x)).ToLower().Contains(filter)));
-
-            }
-
-            return query;
-
+            return _context.GetAll<Parkinglot>().Where(p => p.name == name);
         }
+
+        public IEnumerable<Parkinglot> GetParkinglotByZip(string zip)
+        {
+            return _context.GetAll<Parkinglot>().Where(p => p.zipcode == zip);
+        }
+
     }
 }
