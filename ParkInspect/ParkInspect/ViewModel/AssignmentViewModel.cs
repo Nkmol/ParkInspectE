@@ -10,14 +10,14 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class OpdrachtViewModel : ViewModelBase
+    public class AssignmentViewModel : ViewModelBase
     {
-        public ObservableCollection<Object> OpdrachtenCollection { get; set; }
+        public ObservableCollection<Object> AssignmentsCollection { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the OpdrachtViewModel class.
         /// </summary>
-        public OpdrachtViewModel()
+        public AssignmentViewModel()
         {
         }
     }

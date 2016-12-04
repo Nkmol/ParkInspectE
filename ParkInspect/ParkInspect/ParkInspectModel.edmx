@@ -22,7 +22,6 @@
         </EntityType>
         <EntityType Name="Asignment">
           <Key>
-            <PropertyRef Name="client_id" />
             <PropertyRef Name="id" />
           </Key>
           <Property Name="client_id" Type="int" Nullable="false" />
@@ -44,7 +43,6 @@
         <EntityType Name="Contactperson">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="client_id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="client_id" Type="int" Nullable="false" />
@@ -127,7 +125,6 @@
           <Property Name="deadline" Type="datetime" />
           <Property Name="date" Type="datetime" />
           <Property Name="clarification" Type="text" />
-          <Property Name="assigment_client_id" Type="int" Nullable="false" />
           <Property Name="assignment_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inspector">
@@ -368,11 +365,9 @@
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Asignment">
-              <PropertyRef Name="client_id" />
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Inspection">
-              <PropertyRef Name="assigment_client_id" />
               <PropertyRef Name="assignment_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -630,7 +625,6 @@
         </EntityType>
         <EntityType Name="Asignment">
           <Key>
-            <PropertyRef Name="client_id" />
             <PropertyRef Name="id" />
           </Key>
           <Property Name="client_id" Type="Int32" Nullable="false" />
@@ -758,7 +752,6 @@
           <Property Name="deadline" Type="DateTime" Precision="3" />
           <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="assigment_client_id" Type="Int32" Nullable="false" />
           <Property Name="assignment_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Asignment" Relationship="Self.FK_Inspectie_Opdracht" FromRole="Inspection" ToRole="Asignment" />
           <NavigationProperty Name="Form" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Inspection" ToRole="Form" />
@@ -872,11 +865,9 @@
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Asignment">
-              <PropertyRef Name="client_id" />
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Inspection">
-              <PropertyRef Name="assigment_client_id" />
               <PropertyRef Name="assignment_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1084,13 +1075,12 @@
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
         </Association>
         <EntityContainer Name="ParkInspectEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
-          <EntitySet Name="Absence" EntityType="Self.Absence" />
-          <EntitySet Name="Asignment" EntityType="Self.Asignment" />
-          <EntitySet Name="Client" EntityType="Self.Client" />
-          <EntitySet Name="Contactperson" EntityType="Self.Contactperson" />
-          <EntitySet Name="Datatype" EntityType="Self.Datatype" />
-          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Absences" EntityType="Self.Absence" />
+          <EntitySet Name="Asignments" EntityType="Self.Asignment" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+		  <EntitySet Name="Contactperson" EntityType="Self.Contactperson" />
+          <EntitySet Name="Datatypes" EntityType="Self.Datatype" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
           <EntitySet Name="Field" EntityType="Self.Field" />
           <EntitySet Name="Form" EntityType="Self.Form" />
@@ -1193,20 +1183,35 @@
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Contactperson">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="ParkInspectModel.FK_Client_Contactperson" FromRole="Contactperson" ToRole="Client" />
+        </EntityType>
+        <Association Name="FK_Client_Contactperson">
+          <End Type="ParkInspectModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="ParkInspectModel.Contactperson" Role="Contactperson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Contactperson">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ParkInspectModelStoreContainer" CdmEntityContainer="ParkInspectEntities">
-          <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="ParkInspectModel.C__RefactorLog">
-              <MappingFragment StoreEntitySet="__RefactorLog">
-                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Absence">
+          <EntitySetMapping Name="Absences">
             <EntityTypeMapping TypeName="ParkInspectModel.Absence">
               <MappingFragment StoreEntitySet="Absence">
                 <ScalarProperty Name="start" ColumnName="start" />
@@ -1325,7 +1330,6 @@
                 <ScalarProperty Name="deadline" ColumnName="deadline" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="clarification" ColumnName="clarification" />
-                <ScalarProperty Name="assigment_client_id" ColumnName="assigment_client_id" />
                 <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
               </MappingFragment>
             </EntityTypeMapping>
