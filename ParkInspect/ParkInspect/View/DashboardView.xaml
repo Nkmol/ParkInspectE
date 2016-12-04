@@ -8,8 +8,8 @@
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
-        Height="600"
-        Width="1000"
+        Height="500"
+        Width="800"
         Title="ParkInspect"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}">
     
@@ -24,25 +24,25 @@
     <Grid x:Name="LayoutRoot">
         <TabControl>
             <TabItem Header="Klanten">
-              <userControls:KlantControl />
+              <userControls:CustomerControl />
             </TabItem>    
             <TabItem Header="Parkeerplaatsen">
               <userControls:ParkeerplaatsControl />
             </TabItem>
             <TabItem Header="Opdrachten">
-              <userControls:OpdrachtControl />
+              <userControls:AssignmentControl />
             </TabItem>    
             <TabItem Header="Inspectie"> 
-              <userControls:InspectieControl />  
+              <userControls:InspectionControl />  
             </TabItem>
             <TabItem Header="Vragenlijst">
-              <userControls:VragenlijstControl />
+              <userControls:FormControl />
             </TabItem>
             <TabItem Header="Personeel">
-              <userControls:PersoneelControl />
+              <userControls:EmployeeControl />
             </TabItem>
             <TabItem Header="Rapportage">
-              <userControls:RapportageControl />  
+              <userControls:ReportControl />  
             </TabItem>
         </TabControl>
     </Grid>
