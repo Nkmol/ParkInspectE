@@ -1,5 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace ParkInspect.ViewModel
 {
@@ -22,6 +29,8 @@ namespace ParkInspect.ViewModel
         public const string WelcomeTitlePropertyName = "WelcomeTitle";
 
         private string _welcomeTitle = string.Empty;
+
+        //public ObservableCollection<Users> klanten;
 
         /// <summary>
         /// Gets the WelcomeTitle property.

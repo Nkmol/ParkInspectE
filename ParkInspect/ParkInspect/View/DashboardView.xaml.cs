@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using ParkInspect.ViewModel;
 
 namespace ParkInspect
@@ -12,6 +11,8 @@ namespace ParkInspect
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
+        /// 
+
         public MainWindow()
         {
             InitializeComponent();

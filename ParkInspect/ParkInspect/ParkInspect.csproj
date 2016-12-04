@@ -185,6 +185,7 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ParkinglotService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
