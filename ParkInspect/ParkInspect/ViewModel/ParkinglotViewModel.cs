@@ -145,26 +145,5 @@ namespace ParkInspect.ViewModel
 
         }
 
-        private bool CanSave()
-        {
-
-            return false;
-
-            //if (Parkinglot?.name == null || Parkinglot.name.Equals(""))
-            //    return false;
-
-            //if (Parkinglot?.region_name == null || Parkinglot.region_name.Equals(""))
-            //    return false;
-
-            //if (Parkinglot?.clarification == null || Parkinglot.clarification.Equals(""))
-            //    return false;
-
-            //if (Parkinglot?.zipcode == null || Parkinglot.zipcode.Equals(""))
-            //    return false;
-
-            //return (Parkinglot?.number != null && Parkinglot.number > 0);
-
-        }
-
     }
 }

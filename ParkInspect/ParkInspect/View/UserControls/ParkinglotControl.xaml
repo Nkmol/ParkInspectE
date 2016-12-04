@@ -62,7 +62,15 @@
                             </TextBox.Text>
                         </TextBox>
 
-                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
+                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190">
+                            <ComboBox.Text>
+                                <Binding Path="Region" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
 
                         <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="190">
                             <TextBox.Text>
@@ -86,6 +94,7 @@
                                                 <Condition Binding="{Binding ElementName=ZipBox, Path=(Validation.HasError)}" Value="false" />
                                                 <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="false" />
                                                 <Condition Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}" Value="false" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>
