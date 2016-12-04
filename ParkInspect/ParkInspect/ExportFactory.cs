@@ -60,7 +60,7 @@ namespace ParkInspect
         /*
          * Save dataset to PDF.
          * @param data - Dataset that should be exported
-         * @param columns - The columns that should be executed, will have to match the dataset!
+         * @param columns (optional) - The columns that should be executed, will have to match the dataset!
          * @param headers (optional) - The shown headers of the table. 
          */
         public static void ExportPdf<T>(IEnumerable<T> data, string[] columns = null, string[] headers = null)
