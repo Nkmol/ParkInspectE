@@ -40,13 +40,25 @@ namespace ParkInspect
          * string[] headers (optional) = All the cosmetic headers for the table. Length has to match columns length
          * PdfAlignment alignment (optional) - Tells the document where to align the table
          */
-        public void AddTable<T>(IEnumerable<T> data, string[] columns, string[] headers = null, PdfAlignment alignment = PdfAlignment.LEFT)
+        public void AddTable<T>(IEnumerable<T> data, string[] columns = null, string[] headers = null, PdfAlignment alignment = PdfAlignment.LEFT)
         {
 
-            if (headers != null && columns.Length != headers.Length)
+            if ((headers != null && headers.Length > 0) && (columns != null && columns.Length > 0) && columns.Length != headers.Length)
                 return;
 
-            var t = typeof(T);
+            //Generic typing can be tricky. If not given by generic, but cast to dynamic, the if statement will save the nullpointer.
+            var type = typeof(T);
+            if(type.GetProperties().Length == 0)
+                type = data.GetType().GenericTypeArguments[0];
+
+            if (columns == null || columns.Length == 0)
+            {
+                columns = new string[type.GetProperties().Length];
+                for (int i = 0; i < type.GetProperties().Length; i++)
+                    columns[i] = type.GetProperties()[i].Name;
+            }
+            
+
             var table = new PdfPTable(columns.Length);
             table.HorizontalAlignment = (int) alignment;
 
@@ -61,8 +73,9 @@ namespace ParkInspect
 
                 foreach (var column in columns)
                 {
-                    var p = t.GetProperty(column);
-                    table.AddCell((string)p.GetValue(item));
+                    var p = type.GetProperty(column);
+                    if(p != null)
+                        table.AddCell("" + p.GetValue(item));
                 }
 
             }

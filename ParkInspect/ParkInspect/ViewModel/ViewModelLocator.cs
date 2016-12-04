@@ -43,6 +43,7 @@ namespace ParkInspect.ViewModel
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
+            SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<EmployeeViewModel>();
             SimpleIoc.Default.Register<InspectionViewModel>();
             SimpleIoc.Default.Register<ReportViewModel>();
@@ -57,6 +58,8 @@ namespace ParkInspect.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
+
+        public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 

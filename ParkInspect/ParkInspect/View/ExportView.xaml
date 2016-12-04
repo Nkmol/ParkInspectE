@@ -1,12 +1,23 @@
-﻿<Window x:Class="ParkInspect.View.ExportView"
+﻿<controls:MetroWindow x:Class="ParkInspect.ExportView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ParkInspect.View.UserControls"
-        mc:Ignorable="d"
-        Title="ExportView" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
-</Window>
+        xmlns:ignore="http://www.galasoft.ch/ignore"            
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="using:ParkInspect.View.UserControls"
+        xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
+        mc:Ignorable="d ignore"
+        Height="600"
+        Width="1000"
+        Title="ParkInspect"
+        DataContext="{Binding Export, Source={StaticResource Locator}}">
+    <StackPanel>
+
+        <DataGrid x:Name="ExportGrid" IsReadOnly="True" ItemsSource="{Binding Data, Mode=TwoWay}">
+
+        </DataGrid>
+        <Button x:Name="Export" Content="Export selected data" Command="{Binding ExportCommand}"/>
+
+    </StackPanel>
+</controls:MetroWindow>

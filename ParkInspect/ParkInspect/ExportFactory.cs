@@ -63,7 +63,7 @@ namespace ParkInspect
          * @param columns - The columns that should be executed, will have to match the dataset!
          * @param headers (optional) - The shown headers of the table. 
          */
-        public static void ExportPdf<T>(IEnumerable<T> data, string[] columns, string[] headers = null)
+        public static void ExportPdf<T>(IEnumerable<T> data, string[] columns = null, string[] headers = null)
         {
 
             if (!PromptSave("PDF Files | *.pdf"))

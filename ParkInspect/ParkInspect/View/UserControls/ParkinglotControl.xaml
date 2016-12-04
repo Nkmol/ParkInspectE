@@ -12,15 +12,41 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">
-                <DataGrid Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding name}" />
-                        <DataGridTextColumn Header="Zip code" Binding="{Binding zipcode}" />
-                        <DataGridTextColumn Header="Number" Binding="{Binding number}" />
-                        <DataGridTextColumn Header="Region" Binding="{Binding region_name}" />
-                        <DataGridTextColumn Header="Clarification" Binding="{Binding clarification}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <StackPanel>
+
+                    <Label Name="SearchLabel">
+                        Search:
+                    </Label>
+
+                    <Grid Name="FilterGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Name="NameFilter" HorizontalAlignment="Stretch" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="1" Name="ZipFilter" HorizontalAlignment="Stretch" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="2" Name="NumberFilter" HorizontalAlignment="Stretch" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="3" Name="RegionFilter" HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="4" Name="ClarificationFilter" HorizontalAlignment="Stretch" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </Grid>
+
+                    <DataGrid Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding name}"/>
+                            <DataGridTextColumn Header="Zip code" Width="1*" Binding="{Binding zipcode}" />
+                            <DataGridTextColumn Header="Number" Width="1*" Binding="{Binding number}" />
+                            <DataGridTextColumn Header="Region" Width="1*" Binding="{Binding region_name}" />
+                            <DataGridTextColumn Header="Clarification" Width="1*" Binding="{Binding clarification}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button x:Name="ExportButton" Content="Export Data" PreviewMouseDown="Unselect" Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                    
+                </StackPanel>
             </TabItem>
             <TabItem Header="Management">
 
