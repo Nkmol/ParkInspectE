@@ -73,7 +73,7 @@
                         </StackPanel>
                     </DockPanel>
                     <StackPanel Margin="0,270,0,0">
-                        <Label DataContext="{Binding Employees, Source={StaticResource Locator}}" Margin="0,0,0,10" Text="{Binding Notification, Mode=TwoWay}"></Label>
+                        <Label DataContext="{Binding Employees, Source={StaticResource Locator}}" Margin="0,0,0,10" Content="{Binding Notification, Mode=TwoWay}"></Label>
                         <Button HorizontalContentAlignment="Left" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding CreateItemCommand}" Margin="0,0,0,10" Content="Voeg toe"/>
                         <Button HorizontalContentAlignment="Left" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding EditItemCommand}" Margin="0,0,0,10" Content="Bewerken"/>
                         <Button HorizontalContentAlignment="Left" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,10" Content="Deselecteren"/>
