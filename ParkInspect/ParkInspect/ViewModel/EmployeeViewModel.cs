@@ -68,7 +68,7 @@ namespace ParkInspect.ViewModel
         public ICommand EditItemCommand { get; set; }
         public ICommand DeselectEmployeeCommand { get; set; }
 
-        public PersoneelViewModel(IRepository context)
+        public EmployeeViewModel(IRepository context)
         {
             //Service and employees
             Service = new EmployeeService(context);
@@ -123,7 +123,7 @@ namespace ParkInspect.ViewModel
         /// <summary>
         /// Initializes a new instance of the PersoneelViewModel class.
         /// </summary>
-        public PersoneelViewModel()
+        private void SetNewEmployee()
         {
             Employee e = new Employee();
             e.in_service_date = DateTime.Today;
