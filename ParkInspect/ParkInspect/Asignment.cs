@@ -23,9 +23,9 @@ namespace ParkInspect
         public int client_id { get; set; }
         public int id { get; set; }
         public Nullable<System.DateTime> date { get; set; }
-        public System.DateTime deadine { get; set; }
         public string state { get; set; }
         public string clarification { get; set; }
+        public System.DateTime deadline { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual State State1 { get; set; }

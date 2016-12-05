@@ -29,7 +29,6 @@ namespace ParkInspect
         public Nullable<System.DateTime> deadline { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public string clarification { get; set; }
-        public int assigment_client_id { get; set; }
         public int assignment_id { get; set; }
     
         public virtual Asignment Asignment { get; set; }
