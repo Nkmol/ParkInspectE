@@ -16,6 +16,12 @@ namespace ParkInspect.Services
             _context = context;
         }
 
+        public IEnumerable<Employee> GetEmployee(string email, string password)
+        {
+            return _context.Get<Employee>()
+                .Where(k => k.email == email && k.password == password);
+        }
+
         public IEnumerable<Employee> GetAllEmployees()
         {
             return _context.GetAll<Employee>();
@@ -51,7 +57,5 @@ namespace ParkInspect.Services
         {
             return _context.GetAll<Employee_Status>();
         }
-
-
     }
 }
