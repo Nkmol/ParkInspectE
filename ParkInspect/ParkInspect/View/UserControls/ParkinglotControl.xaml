@@ -6,19 +6,15 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             mc:Ignorable="d"
+             Width="1000"
+             Height="600"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
     <Grid>
         <TabControl Name="Tabs">
-            <TabItem Header="Overview">
-                
+            <TabItem Header="Overzicht">
                 <StackPanel>
-
-                    <Label Name="SearchLabel">
-                        Search:
-                    </Label>
-                    
+                    <Label Name="SearchLabel">Zoeken</Label>
                     <Grid Name="FilterGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -27,12 +23,12 @@
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-
-                        <TextBox Grid.Column="0" Name="NameFilter" HorizontalAlignment="Stretch" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBox Grid.Column="1" Name="ZipFilter" HorizontalAlignment="Stretch" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBox Grid.Column="2" Name="NumberFilter" HorizontalAlignment="Stretch" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBox Grid.Column="3" Name="RegionFilter" HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBox Grid.Column="4" Name="ClarificationFilter" HorizontalAlignment="Stretch" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        
+                        <TextBox Grid.Column="0" Name="NameFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="1" Name="ZipFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="2" Name="NumberFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="3" Name="RegionFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="4" Name="ClarificationFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     </Grid>
 
                     <DataGrid Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
@@ -44,45 +40,38 @@
                             <DataGridTextColumn Header="Clarification" Width="1*" Binding="{Binding clarification}" />
                         </DataGrid.Columns>
                     </DataGrid>
-
                 </StackPanel>
-                
-                
-                
-                
-                
             </TabItem>
             <TabItem Header="Management">
-
                 <Grid>
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="248*"/>
-                        <ColumnDefinition Width="269*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <StackPanel Grid.Row="0" Grid.Column="0">
-                        <Label x:Name="NameLabel" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label x:Name="ZipLabel" Content="ZIP Code:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label x:Name="RegioLabel" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label x:Name="NumberLabel" Content="Number:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label x:Name="ClarificationLabel" Content="Clarification:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    </StackPanel>
-                    
-                    <StackPanel Grid.Row="0" Grid.Column="1">
-                        <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Zip, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
-                        <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="274"/>
-                        <Button x:Name="NewButton" Content="New Parkinglot" PreviewMouseDown="Unselect" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="274"/>
+                    <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="250">
+                        <StackPanel>
+                            <Label x:Name="NameLabel" Content="Naam parkeerplaats" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="NameBox" Margin="0,0,0,10" HorizontalAlignment="Left" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                            
+                            <Label x:Name="ZipLabel" Content="Postcode" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Text="{Binding Zip, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,0,0,10"/>
+                            
+                            <Label x:Name="RegioLabel" Content="Regio" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="250" Margin="0,0,0,10"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="480" Height="250">
+                        <StackPanel>
+                            <Label x:Name="NumberLabel" Content="Nummer" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,0,0,10"/>
+
+                            <Label x:Name="ClarificationLabel" Content="Verduidelijking" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="250"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Margin="0,250,0,0">
                         <Label x:Name="MessageLabel" Content="{Binding Message}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                        <Button x:Name="SaveButton" Content="Voeg toe" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                        <Button x:Name="NewButton" Content="Bewerken"  Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                        <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,10"/>
                     </StackPanel>
-
                 </Grid>
-                
-
             </TabItem>
         </TabControl>
     </Grid>
