@@ -27,6 +27,7 @@
         <AssociationConnector Association="ParkInspectModel.FK_Asignment_Client" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Asignment_Status" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Opdracht" ManuallyRouted="false" />
+
         <AssociationConnector Association="ParkInspectModel.FK_Field_Datatype" ManuallyRouted="true" >
           <ConnectorPoint PointX="8.9519956402994048" PointY="1.75" />
           <ConnectorPoint PointX="8.9519956402994048" PointY="1.3749995" />
@@ -49,6 +50,7 @@
         <AssociationConnector Association="ParkInspectModel.FK_Parkinglot_Region" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.Inspector" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.Inspector_has_Inspection" ManuallyRouted="false" />
+
         <EntityTypeShape EntityType="ParkInspectModel.Contactperson" Width="1.5" PointX="8.75" PointY="12.25" />
         <AssociationConnector Association="ParkInspectModel.FK_Client_Contactperson" />
       </Diagram>

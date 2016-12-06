@@ -12,7 +12,7 @@ namespace ParkInspect
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class ParkInspectEntities : DbContext
     {
         public ParkInspectEntities()

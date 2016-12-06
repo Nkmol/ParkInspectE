@@ -12,6 +12,7 @@ namespace ParkInspect.Services
         {
             _context = context;
         }
+
         public void AddClient(Client c)
         {
             _context.Create(c);

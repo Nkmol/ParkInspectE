@@ -26,7 +26,7 @@ namespace ParkInspect
         public string state { get; set; }
         public string clarification { get; set; }
         public System.DateTime deadline { get; set; }
-    
+		
         public virtual Client Client { get; set; }
         public virtual State State1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

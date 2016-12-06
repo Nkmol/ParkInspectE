@@ -184,6 +184,7 @@
     <Compile Include="Role.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AbsenceService.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ParkinglotService.cs" />
@@ -195,6 +196,7 @@
     </Compile>
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
+    <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
@@ -205,6 +207,9 @@
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\UserControls\AbsenceControl.xaml.cs">
+      <DependentUpon>AbsenceControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\InspectionControl.xaml.cs">
       <DependentUpon>InspectionControl.xaml</DependentUpon>
     </Compile>
@@ -242,6 +247,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UserControls\AbsenceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\InspectionControl.xaml">
       <SubType>Designer</SubType>
