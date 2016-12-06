@@ -44,7 +44,7 @@
             </TabItem>
             <TabItem Header="Management">
                 <Grid>
-                    <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="250" Margin="20,0,0,0">
+                    <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="255" Height="250" Margin="100,0,0,0">
                         <StackPanel>
                             <Label x:Name="NameLabel" Content="Naam parkeerplaats" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBox x:Name="NameBox" Margin="0,0,0,10" HorizontalAlignment="Left" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="250"/>
@@ -56,7 +56,7 @@
                             <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="250" Margin="0,0,0,10"/>
                         </StackPanel>
                     </DockPanel>
-                    <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="480" Height="250">
+                    <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="255" Height="250" Margin="0,0,100,0">
                         <StackPanel>
                             <Label x:Name="NumberLabel" Content="Nummer" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,0,0,10"/>
@@ -65,11 +65,11 @@
                             <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="250"/>
                         </StackPanel>
                     </DockPanel>
-                    <StackPanel Margin="0,250,0,0">
-                        <Label x:Name="MessageLabel" Content="{Binding Message}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
-                        <Button x:Name="SaveButton" Content="Voeg toe" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,0,0,10"/>
-                        <Button x:Name="NewButton" Content="Bewerken"  Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,0,0,10"/>
-                        <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal" Margin="100,250,100,0">
+                        <Label Width="300" Height="50" x:Name="MessageLabel" Content="{Binding Message}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button x:Name="SaveButton" Content="Voeg toe" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="100" Margin="150,0,10,0"/>
+                        <Button x:Name="NewButton" Content="Bewerken"  Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="100" Margin="0,0,10,0"/>
+                        <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
