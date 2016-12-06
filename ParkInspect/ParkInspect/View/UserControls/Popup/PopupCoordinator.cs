@@ -18,10 +18,10 @@ namespace ParkInspect.View.UserControls.Popup
         /// </summary>
         public static readonly PopupCoordinator Instance = new PopupCoordinator();
 
-        public Task ShowPopupAsync(object context, string title)
+        public Task ShowPopupAsync(object context, string title, object content)
         {
             var window = GetMetroWindow(context);
-            return window.Invoke(() => window.ShowChildWindowAsync(new BaseChildWindow() { IsModal = true, AllowMove = true}));
+            return window.Invoke(() => window.ShowChildWindowAsync(new BaseChildWindow() { IsModal = true, AllowMove = true, Content = content}));
         }
 
         private static MetroWindow GetMetroWindow(object context)
@@ -32,7 +32,7 @@ namespace ParkInspect.View.UserControls.Popup
             }
             if (!ChildWindowParticipation.IsRegistered(context))
             {
-                throw new InvalidOperationException("Context is not registered. Consider using ChildWindowParticipation.Register in XAML to bind in the DataContext.");
+                throw new InvalidOperationException("Context is not registered. Consider using ChildWindowParticipation. Register in XAML to bind in the DataContext.");
             }
 
             var association = ChildWindowParticipation.GetAssociation(context);

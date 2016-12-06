@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
 
 namespace ParkInspect.ViewModel
@@ -176,7 +177,7 @@ namespace ParkInspect.ViewModel
 
         private async void SearchRegion()
         {
-            await PopupCoordinator.ShowPopupAsync(this, "test");
+            await PopupCoordinator.ShowPopupAsync(this, "test", new RegionOverview()); //TODO Don't let ViewModel know of UserControl/View
         }
 
         private void UpdateParkinglots()

@@ -16,6 +16,7 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.Regio;
 
 namespace ParkInspect.ViewModel
 {
@@ -52,7 +53,9 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkinglotViewModel>();
-            SimpleIoc.Default.Register<ExportViewModel>();           
+            SimpleIoc.Default.Register<ExportViewModel>();
+
+            SimpleIoc.Default.Register<RegionOverviewViewModel>();
         }
 
         /// <summary>
@@ -78,6 +81,8 @@ namespace ParkInspect.ViewModel
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
+
+        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.
