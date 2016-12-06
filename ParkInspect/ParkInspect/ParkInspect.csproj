@@ -185,6 +185,7 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ParkinglotService.cs" />
     <Compile Include="State.cs">
@@ -205,6 +206,9 @@
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\ExportView.xaml.cs">
+      <DependentUpon>ExportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\InspectionControl.xaml.cs">
       <DependentUpon>InspectionControl.xaml</DependentUpon>
     </Compile>
@@ -242,6 +246,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ExportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\InspectionControl.xaml">
       <SubType>Designer</SubType>

@@ -12,13 +12,12 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">
-                
                 <StackPanel>
 
                     <Label Name="SearchLabel">
                         Search:
                     </Label>
-                    
+
                     <Grid Name="FilterGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -45,12 +44,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                    <Button x:Name="ExportButton" Content="Export Data" PreviewMouseDown="Unselect" Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                    
                 </StackPanel>
-                
-                
-                
-                
-                
             </TabItem>
             <TabItem Header="Management">
 

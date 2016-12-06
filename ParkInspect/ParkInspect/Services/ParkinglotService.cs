@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,14 +10,11 @@ using ParkInspect.Repository;
 
 namespace ParkInspect.Services
 {
-    public class ParkinglotService
+    public class ParkinglotService : DataService
     {
 
-        private readonly IRepository _context;
-
-        public ParkinglotService(IRepository context)
+        public ParkinglotService(IRepository context) : base(context)
         {
-            _context = context;
         }
 
         public bool AddParkinglot(Parkinglot p)
@@ -22,8 +22,8 @@ namespace ParkInspect.Services
 
             try
             {
-                _context.Create(p);
-                _context.Save();
+                Context.Create(p);
+                Context.Save();
                 return true;
             }
             catch (Exception)
@@ -37,8 +37,8 @@ namespace ParkInspect.Services
         {
             try
             {
-                _context.Update(p);
-                _context.Save();
+                Context.Update(p);
+                Context.Save();
                 return true;
             }
             catch (Exception)
@@ -50,23 +50,23 @@ namespace ParkInspect.Services
 
         public IEnumerable<Parkinglot> GetAllParkinglots()
         {
-            return _context.GetAll<Parkinglot>();
+            return Context.GetAll<Parkinglot>();
         }
 
         public IEnumerable<Region> GetAllRegions()
         {
-            return _context.GetAll<Region>();
+            return Context.GetAll<Region>();
         }
 
         public IEnumerable<Inspection> GetAllInspections()
         {
-            return _context.GetAll<Inspection>();
+            return Context.GetAll<Inspection>();
         }
 
         public IEnumerable<Parkinglot> GetAllParkinglotsWhere(Dictionary<string, string> filters)
         {
 
-            var query = _context.GetAll<Parkinglot>();
+            var query = Context.GetAll<Parkinglot>();
 
             foreach (var property in filters.Keys)
             {
@@ -83,5 +83,6 @@ namespace ParkInspect.Services
             return query;
 
         }
+
     }
 }

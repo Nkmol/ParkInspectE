@@ -33,6 +33,7 @@ namespace ParkInspect.ViewModel
         private string _clarificationFilter;
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand NewCommand { get; set; }
+        public RelayCommand ExportCommand { get; set; }
 
         public Parkinglot Parkinglot
         {
@@ -161,6 +162,7 @@ namespace ParkInspect.ViewModel
 
             SaveCommand = new RelayCommand(Save, () => CanSave());
             NewCommand = new RelayCommand(NewParkinglot);
+            ExportCommand = new RelayCommand(Export);
             Service = new ParkinglotService(context);
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAllRegions());
@@ -228,6 +230,25 @@ namespace ParkInspect.ViewModel
                 return false;
 
             return (Parkinglot?.number != null && Parkinglot.number > 0);
+
+        }
+
+        private void Export()
+        {
+
+            ExportView export = new ExportView();
+            export.Show();
+
+            var filters = new Dictionary<string, string>()
+            {
+                {"name", NameFilter},
+                {"region_name", RegionFilter },
+                {"number", NumberFilter },
+                {"zipcode", ZipFilter },
+                {"clarification", ClarificationFilter }
+            };
+
+            export.FillGrid(Service.GetAllParkinglotsWhere(filters), Service);
 
         }
 
