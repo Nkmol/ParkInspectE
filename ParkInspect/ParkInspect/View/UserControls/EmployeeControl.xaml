@@ -32,7 +32,7 @@
             </TabItem>
             <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
                 <Grid>
-                    <DockPanel Height="250" Width="480" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <DockPanel Height="310" Width="480" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <StackPanel>
                             <Label Content="Voornaam" />
                             <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50"  Text="{Binding firstname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
@@ -50,7 +50,7 @@
                             <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding password, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </DockPanel>
-                    <DockPanel Height="250" Width="480" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <DockPanel Height="310" Width="480" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <StackPanel>
                             <Label Content="Datum in dienst" />
                             <DatePicker Width="250" SelectedDate="{Binding in_service_date, Mode=TwoWay}"  HorizontalAlignment="Left"
@@ -72,11 +72,11 @@
                             <ComboBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
                         </StackPanel>
                     </DockPanel>
-                    <StackPanel Margin="0,270,0,0">
+                    <StackPanel Margin="0,320,0,0">
                         <Label DataContext="{Binding Employees, Source={StaticResource Locator}}" Margin="0,0,0,10" Content="{Binding Notification, Mode=TwoWay}"></Label>
-                        <Button HorizontalContentAlignment="Left" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding CreateItemCommand}" Margin="0,0,0,10" Content="Voeg toe"/>
-                        <Button HorizontalContentAlignment="Left" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding EditItemCommand}" Margin="0,0,0,10" Content="Bewerken"/>
-                        <Button HorizontalContentAlignment="Left" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,10" Content="Deselecteren"/>
+                        <Button Width="100" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding CreateItemCommand}" Margin="0,0,0,10" Content="Voeg toe"/>
+                        <Button Width="100" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding EditItemCommand}" Margin="0,0,0,10" Content="Bewerken"/>
+                        <Button Width="100" DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,10" Content="Deselecteren"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

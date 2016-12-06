@@ -44,7 +44,7 @@
             </TabItem>
             <TabItem Header="Management">
                 <Grid>
-                    <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="250">
+                    <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="250" Margin="20,0,0,0">
                         <StackPanel>
                             <Label x:Name="NameLabel" Content="Naam parkeerplaats" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBox x:Name="NameBox" Margin="0,0,0,10" HorizontalAlignment="Left" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="250"/>
