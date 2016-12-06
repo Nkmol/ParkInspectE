@@ -84,22 +84,5 @@ namespace ParkInspect.Services
 
         }
 
-        public IEnumerable GetData(List<string> columns, List<string> alias)
-        {
-
-            var query = Context.GetAll<Parkinglot>().AsEnumerable().Select(x =>
-            {
-                var data = new ExpandoObject();
-                for (int i = 0; i < columns.Count; i++)
-                {
-                    ((IDictionary<String, Object>)data)
-                     .Add((alias != null ? alias[i] : columns[i]), x.GetType().GetProperty(columns[i]).GetValue(x));
-                }
-                return data;
-            });
-            return query;
-
-        }
-
     }
 }
