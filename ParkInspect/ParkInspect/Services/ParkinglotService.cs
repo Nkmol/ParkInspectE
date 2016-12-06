@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,14 +10,11 @@ using ParkInspect.Repository;
 
 namespace ParkInspect.Services
 {
-    public class ParkinglotService
+    public class ParkinglotService : DataService
     {
 
-        private readonly IRepository _context;
-
-        public ParkinglotService(IRepository context)
+        public ParkinglotService(IRepository context) : base(context)
         {
-            _context = context;
         }
 
         public bool AddParkinglot(Parkinglot p)
@@ -22,23 +22,23 @@ namespace ParkInspect.Services
 
             try
             {
-                _context.Create(p);
-                _context.Save();
+                Context.Create(p);
+                Context.Save();
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
-            
+
         }
 
         public bool UpdateParkinglot(Parkinglot p)
         {
             try
             {
-                _context.Update(p);
-                _context.Save();
+                Context.Update(p);
+                Context.Save();
                 return true;
             }
             catch (Exception)
@@ -50,27 +50,38 @@ namespace ParkInspect.Services
 
         public IEnumerable<Parkinglot> GetAllParkinglots()
         {
-            return _context.GetAll<Parkinglot>();
+            return Context.GetAll<Parkinglot>();
         }
 
         public IEnumerable<Region> GetAllRegions()
         {
-            return _context.GetAll<Region>();
+            return Context.GetAll<Region>();
         }
 
         public IEnumerable<Inspection> GetAllInspections()
         {
-            return _context.GetAll<Inspection>();
+            return Context.GetAll<Inspection>();
         }
 
-        public IEnumerable<Parkinglot> GetParkinglotByName(string name)
+        public IEnumerable<Parkinglot> GetAllParkinglotsWhere(Dictionary<string, string> filters)
         {
-            return _context.GetAll<Parkinglot>().Where(p => p.name == name);
-        }
 
-        public IEnumerable<Parkinglot> GetParkinglotByZip(string zip)
-        {
-            return _context.GetAll<Parkinglot>().Where(p => p.zipcode == zip);
+            var query = Context.GetAll<Parkinglot>();
+
+            foreach (var property in filters.Keys)
+            {
+                var filter = filters[property];
+                filter = filter?.ToLower() ?? "";
+
+                query = query.Where(x => 
+                    (x.GetType().GetProperty(property).GetValue(x) == typeof(int) 
+                    ? Convert.ToInt32(x.GetType().GetProperty(property).GetValue(x)) == Convert.ToInt32(filter) 
+                    : Convert.ToString(x.GetType().GetProperty(property).GetValue(x)).ToLower().Contains(filter)));
+
+            }
+
+            return query;
+
         }
 
     }

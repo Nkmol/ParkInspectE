@@ -21,7 +21,7 @@
           <Property Name="client_id" Type="int" Nullable="false" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="date" Type="date" />
-          <Property Name="deadine" Type="datetime" Nullable="false" />
+          <Property Name="deadline" Type="datetime" Nullable="false" />
           <Property Name="state" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="clarification" Type="text" />
         </EntityType>
@@ -142,7 +142,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="region_name" Type="varchar" MaxLength="50" />
-          <Property Name="zipcode" Type="varchar" MaxLength="50" />
+          <Property Name="zipcode" Type="varchar" MaxLength="10" />
           <Property Name="number" Type="int" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="clarification" Type="text" Nullable="false" />
@@ -246,7 +246,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Job">
+        <Association Name="FK_Employee_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -518,7 +518,7 @@
             <End Role="Employee_Status" EntitySet="Employee_Status" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Job" Association="Self.FK_Employee_Job">
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
@@ -616,12 +616,12 @@
           <Property Name="client_id" Type="Int32" Nullable="false" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="date" Type="DateTime" Precision="0" />
-          <Property Name="deadine" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Asignment_Client" FromRole="Asignment" ToRole="Client" />
           <NavigationProperty Name="State1" Relationship="Self.FK_Asignment_Status" FromRole="Asignment" ToRole="State" />
           <NavigationProperty Name="Inspections" Relationship="Self.FK_Inspectie_Opdracht" FromRole="Asignment" ToRole="Inspection" />
+          <Property Name="deadline" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -743,7 +743,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="region_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="zipcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="number" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1186,10 +1186,10 @@
           <EntitySetMapping Name="Asignments">
             <EntityTypeMapping TypeName="ParkInspectModel.Asignment">
               <MappingFragment StoreEntitySet="Asignment">
+                <ScalarProperty Name="deadline" ColumnName="deadline" />
                 <ScalarProperty Name="client_id" ColumnName="client_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="deadine" ColumnName="deadine" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="clarification" ColumnName="clarification" />
               </MappingFragment>
