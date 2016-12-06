@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls.Popup;
 
 namespace ParkInspect.ViewModel
 {
@@ -33,6 +34,7 @@ namespace ParkInspect.ViewModel
         private string _clarificationFilter;
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand NewCommand { get; set; }
+        public RelayCommand SearchCommand { get; set; }
 
         public Parkinglot Parkinglot
         {
@@ -156,8 +158,12 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public ParkinglotViewModel(IRepository context)
+        public PopupCoordinator PopupCoordinator { get; set; }
+
+        public ParkinglotViewModel(IRepository context, PopupCoordinator popupCoordinator)
         {
+            PopupCoordinator = popupCoordinator;
+            SearchCommand = new RelayCommand(SearchRegion);
 
             SaveCommand = new RelayCommand(Save, () => CanSave());
             NewCommand = new RelayCommand(NewParkinglot);
@@ -166,6 +172,11 @@ namespace ParkInspect.ViewModel
             Regions = new ObservableCollection<Region>(Service.GetAllRegions());
             NewParkinglot();
            
+        }
+
+        private async void SearchRegion()
+        {
+            await PopupCoordinator.ShowPopupAsync(this, "test");
         }
 
         private void UpdateParkinglots()
