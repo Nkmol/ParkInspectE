@@ -46,6 +46,9 @@
             <TabItem Header="Rapportage">
                 <userControls:ReportControl />
             </TabItem>
+            <TabItem Header="Afwezigheid">
+                <userControls:AbsenceControl />
+            </TabItem>
         </TabControl>
     </Grid>
 
