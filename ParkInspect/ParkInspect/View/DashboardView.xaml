@@ -49,6 +49,9 @@
             <TabItem Header="Afwezigheid">
                 <userControls:AbsenceControl />
             </TabItem>
+            <TabItem Header="Contactpersonen">
+                <userControls:ContactpersoonControl />
+            </TabItem>
         </TabControl>
     </Grid>
 

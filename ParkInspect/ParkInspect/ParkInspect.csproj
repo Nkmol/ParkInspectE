@@ -215,8 +215,6 @@
     <Compile Include="View\UserControls\ContactpersoonControl.xaml.cs">
       <DependentUpon>ContactpersoonControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\InspectieControl.xaml.cs">
-      <DependentUpon>InspectieControl.xaml</DependentUpon>
     <Compile Include="View\ExportView.xaml.cs">
       <DependentUpon>ExportView.xaml</DependentUpon>
     </Compile>
@@ -265,7 +263,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\InspectieControl.xaml">
+    <Page Include="View\UserControls\InspectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+     </Page>
     <Page Include="View\ExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -273,9 +274,6 @@
     <Page Include="View\UserControls\AbsenceControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\CustomerControl.xaml">
       <SubType>Designer</SubType>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              mc:Ignorable="d"
              d:DesignHeight="386" d:DesignWidth="800"
@@ -26,25 +27,125 @@
                     <Label x:Name="TelnrLabel" Content="Achternaam:" Margin="89,75,196.4,154.2" />
                     <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
                            VerticalAlignment="Top" Width="109" />
-                    <TextBox x:Name="Voornaam" Text="{Binding firstname}" HorizontalAlignment="Left" Height="23"
-                             Margin="204,47,0,0" VerticalAlignment="Top" Width="150" />
-                    <TextBox x:Name="Telnr" Text="{Binding lastname}" HorizontalAlignment="Left" Height="23"
-                             Margin="204,75,0,0" VerticalAlignment="Top" Width="150" />
+                    <TextBox x:Name="Firstname" HorizontalAlignment="Left" Height="23"
+                             Margin="204,47,0,0" VerticalAlignment="Top" Width="150">
+                        <TextBox.Text>
+                            <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="Lastname" HorizontalAlignment="Left" Height="23"
+                             Margin="204,75,0,0" VerticalAlignment="Top" Width="150">
+                        <TextBox.Text>
+                            <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
                            VerticalAlignment="Top" Width="109" />
-                        <ComboBox HorizontalAlignment="Left" Height="27" Margin="205,105,0,0" VerticalAlignment="Top"
+                    <ComboBox Name="Customer" HorizontalAlignment="Left" Height="27" Margin="205,105,0,0"
+                              VerticalAlignment="Top"
                               Width="149" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                              ItemsSource="{Binding Clients}" DisplayMemberPath="name" SelectedItem="{Binding SelectedClient}" />
-                    
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" DataContext="{Binding Contactperson, Source={StaticResource Locator}}" Height="148" Margin="0,191,0.4,1">
-                            <Button Command="{Binding CompleteContactpersonCommand}"
-                                Content="Maak nieuw contactpersoon aan" Margin="10,0,0,0" Height="78" Width="210"/>
-                            <Button Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
+                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                              SelectedItem="{Binding SelectedClient}">
+                        <ComboBox.Text>
+                            <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.Text>
+                    </ComboBox>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom"
+                                DataContext="{Binding Contactperson, Source={StaticResource Locator}}" Height="148"
+                                Margin="0,191,0.4,1">
+                        <Button Command="{Binding CompleteContactpersonCommand, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Maak nieuw contactpersoon aan" Margin="10,0,0,0" Height="78" Width="210">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition
+                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" Margin="30,35,0,0" Height="78" Width="100" />
-                            <Button Command="{Binding UpdateButtonCommand}" Content="Update contactpersoon"
-                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78" Width="195"/>
-                            <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijder contactpersoon"
-                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78" Width="195"/>
+                        <Button Command="{Binding UpdateButtonCommand, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Update contactpersoon"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78"
+                                Width="195">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition
+                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijder contactpersoon"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78"
+                                Width="195">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition
+                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </TabItem>

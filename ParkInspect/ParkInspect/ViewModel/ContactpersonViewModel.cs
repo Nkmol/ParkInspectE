@@ -21,10 +21,10 @@ namespace ParkInspect.ViewModel
             Service = new ContactpersonService(context);
             Contactpersons = new ObservableCollection<Contactperson>(Service.GetAllContactpersons());
             Clients = new ObservableCollection<Client>(Service.GetAllClients());
-            CompleteContactpersonCommand = new RelayCommand(CompleteContactperson);
+            CompleteContactpersonCommand = new RelayCommand(CompleteContactperson, CanCreate);
             ResetButtonCommand = new RelayCommand(Reset);
-            UpdateButtonCommand = new RelayCommand(UpdateContactperson);
-            DeleteContactpersonCommand = new RelayCommand(DeleteContactperson);
+            UpdateButtonCommand = new RelayCommand(UpdateContactperson, CanUpdate);
+            DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
             SelectedClient = new Client();
             SelectedContactperson = new Contactperson();
         }
@@ -43,6 +43,9 @@ namespace ParkInspect.ViewModel
                     SelectedClient = _selectedContactperson.Client;
 
                 RaisePropertyChanged();
+                UpdateButtonCommand.RaiseCanExecuteChanged();
+                CompleteContactpersonCommand.RaiseCanExecuteChanged();
+                DeleteContactpersonCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -56,63 +59,62 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public ICommand CompleteContactpersonCommand { get; set; }
+        public RelayCommand CompleteContactpersonCommand { get; set; }
         public ICommand ResetButtonCommand { get; set; }
-        public ICommand UpdateButtonCommand { get; set; }
-        public ICommand DeleteContactpersonCommand { get; set; }
-
-        private void CompleteContactperson()
-        {
-            if (string.IsNullOrEmpty(SelectedContactperson.firstname) ||
-                string.IsNullOrEmpty(SelectedContactperson.lastname) ||
-                SelectedClient == null || string.IsNullOrWhiteSpace(SelectedContactperson.firstname) ||
-                string.IsNullOrWhiteSpace(SelectedContactperson.lastname))
-            {
-                MessageBox.Show("Een of meerdere velden is/zijn niet correct ingevuld");
-                return;
-            }
-
-            SelectedContactperson.client_id = SelectedClient.id;
-            Service.AddContactperson(SelectedContactperson);
-            Contactpersons.Add(SelectedContactperson);
-
-            MessageBox.Show("Contactpersoon toegevoegd");
-        }
+        public RelayCommand UpdateButtonCommand { get; set; }
+        public RelayCommand DeleteContactpersonCommand { get; set; }
 
         private void Reset()
         {
             SelectedContactperson = new Contactperson();
         }
 
+        private bool CanUpdate()
+        {
+            return (SelectedContactperson != null) && (SelectedContactperson.id != 0);
+        }
+
+        private bool CanCreate()
+        {
+            return (SelectedContactperson != null) && (SelectedContactperson.id == 0);
+        }
+
+        private bool CanDelete()
+        {
+            return (SelectedContactperson != null) && (SelectedContactperson.id != 0);
+        }
+
+        private void CompleteContactperson()
+        {
+            SelectedContactperson.client_id = SelectedClient.id;
+            Service.AddContactperson(SelectedContactperson);
+            Contactpersons.Add(SelectedContactperson);
+            CompleteContactpersonCommand.RaiseCanExecuteChanged();
+            UpdateButtonCommand.RaiseCanExecuteChanged();
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
+
+            MessageBox.Show("Contactpersoon toegevoegd");
+        }
+
         private void UpdateContactperson()
         {
-            if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
-                SelectedClient == null || string.IsNullOrWhiteSpace(SelectedContactperson.firstname) ||
-                string.IsNullOrWhiteSpace(SelectedContactperson.lastname) || Service.GetContactperson(SelectedContactperson) == null)
-            {
-                MessageBox.Show("Een of meerdere velden is/zijn niet correct ingevuld");
-                return;
-            }
-
             SelectedContactperson.client_id = SelectedClient.id;
             Service.UpdateContactperson(SelectedContactperson);
+            CompleteContactpersonCommand.RaiseCanExecuteChanged();
+            UpdateButtonCommand.RaiseCanExecuteChanged();
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
 
             MessageBox.Show("Contactpersoon geupdate");
         }
 
         private void DeleteContactperson()
         {
-            if (string.IsNullOrEmpty(SelectedContactperson.firstname) || string.IsNullOrEmpty(SelectedContactperson.lastname) ||
-                SelectedClient == null || string.IsNullOrWhiteSpace(SelectedContactperson.firstname) ||
-                string.IsNullOrWhiteSpace(SelectedContactperson.lastname) || Service.GetContactperson(SelectedContactperson) == null)
-            {
-                MessageBox.Show("Een of meerdere velden is/zijn niet correct ingevuld");
-                return;
-            }
-
             Service.DeleteContactpeson(SelectedContactperson);
             Contactpersons.Remove(SelectedContactperson);
             Reset();
+            CompleteContactpersonCommand.RaiseCanExecuteChanged();
+            UpdateButtonCommand.RaiseCanExecuteChanged();
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
 
             MessageBox.Show("Contactpersoon verwijderd");
         }
