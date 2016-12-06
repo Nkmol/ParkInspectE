@@ -17,9 +17,6 @@ namespace ParkInspect.ViewModel
 
     public class ParkinglotViewModel : ViewModelBase
     {
-
-
-
         public string Message { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
         public ObservableCollection<Region> Regions { get; set; }
@@ -160,14 +157,15 @@ namespace ParkInspect.ViewModel
         public ParkinglotViewModel(IRepository context)
         {
 
-            SaveCommand = new RelayCommand(Save, () => CanSave());
+            //SaveCommand = new RelayCommand(Save, () => CanSave());
+            SaveCommand = new RelayCommand(Save);
+
             NewCommand = new RelayCommand(NewParkinglot);
             ExportCommand = new RelayCommand(Export);
             Service = new ParkinglotService(context);
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAllRegions());
-            NewParkinglot();
-           
+            NewParkinglot();          
         }
 
         private void UpdateParkinglots()
@@ -214,25 +212,6 @@ namespace ParkInspect.ViewModel
             UpdateParkinglots();
         }
 
-        private bool CanSave()
-        {
-
-            if (Parkinglot?.name == null || Parkinglot.name.Equals(""))
-                return false;
-
-            if (Parkinglot?.region_name == null || Parkinglot.region_name.Equals(""))
-                return false;
-
-            if (Parkinglot?.clarification == null || Parkinglot.clarification.Equals(""))
-                return false;
-
-            if (Parkinglot?.zipcode == null || Parkinglot.zipcode.Equals(""))
-                return false;
-
-            return (Parkinglot?.number != null && Parkinglot.number > 0);
-
-        }
-
         private void Export()
         {
 
@@ -251,6 +230,5 @@ namespace ParkInspect.ViewModel
             export.FillGrid(Service.GetAllParkinglotsWhere(filters), Service);
 
         }
-
     }
 }

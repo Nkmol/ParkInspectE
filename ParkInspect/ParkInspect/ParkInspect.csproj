@@ -149,6 +149,8 @@
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Model\ValidationRules\IsNotEmptyValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
     <Compile Include="Parkinglot.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
