@@ -85,17 +85,27 @@ namespace ParkInspect.ViewModel
 
         }
 
+        /*
+         * Sets the service that is used to get the corresponding data
+         * DataService service - The Dataservice used to get the data
+         */
         public void SetService(DataService service)
         {
             this.Service = service;
         }
 
+        /*
+         * Used to update the data when the alias is changed
+         */
         private void AliasChanged()
         {
             UpdateData();
             Notify();
         }
 
+        /*
+         * Sets the columns for the first time. Only called when Data is set for the first time.
+         */
         private void UpdateColumns()
         { 
 
@@ -113,6 +123,9 @@ namespace ParkInspect.ViewModel
 
         }
 
+        /*
+         * Adds all AvailableColumns to the SelectedColumns
+         */
         private void AddAll()
         {
 
@@ -128,6 +141,9 @@ namespace ParkInspect.ViewModel
                
         }
 
+        /*
+         * Removes all SelectedColumns and adds them to the AvailableColumns
+         */
         private void RemoveAll()
         {
             foreach (var column in SelectedColumns)
@@ -139,6 +155,9 @@ namespace ParkInspect.ViewModel
             Notify();
         }
 
+        /*
+         * Moves one column from the AvailableColumns to the SelectedColumns
+         */
         private void AddColumn()
         {
             if (Available != null)
@@ -154,6 +173,9 @@ namespace ParkInspect.ViewModel
             Notify();
         }
 
+        /*
+         * Moves one column from the SelectedColumns to the AvailableColumns
+         */
         private void RemoveColumn()
         {
             if (Selected != null)
@@ -163,7 +185,7 @@ namespace ParkInspect.ViewModel
 
                 foreach (var alias in AliasColumns)
                 {
-                    if(alias.Equals(Selected))
+                    if(alias.Value.Equals(Selected))
                         AliasColumns.Remove(alias);
                 }
 
@@ -173,11 +195,17 @@ namespace ParkInspect.ViewModel
             Notify();
         }
 
+        /*
+         * Exports all data using the ExportFactory
+         */
         private void Export()
         {
             ExportFactory.ExportPdf(ExpandoData.Cast<dynamic>(), ExportableType, SelectedColumns.ToArray(), GetAliases().ToArray());
         }
 
+        /*
+         * Notify all binded data. Updates the UI.
+         */
         private void Notify()
         {
             RaisePropertyChanged("AvailableColumns");
@@ -186,6 +214,9 @@ namespace ParkInspect.ViewModel
             RaisePropertyChanged("Data");
         }
 
+        /*
+         * Adds all data to the datagrid using ExpandoObjects and Reflection.
+         */
         private void UpdateData()
         {
 
@@ -227,6 +258,9 @@ namespace ParkInspect.ViewModel
 
         }
 
+        /*
+         * Generate a list of aliases
+         */
         private List<string> GetAliases()
         {
             List<string> aliases = new List<string>();
@@ -240,6 +274,9 @@ namespace ParkInspect.ViewModel
 
     }
 
+    /*
+     * Used to fill the alias DataGrid.
+     */
     public class Alias
     {
 

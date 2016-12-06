@@ -20,6 +20,9 @@ namespace ParkInspect.Services
             Context = context;
         }
 
+        /*
+         * Get all data, corresponding to the columns and aliases, using ExpandoObjects.
+         */
         public IEnumerable GetData<T>(List<string> columns, List<string> alias) where T : class
         {
 
