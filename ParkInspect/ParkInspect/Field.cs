@@ -23,7 +23,7 @@ namespace ParkInspect
         public string title { get; set; }
         public int template_id { get; set; }
         public string datatype { get; set; }
-        public string repportFieldType_title { get; set; }
+        public string reportFieldType_title { get; set; }
     
         public virtual Datatype Datatype1 { get; set; }
         public virtual ReportFieldType ReportFieldType { get; set; }
