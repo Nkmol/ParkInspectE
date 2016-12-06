@@ -25,6 +25,8 @@ namespace ParkInspect.ViewModel
 
         private bool _logoutButtonEnabled;
 
+        private Employee CurrentUser;
+
         private ICommand _showLoginDialogCommand;
 
         private ICommand _logoutCommand;
@@ -34,12 +36,16 @@ namespace ParkInspect.ViewModel
         /// </summary>
         protected EmployeeService Service;
 
-        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context)
+        private DashboardViewModel dashboard;
+
+        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context, DashboardViewModel dashboard)
         {
             _dialogCoordinator = dialogCoordinator;
             Service = new EmployeeService(context);
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
+
+            this.dashboard = dashboard;
         }
 
         public string LoginName
@@ -109,6 +115,11 @@ namespace ParkInspect.ViewModel
                     LoginName = result.Username;
                     LoginButtonEnabled = false;
                     LogoutButtonEnabled = true;
+
+                    // goes wrong on multiple users with the same username and password with different roles.
+                    CurrentUser = Service.GetEmployee(result.Username, result.Password).First();
+                    dashboard.ChangeAuthorization(CurrentUser.Role1);
+
                 }
             }
         }
@@ -118,6 +129,7 @@ namespace ParkInspect.ViewModel
             LoginName = "";
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
+            dashboard.ChangeAuthorization(null);
         }
     }
 }

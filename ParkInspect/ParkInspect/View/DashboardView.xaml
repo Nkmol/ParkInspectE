@@ -17,40 +17,51 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            <userControls:VisibilityConverter x:Key="VisibilityConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
+    <!--
+    Waring, adding more tabs will require you to make them vissible in the dashboardViewModel.
+    Add a new bool property in the dashboardViewModel and set it on true in the showAllTabs method.
+    -->
     <Grid x:Name="LayoutRoot">
         <TabControl>
-            <TabItem Header="Klanten">
+            <TabItem Visibility="{Binding ShowClients, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
                 <userControls:CustomerControl />
             </TabItem>
-            <TabItem Header="Parkeerplaatsen">
+            <TabItem Visibility="{Binding ShowParkinglots, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Parkeerplaatsen">
                 <userControls:ParkeerplaatsControl />
             </TabItem>
-            <TabItem Header="Opdrachten">
+            <TabItem Visibility="{Binding ShowAssignments, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Opdrachten">
                 <userControls:AssignmentControl />
             </TabItem>
-            <TabItem Header="Inspectie">
+            <TabItem Visibility="{Binding ShowInspections, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Inspectie">
                 <userControls:InspectionControl />
             </TabItem>
-            <TabItem Header="Vragenlijst">
+            <TabItem Visibility="{Binding ShowForms, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Vragenlijst">
                 <userControls:FormControl />
             </TabItem>
-            <TabItem Header="Personeel">
+            <TabItem  Visibility="{Binding ShowEmployee, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Personeel">
                 <userControls:EmployeeControl />
             </TabItem>
-            <TabItem Header="Rapportage">
+            <TabItem Visibility="{Binding ShowRaport, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Rapportage">
                 <userControls:ReportControl />
             </TabItem>
-            <TabItem Header="Afwezigheid">
+            <TabItem  Visibility="{Binding ShowAbsence, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
                 <userControls:AbsenceControl />
             </TabItem>
         </TabControl>
     </Grid>
+    
+    <!--
+    Warning: only works with registered roles.
+    all registered roles can be found in the dashboardViewModel.
+    -->
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="False"
