@@ -1,6 +1,8 @@
 ﻿using iTextSharp.text;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -42,7 +44,7 @@ namespace ParkInspect
          * PdfAlignment alignment (optional) - Tells the document where to align the table
          */
 
-        public void AddTable<T>(IEnumerable<T> data, string[] columns = null, string[] headers = null,
+        public void AddTable<T>(IEnumerable<T> data, Type type = null, string[] columns = null, string[] headers = null,
             PdfAlignment alignment = PdfAlignment.LEFT)
         {
 
@@ -50,7 +52,14 @@ namespace ParkInspect
                 columns.Length != headers.Length)
                 return;
 
-            var type = GetTypeOf(data);
+            if (type != null)
+            {
+                AddTableExpendo(data, type, columns, headers, alignment);
+                return;
+            }
+
+            type = GetTypeOf(data);
+
 
             if (columns == null || columns.Length == 0)
             {
@@ -58,7 +67,6 @@ namespace ParkInspect
                 for (int i = 0; i < type.GetProperties().Length; i++)
                     columns[i] = type.GetProperties()[i].Name;
             }
-
 
             var table = new PdfPTable(columns.Length);
             table.HorizontalAlignment = (int) alignment;
@@ -78,6 +86,43 @@ namespace ParkInspect
                     if (p != null)
                         table.AddCell("" + p.GetValue(item));
                 }
+
+            }
+
+            _document.Add(table);
+
+        }
+
+        private void AddTableExpendo(IEnumerable data, Type type, string[] columns, string[] headers, PdfAlignment alignment)
+        {
+
+            if (columns == null || columns.Length == 0)
+            {
+                columns = new string[type.GetProperties().Length];
+                for (int i = 0; i < type.GetProperties().Length; i++)
+                    columns[i] = type.GetProperties()[i].Name;
+            }
+
+
+            var table = new PdfPTable(columns.Length);
+            table.HorizontalAlignment = (int)alignment;
+
+            var realColumns = (headers != null && headers.Length > 0 ? headers : columns);
+            foreach (var column in realColumns)
+            {
+                table.AddCell(column);
+            }
+
+            foreach (ExpandoObject item in data)
+            {
+
+                var dict = (IDictionary<string, object>)item;
+
+                foreach (var value in dict.Values)
+                {
+                    table.AddCell(value + "");
+                }
+
 
             }
 

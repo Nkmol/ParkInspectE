@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using MahApps.Metro.Controls;
+using ParkInspect.Services;
+using ParkInspect.ViewModel;
 
 namespace ParkInspect
 {
@@ -16,9 +18,10 @@ namespace ParkInspect
             InitializeComponent();
         }
 
-        public void FillGrid<T>(IEnumerable<T> data)
+        public void FillGrid<T>(IEnumerable<T> data, DataService service)
         {
             this.ExportGrid.ItemsSource = data;
+            ((ExportViewModel)this.DataContext).SetService(service);
         }
 
 

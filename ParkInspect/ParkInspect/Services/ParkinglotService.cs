@@ -13,7 +13,9 @@ namespace ParkInspect.Services
     public class ParkinglotService : DataService
     {
 
-        public ParkinglotService(IRepository context) : base(context) {}
+        public ParkinglotService(IRepository context) : base(context)
+        {
+        }
 
         public bool AddParkinglot(Parkinglot p)
         {
@@ -82,7 +84,7 @@ namespace ParkInspect.Services
 
         }
 
-        public override IEnumerable GetData(List<string> columns, List<string> alias = null)
+        public IEnumerable GetData(List<string> columns, List<string> alias)
         {
 
             var query = Context.GetAll<Parkinglot>().AsEnumerable().Select(x =>
@@ -98,5 +100,6 @@ namespace ParkInspect.Services
             return query;
 
         }
+
     }
 }

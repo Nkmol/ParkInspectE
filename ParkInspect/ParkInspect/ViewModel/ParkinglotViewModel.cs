@@ -248,7 +248,7 @@ namespace ParkInspect.ViewModel
                 {"clarification", ClarificationFilter }
             };
 
-            export.FillGrid(Service.GetAllParkinglotsWhere(filters));
+            export.FillGrid(Service.GetAllParkinglotsWhere(filters), Service);
 
         }
 

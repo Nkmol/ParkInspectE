@@ -7,18 +7,21 @@ using System.ComponentModel;
 using System.Data;
 using System.Dynamic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using DataService = ParkInspect.Model.DataService;
 
 namespace ParkInspect.ViewModel
 {
     public class ExportViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
+        private DataService Service { get; set; }
+        public Type ExportableType { get; set; }
+        public IEnumerable ExpandoData { get; set; }
         private string _available { get; set; }
         private string _selected { get; set; }
 
@@ -33,6 +36,8 @@ namespace ParkInspect.ViewModel
             get { return _selected; }
             set { _selected = value; }
         }
+
+        public string AliasSelected { get; set; }
 
         private IEnumerable _data;
 
@@ -50,33 +55,56 @@ namespace ParkInspect.ViewModel
         public ObservableCollection<string> AvailableColumns { get; set; }
         public ObservableCollection<string> SelectedColumns { get; set; }
 
+        private ObservableCollection<Alias> _aliasColumns;
+        public ObservableCollection<Alias> AliasColumns
+        {
+            get { return _aliasColumns; }
+            set
+            {
+                _aliasColumns = value;
+                UpdateData();
+            }
+        }
 
         public RelayCommand ExportCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand RemoveCommand { get; set; }
         public RelayCommand AddAllCommand { get; set; }
         public RelayCommand RemoveAllCommand { get; set; }
-
-        public ParkinglotService Service;
+        public RelayCommand AliasChangedCommand { get; set; }
 
         public ExportViewModel(IRepository context)
         {
-            Service = new ParkinglotService(context);
+
             ExportCommand = new RelayCommand(Export);
             AddCommand = new RelayCommand(AddColumn);
             RemoveCommand = new RelayCommand(RemoveColumn);
             AddAllCommand = new RelayCommand(AddAll);
             RemoveAllCommand = new RelayCommand(RemoveAll);
+            AliasChangedCommand = new RelayCommand(AliasChanged);
 
         }
 
-        private void UpdateColumns()
+        public void SetService(DataService service)
         {
+            this.Service = service;
+        }
+
+        private void AliasChanged()
+        {
+            UpdateData();
+            Notify();
+        }
+
+        private void UpdateColumns()
+        { 
 
             var type = Data.GetType().GenericTypeArguments[0];
+            ExportableType = type;
 
             AvailableColumns = new ObservableCollection<string>();
             SelectedColumns = new ObservableCollection<string>();
+            AliasColumns = new ObservableCollection<Alias>();
 
             for (var index = 0; index < type.GetProperties().Length; index++)                
                 AvailableColumns.Add(type.GetProperties()[index].Name);
@@ -90,6 +118,7 @@ namespace ParkInspect.ViewModel
 
             foreach (var column in AvailableColumns)
             {
+                AliasColumns.Add(new Alias(column));
                 SelectedColumns.Add(column);
             }
 
@@ -104,6 +133,7 @@ namespace ParkInspect.ViewModel
             foreach (var column in SelectedColumns)
                 AvailableColumns.Add(column);
 
+            AliasColumns.Clear();
             SelectedColumns.Clear();
             UpdateData();
             Notify();
@@ -113,9 +143,12 @@ namespace ParkInspect.ViewModel
         {
             if (Available != null)
             {
+                AliasColumns.Add(new Alias(Available));
                 SelectedColumns.Add(Available);
                 AvailableColumns.Remove(Available);
             }
+
+            
 
             UpdateData();
             Notify();
@@ -127,6 +160,13 @@ namespace ParkInspect.ViewModel
             {
                 AvailableColumns.Add(Selected);
                 SelectedColumns.Remove(Selected);
+
+                foreach (var alias in AliasColumns)
+                {
+                    if(alias.Equals(Selected))
+                        AliasColumns.Remove(alias);
+                }
+
             }
 
             UpdateData();
@@ -135,44 +175,86 @@ namespace ParkInspect.ViewModel
 
         private void Export()
         {
-            ExportFactory.ExportPdf(Data.Cast<dynamic>());
+            ExportFactory.ExportPdf(ExpandoData.Cast<dynamic>(), ExportableType, SelectedColumns.ToArray(), GetAliases().ToArray());
         }
 
         private void Notify()
         {
             RaisePropertyChanged("AvailableColumns");
             RaisePropertyChanged("SelectedColumns");
+            RaisePropertyChanged("AliasColumns");
             RaisePropertyChanged("Data");
         }
 
         private void UpdateData()
         {
 
-            DataTable table = new DataTable();
-            table.Rows.Clear();
-            table.Columns.Clear();
-
-            var  data = Service.GetData(SelectedColumns.ToList());
-
-            foreach (ExpandoObject expando in data)
+            if (SelectedColumns.Count > 0)
             {
 
-                var dict = (IDictionary<string, object>) expando;
+                var table = new DataTable();
+                table.Rows.Clear();
+                table.Columns.Clear();
 
-                foreach (var key in dict.Keys)
+                object[] param = new object[2];
+                param[0] = SelectedColumns.ToList();
+                param[1] = GetAliases();
+
+                MethodInfo mi = typeof(DataService).GetMethod("GetData").MakeGenericMethod(ExportableType);
+                ExpandoData = (IEnumerable) mi.Invoke(Service, param);
+
+                foreach (ExpandoObject expando in ExpandoData)
                 {
-                    if (!table.Columns.Contains(key))
-                        table.Columns.Add(key);
+
+                    var dict = (IDictionary<string, object>)expando;
+
+                    foreach (var key in dict.Keys)
+                    {
+                        if (!table.Columns.Contains(key))
+                            table.Columns.Add(key);
+
+                    }
+
+                    table.Rows.Add(dict.Values.ToArray());
 
                 }
 
-                table.Rows.Add(dict.Values.ToArray());
+                Data = table.DefaultView;
 
             }
 
-            Data = table.DefaultView;
+            
 
         }
-       
+
+        private List<string> GetAliases()
+        {
+            List<string> aliases = new List<string>();
+
+            foreach(var alias in AliasColumns)
+                aliases.Add(alias.Value);
+            
+            return aliases;
+
+        }
+
+    }
+
+    public class Alias
+    {
+
+        private string _value;
+
+        public string Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+        public Alias(string value)
+        {
+            this.Value = value;
+        }
+
     }
 }

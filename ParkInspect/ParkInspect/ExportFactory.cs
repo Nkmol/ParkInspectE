@@ -63,7 +63,7 @@ namespace ParkInspect
          * @param columns (optional) - The columns that should be executed, will have to match the dataset!
          * @param headers (optional) - The shown headers of the table. 
          */
-        public static void ExportPdf<T>(IEnumerable<T> data, string[] columns = null, string[] headers = null)
+        public static void ExportPdf<T>(IEnumerable<T> data, Type type = null, string[] columns = null, string[] headers = null)
         {
 
             if (!PromptSave("PDF Files | *.pdf"))
@@ -74,7 +74,7 @@ namespace ParkInspect
 
             var builder = new PdfBuilder(_stream);
             builder.AddImage(rootPath + "/ParkInspect.png", 447, 204, PdfAlignment.CENTER);
-            builder.AddTable(data, columns, headers, PdfAlignment.CENTER);
+            builder.AddTable(data, type, columns, headers, PdfAlignment.CENTER);
             builder.Build();
 
         }
