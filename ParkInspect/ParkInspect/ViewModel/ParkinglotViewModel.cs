@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity.Migrations.Model;
@@ -16,15 +17,20 @@ namespace ParkInspect.ViewModel
 
     public class ParkinglotViewModel : ViewModelBase
     {
-
         public string Message { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
         public ObservableCollection<Region> Regions { get; set; }
         public ObservableCollection<Inspection> Inspections { get; set; }
         protected ParkinglotService Service { get; set; }
         private Parkinglot _parkinglot;
+        private string _nameFilter;
+        private string _zipFilter;
+        private string _numberFilter;
+        private string _regionFilter;
+        private string _clarificationFilter;
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand NewCommand { get; set; }
+        public RelayCommand ExportCommand { get; set; }
 
         public Parkinglot Parkinglot
         {
@@ -100,16 +106,82 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        public string NameFilter
+        {
+            get { return _nameFilter; }
+            set { _nameFilter = value;
+                UpdateParkinglots();
+            }
+        }
+
+        public string ZipFilter
+        {
+            get { return _zipFilter; }
+            set
+            {
+                _zipFilter = value;
+                UpdateParkinglots();
+            }
+        }
+
+        public string NumberFilter
+        {
+            get { return _numberFilter; }
+            set
+            {
+                _numberFilter = value;
+                UpdateParkinglots();
+            }
+        }
+
+        public string RegionFilter
+        {
+            get { return _regionFilter; }
+            set
+            {
+                _regionFilter = value;
+                UpdateParkinglots();
+            }
+        }
+
+        public string ClarificationFilter
+        {
+            get { return _clarificationFilter; }
+            set
+            {
+                _clarificationFilter = value;
+                UpdateParkinglots();
+            }
+        }
+
         public ParkinglotViewModel(IRepository context)
         {
 
-            SaveCommand = new RelayCommand(Save, () => CanSave());
+            //SaveCommand = new RelayCommand(Save, () => CanSave());
+            SaveCommand = new RelayCommand(Save);
+
             NewCommand = new RelayCommand(NewParkinglot);
+            ExportCommand = new RelayCommand(Export);
             Service = new ParkinglotService(context);
-            Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
+            UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAllRegions());
-            NewParkinglot();
-           
+            NewParkinglot();          
+        }
+
+        private void UpdateParkinglots()
+        {
+
+            var filters = new Dictionary<string, string>()
+            {
+                {"name", NameFilter},
+                {"region_name", RegionFilter },
+                {"number", NumberFilter },
+                {"zipcode", ZipFilter },
+                {"clarification", ClarificationFilter }
+            };
+
+            Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglotsWhere(filters));
+            RaisePropertyChanged("Parkinglots");
         }
 
         private void NewParkinglot()
@@ -137,29 +209,26 @@ namespace ParkInspect.ViewModel
             }
 
             RaisePropertyChanged("Message");
-            Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglots());
-            RaisePropertyChanged("Parkinglots");
-
+            UpdateParkinglots();
         }
 
-        private bool CanSave()
+        private void Export()
         {
 
-            if (Parkinglot?.name == null || Parkinglot.name.Equals(""))
-                return false;
+            ExportView export = new ExportView();
+            export.Show();
 
-            if (Parkinglot?.region_name == null || Parkinglot.region_name.Equals(""))
-                return false;
+            var filters = new Dictionary<string, string>()
+            {
+                {"name", NameFilter},
+                {"region_name", RegionFilter },
+                {"number", NumberFilter },
+                {"zipcode", ZipFilter },
+                {"clarification", ClarificationFilter }
+            };
 
-            if (Parkinglot?.clarification == null || Parkinglot.clarification.Equals(""))
-                return false;
-
-            if (Parkinglot?.zipcode == null || Parkinglot.zipcode.Equals(""))
-                return false;
-
-            return (Parkinglot?.number != null && Parkinglot.number > 0);
+            export.FillGrid(Service.GetAllParkinglotsWhere(filters), Service);
 
         }
-
     }
 }

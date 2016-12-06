@@ -7,11 +7,13 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
+        xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1000"
         Title="ParkInspect"
-        DataContext="{Binding Dashboard, Source={StaticResource Locator}}">
+        DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
+        dialog:DialogParticipation.Register="{Binding Login, Source={StaticResource Locator}}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -24,29 +26,43 @@
     <Grid x:Name="LayoutRoot">
         <TabControl>
             <TabItem Header="Klanten">
-                <userControls:KlantControl />
+                <userControls:CustomerControl />
             </TabItem>
             <TabItem Header="Parkeerplaatsen">
                 <userControls:ParkeerplaatsControl />
             </TabItem>
             <TabItem Header="Opdrachten">
-                <userControls:OpdrachtControl />
+		<userControls:AssignmentControl />
             </TabItem>
             <TabItem Header="Inspectie">
-                <userControls:InspectieControl />
+                <userControls:InspectionControl />
             </TabItem>
             <TabItem Header="Vragenlijst">
-                <userControls:VragenlijstControl />
+                <userControls:FormControl />
             </TabItem>
             <TabItem Header="Personeel">
-                <userControls:PersoneelControl />
+                <userControls:EmployeeControl />
             </TabItem>
             <TabItem Header="Rapportage">
-                <userControls:RapportageControl />
+                <userControls:ReportControl />
             </TabItem>
-            <TabItem Header="Contactpersoon">
-                <userControls:ContactpersoonControl/>
+            <TabItem Header="Afwezigheid">
+                <userControls:AbsenceControl />
             </TabItem>
         </TabControl>
     </Grid>
+
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands ShowLastSeparator="False"
+                                 DataContext="{Binding Login, Source={StaticResource Locator}}">
+            <Label Content="{Binding LoginName}" />
+            <Button Command="{Binding ShowLoginDialogCommand}"
+                    Content="Login"
+                    IsEnabled="{Binding LoginButtonEnabled}" />
+            <Button Command="{Binding LogoutCommand}"
+                    Content="Logout"
+                    IsEnabled="{Binding LogoutButtonEnabled}" />
+
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 </controls:MetroWindow>

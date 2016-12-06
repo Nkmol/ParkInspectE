@@ -11,6 +11,7 @@
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
@@ -40,9 +41,11 @@ namespace ParkInspect.ViewModel
             }
 
             SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
+            SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<EmployeeViewModel>();
             SimpleIoc.Default.Register<InspectionViewModel>();
             SimpleIoc.Default.Register<ReportViewModel>();
@@ -50,6 +53,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
+	    SimpleIoc.Default.Register<AbsenceViewModel>();
         }
 
         /// <summary>
@@ -59,6 +63,8 @@ namespace ParkInspect.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
+
+	public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
@@ -70,7 +76,7 @@ namespace ParkInspect.ViewModel
 
         public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
 
-        public ExportViewModel Exports => ServiceLocator.Current.GetInstance<ExportViewModel>();
+        public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
