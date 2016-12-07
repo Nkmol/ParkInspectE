@@ -13,7 +13,8 @@ namespace ParkInspect.Model.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             DateTime temp;
-            if (DateTime.TryParse(Convert.ToString(value), out temp))
+            string format = "d-M-yyyy";
+            if (DateTime.TryParseExact(Convert.ToString(value), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out temp))
                 return new ValidationResult(true, null);
 
             return new ValidationResult(false, "Voer een geldige datum in!");
