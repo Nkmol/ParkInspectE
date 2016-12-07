@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace ParkInspect.View.UserControls
+namespace ParkInspect.Convertor
 {
     class VisibilityConverter : IValueConverter
     {

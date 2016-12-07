@@ -25,7 +25,7 @@ namespace ParkInspect.ViewModel
 
         private bool _logoutButtonEnabled;
 
-        private Employee CurrentUser;
+        private Employee _currentUser;
 
         private ICommand _showLoginDialogCommand;
 
@@ -117,8 +117,8 @@ namespace ParkInspect.ViewModel
                     LogoutButtonEnabled = true;
 
                     // goes wrong on multiple users with the same username and password with different roles.
-                    CurrentUser = Service.GetEmployee(result.Username, result.Password).First();
-                    dashboard.ChangeAuthorization(CurrentUser.Role1);
+                    _currentUser = Service.GetEmployee(result.Username, result.Password).First();
+                    dashboard.ChangeAuthorization(_currentUser.Role1);
 
                 }
             }

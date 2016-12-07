@@ -22,10 +22,6 @@ namespace ParkInspect
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
-
-            if (DataContext.GetType() == typeof(DashboardViewModel)) _datacontext = (DashboardViewModel)DataContext;
-
-
         }
     }
 }

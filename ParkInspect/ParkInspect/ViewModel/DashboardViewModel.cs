@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.RightsManagement;
-using System.Windows.Documents;
 using GalaSoft.MvvmLight;
-using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -17,23 +14,10 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class DashboardViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
-        private MainWindow dashboardWindow;
-        private EmployeeService _employeeService;
-
-
-
+        private readonly EmployeeService _employeeService;
         private List<Role> PossibleRoles { get; set; }
 
-
-
-        public int Height = 100;
-        public int Width = 100;
-
-
-
-
-       // list of tabs is a lits of booleans used to show or hide tabs
+        // list of tabs is a lits of booleans used to show or hide tabs
 
         #region List of tabs
         private bool _showAbsence;
@@ -150,16 +134,8 @@ namespace ParkInspect.ViewModel
         }
         #endregion
 
-
-
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        /// 
         public DashboardViewModel(IRepository repository)
         {
-
-
             ShowDefaultTabs();
             _employeeService = new EmployeeService(repository);
             PossibleRoles = _employeeService.GetAllRoles().ToList();
@@ -191,11 +167,12 @@ namespace ParkInspect.ViewModel
             }
             else
             {
-                ShowDefaultTabs();
+                HideAllTabs();
             }
 
 
         }
+
 
         private void ChangeAuthorizationToEmployee()
         {
@@ -209,6 +186,7 @@ namespace ParkInspect.ViewModel
             ShowAbsence = true;
         }
 
+
         private void ChangeAuthorizationToManager()
         {
             ShowAssignments = true;
@@ -220,6 +198,7 @@ namespace ParkInspect.ViewModel
             ShowEmployee = true;
             ShowAbsence = true;
         }
+
 
         private void ChangeAuthorizationToInspector()
         {
@@ -247,6 +226,7 @@ namespace ParkInspect.ViewModel
             ShowAbsence = true;
         }
 
+
         private void ShowDefaultTabs()
         {
             ShowAssignments = false;
@@ -258,6 +238,8 @@ namespace ParkInspect.ViewModel
             ShowEmployee = false;
             ShowAbsence = false;
         }
+
+
         // security lockdown. hides all functionality exept login
         private void HideAllTabs()
         {

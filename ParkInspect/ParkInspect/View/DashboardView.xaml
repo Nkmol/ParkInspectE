@@ -8,6 +8,7 @@
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:convertor="clr-namespace:ParkInspect.Convertor"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1000"
@@ -17,7 +18,7 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <userControls:VisibilityConverter x:Key="VisibilityConverter"/>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
 
