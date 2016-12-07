@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Regions, Source={StaticResource Locator}}">
-    <ListView ItemsSource="{Binding Regions}" DisplayMemberPath="Name">
+    <ListView ItemsSource="{Binding Regions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRegion}">
         
     </ListView>
 </UserControl>

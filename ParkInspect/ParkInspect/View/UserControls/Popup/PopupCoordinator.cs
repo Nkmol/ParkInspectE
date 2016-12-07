@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using GalaSoft.MvvmLight;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
+using ParkInspect.ViewModel;
 
 namespace ParkInspect.View.UserControls.Popup
 {
@@ -18,10 +20,20 @@ namespace ParkInspect.View.UserControls.Popup
         /// </summary>
         public static readonly PopupCoordinator Instance = new PopupCoordinator();
 
-        public Task ShowPopupAsync(object context, string title, object content)
+        public Task ShowPopupAsync<T>(ViewModelBase context, string title, UserControl content, Action<T> action)
         {
             var window = GetMetroWindow(context);
-            return window.Invoke(() => window.ShowChildWindowAsync(new BaseChildWindow() { IsModal = true, AllowMove = true, Content = content}));
+
+            // Create BaseChildWindow
+            var baseChildWindow = new BaseChildWindow() {IsModal = true, AllowMove = true, AdditionalContent = content};
+            // Fill Context with values so ViewModels are linked  // TODO Improve, let Injection handle more
+            var Context = (PopupViewModel)baseChildWindow.DataContext;
+            Context.OwnerTask = x => action((T)x); // Simple way of Converting T to specific type (object in this case)
+            Context.ContentContext = content.DataContext as IPopup;
+            Context.CloseWindow = () => baseChildWindow.Close();
+            Context.Ready();
+
+            return window.Invoke(() => window.ShowChildWindowAsync(baseChildWindow));
         }
 
         private static MetroWindow GetMetroWindow(object context)

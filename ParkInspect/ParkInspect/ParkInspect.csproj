@@ -202,11 +202,13 @@
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
+    <Compile Include="ViewModel\IPopup.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\PopupViewModel.cs" />
     <Compile Include="ViewModel\Regio\RegionOverviewViewModel.cs" />
     <Compile Include="ViewModel\Regio\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />

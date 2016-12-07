@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using ParkInspect.Repository;
@@ -12,11 +13,15 @@ namespace ParkInspect.ViewModel.Regio
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class RegionOverviewViewModel : ViewModelBase
+    public class RegionOverviewViewModel : ViewModelBase, IPopup
     {
         private ParkinglotService _service;
         public ObservableCollection<RegionViewModel> Regions { get; set; }
         public RegionViewModel SelectedRegion { get; set; }
+
+        // Same as SelectedRegion
+        public object SelectedItemPopup => SelectedRegion;
+
         /// <summary>
         /// Initializes a new instance of the RegioOverviewViewModel class.
         /// </summary>

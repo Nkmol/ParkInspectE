@@ -6,6 +6,7 @@ using System.Data.Entity.Migrations.Model;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -13,6 +14,7 @@ using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.Regio;
 
 namespace ParkInspect.ViewModel
 {
@@ -177,7 +179,12 @@ namespace ParkInspect.ViewModel
 
         private async void SearchRegion()
         {
-            await PopupCoordinator.ShowPopupAsync(this, "test", new RegionOverview()); //TODO Don't let ViewModel know of UserControl/View
+            //TODO Don't let ViewModel know of UserControl/View?
+            await PopupCoordinator.ShowPopupAsync<RegionViewModel>(this, "test", new RegionOverview(), x =>
+            {
+                Region = x.Name; 
+                RaisePropertyChanged("Region");
+            });
         }
 
         private void UpdateParkinglots()

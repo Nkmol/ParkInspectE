@@ -13,8 +13,15 @@
 		BorderThickness="1"
 		ShowCloseButton="True"
         d:DesignWidth="300"
-        d:DesignHeight="300">
-    <Grid>
-        <TextBox></TextBox>
-    </Grid>
+        d:DesignHeight="300"
+        Name="ChildWindow"
+        DataContext="{Binding Popup, Source={StaticResource Locator}}">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <ContentPresenter Content="{Binding AdditionalContent, ElementName=ChildWindow}"></ContentPresenter>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Button Content="Select" Command="{Binding SelectCommand}"></Button>
+        </StackPanel>        
+    </DockPanel>
 </simpleChildWindow:ChildWindow>
