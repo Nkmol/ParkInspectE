@@ -167,7 +167,7 @@ namespace ParkInspect.ViewModel
             NewCommand = new RelayCommand(NewParkinglot);
             ExportCommand = new RelayCommand(Export);
             Service = new ParkinglotService(context);
-            Data = Service.GetAllParkinglots();
+            Data = Service.GetAll<Parkinglot>();
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
             NewParkinglot();          
@@ -232,7 +232,7 @@ namespace ParkInspect.ViewModel
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
-            export.FillGrid(result, Service);
+            export.FillGrid(result);
 
         }
     }
