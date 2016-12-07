@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity.Migrations.Model;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -17,6 +21,8 @@ namespace ParkInspect.ViewModel
 
     public class ParkinglotViewModel : ViewModelBase
     {
+
+        private IEnumerable<Parkinglot> Data { get; set; }
         public string Message { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
         public ObservableCollection<Region> Regions { get; set; }
@@ -157,12 +163,11 @@ namespace ParkInspect.ViewModel
         public ParkinglotViewModel(IRepository context)
         {
 
-            //SaveCommand = new RelayCommand(Save, () => CanSave());
             SaveCommand = new RelayCommand(Save);
-
             NewCommand = new RelayCommand(NewParkinglot);
             ExportCommand = new RelayCommand(Export);
             Service = new ParkinglotService(context);
+            Data = Service.GetAllParkinglots();
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
             NewParkinglot();          
@@ -171,16 +176,16 @@ namespace ParkInspect.ViewModel
         private void UpdateParkinglots()
         {
 
-            var filters = new Dictionary<string, string>()
-            {
-                {"name", NameFilter},
-                {"region_name", RegionFilter },
-                {"number", NumberFilter },
-                {"zipcode", ZipFilter },
-                {"clarification", ClarificationFilter }
-            };
+            var builder = new FilterBuilder();
+            builder.Add("name", NameFilter);
+            builder.Add("region_name", RegionFilter);
+            builder.Add("number", NumberFilter);
+            builder.Add("zipcode", ZipFilter);
+            builder.Add("clarification", ClarificationFilter);
 
-            Parkinglots = new ObservableCollection<Parkinglot>(Service.GetAllParkinglotsWhere(filters));
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Parkinglots = new ObservableCollection<Parkinglot>(result);
             RaisePropertyChanged("Parkinglots");
         }
 
@@ -218,16 +223,16 @@ namespace ParkInspect.ViewModel
             ExportView export = new ExportView();
             export.Show();
 
-            var filters = new Dictionary<string, string>()
-            {
-                {"name", NameFilter},
-                {"region_name", RegionFilter },
-                {"number", NumberFilter },
-                {"zipcode", ZipFilter },
-                {"clarification", ClarificationFilter }
-            };
+            FilterBuilder builder = new FilterBuilder();
+            builder.Add("name", NameFilter);
+            builder.Add("region_name", RegionFilter);
+            builder.Add("number", NumberFilter);
+            builder.Add("zipcode", ZipFilter);
+            builder.Add("clarification", ClarificationFilter);
 
-            export.FillGrid(Service.GetAllParkinglotsWhere(filters), Service);
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            export.FillGrid(result, Service);
 
         }
     }
