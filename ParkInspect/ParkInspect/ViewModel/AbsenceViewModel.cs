@@ -16,6 +16,7 @@ namespace ParkInspect.ViewModel
 {
     public class AbsenceViewModel : ViewModelBase
     {
+  
         private ObservableCollection<Absence> _absences;
         public ObservableCollection<Absence> Absences
         {

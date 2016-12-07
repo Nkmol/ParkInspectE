@@ -46,6 +46,9 @@
             <TabItem Header="Rapportage">
                 <userControls:ReportControl />
             </TabItem>
+            <TabItem Header="Voorbereiding">
+                <userControls:PrepareControl />
+            </TabItem>
             <TabItem Header="Afwezigheid">
                 <userControls:AbsenceControl />
             </TabItem>
