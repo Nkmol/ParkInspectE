@@ -31,28 +31,28 @@
     -->
     <Grid x:Name="LayoutRoot">
         <TabControl>
-            <TabItem Visibility="{Binding ShowClients, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
+            <TabItem Visibility="{Binding TabsStatus[0], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
                 <userControls:CustomerControl />
             </TabItem>
-            <TabItem Visibility="{Binding ShowParkinglots, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Parkeerplaatsen">
+            <TabItem Visibility="{Binding TabsStatus[1], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Parkeerplaatsen">
                 <userControls:ParkeerplaatsControl />
             </TabItem>
-            <TabItem Visibility="{Binding ShowAssignments, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Opdrachten">
+            <TabItem Visibility="{Binding TabsStatus[2], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Opdrachten">
                 <userControls:AssignmentControl />
             </TabItem>
-            <TabItem Visibility="{Binding ShowInspections, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Inspectie">
+            <TabItem Visibility="{Binding TabsStatus[3], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Inspectie">
                 <userControls:InspectionControl />
             </TabItem>
-            <TabItem Visibility="{Binding ShowForms, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Vragenlijst">
+            <TabItem Visibility="{Binding TabsStatus[4], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Vragenlijst">
                 <userControls:FormControl />
             </TabItem>
-            <TabItem  Visibility="{Binding ShowEmployee, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Personeel">
+            <TabItem  Visibility="{Binding TabsStatus[5], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Personeel">
                 <userControls:EmployeeControl />
             </TabItem>
-            <TabItem Visibility="{Binding ShowRaport, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Rapportage">
+            <TabItem Visibility="{Binding TabsStatus[6], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Rapportage">
                 <userControls:ReportControl />
             </TabItem>
-            <TabItem  Visibility="{Binding ShowAbsence, Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
+            <TabItem  Visibility="{Binding TabsStatus[7], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
                 <userControls:AbsenceControl />
             </TabItem>
         </TabControl>
