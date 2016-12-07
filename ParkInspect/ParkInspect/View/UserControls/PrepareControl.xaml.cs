@@ -48,6 +48,7 @@ namespace ParkInspect.View.UserControls
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            gmap.Markers.Clear();
             zip = l_zip_text.Content.ToString();
             region = l_region_text.Content.ToString();
             zip = zip.Trim();
@@ -84,6 +85,7 @@ namespace ParkInspect.View.UserControls
 
 
                 //directions
+               listBox.Items.Clear();
                 var drivingDirectionRequest = new DirectionsRequest
                 {
                     Origin = txt_home_adres.Text,
