@@ -115,7 +115,7 @@ namespace ParkInspect.ViewModel
             var builder = new FilterBuilder();
             builder.Add("firstname", FirstnameFilter);
             builder.Add("lastname", LastnameFilter);
-            builder.Add("client", ClientFilter);
+            builder.Add("Client.name", ClientFilter);
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
