@@ -130,7 +130,8 @@
     <Compile Include="Employee_Status.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExportFactory.cs" />
+    <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
+    <Compile Include="Model\Factory\ExportFactory.cs" />
     <Compile Include="Field.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -148,6 +149,7 @@
     </Compile>
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\Factory\FilterFactory.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ValidationRules\IsNotEmptyValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
@@ -169,7 +171,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="PdfBuilder.cs" />
+    <Compile Include="Model\Factory\Builder\PdfBuilder.cs" />
     <Compile Include="Region.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -341,6 +343,7 @@
       <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
