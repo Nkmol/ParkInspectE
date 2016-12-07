@@ -180,7 +180,7 @@ namespace ParkInspect.ViewModel
         private async void SearchRegion()
         {
             //TODO Don't let ViewModel know of UserControl/View?
-            await PopupCoordinator.ShowPopupAsync<RegionViewModel>(this, "test", new RegionOverview(), x =>
+            await PopupCoordinator.ShowPopupAsync<RegionViewModel>(this, "Selecteer een regio.", new RegionOverview(), x =>
             {
                 Region = x.Name; 
                 RaisePropertyChanged("Region");

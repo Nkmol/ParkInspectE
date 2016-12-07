@@ -10,7 +10,8 @@ namespace ParkInspect.ViewModel
 {
     public class PopupViewModel : ViewModelBase
     {
-        public IPopup ContentContext { get; set; } // TODO IPopupParticipate
+        public string Title { get; set; }
+        public IPopup ContentContext { get; set; } 
         public Action<object> OwnerTask { get; set; }
         public RelayCommand SelectCommand { get; set; }
         public Action CloseWindow { get; set; }

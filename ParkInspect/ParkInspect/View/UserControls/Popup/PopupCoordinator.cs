@@ -31,6 +31,7 @@ namespace ParkInspect.View.UserControls.Popup
             Context.OwnerTask = x => action((T)x); // Simple way of Converting T to specific type (object in this case)
             Context.ContentContext = content.DataContext as IPopup;
             Context.CloseWindow = () => baseChildWindow.Close();
+            Context.Title = title;
             Context.Ready();
 
             return window.Invoke(() => window.ShowChildWindowAsync(baseChildWindow));

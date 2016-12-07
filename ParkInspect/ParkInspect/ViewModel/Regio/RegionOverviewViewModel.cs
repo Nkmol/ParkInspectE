@@ -18,7 +18,6 @@ namespace ParkInspect.ViewModel.Regio
         private ParkinglotService _service;
         public ObservableCollection<RegionViewModel> Regions { get; set; }
         public RegionViewModel SelectedRegion { get; set; }
-
         // Same as SelectedRegion
         public object SelectedItemPopup => SelectedRegion;
 

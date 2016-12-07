@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
         mc:Ignorable="d"
-        Title="BaseChildWindow" 
+        Title="{Binding Title}" 
         CloseOnOverlay="True"
 		GlowBrush="{DynamicResource AccentColorBrush}"
 		BorderBrush="{DynamicResource AccentColorBrush}"
