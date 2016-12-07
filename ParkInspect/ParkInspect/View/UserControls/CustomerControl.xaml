@@ -59,7 +59,7 @@
                             <TextBox.Text>
                                 <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <validationrules:IsValidEmailValidationRule ValidationStep="RawProposedValue"
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
