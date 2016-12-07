@@ -40,6 +40,7 @@ namespace ParkInspect.ViewModel
             }
 
             SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities1>(new ParkInspectEntities1()));
+            SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities1>>(() => new EntityFrameworkRepository<ParkInspectEntities1>(new ParkInspectEntities1()));
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
@@ -49,6 +50,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
             SimpleIoc.Default.Register<VragenlijstViewModel>();
+            ServiceLocator.Current.GetInstance<VragenlijstViewModel>().Context = ServiceLocator.Current.GetInstance<EntityFrameworkRepository<ParkInspectEntities1>>();
         }
 
         /// <summary>

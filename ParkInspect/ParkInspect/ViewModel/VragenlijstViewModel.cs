@@ -3,12 +3,15 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Collections;
 using System.Collections.Generic;
+using ParkInspect.Repository;
 
 
 namespace ParkInspect.ViewModel
 {
     public class VragenlijstViewModel : ViewModelBase
     {
+        public EntityFrameworkRepository<ParkInspectEntities1> Context { get; set; }
+
         private Visibility editorVisilibty;
         public Visibility EditorVisibility {
             get {
@@ -64,7 +67,7 @@ namespace ParkInspect.ViewModel
         {
             // create new template
             enableEditor();
-            NewTemplateViewModel.setTemplate(new Template());
+            NewTemplateViewModel.newTemplate();
         }
 
         public void editTemplate()

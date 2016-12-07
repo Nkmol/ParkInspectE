@@ -19,6 +19,12 @@ namespace ParkInspect.Repository
             this.Context = context;
         }
 
+        public bool IsConnected()
+        {
+            Context.Database.Connection.Open();
+            return Context.Database.Connection.State == System.Data.ConnectionState.Open;
+        }
+
         protected virtual IQueryable<TEntity> GetQueryable<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>  orderBy = null,

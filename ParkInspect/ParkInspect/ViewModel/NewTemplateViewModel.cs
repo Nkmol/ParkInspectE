@@ -7,87 +7,98 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Collections.ObjectModel;
+using ParkInspect.Services;
 
 namespace ParkInspect.ViewModel
 {
     
     public class NewTemplateViewModel : ViewModelBase
     {
-        private VragenlijstViewModel superViewModel;
+        private TemplateService _service;
+        private TemplateService Service {
+            get {
+                if (_service == null && superViewModel.Context != null)
+                {
+                    _service = new TemplateService(superViewModel.Context, superViewModel.Context);
+                }
+                return _service;
+            }
+        }
+        private VragenlijstViewModel superViewModel { get; }
 
-        private Template template;
+        private Template _template;
         public Template Template
         {
             get {
-                return template;
+                return _template;
             }
             set {
-                template = value;
+                _template = value;
                 RaisePropertyChanged("Template");
             }
         }
 
-        private string fieldLabel;
+        private string _fieldLabel;
         public string FieldLabel {
             get {
-                return fieldLabel;
+                return _fieldLabel;
             }
             set{
-                fieldLabel = value;
+                _fieldLabel = value;
                 RaisePropertyChanged("FieldLabel");
                 AddFieldCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private ObservableCollection<string> fieldTypes;
+        private ObservableCollection<string> _fieldTypes;
         public ObservableCollection<string> FieldTypes {
             get{
-                return fieldTypes;
+                return _fieldTypes;
             }
             set{
-                fieldTypes = value;
+                _fieldTypes = value;
                 RaisePropertyChanged("FieldTypes");
             }
         }
 
-        private ObservableCollection<Field> fields;
+        private ObservableCollection<Field> _fields;
         public ObservableCollection<Field> Fields {
             get
             {
-                return fields;
+                return _fields;
             }
             set
             {
-                fields = value;
+                _fields = value;
                 RaisePropertyChanged("Fields");
                 SaveTemplateCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private string selectedFieldType;
+        private string _selectedFieldType;
         public string SelectedFieldType {
             get
             {
-                return selectedFieldType;
+                return _selectedFieldType;
             }
             set
             {
-                selectedFieldType = value;
+                _selectedFieldType = value;
                 RaisePropertyChanged("SelectedFieldType");
                 AddFieldCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private Field selectedField;
+        private Field _selectedField;
         public Field SelectedField
         {
             get
             {
-                return selectedField;
+                return _selectedField;
             }
             set
             {
-                selectedField = value;
+                _selectedField = value;
                 RaisePropertyChanged("SelectedField");
                 RemoveFieldCommand.RaiseCanExecuteChanged();
             }
@@ -118,10 +129,10 @@ namespace ParkInspect.ViewModel
 
         public NewTemplateViewModel(VragenlijstViewModel superViewModel)
         {
-            AddFieldCommand = new RelayCommand(addField, canAddField);
-            RemoveFieldCommand = new RelayCommand(removeField, canRemoveField);
-            SaveTemplateCommand = new RelayCommand(saveTemplate, canSaveTemplate);
-            NameChangedCommand = new RelayCommand(nameChanged);
+            AddFieldCommand = new RelayCommand(AddField, CanAddField);
+            RemoveFieldCommand = new RelayCommand(RemoveField, CanRemoveField);
+            SaveTemplateCommand = new RelayCommand(SaveTemplate, CanSaveTemplate);
+            NameChangedCommand = new RelayCommand(NameChanged);
 
             this.superViewModel = superViewModel;
             FieldTypes = new ObservableCollection<string>
@@ -131,59 +142,61 @@ namespace ParkInspect.ViewModel
             SelectedFieldType = FieldTypes.First();
         }
 
-        public void addField()
+        public void AddField()
         {
             Template.Fields.Add(new Field() { title = FieldLabel, datatype = SelectedFieldType });
-            Fields = new ObservableCollection<Field>(template.Fields);
+            Fields = new ObservableCollection<Field>(Template.Fields);
         }
 
-        public bool canAddField()
+        public bool CanAddField()
         {
             if (SelectedFieldType == null)
             {
                 return false;
             }
-            if (FieldLabel == "" || FieldLabel == null)
+            if (string.IsNullOrEmpty(FieldLabel))
             {
                 return false;
             }
             return true;
         }
 
-        public void removeField()
+        public void RemoveField()
         {
-            template.Fields.Remove(selectedField);
-            Fields.Remove(selectedField);
+            Template.Fields.Remove(SelectedField);
+            Fields.Remove(SelectedField);
             SaveTemplateCommand.RaiseCanExecuteChanged();
         }
 
-        public bool canRemoveField()
+        public bool CanRemoveField()
         {
-            if (SelectedField == null)
-            {
-                return false;
-            }
-            return true;
+            return (SelectedField != null);
         }
 
-        public void setTemplate(Template template)
+        public void SetTemplate(Template template)
         {
             this.Template = template;
         }
 
-        public void nameChanged()
+        public void newTemplate()
+        {
+            SetTemplate(Service.createTemplate());
+        }
+
+        public void NameChanged()
         {
             SaveTemplateCommand.RaiseCanExecuteChanged();
         }
 
-        public void saveTemplate()
+        public void SaveTemplate()
         {
+            Service.SaveTemplate(Template);
             superViewModel.disableEditor();
         }
 
-        public bool canSaveTemplate()
+        public bool CanSaveTemplate()
         {
-            if (template == null || template.name == "" || template.name == null || template.Fields.Count == 0)
+            if (Template == null || Template.name == "" || Template.name == null || Template.Fields.Count == 0)
             {
                 return false;
             }

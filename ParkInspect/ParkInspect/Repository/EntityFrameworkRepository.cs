@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParkInspect.Repository
 {
-    class EntityFrameworkRepository<TContext> : EntityFrameworkReadOnlyRepository<TContext>, IRepository
+    public class EntityFrameworkRepository<TContext> : EntityFrameworkReadOnlyRepository<TContext>, IRepository
         where TContext : DbContext
     {
         public EntityFrameworkRepository(TContext context) : base(context)

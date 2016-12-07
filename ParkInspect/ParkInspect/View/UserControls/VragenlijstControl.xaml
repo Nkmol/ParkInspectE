@@ -11,7 +11,9 @@
     <Grid>
         <TabControl SelectedIndex="{Binding SelectedTab}">
             <Custom:MetroTabItem Header="Vragenlijsten" DataContext="{Binding Lists, Source={StaticResource Locator}}">
-                <Grid Background="#aaaaaa"/>
+                <Grid Background="#aaaaaa">
+                    <Button x:Name="button1" Content="Opslaan" HorizontalAlignment="Left" Margin="659,218,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
             </Custom:MetroTabItem>
             <Custom:MetroTabItem Header="Templates" >
                 <Grid Background="#aaaaaa">
