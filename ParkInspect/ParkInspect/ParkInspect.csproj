@@ -150,6 +150,9 @@
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ValidationRules\IsNotEmptyValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsValidEmailValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsValidPhoneNumberRule.cs" />
+    <Compile Include="Model\ValidationRules\IsValidZipCodeValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
     <Compile Include="Parkinglot.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
