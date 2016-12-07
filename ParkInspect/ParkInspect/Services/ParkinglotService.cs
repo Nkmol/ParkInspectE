@@ -17,52 +17,6 @@ namespace ParkInspect.Services
         {
         }
 
-        public bool AddParkinglot(Parkinglot p)
-        {
-
-            try
-            {
-                Context.Create(p);
-                Context.Save();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-        }
-
-        public bool UpdateParkinglot(Parkinglot p)
-        {
-            try
-            {
-                Context.Update(p);
-                Context.Save();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-        }
-
-        public IEnumerable<Parkinglot> GetAllParkinglots()
-        {
-            return Context.GetAll<Parkinglot>();
-        }
-
-        public IEnumerable<Region> GetAllRegions()
-        {
-            return Context.GetAll<Region>();
-        }
-
-        public IEnumerable<Inspection> GetAllInspections()
-        {
-            return Context.GetAll<Inspection>();
-        }
-
         public IEnumerable<Parkinglot> GetAllParkinglotsWhere(Dictionary<string, string> filters)
         {
 
