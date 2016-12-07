@@ -58,10 +58,12 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Seed" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Asignment.sql" />
-    <Build Include="Tables\Contactman.sql" />
+    <Build Include="Tables\Contactperson.sql" />
     <Build Include="Tables\Inspection.sql" />
     <Build Include="Tables\Inspector.sql" />
     <Build Include="Tables\Absence.sql" />
@@ -88,11 +90,34 @@
     <Build Include="Tables\ReportFieldType.sql" />
     <Build Include="Tables\Role.sql" />
     <Build Include="Tables\State.sql" />
+    <Build Include="CheckInspectionDates.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Seed\Region.sql" />
+    <None Include="Scripts\Seed\Client.sql" />
+    <None Include="Scripts\Seed\Role.sql" />
+    <None Include="Scripts\Seed\State.sql" />
+    <None Include="Scripts\Seed\Employee_Status.sql" />
+    <None Include="Scripts\Seed\Template.sql" />
+    <None Include="Scripts\Seed\Datatype.sql" />
+    <None Include="Scripts\Seed\ReportFieldType.sql" />
+    <None Include="Scripts\Seed\Contactperson.sql" />
+    <None Include="Scripts\Seed\Parkinglot.sql" />
+    <None Include="Scripts\Seed\Employee.sql" />
+    <None Include="Scripts\Seed\Inspector.sql" />
+    <None Include="Scripts\Seed\Assignment.sql" />
+    <None Include="Scripts\Seed\Form.sql" />
+    <None Include="Scripts\Seed\Inspection.sql" />
+    <None Include="Scripts\Seed\Inspector_has_Inspection.sql" />
+    <None Include="Scripts\Seed\Absence.sql" />
+    <None Include="Scripts\Seed\Report.sql" />
+    <None Include="Scripts\Seed\Field.sql" />
+    <None Include="Scripts\Seed\Formfield.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish-Script.publish.xml" />
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>

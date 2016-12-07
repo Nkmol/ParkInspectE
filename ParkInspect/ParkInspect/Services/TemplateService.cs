@@ -9,10 +9,10 @@ namespace ParkInspect.Services
 {
     class TemplateService
     {
-        EntityFrameworkRepository<ParkInspectEntities1> central;
-        EntityFrameworkRepository<ParkInspectEntities1> local;
+        EntityFrameworkRepository<ParkInspectEntities> central;
+        EntityFrameworkRepository<ParkInspectEntities> local;
 
-        public TemplateService(EntityFrameworkRepository<ParkInspectEntities1> central, EntityFrameworkRepository<ParkInspectEntities1> local)
+        public TemplateService(EntityFrameworkRepository<ParkInspectEntities> central, EntityFrameworkRepository<ParkInspectEntities> local)
         {
             this.central = central;
             this.local = local;

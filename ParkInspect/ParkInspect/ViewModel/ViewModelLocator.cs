@@ -11,6 +11,7 @@
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
@@ -39,18 +40,22 @@ namespace ParkInspect.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
-            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities1>(new ParkInspectEntities1()));
-            SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities1>>(() => new EntityFrameworkRepository<ParkInspectEntities1>(new ParkInspectEntities1()));
+            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
-            SimpleIoc.Default.Register<PersoneelViewModel>();
-            SimpleIoc.Default.Register<InspectieViewModel>();
-            SimpleIoc.Default.Register<RapportageViewModel>();
+            SimpleIoc.Default.Register<ExportViewModel>();
+            SimpleIoc.Default.Register<EmployeeViewModel>();
+            SimpleIoc.Default.Register<InspectionViewModel>();
+            SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
-            SimpleIoc.Default.Register<ParkeerplaatsViewModel>();
-            SimpleIoc.Default.Register<VragenlijstViewModel>();
-            ServiceLocator.Current.GetInstance<VragenlijstViewModel>().Context = ServiceLocator.Current.GetInstance<EntityFrameworkRepository<ParkInspectEntities1>>();
+            SimpleIoc.Default.Register<FormViewModel>();
+            ServiceLocator.Current.GetInstance<FormViewModel>().Context = ServiceLocator.Current.GetInstance<EntityFrameworkRepository<ParkInspectEntities>>();
+            SimpleIoc.Default.Register<ParkinglotViewModel>();
+            SimpleIoc.Default.Register<ExportViewModel>();
+            SimpleIoc.Default.Register<AbsenceViewModel>();
         }
 
         /// <summary>
@@ -61,17 +66,21 @@ namespace ParkInspect.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
 
-        public PersoneelViewModel Personeel => ServiceLocator.Current.GetInstance<PersoneelViewModel>();
+        public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
-        public InspectieViewModel Inspecties => ServiceLocator.Current.GetInstance<InspectieViewModel>();
+        public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
-        public RapportageViewModel Rapportages => ServiceLocator.Current.GetInstance<RapportageViewModel>();
+        public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
+
+        public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
-
-        public ParkeerplaatsViewModel Parkeerplaatsen => ServiceLocator.Current.GetInstance<ParkeerplaatsViewModel>();
         
-        public VragenlijstViewModel Vragenlijsten => ServiceLocator.Current.GetInstance<VragenlijstViewModel>();
+        public FormViewModel Vragenlijsten => ServiceLocator.Current.GetInstance<FormViewModel>();
+
+        public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
+
+        public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 

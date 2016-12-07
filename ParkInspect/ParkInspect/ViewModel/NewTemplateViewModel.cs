@@ -24,7 +24,7 @@ namespace ParkInspect.ViewModel
                 return _service;
             }
         }
-        private VragenlijstViewModel superViewModel { get; }
+        private FormViewModel superViewModel { get; }
 
         private Template _template;
         public Template Template
@@ -127,7 +127,7 @@ namespace ParkInspect.ViewModel
         public RelayCommand SaveTemplateCommand { get; set; }
         public RelayCommand NameChangedCommand { get; set; }
 
-        public NewTemplateViewModel(VragenlijstViewModel superViewModel)
+        public NewTemplateViewModel(FormViewModel superViewModel)
         {
             AddFieldCommand = new RelayCommand(AddField, CanAddField);
             RemoveFieldCommand = new RelayCommand(RemoveField, CanRemoveField);
