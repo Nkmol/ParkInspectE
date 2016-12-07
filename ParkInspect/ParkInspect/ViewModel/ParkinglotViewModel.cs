@@ -169,7 +169,7 @@ namespace ParkInspect.ViewModel
             Service = new ParkinglotService(context);
             Data = Service.GetAllParkinglots();
             UpdateParkinglots();
-            Regions = new ObservableCollection<Region>(Service.GetAllRegions());
+            Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
             NewParkinglot();          
         }
 
@@ -204,11 +204,11 @@ namespace ParkInspect.ViewModel
 
             if (Parkinglot.id < 0)
             {
-                Message = (Service.AddParkinglot(Parkinglot) ? "The parkinglot was added!" : "Something went wrong.");
+                Message = (Service.Add<Parkinglot>(Parkinglot) ? "The parkinglot was added!" : "Something went wrong.");
             }
             else
             {
-                Message = (Service.UpdateParkinglot(Parkinglot)
+                Message = (Service.Update<Parkinglot>(Parkinglot)
                     ? "The parkinglot was updated!"
                     : "Something went wrong.");
             }
