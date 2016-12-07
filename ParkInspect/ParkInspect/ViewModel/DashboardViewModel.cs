@@ -147,30 +147,23 @@ namespace ParkInspect.ViewModel
         {
             PossibleRoles = _employeeService.GetAllRoles().ToList();
 
-            if (PossibleRoles.Contains(role))
-            {
-                switch (role.role1)
-                {
-                    case "Employee":
-                        ChangeAuthorizationToEmployee();
-                        break;
-                    case "Inspector":
-                        ChangeAuthorizationToInspector();
-                        break;
-                    case "Manager":
-                        ChangeAuthorizationToManager();
-                        break;
-                    default:
-                        ShowAllTabs();
-                        break;
-                }
-            }
-            else
-            {
-                HideAllTabs();
-            }
+            if (!PossibleRoles.Contains(role)) { HideAllTabs(); return; }
 
-
+            switch (role.role1)
+            {
+                case "Employee":
+                    ChangeAuthorizationToEmployee();
+                    break;
+                case "Inspector":
+                    ChangeAuthorizationToInspector();
+                    break;
+                case "Manager":
+                    ChangeAuthorizationToManager();
+                    break;
+                default:
+                    ShowAllTabs();
+                    break;
+            }
         }
 
 
