@@ -104,6 +104,7 @@
                                 <Binding Path="Number" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
