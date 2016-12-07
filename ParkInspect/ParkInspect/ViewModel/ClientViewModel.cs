@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -17,13 +18,12 @@ namespace ParkInspect.ViewModel
         {
             Service = new ClientService(context);
             Clients = new ObservableCollection<Client>(Service.GetAllClients());
+            CompleteClientCommand = new RelayCommand(CompleteClient, CanCreate);
+            ResetButtonCommand = new RelayCommand(Reset);
+            UpdateButtonCommand = new RelayCommand(UpdateClient, CanUpdate);
             SelectedClient = new Client();
             Assignments = new ObservableCollection<Asignment>(SelectedClient.Asignments);
             Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
-
-            CompleteClientCommand = new RelayCommand(CompleteClient);
-            ResetButtonCommand = new RelayCommand(Reset);
-            UpdateButtonCommand = new RelayCommand(UpdateClient);
         }
 
         public ObservableCollection<Client> Clients { get; set; }
@@ -39,19 +39,33 @@ namespace ParkInspect.ViewModel
             {
                 Set(ref _selectedClient, value);
                 RaisePropertyChanged();
+                CompleteClientCommand.RaiseCanExecuteChanged();
+                UpdateButtonCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public ICommand CompleteClientCommand { get; set; }
+        public RelayCommand CompleteClientCommand { get; set; }
         public ICommand ResetButtonCommand { get; set; }
-        public ICommand UpdateButtonCommand { get; set; }
+        public RelayCommand UpdateButtonCommand { get; set; }
+
+        private bool CanCreate()
+        {
+            return (SelectedClient != null) && (SelectedClient.id == 0);
+        }
+
+        private bool CanUpdate()
+        {
+            return (SelectedClient != null) && (SelectedClient.id != 0);
+        }
 
         private void CompleteClient()
         {
-            if (string.IsNullOrEmpty(SelectedClient.name) || string.IsNullOrEmpty(SelectedClient.phonenumber) || string.IsNullOrEmpty(SelectedClient.email))
-                return;
             Service.AddClient(SelectedClient);
             Clients.Add(SelectedClient);
+            CompleteClientCommand.RaiseCanExecuteChanged();
+            UpdateButtonCommand.RaiseCanExecuteChanged();
+
+            MessageBox.Show("Klant toegevoegd");
         }
 
         private void Reset()
@@ -61,9 +75,11 @@ namespace ParkInspect.ViewModel
 
         private void UpdateClient()
         {
-            if (string.IsNullOrEmpty(SelectedClient.name) || string.IsNullOrEmpty(SelectedClient.phonenumber) || string.IsNullOrEmpty(SelectedClient.email))
-                return;
             Service.UpdateClient(SelectedClient);
+            CompleteClientCommand.RaiseCanExecuteChanged();
+            UpdateButtonCommand.RaiseCanExecuteChanged();
+
+            MessageBox.Show("Klant geupdate");
         }
     }
 }
