@@ -14,7 +14,7 @@ namespace ParkInspect.Model.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             bool isZipCode =
-               Regex.IsMatch(Convert.ToString(value), @"^[1-9][0-9]{3}\s*(?:[a-zA-Z]{2})?$");
+               Regex.IsMatch(Convert.ToString(value), @"^[1-9][0-9]{3}\s?[A-Z]{2}$");
 
             return isZipCode ? new ValidationResult(true, null) : new ValidationResult(false, "Geen geldige postcode!");
 
