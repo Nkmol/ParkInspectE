@@ -49,9 +49,9 @@
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" DataContext="{Binding Client, Source={StaticResource Locator}}" Margin="100,250,100,0">
                         <Label Width="300" Height="50" VerticalAlignment="Top"></Label>
-                        <Button Width="100" Command="{Binding CompleteClientCommand}" Content="Voeg toe" Margin="150,0,10,0" VerticalAlignment="Top"/>
-                        <Button Width="100" Command="{Binding UpdateButtonCommand}" Content="Bewerken" Margin="0,0,10,0" VerticalAlignment="Top"/>
-                        <Button Width="100" Command="{Binding ResetButtonCommand}" Content="Deselecteren" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                        <Button Width="120" Command="{Binding CompleteClientCommand}" Content="Voeg toe" Margin="110,0,10,0" VerticalAlignment="Top"/>
+                        <Button Width="120" Command="{Binding UpdateButtonCommand}" Content="Bewerken" Margin="0,0,10,0" VerticalAlignment="Top"/>
+                        <Button Width="120" Command="{Binding ResetButtonCommand}" Content="Deselecteren" Margin="0,0,0,0" VerticalAlignment="Top"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

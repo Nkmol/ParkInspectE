@@ -90,14 +90,15 @@ namespace ParkInspect.ViewModel
         //CRU METHODS
         private void CreateNewEmployee()
         {
-            if(SelectedEmployee.firstname == null || SelectedEmployee.lastname == null || 
+            if (SelectedEmployee.active)
+                SelectedEmployee.out_service_date = null;
+
+
+            if (SelectedEmployee.firstname == null || SelectedEmployee.lastname == null || 
                 SelectedEmployee.email == null || SelectedEmployee.role == null || 
                 SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
                 SelectedEmployee.phonenumber == null)
                 return;
-
-            if (SelectedEmployee.active)
-                SelectedEmployee.out_service_date = null;
 
             Service.InsertEntity(SelectedEmployee);
             Notification = "De medewerker is opgeslagen";
@@ -106,14 +107,14 @@ namespace ParkInspect.ViewModel
 
         private void EditEmployee()
         {
+            if (SelectedEmployee.active)
+                SelectedEmployee.out_service_date = null;
+
             if (SelectedEmployee.firstname == null || SelectedEmployee.lastname == null ||
                 SelectedEmployee.email == null || SelectedEmployee.role == null ||
                 SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
                 SelectedEmployee.phonenumber == null)
                 return;
-
-            if (SelectedEmployee.active)
-                SelectedEmployee.out_service_date = null;
 
             Service.UpdateEntity(SelectedEmployee);
             Notification = "De medewerker is aangepast";
@@ -123,21 +124,23 @@ namespace ParkInspect.ViewModel
         /// <summary>
         /// Initializes a new instance of the PersoneelViewModel class.
         /// </summary>
+
+        private void UpdateDataGrid()
+        {
+             _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
+            var temp = Employees;
+            Employees = null;
+            Employees = temp;
+            SetNewEmployee();
+        }
+
         private void SetNewEmployee()
         {
             Employee e = new Employee();
             e.in_service_date = DateTime.Today;
             e.out_service_date = DateTime.Today;
-            SelectedEmployee = e;
-        }
 
-        private void UpdateDataGrid()
-        {
-            SetNewEmployee();
-             _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
-            var temp = Employees;
-            Employees = null;
-            Employees = temp;
+            SelectedEmployee = e;
         }
     }
 }
