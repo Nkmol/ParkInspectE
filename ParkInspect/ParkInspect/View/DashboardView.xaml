@@ -8,6 +8,7 @@
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1010"
@@ -21,13 +22,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <TabControl>
+        <dragablz:TabablzControl>
             <TabItem Header="Klanten">
                 <userControls:CustomerControl />
             </TabItem>
@@ -49,7 +49,7 @@
             <TabItem Header="Rapportage">
                 <userControls:ReportControl />
             </TabItem>
-        </TabControl>
+        </dragablz:TabablzControl>
     </Grid>
 
     <controls:MetroWindow.RightWindowCommands>

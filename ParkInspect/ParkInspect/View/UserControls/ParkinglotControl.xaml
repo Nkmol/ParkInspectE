@@ -47,7 +47,7 @@
                 <Grid>
                     <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="255" Height="250" Margin="100,0,0,0">
                         <StackPanel>
-                            <Label x:Name="NameLabel" Content="Naam parkeerplaats" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="NameLabel" Content="Naam" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBox x:Name="NameBox" Margin="0,0,0,10" HorizontalAlignment="Left" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="250"/>
                             
                             <Label x:Name="ZipLabel" Content="Postcode" HorizontalAlignment="Left" VerticalAlignment="Top"/>
