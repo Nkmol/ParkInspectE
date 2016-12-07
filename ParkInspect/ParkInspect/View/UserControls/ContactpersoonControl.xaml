@@ -12,13 +12,34 @@
     <Grid>
         <TabControl>
             <TabItem Header="Overview">
-                <DataGrid ItemsSource="{Binding Contactpersons}" IsReadOnly="True" AutoGenerateColumns="False"
+                <StackPanel>
+                    <Label Name="SearchLabel">
+                        Search:
+                    </Label>
+
+                    <Grid Name="FilterGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Name="FirstnameFilter" HorizontalAlignment="Stretch" Text="{Binding FirstnameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="1" Name="LastnameFilter" HorizontalAlignment="Stretch" Text="{Binding LastnameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Grid.Column="2" Name="ClientFilter" HorizontalAlignment="Stretch" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </Grid>
+
+                    <DataGrid ItemsSource="{Binding Contactpersons, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" AutoGenerateColumns="False"
                           SelectedItem="{Binding SelectedContactperson}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="150" Header="Voornaam" Binding="{Binding firstname}" />
                         <DataGridTextColumn Width="150" Header="Achternaam" Binding="{Binding lastname}" />
+                        <DataGridTextColumn Width="150" Header="Klant" Binding="{Binding Client.name}" />
                     </DataGrid.Columns>
                 </DataGrid>
+                    </StackPanel>
             </TabItem>
 
             <TabItem Header="Management" DataContext="{Binding SelectedContactperson}">
@@ -96,7 +117,7 @@
                         <Button Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" Margin="30,35,0,0" Height="78" Width="100" />
                         <Button Command="{Binding UpdateButtonCommand, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Update contactpersoon"
+                                Content="Werk contactpersoon bij"
                                 HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78"
                                 Width="195">
                             <Button.Style>

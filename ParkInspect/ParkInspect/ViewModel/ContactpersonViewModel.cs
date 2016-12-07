@@ -1,8 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -16,10 +20,16 @@ namespace ParkInspect.ViewModel
 
         protected ContactpersonService Service;
 
+        private IEnumerable<Contactperson> Data { get; set; }
+
+        private string _firstnameFilter;
+        private string _lastnameFilter;
+        private string _clientFilter;
+
         public ContactpersonViewModel(IRepository context)
         {
             Service = new ContactpersonService(context);
-            Contactpersons = new ObservableCollection<Contactperson>(Service.GetAllContactpersons());
+            Data = Service.GetAllContactpersons();
             Clients = new ObservableCollection<Client>(Service.GetAllClients());
             CompleteContactpersonCommand = new RelayCommand(CompleteContactperson, CanCreate);
             ResetButtonCommand = new RelayCommand(Reset);
@@ -27,6 +37,7 @@ namespace ParkInspect.ViewModel
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
             SelectedClient = new Client();
             SelectedContactperson = new Contactperson();
+            UpdateContactpersons();
         }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
@@ -42,7 +53,7 @@ namespace ParkInspect.ViewModel
                 if (_selectedContactperson?.Client != null)
                     SelectedClient = _selectedContactperson.Client;
 
-                RaisePropertyChanged();
+                RaisePropertyChanged(("SelectedContactperson"));
                 UpdateButtonCommand.RaiseCanExecuteChanged();
                 CompleteContactpersonCommand.RaiseCanExecuteChanged();
                 DeleteContactpersonCommand.RaiseCanExecuteChanged();
@@ -55,7 +66,37 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedClient, value);
-                RaisePropertyChanged();
+                RaisePropertyChanged(("SelectedClient"));
+            }
+        }
+
+        public string FirstnameFilter
+        {
+            get { return _firstnameFilter; }
+            set
+            {
+                _firstnameFilter = value;
+                UpdateContactpersons();
+            }
+        }
+
+        public string LastnameFilter
+        {
+            get { return _lastnameFilter; }
+            set
+            {
+                _lastnameFilter = value;
+                UpdateContactpersons();
+            }
+        }
+
+        public string ClientFilter
+        {
+            get { return _clientFilter; }
+            set
+            {
+                _clientFilter = value;
+                UpdateContactpersons();
             }
         }
 
@@ -67,6 +108,19 @@ namespace ParkInspect.ViewModel
         private void Reset()
         {
             SelectedContactperson = new Contactperson();
+        }
+
+        private void UpdateContactpersons()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("firstname", FirstnameFilter);
+            builder.Add("lastname", LastnameFilter);
+            builder.Add("client", ClientFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Contactpersons = new ObservableCollection<Contactperson>(result);
+            RaisePropertyChanged("Contactpersons");
         }
 
         private bool CanUpdate()
@@ -92,6 +146,7 @@ namespace ParkInspect.ViewModel
             CompleteContactpersonCommand.RaiseCanExecuteChanged();
             UpdateButtonCommand.RaiseCanExecuteChanged();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            UpdateContactpersons();
 
             MessageBox.Show("Contactpersoon toegevoegd");
         }
@@ -103,6 +158,7 @@ namespace ParkInspect.ViewModel
             CompleteContactpersonCommand.RaiseCanExecuteChanged();
             UpdateButtonCommand.RaiseCanExecuteChanged();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            UpdateContactpersons();
 
             MessageBox.Show("Contactpersoon geupdate");
         }
@@ -115,6 +171,7 @@ namespace ParkInspect.ViewModel
             CompleteContactpersonCommand.RaiseCanExecuteChanged();
             UpdateButtonCommand.RaiseCanExecuteChanged();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            UpdateContactpersons();
 
             MessageBox.Show("Contactpersoon verwijderd");
         }
