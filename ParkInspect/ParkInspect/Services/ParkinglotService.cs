@@ -17,52 +17,6 @@ namespace ParkInspect.Services
         {
         }
 
-        public bool AddParkinglot(Parkinglot p)
-        {
-
-            try
-            {
-                Context.Create(p);
-                Context.Save();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-        }
-
-        public bool UpdateParkinglot(Parkinglot p)
-        {
-            try
-            {
-                Context.Update(p);
-                Context.Save();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-        }
-
-        public IEnumerable<Parkinglot> GetAllParkinglots()
-        {
-            return Context.GetAll<Parkinglot>();
-        }
-
-        public IEnumerable<Region> GetAllRegions()
-        {
-            return Context.GetAll<Region>();
-        }
-
-        public IEnumerable<Inspection> GetAllInspections()
-        {
-            return Context.GetAll<Inspection>();
-        }
-
         public IEnumerable<Parkinglot> GetAllParkinglotsWhere(Dictionary<string, string> filters)
         {
 
@@ -73,10 +27,10 @@ namespace ParkInspect.Services
                 var filter = filters[property];
                 filter = filter?.ToLower() ?? "";
 
-                query = query.Where(x => 
-                    (x.GetType().GetProperty(property).GetValue(x) == typeof(int) 
-                    ? Convert.ToInt32(x.GetType().GetProperty(property).GetValue(x)) == Convert.ToInt32(filter) 
-                    : Convert.ToString(x.GetType().GetProperty(property).GetValue(x)).ToLower().Contains(filter)));
+                query = query.Where(x =>
+                    (x.GetType().GetProperty(property).GetValue(x) == typeof(int)
+                        ? Convert.ToInt32(x.GetType().GetProperty(property).GetValue(x)) == Convert.ToInt32(filter)
+                        : Convert.ToString(x.GetType().GetProperty(property).GetValue(x)).ToLower().Contains(filter)));
 
             }
 
