@@ -43,6 +43,36 @@ namespace ParkInspect.ViewModel
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
 
+        public string Name
+        {
+            get { return _selectedClient.name; }
+            set
+            {
+                _selectedClient.name = value;
+                RaisePropertyChanged("Name");
+            }
+        }
+
+        public string Phonenumber
+        {
+            get { return _selectedClient.phonenumber; }
+            set
+            {
+                _selectedClient.phonenumber = value;
+                RaisePropertyChanged("Phonenumber");
+            }
+        }
+
+        public string Email
+        {
+            get { return _selectedClient.email; }
+            set
+            {
+                _selectedClient.email = value;
+                RaisePropertyChanged("Email");
+            }
+        }
+
         public string NameFilter
         {
             get { return _nameFilter; }
@@ -80,7 +110,9 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedClient, value);
-                RaisePropertyChanged();
+                RaisePropertyChanged("name");
+                RaisePropertyChanged("phonenumber");
+                RaisePropertyChanged("email");
                 CompleteClientCommand.RaiseCanExecuteChanged();
                 UpdateButtonCommand.RaiseCanExecuteChanged();
             }

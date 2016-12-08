@@ -48,7 +48,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Management" DataContext="{Binding SelectedClient}">
+            <TabItem Header="Management">
                 <DockPanel LastChildFill="False">
                     <Grid DockPanel.Dock="Top" Height="223" Margin="0,0,0.4,0">
                         <Label x:Name="NameLabel" Content="Naam:" Margin="89,47,255,148" />
@@ -58,7 +58,7 @@
                         <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0"
                                  VerticalAlignment="Top" Width="150">
                             <TextBox.Text>
-                                <Binding Path="name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
@@ -69,9 +69,9 @@
                         <TextBox x:Name="Telnr" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0"
                                  VerticalAlignment="Top" Width="150">
                             <TextBox.Text>
-                                <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue"
+                                        <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
                                                                                    ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
@@ -80,9 +80,9 @@
                         <TextBox x:Name="Email" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0"
                                  VerticalAlignment="Top" Width="150">
                             <TextBox.Text>
-                                <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                        <validationrules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
@@ -120,7 +120,7 @@
                         <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="70,0,0,0"
                                 HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195" />
                         <Button Command="{Binding UpdateButtonCommand, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Update klant" Margin="80,0,0,0"
+                                Content="Werk klant bij" Margin="80,0,0,0"
                                 HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
