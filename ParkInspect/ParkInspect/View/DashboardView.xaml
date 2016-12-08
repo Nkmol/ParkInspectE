@@ -28,6 +28,9 @@
 
     <Grid x:Name="LayoutRoot">
         <dragablz:TabablzControl>
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>
             <TabItem Header="Klanten">
                 <userControls:CustomerControl />
             </TabItem>
