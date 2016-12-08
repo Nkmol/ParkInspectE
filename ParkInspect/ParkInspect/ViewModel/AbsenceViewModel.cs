@@ -11,11 +11,15 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 
 namespace ParkInspect.ViewModel
 {
     public class AbsenceViewModel : ViewModelBase
     {
+
+        private IEnumerable<Absence> Data { get; set; }
         private ObservableCollection<Absence> _absences;
         public ObservableCollection<Absence> Absences
         {
@@ -36,6 +40,62 @@ namespace ParkInspect.ViewModel
 
         public ICommand SaveNewAbsenceCommand { get; set; }
         public ICommand DeleteAbsenceCommand { get; set; }
+
+
+        private string _startDateFilter;
+        public string StartDateFilter
+        {
+            get { return _startDateFilter; }
+            set
+            {
+                _startDateFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _endDateFilter;
+        public string EndDateFilter
+        {
+            get { return _endDateFilter; }
+            set
+            {
+                _endDateFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _surnameFilter;
+        public string SurnameFilter
+        {
+            get { return _surnameFilter; }
+            set
+            {
+                _surnameFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _lastNameFilter;
+        public string LastNameFilter
+        {
+            get { return _lastNameFilter; }
+            set
+            {
+                _lastNameFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _idFilter;
+        public string IDFilter
+        {
+            get { return _idFilter; }
+            set
+            {
+                _idFilter = value;
+                UpdateAbsence();
+            }
+        }
 
         private string _notification;
 
@@ -111,6 +171,7 @@ namespace ParkInspect.ViewModel
         public AbsenceViewModel(IRepository context)
         {
             Service = new AbsenceService(context);
+            Data = Service.GetAllAbsences();
             // look at asignment feature for datetime examples.
             Reset(); // Create default absence
             NewAbsence.start = DateTime.Now;
@@ -163,6 +224,21 @@ namespace ParkInspect.ViewModel
                 start = DateTime.Now,
                 end = DateTime.Now
             };
+        }
+
+        public void UpdateAbsence()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("Employee.firstname", SurnameFilter);
+            builder.Add("Employee.lastname", LastNameFilter);
+            builder.Add("employee_id", IDFilter);
+            builder.Add("start", StartDateFilter);
+            builder.Add("end", EndDateFilter);
+
+            var filters = builder.Get();
+            var result = Data.Where(a => a.Like(filters));
+            Absences = new ObservableCollection<Absence>(result);
+            RaisePropertyChanged("Absences");
         }
 
     }
