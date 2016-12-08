@@ -42,7 +42,7 @@
                     </StackPanel>
             </TabItem>
 
-            <TabItem Header="Management" DataContext="{Binding SelectedContactperson}">
+            <TabItem Header="Management">
                 <Grid>
                     <Label x:Name="NameLabel" Content="Voornaam:" Margin="89,43,196.4,185.2" />
                     <Label x:Name="TelnrLabel" Content="Achternaam:" Margin="89,75,196.4,154.2" />
@@ -51,7 +51,7 @@
                     <TextBox x:Name="Firstname" HorizontalAlignment="Left" Height="23"
                              Margin="204,47,0,0" VerticalAlignment="Top" Width="150">
                         <TextBox.Text>
-                            <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
@@ -62,7 +62,7 @@
                     <TextBox x:Name="Lastname" HorizontalAlignment="Left" Height="23"
                              Margin="204,75,0,0" VerticalAlignment="Top" Width="150">
                         <TextBox.Text>
-                            <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />

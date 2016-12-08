@@ -14,17 +14,15 @@ namespace ParkInspect.ViewModel
 {
     public class ContactpersonViewModel : ViewModelBase
     {
+        private string _clientFilter;
+
+        private string _firstnameFilter;
+        private string _lastnameFilter;
         private Client _selectedClient;
 
         private Contactperson _selectedContactperson;
 
         protected ContactpersonService Service;
-
-        private IEnumerable<Contactperson> Data { get; set; }
-
-        private string _firstnameFilter;
-        private string _lastnameFilter;
-        private string _clientFilter;
 
         public ContactpersonViewModel(IRepository context)
         {
@@ -40,6 +38,8 @@ namespace ParkInspect.ViewModel
             UpdateContactpersons();
         }
 
+        private IEnumerable<Contactperson> Data { get; }
+
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
         public ObservableCollection<Client> Clients { get; set; }
 
@@ -53,7 +53,9 @@ namespace ParkInspect.ViewModel
                 if (_selectedContactperson?.Client != null)
                     SelectedClient = _selectedContactperson.Client;
 
-                RaisePropertyChanged(("SelectedContactperson"));
+                RaisePropertyChanged("firstname");
+                RaisePropertyChanged("lastname");
+                RaisePropertyChanged("client");
                 UpdateButtonCommand.RaiseCanExecuteChanged();
                 CompleteContactpersonCommand.RaiseCanExecuteChanged();
                 DeleteContactpersonCommand.RaiseCanExecuteChanged();
@@ -66,7 +68,27 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedClient, value);
-                RaisePropertyChanged(("SelectedClient"));
+                RaisePropertyChanged("SelectedClient");
+            }
+        }
+
+        public string Firstname
+        {
+            get { return _selectedContactperson.firstname; }
+            set
+            {
+                _selectedContactperson.firstname = value;
+                RaisePropertyChanged("Firstname");
+            }
+        }
+
+        public string Lastname
+        {
+            get { return _selectedContactperson.lastname; }
+            set
+            {
+                _selectedContactperson.lastname = value;
+                RaisePropertyChanged("Lastname");
             }
         }
 
