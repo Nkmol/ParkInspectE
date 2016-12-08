@@ -80,9 +80,10 @@
 
                         <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" >
                             <TextBox.Text>
-                                <Binding Path="Zip" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Zip" UpdateSourceTrigger="PropertyChanged" >
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsValidZipCodeValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -103,6 +104,7 @@
                                 <Binding Path="Number" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
