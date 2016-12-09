@@ -27,11 +27,10 @@ namespace ParkInspect.ViewModel
         public ContactpersonViewModel(IRepository context)
         {
             Service = new ContactpersonService(context);
-            Data = Service.GetAllContactpersons();
-            Clients = new ObservableCollection<Client>(Service.GetAllClients());
-            CompleteContactpersonCommand = new RelayCommand(CompleteContactperson, CanCreate);
+            Data = Service.GetAll<Contactperson>();
+            Clients = new ObservableCollection<Client>(Service.GetAll<Client>());
             ResetButtonCommand = new RelayCommand(Reset);
-            UpdateButtonCommand = new RelayCommand(UpdateContactperson, CanUpdate);
+            SaveCommand = new RelayCommand(SaveContactperson);
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
             SelectedClient = new Client();
             SelectedContactperson = new Contactperson();
@@ -56,8 +55,7 @@ namespace ParkInspect.ViewModel
                 RaisePropertyChanged("firstname");
                 RaisePropertyChanged("lastname");
                 RaisePropertyChanged("client");
-                UpdateButtonCommand.RaiseCanExecuteChanged();
-                CompleteContactpersonCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
                 DeleteContactpersonCommand.RaiseCanExecuteChanged();
             }
         }
@@ -122,14 +120,14 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public RelayCommand CompleteContactpersonCommand { get; set; }
         public ICommand ResetButtonCommand { get; set; }
-        public RelayCommand UpdateButtonCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
         public RelayCommand DeleteContactpersonCommand { get; set; }
 
         private void Reset()
         {
             SelectedContactperson = new Contactperson();
+            RaisePropertyChanged("SelectedContactperson");
         }
 
         private void UpdateContactpersons()
@@ -145,53 +143,37 @@ namespace ParkInspect.ViewModel
             RaisePropertyChanged("Contactpersons");
         }
 
-        private bool CanUpdate()
-        {
-            return (SelectedContactperson != null) && (SelectedContactperson.id != 0);
-        }
-
-        private bool CanCreate()
-        {
-            return (SelectedContactperson != null) && (SelectedContactperson.id == 0);
-        }
-
         private bool CanDelete()
         {
             return (SelectedContactperson != null) && (SelectedContactperson.id != 0);
         }
 
-        private void CompleteContactperson()
+        private void SaveContactperson()
         {
-            SelectedContactperson.client_id = SelectedClient.id;
-            Service.AddContactperson(SelectedContactperson);
-            Contactpersons.Add(SelectedContactperson);
-            CompleteContactpersonCommand.RaiseCanExecuteChanged();
-            UpdateButtonCommand.RaiseCanExecuteChanged();
+            if (SelectedContactperson.id == 0)
+            {
+                SelectedContactperson.client_id = SelectedClient.id;
+                Service.Add(SelectedContactperson);
+                MessageBox.Show("Contactpersoon toegevoegd");
+            }
+            else
+            {
+                SelectedContactperson.client_id = SelectedClient.id;
+                Service.Update(SelectedContactperson);
+                MessageBox.Show("Contactpersoon geupdate");
+            }
+
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            RaisePropertyChanged("Contactpersons");
             UpdateContactpersons();
-
-            MessageBox.Show("Contactpersoon toegevoegd");
-        }
-
-        private void UpdateContactperson()
-        {
-            SelectedContactperson.client_id = SelectedClient.id;
-            Service.UpdateContactperson(SelectedContactperson);
-            CompleteContactpersonCommand.RaiseCanExecuteChanged();
-            UpdateButtonCommand.RaiseCanExecuteChanged();
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
-            UpdateContactpersons();
-
-            MessageBox.Show("Contactpersoon geupdate");
         }
 
         private void DeleteContactperson()
         {
-            Service.DeleteContactpeson(SelectedContactperson);
+            Service.Delete(SelectedContactperson);
             Contactpersons.Remove(SelectedContactperson);
             Reset();
-            CompleteContactpersonCommand.RaiseCanExecuteChanged();
-            UpdateButtonCommand.RaiseCanExecuteChanged();
+            SaveCommand.RaiseCanExecuteChanged();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
             UpdateContactpersons();
 
