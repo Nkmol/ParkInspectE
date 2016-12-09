@@ -92,35 +92,10 @@
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom"
                                 DataContext="{Binding Client, Source={StaticResource Locator}}" Height="148"
                                 Margin="0,0,0.4,0">
-                        <Button Command="{Binding CompleteClientCommand, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Maak nieuwe klant aan"
-                                Margin="30,0,0,70" Height="78" Width="195">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="IsEnabled" Value="false" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition
-                                                    Binding="{Binding ElementName=Name, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                                <Condition
-                                                    Binding="{Binding ElementName=Telnr, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                                <Condition
-                                                    Binding="{Binding ElementName=Email, Path=(Validation.HasError)}"
-                                                    Value="False" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="IsEnabled" Value="true" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
                         <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="70,0,0,0"
                                 HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195" />
-                        <Button Command="{Binding UpdateButtonCommand, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Werk klant bij" Margin="80,0,0,0"
+                        <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Sla klant op" Margin="80,0,0,0"
                                 HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
@@ -129,13 +104,13 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding ElementName=Name, Path=(Validation.HasError)}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Name}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding ElementName=Telnr, Path=(Validation.HasError)}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Telnr}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding ElementName=Email, Path=(Validation.HasError)}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Email}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />

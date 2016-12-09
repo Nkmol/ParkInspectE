@@ -5,42 +5,37 @@ using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using ParkInspect.Model.Factory;
 
 namespace ParkInspect.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
+        private readonly IEnumerable<Client> Data;
         private string _emailFilter;
 
         private string _nameFilter;
         private string _phoneFilter;
         private Client _selectedClient;
-
-        private readonly IEnumerable<Client> Data;
-
         protected ClientService Service;
 
         public ClientViewModel(IRepository context)
         {
             Service = new ClientService(context);
-            CompleteClientCommand = new RelayCommand(CompleteClient, CanCreate);
             ResetButtonCommand = new RelayCommand(Reset);
-            UpdateButtonCommand = new RelayCommand(UpdateClient, CanUpdate);
-            SelectedClient = new Client();
+            SaveCommand = new RelayCommand(SaveClient);
+            Data = Service.GetAll<Client>();
+            UpdateClients();
+            Reset();
             Assignments = new ObservableCollection<Asignment>(SelectedClient.Asignments);
             Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
-            Data = Service.GetAllClients();
-            UpdateClients();
         }
 
         public ObservableCollection<Client> Clients { get; set; }
-
         public ObservableCollection<Asignment> Assignments { get; set; }
-
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
 
         public string Name
@@ -113,49 +108,32 @@ namespace ParkInspect.ViewModel
                 RaisePropertyChanged("name");
                 RaisePropertyChanged("phonenumber");
                 RaisePropertyChanged("email");
-                CompleteClientCommand.RaiseCanExecuteChanged();
-                UpdateButtonCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public RelayCommand CompleteClientCommand { get; set; }
         public ICommand ResetButtonCommand { get; set; }
-        public RelayCommand UpdateButtonCommand { get; set; }
-
-        private bool CanCreate()
-        {
-            return (SelectedClient != null) && (SelectedClient.id == 0);
-        }
-
-        private bool CanUpdate()
-        {
-            return (SelectedClient != null) && (SelectedClient.id != 0);
-        }
-
-        private void CompleteClient()
-        {
-            Service.AddClient(SelectedClient);
-            Clients.Add(SelectedClient);
-            CompleteClientCommand.RaiseCanExecuteChanged();
-            UpdateButtonCommand.RaiseCanExecuteChanged();
-            UpdateClients();
-
-            MessageBox.Show("Klant toegevoegd");
-        }
+        public RelayCommand SaveCommand { get; set; }
 
         private void Reset()
         {
             SelectedClient = new Client();
+            RaisePropertyChanged("SelectedClient");
         }
 
-        private void UpdateClient()
+        private void SaveClient()
         {
-            Service.UpdateClient(SelectedClient);
-            CompleteClientCommand.RaiseCanExecuteChanged();
-            UpdateButtonCommand.RaiseCanExecuteChanged();
-            UpdateClients();
+            if (SelectedClient.id == 0)
+            {
+                Service.Add(SelectedClient);
+                MessageBox.Show("Klant toegevoegd");
+            }
+            else
+            {
+                Service.Update(SelectedClient);
+                MessageBox.Show("Klant geupdate");
+            }
 
-            MessageBox.Show("Klant geupdate");
+            UpdateClients();
         }
 
         private void UpdateClients()
