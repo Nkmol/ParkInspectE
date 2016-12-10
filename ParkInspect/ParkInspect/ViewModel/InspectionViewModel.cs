@@ -223,6 +223,7 @@ namespace ParkInspect.ViewModel
             if (_selectedInspection.Asignment == null) CommandError = "Geen opdracht geselecteerd";
             if (_selectedInspection.Parkinglot == null) CommandError = "Geen Parkeerplaats geselecteerd";
             if (_selectedInspection.State1 == null) CommandError = "Geen status geselecteerd";
+            if (_selectedInspection.date >= _selectedInspection.deadline) CommandError = "Deadline is al geweest.";
 
 
             return CommandError.Equals("");
@@ -230,7 +231,7 @@ namespace ParkInspect.ViewModel
 
         private void SetNewInspection()
         {
-            _selectedInspection = new Inspection {deadline = DateTime.Now};
+            SelectedInspection = new Inspection {deadline = DateTime.Now};
             base.RaisePropertyChanged();
 
         }
