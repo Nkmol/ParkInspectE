@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using ParkInspect.Repository;
@@ -134,10 +135,106 @@ namespace ParkInspect.ViewModel
         }
         #endregion
 
+        #region Collections of bools for each dashboard tab.
+
+
+
+
+        private ObservableCollection<bool> _absenceTabs;
+        public ObservableCollection<bool> AbsenceTabs
+        {
+            get { return _absenceTabs; }
+            set
+            {
+                _absenceTabs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<bool> _clientTabs;
+        public ObservableCollection<bool> ClientTabs
+        {
+            get { return _clientTabs; }
+            set
+            {
+                _clientTabs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<bool> _inspectionTabs;
+        public ObservableCollection<bool> InspectionTabs
+        {
+            get { return _inspectionTabs; }
+            set
+            {
+                _inspectionTabs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<bool> _employeeTabs;
+        public ObservableCollection<bool> EmployeeTabs
+        {
+            get { return _employeeTabs; }
+            set
+            {
+                _employeeTabs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<bool> _formTabs;
+        public ObservableCollection<bool> FormTabs
+        {
+            get { return _formTabs; }
+            set
+            {
+                _formTabs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<bool> _assignmentTabs;
+        public ObservableCollection<bool> AssignmentsTabs
+        {
+            get { return _assignmentTabs; }
+            set
+            {
+                _assignmentTabs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        // Collection containing the visibility status of all tabs in the aplication. currently capped at 30 booleans. can be edited in the constructor.
+        private ObservableCollection<bool> _tabStatus;
+        public ObservableCollection<bool> TabStatus
+        {
+            get { return _tabStatus; }
+            set
+            {
+                _tabStatus = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
         public DashboardViewModel(IRepository repository)
         {
-            ShowDefaultTabs();
+
             _employeeService = new EmployeeService(repository);
+            /*
+                        AbsenceTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
+                        AssignmentsTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
+                        FormTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
+                        EmployeeTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
+                        InspectionTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
+                        ClientTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
+            */
+            TabStatus = new ObservableCollection<bool>(Enumerable.Repeat(true, 30));
+            ShowDefaultTabs();
+
             PossibleRoles = _employeeService.GetAllRoles().ToList();
 
         }
@@ -147,7 +244,7 @@ namespace ParkInspect.ViewModel
         {
             PossibleRoles = _employeeService.GetAllRoles().ToList();
 
-            if (!PossibleRoles.Contains(role)) { HideAllTabs(); return; }
+            if (!PossibleRoles.Contains(role)) { ShowDefaultTabs(); return; }
 
             switch (role.role1)
             {
@@ -169,67 +266,53 @@ namespace ParkInspect.ViewModel
 
         private void ChangeAuthorizationToEmployee()
         {
-            ShowAssignments = true;
-            ShowForms = true;
-            ShowClients = true;
-            ShowInspections = true;
-            ShowParkinglots = true;
-            ShowRaport = false;
-            ShowEmployee = false;
-            ShowAbsence = true;
+            ShowAllTabs();
+
+            TabStatus[6] = false;
+            TabStatus[7] = false;
+            
+
         }
 
 
         private void ChangeAuthorizationToManager()
         {
-            ShowAssignments = true;
-            ShowForms = true;
-            ShowClients = true;
-            ShowInspections = true;
-            ShowParkinglots = true;
-            ShowRaport = true;
-            ShowEmployee = true;
-            ShowAbsence = true;
+            ShowAllTabs();
+
         }
 
 
         private void ChangeAuthorizationToInspector()
         {
-            ShowAssignments = false;
-            ShowForms = true;
-            ShowClients = false;
-            ShowInspections = true;
-            ShowParkinglots = true;
-            ShowRaport = false;
-            ShowEmployee = false;
-            ShowAbsence = true;
+            ShowAllTabs();
+
+            TabStatus[5] = false;
+            TabStatus[0] = false;
+            TabStatus[6] = false;
+            TabStatus[2] = false;
         }
 
 
         // Waring: security flaw, will be triggered with a known role object with unknown role status.
         private void ShowAllTabs()
         {
-            ShowAssignments = true;
-            ShowForms = true;
-            ShowClients = true;
-            ShowInspections = true;
-            ShowParkinglots = true;
-            ShowRaport = true;
-            ShowEmployee = true;
-            ShowAbsence = true;
+            for (int i = 0; i < TabStatus.Count; i++)
+            {
+                TabStatus[i] = true;
+            }
         }
 
 
         private void ShowDefaultTabs()
         {
-            ShowAssignments = false;
-            ShowForms = false;
-            ShowClients = false;
-            ShowInspections = true;
-            ShowParkinglots = true;
-            ShowRaport = false;
-            ShowEmployee = false;
-            ShowAbsence = false;
+            ShowAllTabs();
+
+            TabStatus[0] = false;
+            TabStatus[2] = false;
+            TabStatus[4] = false;
+            TabStatus[5] = false;
+            TabStatus[6] = false;
+            TabStatus[7] = false;
         }
 
 

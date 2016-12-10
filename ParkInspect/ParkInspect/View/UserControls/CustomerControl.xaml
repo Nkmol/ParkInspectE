@@ -3,13 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
              d:DesignHeight="386" d:DesignWidth="800"
              DataContext="{Binding Client, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <convertor1:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
 
         <TabControl>
-            <TabItem Header="Overview">
+            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[15], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" >
                 <DataGrid 
                     ItemsSource="{Binding Clients}" 
                     SelectedItem="{Binding SelectedClient}"
@@ -24,7 +30,7 @@
                 </DataGrid>
             </TabItem>
 
-            <TabItem Header="Management" DataContext="{Binding SelectedClient}">
+            <TabItem Header="Management" DataContext="{Binding SelectedClient}" Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <DockPanel LastChildFill="False">
                     <Grid DockPanel.Dock="Top" Height="223" Margin="0,0,0.4,0">
                         <Label x:Name="NameLabel" Content="Naam:" Margin="89,47,255,148"/>

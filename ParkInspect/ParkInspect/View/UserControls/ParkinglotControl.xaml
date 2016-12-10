@@ -7,12 +7,18 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <TabControl Name="Tabs">
-            <TabItem Header="Overview">
+            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <StackPanel>
 
                     <Label Name="SearchLabel">
@@ -49,7 +55,7 @@
                     
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Management">
+            <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[24], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
 
                 <Grid>
                     

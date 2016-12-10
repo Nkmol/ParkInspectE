@@ -341,6 +341,7 @@
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
       <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="TabsStatusInfo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
