@@ -1,16 +1,16 @@
-﻿<UserControl x:Class="ParkInspect.View.UserControls.InspectieControl"
+﻿<UserControl x:Class="ParkInspect.View.UserControls.InspectionControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignHeight="382" d:DesignWidth="782"
-             DataContext="{Binding Inspections, Source={StaticResource Locator}}">
+             DataContext="{Binding Inspections, Source={StaticResource Locator}}" Width="982" Height="482">
     <Grid>
-        <TabControl>
+        <TabControl Width="982" Height="482">
             <TabItem Header="Overzicht">
                 <DockPanel>
-                    <DataGrid Width="774" ItemsSource="{Binding InspectieCollection}"  SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" >
+                    <DataGrid Width="971" ItemsSource="{Binding InspectieCollection}"  SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="0,0,0,10" >
                         <DataGrid.Columns>
                             <!-- removes parkeeplaats name after selection-->
                             <DataGridTextColumn Header="Parkeerplaats" Width="*" Binding="{Binding Parkinglot.name }" />
@@ -30,32 +30,32 @@
             </TabItem>
             <TabItem Header="Management">
                 <DockPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="300" VerticalAlignment="Top" Height="323">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="327" VerticalAlignment="Top" Height="423">
                         <StackPanel Width="300" Height="623" VerticalAlignment="Top">
 
-                            <Label Height="25" Margin="10,5,151,0" Content="Opdracht" Foreground="White" />
+                            <Label Height="25" Margin="10,5,151,0" Content="Opdracht"  />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Asignment.Client.name}" DisplayMemberPath="Client.name" ItemsSource="{Binding Assignmentlist}" SelectedItem="{Binding SelectedInspection.Asignment}" />
 
-                            <Label Height="25" Margin="10,5,151,0" Content="Parkeerplaats" Foreground="White" />
+                            <Label Height="25" Margin="10,5,151,0" Content="Parkeerplaats"  />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot}" DisplayMemberPath="name" SelectedItem="{Binding SelectedInspection.Parkinglot}" ItemsSource="{Binding ParkinglotList}"/>
 
-                            <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst" Foreground="White" />
+                            <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst"  />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Form.Template.name}" ItemsSource="{Binding ParkinglotList}" DisplayMemberPath="Form.Template.name" SelectedItem="{Binding SelectedInspection.Parkinglot}" />
 
-                            <Label Height="25" Margin="10,5,151,0" Content="Status" Foreground="White" />
+                            <Label Height="25" Margin="10,5,151,0" Content="Status"  />
                             <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedInspection.state}" ItemsSource="{Binding InspectionStateList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedInspection.State1}" />
 
-                            <Label Height="27" Margin="10,5,151,0" Content="Vervolg op" Foreground="White" />
+                            <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot}" ItemsSource="{Binding ParkinglotList}" DisplayMemberPath="name" SelectedItem="{Binding SelectedInspection.Parkinglot}" />
 
-                            <Label Height="25" Margin="10,0,151,0" Content="Date" Foreground="White" />
+                            <Label Height="25" Margin="10,0,151,0" Content="Date"  />
                             <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedInspection.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
 
-                            <Label Height="25" Margin="10,5,151,0" Content="Deadline" Foreground="White" />
+                            <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
                             <DatePicker Margin="10,0,57,0" SelectedDate="{Binding SelectedInspection.deadline}" DisplayDate="{Binding SelectedInspection.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" />
 
 
-                            <Label Height="25" Margin="10,5,151,0" Content="Toelichting" Foreground="White" />
+                            <Label Height="25" Margin="10,5,151,0" Content="Toelichting"  />
                             <TextBox Margin="10,0,57,0" Height="105" Text="{Binding SelectedInspection.clarification}"/>
 
                             <Label Height="35" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
@@ -68,7 +68,7 @@
                             </DockPanel>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel Width="81"/>
+                    <StackPanel Width="263"/>
                     <StackPanel>
 
                         <GroupBox x:Name="Inspecteurs" Header="Inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
@@ -87,7 +87,7 @@
                         <StackPanel Height="7">
                         </StackPanel>
                         <DockPanel Width="363" HorizontalAlignment="Left">
-  
+
                             <Button  Margin="5,0" Content="Toevoegen" Command="{Binding AddInspecteurCommand}" Width="125" HorizontalAlignment="Left"/>
                             <Button Margin="5,0" Content="Verwijderen" Width="88" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
 

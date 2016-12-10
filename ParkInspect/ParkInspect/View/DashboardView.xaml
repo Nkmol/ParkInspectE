@@ -32,7 +32,7 @@
                 <userControls:ParkeerplaatsControl />
             </TabItem>
             <TabItem Header="Opdrachten">
-                <userControls:AssignmentControl />
+                <userControls:AssignmentControl HorizontalAlignment="Left" VerticalAlignment="Top" />
             </TabItem>
             <TabItem Header="Inspectie">
                 <userControls:InspectionControl />
