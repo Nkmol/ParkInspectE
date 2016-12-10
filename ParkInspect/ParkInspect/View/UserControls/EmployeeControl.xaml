@@ -36,7 +36,7 @@
                     <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <StackPanel>
                             <Label Content="Voornaam" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                            <TextBox Name="fname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
                                 <TextBox.Text>
                                     <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -47,7 +47,7 @@
                               </TextBox>
 
                             <Label Content="Achternaam"/>
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                            <TextBox Name="lname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
                                 <TextBox.Text>
                                     <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -58,7 +58,7 @@
                             </TextBox>
 
                             <Label Content="Emailadres"/>
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                            <TextBox Name="email" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
                                 <TextBox.Text>
                                         <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -69,7 +69,7 @@
                                 </TextBox>
 
                             <Label Content="Telefoonnummer" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                            <TextBox Name="phone" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
                                 <TextBox.Text>
                                     <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -80,7 +80,7 @@
                             </TextBox>
 
                             <Label Content="Wachtwoord" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                            <TextBox Name="pass" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
                                 <TextBox.Text>
                                     <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -94,7 +94,7 @@
                     <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <StackPanel>
                             <Label Content="Datum in dienst" />
-                            <DatePicker Width="250" HorizontalAlignment="Left"
+                            <DatePicker Name="start_date" Width="250" HorizontalAlignment="Left"
             	                    Margin="5,0,0,10"
             	                    VerticalAlignment="Top">
                                 <DatePicker.SelectedDate>
@@ -110,7 +110,7 @@
                             <CheckBox Margin="5,0,0,10" Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding active, Mode=TwoWay}"></CheckBox>
 
                             <Label Content="Datum uit dienst" />
-                            <DatePicker Width="250" HorizontalAlignment="Left"
+                            <DatePicker Name="end_date" Width="250" HorizontalAlignment="Left"
             	                    Margin="5,0,0,10"
             	                    VerticalAlignment="Top">
                                 <DatePicker.SelectedDate>
@@ -119,7 +119,7 @@
                             </DatePicker>
 
                             <Label Content="Rol" />
-                            <ComboBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                            <ComboBox Name="role" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                                 <ComboBox.Text>
                                     <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -130,7 +130,7 @@
                             </ComboBox>
 
                             <Label Content="Status" />
-                            <ComboBox Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                            <ComboBox Name="status" Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                                 <ComboBox.Text>
                                     <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -143,7 +143,29 @@
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
                         <Label  Width="300" Height="50" VerticalAlignment="Top" DataContext="{Binding Employees, Source={StaticResource Locator}}" Content="{Binding Notification, Mode=TwoWay}"></Label>
-                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding CreateItemCommand}" Margin="110,0,10,0" Content="Voeg toe"/>
+                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding CreateItemCommand}" Margin="110,0,10,0" Content="Voeg toe">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=fname, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=lname, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=email, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=phone, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=start_date, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=pass, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=role, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=status, Path=(Validation.HasError)}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        
                         <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding EditItemCommand}" Margin="0,0,10,0" Content="Bewerken"/>
                         <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,0" Content="Deselecteren"/>
                     </StackPanel>
