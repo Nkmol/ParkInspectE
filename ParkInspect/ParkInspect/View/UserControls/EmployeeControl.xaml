@@ -145,7 +145,7 @@
                         <Label  Width="300" Height="50" VerticalAlignment="Top" DataContext="{Binding Employees, Source={StaticResource Locator}}" Content="{Binding Notification, Mode=TwoWay}"></Label>
                         <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding CreateItemCommand}" Margin="110,0,10,0" Content="Voeg toe">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
