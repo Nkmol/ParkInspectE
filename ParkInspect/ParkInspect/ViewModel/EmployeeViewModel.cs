@@ -93,13 +93,6 @@ namespace ParkInspect.ViewModel
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
 
-
-            if (SelectedEmployee.firstname == null || SelectedEmployee.lastname == null || 
-                SelectedEmployee.email == null || SelectedEmployee.role == null || 
-                SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
-                SelectedEmployee.phonenumber == null)
-                return;
-
             Service.InsertEntity(SelectedEmployee);
             Notification = "De medewerker is opgeslagen";
             UpdateDataGrid();
@@ -109,12 +102,6 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
-
-            if (SelectedEmployee.firstname == null || SelectedEmployee.lastname == null ||
-                SelectedEmployee.email == null || SelectedEmployee.role == null ||
-                SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
-                SelectedEmployee.phonenumber == null)
-                return;
 
             Service.UpdateEntity(SelectedEmployee);
             Notification = "De medewerker is aangepast";

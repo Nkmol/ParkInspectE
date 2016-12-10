@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d" 
              Width="1000"
              Height="600"
@@ -35,41 +36,109 @@
                     <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <StackPanel>
                             <Label Content="Voornaam" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50"  Text="{Binding firstname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                              </TextBox>
 
-                            <Label Content="Achternaam" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50" Text="{Binding lastname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <Label Content="Achternaam"/>
+                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
                             <Label Content="Emailadres"/>
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50" Text="{Binding email, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                        <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
 
                             <Label Content="Telefoonnummer" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50" Text="{Binding phonenumber, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
                             <Label Content="Wachtwoord" />
-                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50" Text="{Binding password, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <TextBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                     </DockPanel>
                     <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <StackPanel>
                             <Label Content="Datum in dienst" />
-                            <DatePicker Width="250" SelectedDate="{Binding in_service_date, Mode=TwoWay}"  HorizontalAlignment="Left"
+                            <DatePicker Width="250" HorizontalAlignment="Left"
             	                    Margin="5,0,0,10"
-            	                    VerticalAlignment="Top"/>
+            	                    VerticalAlignment="Top">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="in_service_date" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
 
                             <Label Content="Actief" />
                             <CheckBox Margin="5,0,0,10" Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding active, Mode=TwoWay}"></CheckBox>
 
                             <Label Content="Datum uit dienst" />
-                            <DatePicker Width="250" SelectedDate="{Binding out_service_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                            <DatePicker Width="250" HorizontalAlignment="Left"
             	                    Margin="5,0,0,10"
-            	                    VerticalAlignment="Top"/>
+            	                    VerticalAlignment="Top">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="out_service_date" UpdateSourceTrigger="PropertyChanged"></Binding>
+                            </DatePicker.SelectedDate>
+                            </DatePicker>
 
                             <Label Content="Rol" />
-                            <ComboBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
+                            <ComboBox Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.Text>
+                                    <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
 
                             <Label Content="Status" />
-                            <ComboBox Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
+                            <ComboBox Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.Text>
+                                    <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
                         </StackPanel>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
