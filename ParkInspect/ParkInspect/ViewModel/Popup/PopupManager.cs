@@ -18,12 +18,11 @@ namespace ParkInspect.ViewModel
             PopupCoordinator = popupCoordinator;
         }
 
-         // <summary>Shows a MahApps Selection window
-         // <para>title - Title for the popup.<para/>
-         // <para> content - Content (UserControl) that you want to show inside the popup.</para>
-         // <para> selectaction - Task of what should happen on select button click.</para>
-         // <typeparam name = "T" ></ typeparam >
-         // </summary>
+        // <summary>ShowPopup shows a MahApps Popup Selection window</summary>
+        // <param name="title">Title for the popup.<param/>
+        // <param name="content">Content (UserControl) that you want to show inside the popup.</param>
+        // <param name="selectaction">Task of what should happen on select button click.</param>
+        // <typeparam name="T" ></ typeparam >
         public Task ShowPopup<T>(string title, UserControl content, Action<T> selectaction) where T : class
         {
             return PopupCoordinator.ShowSelectPopupAsync<T>(this, title, content, selectaction);
