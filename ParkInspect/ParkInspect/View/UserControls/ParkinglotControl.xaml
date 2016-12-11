@@ -11,7 +11,7 @@
              d:DesignHeight="300"
              d:DesignWidth="480.172"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}"
-             popup:ChildWindowParticipation.Register="{Binding Parkinglots, Source={StaticResource Locator}}">
+             popup:PopupParticipation.Register="{Binding Parkinglots, Source={StaticResource Locator}}">
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">

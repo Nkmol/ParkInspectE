@@ -228,10 +228,10 @@
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Popup\BaseChildWindow.xaml.cs">
-      <DependentUpon>BaseChildWindow.xaml</DependentUpon>
+    <Compile Include="View\UserControls\Popup\SelectPopupWindow.xaml.cs">
+      <DependentUpon>SelectPopupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Popup\ChildWindowParticipation.cs" />
+    <Compile Include="View\UserControls\Popup\PopupParticipation.cs" />
     <Compile Include="View\UserControls\Popup\PopupCoordinator.cs" />
     <Compile Include="View\UserControls\RegionOverview.xaml.cs">
       <DependentUpon>RegionOverview.xaml</DependentUpon>
@@ -279,7 +279,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Popup\BaseChildWindow.xaml">
+    <Page Include="View\UserControls\Popup\SelectPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -329,7 +329,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -20,21 +20,28 @@ namespace ParkInspect.View.UserControls.Popup
         /// </summary>
         public static readonly PopupCoordinator Instance = new PopupCoordinator();
 
-        public Task ShowPopupAsync<T>(ViewModelBase context, string title, UserControl content, Action<T> action)
+        /*
+         * Shows a MahApps Selection window
+         * @param context - The *registrated* ViewModel.
+         * @param title - Title for the popup.
+         * @param content - Content (UserControl) that you want to show inside the popup.
+         * @param selectaction - Task of what should happen on select button click.
+         */
+        public Task ShowSelectPopupAsync<T>(ViewModelBase context, string title, UserControl content, Action<T> selectaction)
         {
             var window = GetMetroWindow(context);
 
             // Create BaseChildWindow
-            var baseChildWindow = new BaseChildWindow() {IsModal = true, AllowMove = true, AdditionalContent = content};
+            var popupWindow = new SelectPopupWindow() {IsModal = true, AllowMove = true, AdditionalContent = content};
             // Fill Context with values so ViewModels are linked  // TODO Improve, let Injection handle more
-            var Context = (PopupViewModel)baseChildWindow.DataContext;
-            Context.OwnerTask = x => action((T)x); // Simple way of Converting T to specific type (object in this case)
+            var Context = (PopupViewModel)popupWindow.DataContext;
+            Context.OwnerTask = x => selectaction((T)x); // Simple way of Converting T to specific type (object in this case)
             Context.ContentContext = content.DataContext as IPopup;
-            Context.CloseWindow = () => baseChildWindow.Close();
+            Context.CloseWindow = () => popupWindow.Close();
             Context.Title = title;
             Context.Ready();
 
-            return window.Invoke(() => window.ShowChildWindowAsync(baseChildWindow));
+            return window.Invoke(() => window.ShowChildWindowAsync(popupWindow));
         }
 
         private static MetroWindow GetMetroWindow(object context)
@@ -43,12 +50,12 @@ namespace ParkInspect.View.UserControls.Popup
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            if (!ChildWindowParticipation.IsRegistered(context))
+            if (!PopupParticipation.IsRegistered(context))
             {
                 throw new InvalidOperationException("Context is not registered. Consider using ChildWindowParticipation. Register in XAML to bind in the DataContext.");
             }
 
-            var association = ChildWindowParticipation.GetAssociation(context);
+            var association = PopupParticipation.GetAssociation(context);
             var metroWindow = association.Invoke(() => Window.GetWindow(association) as MetroWindow);
             if (metroWindow == null)
             {

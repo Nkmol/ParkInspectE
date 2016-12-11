@@ -166,7 +166,7 @@ namespace ParkInspect.ViewModel
         public ParkinglotViewModel(IRepository context, PopupCoordinator popupCoordinator)
         {
             PopupCoordinator = popupCoordinator;
-            SearchCommand = new RelayCommand(SearchRegion);
+            SearchCommand = new RelayCommand(SearchRegionAsync);
 
             SaveCommand = new RelayCommand(Save, () => CanSave());
             NewCommand = new RelayCommand(NewParkinglot);
@@ -177,14 +177,10 @@ namespace ParkInspect.ViewModel
            
         }
 
-        private async void SearchRegion()
+        private async void SearchRegionAsync()
         {
             //TODO Don't let ViewModel know of UserControl/View?
-            await PopupCoordinator.ShowPopupAsync<RegionViewModel>(this, "Selecteer een regio.", new RegionOverview(), x =>
-            {
-                Region = x.Name; 
-                RaisePropertyChanged("Region");
-            });
+            await PopupCoordinator.ShowSelectPopupAsync<RegionViewModel>(this, "Selecteer een regio.", new RegionOverview(), x => Region = x.Name);
         }
 
         private void UpdateParkinglots()

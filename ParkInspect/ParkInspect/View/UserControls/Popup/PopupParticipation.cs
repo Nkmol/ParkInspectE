@@ -4,14 +4,14 @@ using System.Windows;
 
 namespace ParkInspect.View.UserControls.Popup
 {
-    public static class ChildWindowParticipation
+    public static class PopupParticipation
     {
         private static readonly IDictionary<object, DependencyObject> ContextRegistrationIndex = new Dictionary<object, DependencyObject>();
 
         public static readonly DependencyProperty RegisterProperty = DependencyProperty.RegisterAttached(
             "Register",
             typeof(object),
-            typeof(ChildWindowParticipation),
+            typeof(PopupParticipation),
             new PropertyMetadata(default(object), RegisterPropertyChangedCallback));
 
         private static void RegisterPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)

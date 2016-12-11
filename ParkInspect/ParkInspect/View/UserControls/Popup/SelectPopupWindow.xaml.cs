@@ -18,7 +18,7 @@ namespace ParkInspect.View.UserControls.Popup
     /// <summary>
     /// Interaction logic for BaseChildWindow.xaml
     /// </summary>
-    public partial class BaseChildWindow : ChildWindow
+    public partial class SelectPopupWindow : ChildWindow
     {
         /// <summary>
         /// Gets or sets additional content for the UserControl
@@ -29,10 +29,10 @@ namespace ParkInspect.View.UserControls.Popup
             set { SetValue(AdditionalContentProperty, value); }
         }
         public static readonly DependencyProperty AdditionalContentProperty =
-            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(BaseChildWindow),
+            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(SelectPopupWindow),
               new PropertyMetadata(null));
 
-        public BaseChildWindow()
+        public SelectPopupWindow()
         {
             InitializeComponent();
         }
