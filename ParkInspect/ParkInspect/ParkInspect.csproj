@@ -210,8 +210,8 @@
     </Compile>
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
-    <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
+    <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
     <Compile Include="ViewModel\Popup\IPopup.cs" />
