@@ -10,8 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="480.172"
-             DataContext="{Binding Parkinglots, Source={StaticResource Locator}}"
-             popup:PopupParticipation.Register="{Binding Parkinglots, Source={StaticResource Locator}}">
+             DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">
@@ -70,10 +69,7 @@
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
                         <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Zip, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <StackPanel Orientation="Horizontal">
-                            <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
-                            <Button Margin="5 0" Content="Search" Command="{Binding SearchCommand}"></Button>
-                        </StackPanel>
+                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
                         <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
                         <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
                         <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="274"/>

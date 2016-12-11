@@ -209,8 +209,6 @@
     <Compile Include="ViewModel\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\PopupViewModel.cs" />
-    <Compile Include="ViewModel\Regio\RegionOverviewViewModel.cs" />
-    <Compile Include="ViewModel\Regio\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\UserControls\InspectionControl.xaml.cs">
@@ -233,9 +231,6 @@
     </Compile>
     <Compile Include="View\UserControls\Popup\PopupParticipation.cs" />
     <Compile Include="View\UserControls\Popup\PopupCoordinator.cs" />
-    <Compile Include="View\UserControls\RegionOverview.xaml.cs">
-      <DependentUpon>RegionOverview.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\UserControls\ReportControl.xaml.cs">
       <DependentUpon>ReportControl.xaml</DependentUpon>
     </Compile>
@@ -280,10 +275,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\Popup\SelectPopupWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserControls\RegionOverview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

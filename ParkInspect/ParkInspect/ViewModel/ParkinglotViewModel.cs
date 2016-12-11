@@ -14,7 +14,6 @@ using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
-using ParkInspect.ViewModel.Regio;
 
 namespace ParkInspect.ViewModel
 {
@@ -161,13 +160,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public PopupCoordinator PopupCoordinator { get; set; }
-
-        public ParkinglotViewModel(IRepository context, PopupCoordinator popupCoordinator)
+        public ParkinglotViewModel(IRepository context)
         {
-            PopupCoordinator = popupCoordinator;
-            SearchCommand = new RelayCommand(SearchRegionAsync);
-
             SaveCommand = new RelayCommand(Save, () => CanSave());
             NewCommand = new RelayCommand(NewParkinglot);
             Service = new ParkinglotService(context);
@@ -176,13 +170,6 @@ namespace ParkInspect.ViewModel
             NewParkinglot();
            
         }
-
-        private async void SearchRegionAsync()
-        {
-            //TODO Don't let ViewModel know of UserControl/View?
-            await PopupCoordinator.ShowSelectPopupAsync<RegionViewModel>(this, "Selecteer een regio.", new RegionOverview(), x => Region = x.Name);
-        }
-
         private void UpdateParkinglots()
         {
 
