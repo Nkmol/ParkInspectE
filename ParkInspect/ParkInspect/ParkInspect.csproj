@@ -208,6 +208,7 @@
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\PopupManager.cs" />
     <Compile Include="ViewModel\PopupViewModel.cs" />
     <Compile Include="ViewModel\Regio\RegionOverviewViewModel.cs" />
     <Compile Include="ViewModel\Regio\RegionViewModel.cs" />
