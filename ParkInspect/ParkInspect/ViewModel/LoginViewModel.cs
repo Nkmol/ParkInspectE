@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro.Controls.Dialogs;
+using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -17,7 +18,6 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class LoginViewModel : ViewModelBase
     {
-        private readonly IDialogCoordinator _dialogCoordinator;
 
         private bool _loginButtonEnabled;
 
@@ -34,9 +34,11 @@ namespace ParkInspect.ViewModel
         /// </summary>
         protected EmployeeService Service;
 
-        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context)
+        private DialogViewModel _dialogViewModel;
+
+        public LoginViewModel(IRepository context, DialogViewModel dialogViewModel)
         {
-            _dialogCoordinator = dialogCoordinator;
+            _dialogViewModel = dialogViewModel;
             Service = new EmployeeService(context);
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
@@ -82,7 +84,7 @@ namespace ParkInspect.ViewModel
             {
                 var result =
                     await
-                        _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in",
+                        _dialogViewModel.ShowLogin("Authenticatie", "Voer uw inloggegevens in",
                             loginDialogSettings);
 
                 if (result == null)
@@ -97,14 +99,14 @@ namespace ParkInspect.ViewModel
                         loginDialogSettings.InitialUsername = result.Username;
                     }
 
-                    await
-                        _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
+                  
+                    await _dialogViewModel.DialogCoordinator.ShowMessageAsync( _dialogViewModel,"Oeps er is iets misgegaan",
                             "Ongeldig email/wachtwoord");
 
                 }
                 else
                 {
-                    await _dialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
+                    await _dialogViewModel.DialogCoordinator.ShowMessageAsync(_dialogViewModel, "Welkom: " + result.Username, "Fijne dag!");
                     logged = true;
                     LoginName = result.Username;
                     LoginButtonEnabled = false;

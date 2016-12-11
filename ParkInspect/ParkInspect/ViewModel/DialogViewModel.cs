@@ -16,9 +16,16 @@ namespace ParkInspect.ViewModel
             DialogCoordinator = dialogCoordinator;
         }
 
-        public void ShowMessage(string title, string message)
+        public async void ShowMessage(string title, string message)
         {
-            DialogCoordinator.ShowMessageAsync(this, title, message);
+           await DialogCoordinator.ShowMessageAsync(this, title, message);
+        }
+
+        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings )
+        {
+          LoginDialogData result = await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
+
+          return result;
         }
 
     }
