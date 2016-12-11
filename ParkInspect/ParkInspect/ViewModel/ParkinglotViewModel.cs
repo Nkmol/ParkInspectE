@@ -162,9 +162,9 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        private DialogViewModel _dialog;
+        private DialogManager _dialog;
 
-        public ParkinglotViewModel(IRepository context, DialogViewModel dialog)
+        public ParkinglotViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
             SaveCommand = new RelayCommand(Save);

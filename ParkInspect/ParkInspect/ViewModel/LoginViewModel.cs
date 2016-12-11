@@ -32,14 +32,14 @@ namespace ParkInspect.ViewModel
         /// <summary>
         ///     Initializes a new instance of the LoginViewModel class.
         /// </summary>
-        protected EmployeeService Service;
 
-        private DialogViewModel _dialogViewModel;
 
-        public LoginViewModel(IRepository context, DialogViewModel dialogViewModel)
+        private DialogManager _dialogViewModel;
+
+        public LoginViewModel(IRepository context, DialogManager dialogViewModel)
         {
             _dialogViewModel = dialogViewModel;
-            Service = new EmployeeService(context);
+            _dialogViewModel.Service = new EmployeeService(context);
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
         }
@@ -63,57 +63,12 @@ namespace ParkInspect.ViewModel
         }
 
         public ICommand ShowLoginDialogCommand => _showLoginDialogCommand
-                                                  ?? (_showLoginDialogCommand = new RelayCommand(ShowLoginDialog));
+                                                  ?? (_showLoginDialogCommand = new RelayCommand(() =>_dialogViewModel.ShowLoginDialog(this)));
 
         public ICommand LogoutCommand => _logoutCommand
                                                   ?? (_logoutCommand = new RelayCommand(Logout));
 
-        public async void ShowLoginDialog()
-        {
-            var loginDialogSettings = new LoginDialogSettings
-            {
-                UsernameWatermark = "Emailadres...",
-                PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Visible,
-                RememberCheckBoxVisibility = Visibility.Visible
-            };
-
-            var logged = false;
-
-            while (!logged)
-            {
-                var result =
-                    await
-                        _dialogViewModel.ShowLogin("Authenticatie", "Voer uw inloggegevens in",
-                            loginDialogSettings);
-
-                if (result == null)
-                    return;
-
-                var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
-
-                if (!rs)
-                {
-                    if (result.ShouldRemember)
-                    {
-                        loginDialogSettings.InitialUsername = result.Username;
-                    }
-
-                  
-                    await _dialogViewModel.DialogCoordinator.ShowMessageAsync( _dialogViewModel,"Oeps er is iets misgegaan",
-                            "Ongeldig email/wachtwoord");
-
-                }
-                else
-                {
-                    await _dialogViewModel.DialogCoordinator.ShowMessageAsync(_dialogViewModel, "Welkom: " + result.Username, "Fijne dag!");
-                    logged = true;
-                    LoginName = result.Username;
-                    LoginButtonEnabled = false;
-                    LogoutButtonEnabled = true;
-                }
-            }
-        }
+        
 
         private void Logout()
         {
