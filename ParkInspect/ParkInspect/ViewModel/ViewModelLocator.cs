@@ -45,6 +45,7 @@ namespace ParkInspect.ViewModel
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
+            SimpleIoc.Default.Register<OfflineViewMode>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<EmployeeViewModel>();
             SimpleIoc.Default.Register<InspectionViewModel>();
@@ -69,6 +70,8 @@ namespace ParkInspect.ViewModel
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
         public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
+        public OfflineViewMode Offline => ServiceLocator.Current.GetInstance<OfflineViewMode>();
+
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 

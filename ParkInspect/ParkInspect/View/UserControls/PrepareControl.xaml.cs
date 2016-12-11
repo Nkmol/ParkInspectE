@@ -82,25 +82,6 @@ namespace ParkInspect.View.UserControls
                 gmap.Markers.Add(mRoute);
 
                 gmap.ZoomAndCenterMarkers(null);
-
-
-                //directions
-               listBox.Items.Clear();
-                var drivingDirectionRequest = new DirectionsRequest
-                {
-                    Origin = txt_home_adres.Text,
-                    Destination = zip + " " + region
-                };
-                drivingDirectionRequest.Language = "nl";
-                DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
-                Route nRoute = drivingDirections.Routes.First();
-                Leg leg = nRoute.Legs.First();
-                int counter = 1;
-                foreach (Step step in leg.Steps)
-                {
-                    listBox.Items.Add(counter + ". " + StripHTML(step.HtmlInstructions));
-                    counter++;
-                }
             }
             else
             {
@@ -108,10 +89,7 @@ namespace ParkInspect.View.UserControls
             }
 
         }
-        private string StripHTML(string html)
-        {
-            return Regex.Replace(html, @"<(.|\n)*?>", string.Empty);
-        }
+
         private PointLatLng getPointFromKeyWord(String keyword)
         {
             GeoCoderStatusCode status;

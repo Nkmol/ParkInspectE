@@ -9,7 +9,7 @@
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         mc:Ignorable="d ignore"
-        Height="600"
+        Height="898"
         Width="1000"
         Title="ParkInspect"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
@@ -48,6 +48,9 @@
             </TabItem>
             <TabItem Header="Voorbereiding">
                 <userControls:PrepareControl />
+            </TabItem>
+            <TabItem Header="Offline">
+                <userControls:OfflineControl />
             </TabItem>
             <TabItem Header="Afwezigheid">
                 <userControls:AbsenceControl />

@@ -11,12 +11,19 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
+using GoogleMapsApi.Entities.Directions.Request;
+using GoogleMapsApi.Entities.Directions.Response;
+using GoogleMapsApi;
+using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace ParkInspect.ViewModel
 {
     public class PrepareViewModel : ViewModelBase
     {
         protected InspectionService service;
+        public ObservableCollection<String> directionItems { get; set; }
         public ObservableCollection<Inspection> inspections { get; set; }
         public Inspection _selectedInspection;
         public string _client_name;
@@ -25,6 +32,10 @@ namespace ParkInspect.ViewModel
         public string _region_zip;
         public int _region_number;
         public string _clarification;
+        public string _directionsName;
+        private string _home_adress;
+        public RelayCommand saveDirections{ get; set; }
+        public RelayCommand getDirections { get; set; }
 
         public String client_name
         {
@@ -63,7 +74,18 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-
+        public String home_adress
+        {
+            get
+            {
+                return _home_adress;
+            }
+            set
+            {
+                _home_adress = value;
+                base.RaisePropertyChanged();
+            }
+        }
         public String region_zip
         {
             get
@@ -121,11 +143,64 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
+        public String directions_name
+        {
+            get
+            {
+                return _directionsName;
+            }
+            set
+            {
+                _directionsName = value;
+                base.RaisePropertyChanged();
+
+            }
+        }
 
         public PrepareViewModel(IRepository context)
         {
             service = new InspectionService(context);
+            directionItems = new ObservableCollection<string>();
             inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
+            saveDirections = new RelayCommand(SaveDirections);
+            getDirections = new RelayCommand(GetDirections);
+        }
+        private void SaveDirections()
+        {
+            String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            if (_directionsName != "")
+            {
+                System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directionsName + ".txt");
+                foreach (var item in directionItems)
+                {
+                    SaveFile.WriteLine(item.ToString());
+                }
+            } else
+            {
+                MessageBox.Show("Vul een naam in!");
+            }
+        }
+        private void GetDirections()
+        {
+            var drivingDirectionRequest = new DirectionsRequest
+            {
+                Origin = home_adress,
+                Destination = region_zip + " " + region_name
+            };
+            drivingDirectionRequest.Language = "nl";
+            DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
+            Route nRoute = drivingDirections.Routes.First();
+            Leg leg = nRoute.Legs.First();
+            int counter = 1;
+            foreach (Step step in leg.Steps)
+            {
+               directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
+                counter++;
+            }
+        }
+        private string StripHTML(string html)
+        {
+            return Regex.Replace(html, @"<(.|\n)*?>", string.Empty);
         }
     }
 }

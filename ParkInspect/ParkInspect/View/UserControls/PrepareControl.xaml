@@ -42,15 +42,17 @@
                 <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" Margin="380,67,0,0" VerticalAlignment="Top" Width="604" Height="640">
                     <Grid>
                         <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="553" VerticalAlignment="Top" Width="592"/>
-                        <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Height="20" Margin="98,559,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="276"/>
+                        <TextBox x:Name="txt_home_adres"  HorizontalAlignment="Left" Height="20" Margin="98,559,0,0" TextWrapping="Wrap" Text="{Binding home_adress}" VerticalAlignment="Top" Width="276"/>
                         <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="10,558,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
-                        <Button x:Name="button" Content="Navigeer" HorizontalAlignment="Left" Margin="379,559,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
+                        <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="379,559,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox2" Header="Route beschrijving" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="347" Height="332">
                     <Grid>
-                        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="293" VerticalAlignment="Top" Width="335"/>
+                        <ListBox x:Name="listBox" HorizontalAlignment="Left"  ItemsSource="{Binding directionItems, Mode=TwoWay}" Height="254" VerticalAlignment="Top" Width="335"/>
+                        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="0,259,0,0" TextWrapping="Wrap" Text="{Binding directions_name}" VerticalAlignment="Top" Width="218"/>
+                        <Button x:Name="button1" Content="Opslaan" Command="{Binding saveDirections }" HorizontalAlignment="Left" Margin="223,260,0,0" VerticalAlignment="Top" Width="102"/>
 
                     </Grid>
                 </GroupBox>

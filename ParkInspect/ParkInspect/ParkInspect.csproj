@@ -226,6 +226,7 @@
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\OfflineViewModel.cs" />
     <Compile Include="ViewModel\PrepareViewModel.cs" />
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\OfflineControl.xaml.cs">
+      <DependentUpon>OfflineControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\PrepareControl.xaml.cs">
       <DependentUpon>PrepareControl.xaml</DependentUpon>
@@ -338,6 +342,10 @@
     <Page Include="View\UserControls\EmployeeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\OfflineControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\UserControls\PrepareControl.xaml">
       <Generator>MSBuild:Compile</Generator>
