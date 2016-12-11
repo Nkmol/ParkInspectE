@@ -208,6 +208,7 @@
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="Model\WindowManager.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
+    <Compile Include="ViewModel\DialogViewModel.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
