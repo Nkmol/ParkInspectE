@@ -16,7 +16,7 @@ namespace ParkInspect.Model.ValidationRules
             if (int.TryParse(value.ToString(), out i))
                 return new ValidationResult(true, null);
 
-            return new ValidationResult(false, "Please enter a valid integer value!");
+            return new ValidationResult(false, "Voer hier een getal in!");
         }
     }
 }

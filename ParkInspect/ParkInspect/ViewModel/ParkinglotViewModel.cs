@@ -192,7 +192,7 @@ namespace ParkInspect.ViewModel
         private void NewParkinglot()
         {
 
-            Message = "Add a new Parkinglot";
+            Message = "Nieuwe parkeerplaats toevoegen";
             Parkinglot = new Parkinglot();
             RaisePropertyChanged("Parkinglot");
             Parkinglot.id = -1;
@@ -204,13 +204,13 @@ namespace ParkInspect.ViewModel
 
             if (Parkinglot.id < 0)
             {
-                Message = (Service.Add<Parkinglot>(Parkinglot) ? "The parkinglot was added!" : "Something went wrong.");
+                Message = (Service.Add<Parkinglot>(Parkinglot) ? "Parkeerplaats is toegevoegd" : "Er is iets misgegaan.");
             }
             else
             {
                 Message = (Service.Update<Parkinglot>(Parkinglot)
-                    ? "The parkinglot was updated!"
-                    : "Something went wrong.");
+                    ? "Parkeerplaats is bijgewerkt!"
+                    : "Er is iets misgegaan.");
             }
 
             RaisePropertyChanged("Message");
