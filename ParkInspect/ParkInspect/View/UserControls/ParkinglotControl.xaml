@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
+             xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="480.172"
@@ -13,7 +14,6 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Overview">
-
                 <StackPanel>
 
                     <Label Name="SearchLabel">
@@ -46,6 +46,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                    <Button x:Name="ExportButton" Content="Export Data" PreviewMouseDown="Unselect" Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                    
                 </StackPanel>
             </TabItem>
             <TabItem Header="Management">
@@ -66,12 +68,71 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="0" Grid.Column="1">
-                        <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Zip, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Region, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
-                        <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
+                        <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" >
+                            <TextBox.Text>
+                                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+
+                        <TextBox x:Name="ZipBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" >
+                            <TextBox.Text>
+                                <Binding Path="Zip" UpdateSourceTrigger="PropertyChanged" >
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsValidZipCodeValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190">
+                            <ComboBox.Text>
+                                <Binding Path="Region" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+
+                        <TextBox x:Name="NumberBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="190">
+                            <TextBox.Text>
+                                <Binding Path="Number" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
                         <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="190"/>
-                        <Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="274"/>
+
+                        <Button x:Name="SaveButton2" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Save Parkinglot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="274">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=ZipBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <!--<Button x:Name="SaveButton" Content="Save Parkinglot" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="274"/>-->
                         <Button x:Name="NewButton" Content="New Parkinglot" PreviewMouseDown="Unselect" Command="{Binding NewCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="274"/>
                         <Label x:Name="MessageLabel" Content="{Binding Message}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
                     </StackPanel>

@@ -1,0 +1,52 @@
+﻿<controls:MetroWindow x:Class="ParkInspect.ExportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"            
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="using:ParkInspect.View.UserControls"
+        xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
+        mc:Ignorable="d ignore"
+        Height="600"
+        Width="1000"
+        Title="ParkInspect"
+        DataContext="{Binding Export, Source={StaticResource Locator}}">
+    <StackPanel>
+
+        <Label x:Name="ExportLabel">You will export the following table:</Label>
+        <DataGrid x:Name="ExportGrid" IsReadOnly="True" ItemsSource="{Binding Data, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
+
+        <Grid Name="SelectionGrid" Margin="0, 10, 0, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" x:Name="AvailableLabel" Content="Available columns:" HorizontalAlignment="Stretch"/>
+            <ListBox Grid.Row="1" Grid.Column="0" BorderThickness="1" SelectedItem="{Binding Available}" ItemsSource="{Binding AvailableColumns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+            <Button Grid.Row="2" Grid.Column="0" Content="Add selected column" HorizontalAlignment="Stretch" Command="{Binding AddCommand}"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="Add all columns" HorizontalAlignment="Stretch" Command="{Binding AddAllCommand}"/>
+            
+            <Label Grid.Row="0" Grid.Column="1" x:Name="SelectedLabel" Content="Selected columns:"/>
+            <ListBox Grid.Row="1" Grid.Column="1" BorderThickness="1" SelectedItem="{Binding Selected}" ItemsSource="{Binding SelectedColumns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+            <Button Grid.Row="2" Grid.Column="1" Content="Remove selected column" HorizontalAlignment="Stretch" Command="{Binding RemoveCommand}"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Remove all columns" HorizontalAlignment="Stretch" Command="{Binding RemoveAllCommand}"/>
+            
+            <Label Grid.Row="0" Grid.Column="2" x:Name="AliasLabel" Content="Alias columns:"/>
+            <DataGrid Grid.Row="1" Grid.Column="2" AutoGenerateColumns="True"  BorderThickness="1"  HeadersVisibility="None" HorizontalAlignment="Stretch" IsReadOnly="False" ItemsSource="{Binding AliasColumns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </DataGrid>
+            <Button Grid.Row="2" Grid.Column="2" Content="Update" HorizontalAlignment="Stretch" Command="{Binding AliasChangedCommand}"/>
+
+        </Grid>
+        <Button x:Name="Export" Content="Export selected data" Command="{Binding ExportCommand}" Margin="0,10,0,0"/>
+
+    </StackPanel>
+</controls:MetroWindow>
