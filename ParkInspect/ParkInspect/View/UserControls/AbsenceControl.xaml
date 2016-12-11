@@ -48,7 +48,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="125"/>
 
                     </StackPanel>
                 </ScrollViewer>
@@ -93,7 +93,7 @@
 
                             <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                         </DockPanel>
-                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button"  Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="116">
+                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button"  Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="125">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="IsEnabled" Value="false" />
