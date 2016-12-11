@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Services\AbsenceService.cs" />
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\FormService.cs" />
     <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="ViewModel\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\TemplatesViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\ExportView.xaml.cs">
       <DependentUpon>ExportView.xaml</DependentUpon>
@@ -328,7 +330,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -354,4 +358,3 @@
   <Target Name="AfterBuild">
   </Target>
 </Project>
-

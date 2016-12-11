@@ -7,20 +7,20 @@ using ParkInspect.Repository;
 
 namespace ParkInspect.Services
 {
-    class TemplateService
+    public class TemplateService
     {
-        EntityFrameworkRepository<ParkInspectEntities> central;
-        EntityFrameworkRepository<ParkInspectEntities> local;
+        public EntityFrameworkRepository<ParkInspectEntities> central;
+        private EntityFrameworkRepository<ParkInspectEntities> local;
 
         public TemplateService(EntityFrameworkRepository<ParkInspectEntities> central, EntityFrameworkRepository<ParkInspectEntities> local)
         {
-            this.central = central;
+            this.central = central; 
             this.local = local;
         }
 
         public Template createTemplate()
         {
-            Template template = new Template();
+            Template template = new Template() { version_number = "1.0" };
             return template;
         }
 
@@ -28,8 +28,8 @@ namespace ParkInspect.Services
         {
             Template template = new Template();
             template.name = source.name;
-            template.version_number = source.version_number + 1;
-            foreach(Field f in source.Fields)
+            template.version_number = (int.Parse(source.version_number.Replace(".0","")) + 1).ToString() + ".0";
+            foreach (Field f in source.Fields)
             {
                 template.Fields.Add(new Field() { title = f.title, datatype = f.datatype });
             }
@@ -42,7 +42,6 @@ namespace ParkInspect.Services
             {
                 central.Create(template);
                 central.Save();
-                throw new Exception();
             } else
             {
 

@@ -8,23 +8,19 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Collections.ObjectModel;
 using ParkInspect.Services;
+using System.Diagnostics;
 
 namespace ParkInspect.ViewModel
 {
     
     public class NewTemplateViewModel : ViewModelBase
     {
-        private TemplateService _service;
         private TemplateService Service {
             get {
-                if (_service == null && superViewModel.Context != null)
-                {
-                    _service = new TemplateService(superViewModel.Context, superViewModel.Context);
-                }
-                return _service;
+                return superViewModel.Service;
             }
         }
-        private FormViewModel superViewModel { get; }
+        private TemplatesViewModel superViewModel { get; }
 
         private Template _template;
         public Template Template
@@ -35,6 +31,7 @@ namespace ParkInspect.ViewModel
             set {
                 _template = value;
                 RaisePropertyChanged("Template");
+                SaveTemplateCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -50,8 +47,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        private ObservableCollection<string> _fieldTypes;
-        public ObservableCollection<string> FieldTypes {
+        private ObservableCollection<Datatype> _fieldTypes;
+        public ObservableCollection<Datatype> FieldTypes {
             get{
                 return _fieldTypes;
             }
@@ -61,22 +58,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        private ObservableCollection<Field> _fields;
-        public ObservableCollection<Field> Fields {
-            get
-            {
-                return _fields;
-            }
-            set
-            {
-                _fields = value;
-                RaisePropertyChanged("Fields");
-                SaveTemplateCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        private string _selectedFieldType;
-        public string SelectedFieldType {
+        private Datatype _selectedFieldType;
+        public Datatype SelectedFieldType {
             get
             {
                 return _selectedFieldType;
@@ -104,20 +87,17 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public string TemplateName
+        private ObservableCollection<Field> _fields;
+        public ObservableCollection<Field> Fields
         {
             get
             {
-                if (Template == null)
-                {
-                    return null;
-                }
-                return Template.name;
+                return _fields;
             }
             set
             {
-                Template.name = value;
-                RaisePropertyChanged("TemplateName");
+                _fields = value;
+                RaisePropertyChanged("Fields");
                 SaveTemplateCommand.RaiseCanExecuteChanged();
             }
         }
@@ -127,7 +107,7 @@ namespace ParkInspect.ViewModel
         public RelayCommand SaveTemplateCommand { get; set; }
         public RelayCommand NameChangedCommand { get; set; }
 
-        public NewTemplateViewModel(FormViewModel superViewModel)
+        public NewTemplateViewModel(TemplatesViewModel superViewModel)
         {
             AddFieldCommand = new RelayCommand(AddField, CanAddField);
             RemoveFieldCommand = new RelayCommand(RemoveField, CanRemoveField);
@@ -135,17 +115,16 @@ namespace ParkInspect.ViewModel
             NameChangedCommand = new RelayCommand(NameChanged);
 
             this.superViewModel = superViewModel;
-            FieldTypes = new ObservableCollection<string>
-            {
-                "Tekst","Combobox","Checkbox"
-            };
+            FieldTypes = new ObservableCollection<Datatype>(Service.central.GetAll<Datatype>().ToList<Datatype>());
             SelectedFieldType = FieldTypes.First();
         }
 
         public void AddField()
         {
-            Template.Fields.Add(new Field() { title = FieldLabel, datatype = SelectedFieldType });
-            Fields = new ObservableCollection<Field>(Template.Fields);
+            Field field = new Field() { title = FieldLabel, datatype = SelectedFieldType.datatype1 };
+            Template.Fields.Add(field);
+            Fields.Add(field);
+            SaveTemplateCommand.RaiseCanExecuteChanged();
         }
 
         public bool CanAddField()
@@ -166,6 +145,7 @@ namespace ParkInspect.ViewModel
             Template.Fields.Remove(SelectedField);
             Fields.Remove(SelectedField);
             SaveTemplateCommand.RaiseCanExecuteChanged();
+            RaisePropertyChanged("Template.Fields");
         }
 
         public bool CanRemoveField()
@@ -176,6 +156,7 @@ namespace ParkInspect.ViewModel
         public void SetTemplate(Template template)
         {
             this.Template = template;
+            Fields = new ObservableCollection<Field>(template.Fields);
         }
 
         public void newTemplate()
@@ -191,7 +172,7 @@ namespace ParkInspect.ViewModel
         public void SaveTemplate()
         {
             Service.SaveTemplate(Template);
-            superViewModel.disableEditor();
+            superViewModel.superViewModel.disableEditor();
         }
 
         public bool CanSaveTemplate()

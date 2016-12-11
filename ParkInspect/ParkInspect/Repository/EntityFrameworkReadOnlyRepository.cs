@@ -21,8 +21,14 @@ namespace ParkInspect.Repository
 
         public bool IsConnected()
         {
-            Context.Database.Connection.Open();
-            return Context.Database.Connection.State == System.Data.ConnectionState.Open;
+            try
+            {
+                Context.Database.Connection.Open();
+                return Context.Database.Connection.State == System.Data.ConnectionState.Open;
+            } catch (Exception)
+            {
+                return false;
+            }
         }
 
         protected virtual IQueryable<TEntity> GetQueryable<TEntity>(

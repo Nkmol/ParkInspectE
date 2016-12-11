@@ -6,33 +6,35 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ParkInspect.View.UserControls.FormControl"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="750"
-             DataContext="{Binding Vragenlijsten, Source={StaticResource Locator}}">
+             d:DesignHeight="500" d:DesignWidth="850"
+             DataContext="{Binding Forms, Source={StaticResource Locator}}">
     <Grid>
         <TabControl SelectedIndex="{Binding SelectedTab}">
-            <Custom:MetroTabItem Header="Vragenlijsten" DataContext="{Binding Lists, Source={StaticResource Locator}}">
-                <Grid Background="#aaaaaa">
-                    <Button x:Name="button1" Content="Opslaan" HorizontalAlignment="Left" Margin="659,218,0,0" VerticalAlignment="Top" Width="75"/>
-                </Grid>
+            <Custom:MetroTabItem Header="Vragenlijsten" >
+                <ScrollViewer  Background="#aaaaaa">
+                    <Grid Name="FormGrid">
+                        <Button x:Name="saveButton" Command = "{Binding SaveCommand}"  Content="Opslaan" Margin="692,10,0,411" Height="32" RenderTransformOrigin="0.5,0.5" Width="138" />
+                    </Grid>
+                </ScrollViewer>
             </Custom:MetroTabItem>
             <Custom:MetroTabItem Header="Templates" >
-                <Grid Background="#aaaaaa">
-                    <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="233" Width="237">
+                <Grid Background="#aaaaaa" DataContext="{Binding TemplatesViewModel}" Margin="0,-2,0,2">
+                    <DataGrid ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplateCollection, Mode=TwoWay}" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="233" Width="342">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Template naam"/>
-                            <DataGridTextColumn Header="Nieuwste versie"/>
+                            <DataGridTextColumn Header="Template naam" Binding="{Binding name}"/>
+                            <DataGridTextColumn Header="Nieuwste versie" Binding="{Binding highestVersion}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="298,10,0,0" VerticalAlignment="Top" Width="124"/>
-                    <Label x:Name="label" Content="Versie" HorizontalAlignment="Left" Margin="252,10,0,0" VerticalAlignment="Top"/>
-                    <Button Command ="{Binding NewTemplateCommand}" x:Name="newTemplate" Content="Nieuwe template" HorizontalAlignment="Left" Margin="298,63,0,0" VerticalAlignment="Top" Width="124"/>
-                    <Button Command ="{Binding EditTemplateCommand}" x:Name="editTemplate" Content="Wijzig Template" HorizontalAlignment="Left" Margin="298,93,0,0" VerticalAlignment="Top" Width="124"/>
-                    <Button Command ="{Binding NewListCommand}" x:Name="newList" Content="Nieuwe vragenlijst" HorizontalAlignment="Left" Margin="298,126,0,0" VerticalAlignment="Top" Width="124"/>
+                    <ComboBox ItemsSource="{Binding Versions}" SelectedItem="{Binding SelectedVersion}" x:Name="comboBox" HorizontalAlignment="Left" Margin="403,14,0,0" VerticalAlignment="Top" Width="124"/>
+                    <Label x:Name="label" Content="Versie" HorizontalAlignment="Left" Margin="357,14,0,0" VerticalAlignment="Top"/>
+                    <Button Command ="{Binding NewTemplateCommand}" x:Name="newTemplate" Content="Nieuwe template" HorizontalAlignment="Left" Margin="403,67,0,0" VerticalAlignment="Top" Width="124"/>
+                    <Button Command ="{Binding EditTemplateCommand}" x:Name="editTemplate" Content="Wijzig Template" HorizontalAlignment="Left" Margin="403,97,0,0" VerticalAlignment="Top" Width="124"/>
+                    <Button Command ="{Binding NewListCommand}" x:Name="newList" Content="Nieuwe vragenlijst" HorizontalAlignment="Left" Margin="403,130,0,0" VerticalAlignment="Top" Width="124"/>
 
                 </Grid>
             </Custom:MetroTabItem>
             <Custom:MetroTabItem Header="Template editor" Visibility="{Binding EditorVisibility}" >
-                <Grid Background="#aaaaaa" DataContext="{Binding NewTemplateViewModel}">
+                <Grid Background="#aaaaaa" DataContext="{Binding TemplatesViewModel.NewTemplateViewModel}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="162*"/>
                         <RowDefinition Height="91*"/>
@@ -49,9 +51,9 @@
                     <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="9" Margin="114,51,0,0" TextWrapping="Wrap" Text="{Binding FieldLabel, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="164"/>
                     <Label x:Name="label1" Content="Veld label:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="label2" Content="Veld type:" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="114,82,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding FieldTypes}" SelectedItem="{Binding SelectedFieldType}"/>
+                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="114,82,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding FieldTypes}" DisplayMemberPath="datatype1" SelectedItem="{Binding SelectedFieldType}"/>
                     <Label x:Name="label3" Content="Template naam" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox Text="{Binding TemplateName, UpdateSourceTrigger=PropertyChanged}" x:Name="templateName" HorizontalAlignment="Left" Height="9" Margin="114,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="164"/>
+                    <TextBox Text="{Binding Template.name, UpdateSourceTrigger=PropertyChanged}" x:Name="templateName" HorizontalAlignment="Left" Height="9" Margin="114,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="164"/>
                 </Grid>
             </Custom:MetroTabItem>
             <Button x:Name="button" Content="Button" Height="100" Width="75"/>
