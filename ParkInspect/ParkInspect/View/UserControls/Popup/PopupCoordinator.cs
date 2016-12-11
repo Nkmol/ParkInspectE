@@ -27,12 +27,13 @@ namespace ParkInspect.View.UserControls.Popup
          * @param content - Content (UserControl) that you want to show inside the popup.
          * @param selectaction - Task of what should happen on select button click.
          */
-        public Task ShowSelectPopupAsync<T>(ViewModelBase context, string title, UserControl content, Action<T> selectaction)
+        public Task ShowSelectPopupAsync<T>(object context, string title, UserControl content, Action<T> selectaction)
         {
             var window = GetMetroWindow(context);
 
             // Create BaseChildWindow
             var popupWindow = new SelectPopupWindow() {IsModal = true, AllowMove = true, AdditionalContent = content};
+
             // Fill Context with values so ViewModels are linked  // TODO Improve, let Injection handle more
             var Context = (PopupViewModel)popupWindow.DataContext;
             Context.OwnerTask = x => selectaction((T)x); // Simple way of Converting T to specific type (object in this case)

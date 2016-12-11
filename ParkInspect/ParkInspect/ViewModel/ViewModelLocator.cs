@@ -55,6 +55,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ExportViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
+            SimpleIoc.Default.Register<PopupManager>();
         }
 
         /// <summary>
@@ -82,6 +83,7 @@ namespace ParkInspect.ViewModel
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
 
         public PopupViewModel Popup => new PopupViewModel(); // Always new link
+        public PopupManager PopupManager => ServiceLocator.Current.GetInstance<PopupManager>();
 
         /// <summary>
         /// Cleans up all the resources.

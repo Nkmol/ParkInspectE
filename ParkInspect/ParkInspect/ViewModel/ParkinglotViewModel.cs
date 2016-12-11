@@ -168,8 +168,8 @@ namespace ParkInspect.ViewModel
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAllRegions());
             NewParkinglot();
-           
         }
+
         private void UpdateParkinglots()
         {
 

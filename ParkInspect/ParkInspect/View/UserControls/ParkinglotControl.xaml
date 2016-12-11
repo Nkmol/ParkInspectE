@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
-             xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="480.172"
