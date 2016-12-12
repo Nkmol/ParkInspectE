@@ -9,7 +9,7 @@
              DataContext="{Binding Personeel, Source={StaticResource Locator}}">
     <Grid>
         <TabControl>
-            <TabItem Header="Overview">
+            <TabItem Header="Overzicht">
                 <DataGrid ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible" 

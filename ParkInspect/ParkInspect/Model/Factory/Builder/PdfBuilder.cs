@@ -31,7 +31,6 @@ namespace ParkInspect
          * float width - the width of the document
          * float height - the height of the document
          */
-
         public void SetSize(float width, float height)
         {
             _document.SetPageSize(new Rectangle(width, height));
@@ -72,7 +71,8 @@ namespace ParkInspect
             table.HorizontalAlignment = (int) alignment;
 
             var realColumns = (headers != null && headers.Length > 0 ? headers : columns);
-            foreach (var column in realColumns)
+            
+	    foreach (var column in realColumns)
             {
                 table.AddCell(column);
             }
@@ -137,8 +137,7 @@ namespace ParkInspect
          * int height (optional) - the scaled height of the image
          * PdfAlignment alignment (optional) - the alignment of the image on the document
          */
-
-        public void AddImage(string location, int width = 0, int height = 0, PdfAlignment alignment = PdfAlignment.LEFT)
+	public void AddImage(string location, int width = 0, int height = 0, PdfAlignment alignment = PdfAlignment.LEFT)
         {
 
             var img = iTextSharp.text.Image.GetInstance(location);
@@ -154,7 +153,6 @@ namespace ParkInspect
         /*
          * Writes the document. Basically closes all used variables.
          */
-
         public void Build()
         {
             _writer.Flush();
@@ -169,7 +167,6 @@ namespace ParkInspect
 
             return type;
         }
-
     }
 
     /*

@@ -8,15 +8,16 @@ using System.Windows.Controls;
 
 namespace ParkInspect.Model.ValidationRules
 {
-    public class StringToIntValidationRule : ValidationRule
+    public class IsValidDateTimeRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int i;
-            if (int.TryParse(value.ToString(), out i))
+            DateTime temp;
+            string format = "d-M-yyyy";
+            if (DateTime.TryParseExact(Convert.ToString(value), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out temp))
                 return new ValidationResult(true, null);
 
-            return new ValidationResult(false, "Voer hier een getal in!");
+            return new ValidationResult(false, "Voer een geldige datum in!");
         }
     }
 }

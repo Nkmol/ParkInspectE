@@ -4,17 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             Width="1000"
+             Height="600"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
     <Grid>
         <TabControl>
-            <TabItem Header="Overview">
-                <DataGrid ScrollViewer.CanContentScroll="True" 
+            <TabItem Header="Overzicht">
+                <DataGrid ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                               SelectionMode="Single" AutoGenerateColumns="False" 
-                              IsReadOnly="True" ItemsSource="{Binding Employees}" 
+                              IsReadOnly="True" Height="500" ItemsSource="{Binding Employees}" 
                               SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
@@ -30,49 +32,144 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
-                <ScrollViewer>
-                    <StackPanel Margin="15,5" Height="680">
+                <Grid>
+                    <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <StackPanel>
+                            <Label Content="Voornaam" />
+                            <TextBox Name="fname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                              </TextBox>
 
-                        <TextBlock Text="Voornaam:" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50"  Text="{Binding firstname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <Label Content="Achternaam"/>
+                            <TextBox Name="lname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
-                        <TextBlock Text="Achternaam:" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding lastname, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            <Label Content="Emailadres"/>
+                            <TextBox Name="email" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                        <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
 
-                        <TextBlock Text="Rol:" />
-                        <ComboBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
+                            <Label Content="Telefoonnummer" />
+                            <TextBox Name="phone" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
-                        <TextBlock Text="Status:" />
-                        <ComboBox Width="150" HorizontalAlignment="Left" Margin="0,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Text="Selecteer Rol"/>
+                            <Label Content="Wachtwoord" />
+                            <TextBox Name="pass" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
+                                <TextBox.Text>
+                                    <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </DockPanel>
+                    <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel>
+                            <Label Content="Datum in dienst" />
+                            <DatePicker Name="start_date" Width="250" HorizontalAlignment="Left"
+            	                    Margin="5,0,0,10"
+            	                    VerticalAlignment="Top">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="in_service_date" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
 
-                        <TextBlock Text="Datum in dienst:" />
-                        <DatePicker SelectedDate="{Binding in_service_date, Mode=TwoWay}"  HorizontalAlignment="Left"
-            	                    Margin="0,0,0,10"
-            	                    VerticalAlignment="Top"/>
+                            <Label Content="Actief" />
+                            <CheckBox Margin="5,0,0,10" Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding active, Mode=TwoWay}"></CheckBox>
 
-                        <TextBlock Text="Actief" />
-                        <CheckBox Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding active, Mode=TwoWay}"></CheckBox>
+                            <Label Content="Datum uit dienst" />
+                            <DatePicker Name="end_date" Width="250" HorizontalAlignment="Left"
+            	                    Margin="5,0,0,10"
+            	                    VerticalAlignment="Top">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="out_service_date" UpdateSourceTrigger="PropertyChanged"></Binding>
+                            </DatePicker.SelectedDate>
+                            </DatePicker>
 
-                        <TextBlock Text="Datum uit dienst:" />
-                        <DatePicker SelectedDate="{Binding out_service_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
-            	                    Margin="0,0,0,10"
-            	                    VerticalAlignment="Top"/>
+                            <Label Content="Rol" />
+                            <ComboBox Name="role" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.Text>
+                                    <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
 
-                        <TextBlock Text="Emailadres"/>
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding email, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
-
-                        <TextBlock Text="Telefoonnummer" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding phonenumber, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
-
-                        <TextBlock Text="Wachtwoord" />
-                        <TextBox Width="150" HorizontalAlignment="Left"  Margin="0,0,0,10" MaxLength="50" Text="{Binding password, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
-
-                        <Button DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding EditItemCommand}" Margin="0,5" Content="Bewerken"/>
-                        <Button DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding CreateItemCommand}" Margin="0,5" Content="Voeg toe"/>
-                        <Button DataContext="{Binding Employees, Source={StaticResource Locator}}" HorizontalAlignment="Left" Command="{Binding DeselectEmployeeCommand}" Width="150" Height="30" Margin="0,5" Content="Deselecteer medewerker"/>
-                        <TextBlock DataContext="{Binding Employees, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
+                            <Label Content="Status" />
+                            <ComboBox Name="status" Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.Text>
+                                    <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
+                        <Label  Width="300" Height="50" VerticalAlignment="Top" DataContext="{Binding Employees, Source={StaticResource Locator}}" Content="{Binding Notification, Mode=TwoWay}"></Label>
+                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding CreateItemCommand}" Margin="110,0,10,0" Content="Voeg toe">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=fname, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=lname, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=email, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=phone, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=start_date, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=pass, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=role, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=status, Path=(Validation.HasError)}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        
+                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding EditItemCommand}" Margin="0,0,10,0" Content="Bewerken"/>
+                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,0" Content="Deselecteren"/>
                     </StackPanel>
-                </ScrollViewer>
+                </Grid>
             </TabItem>
         </TabControl>
 

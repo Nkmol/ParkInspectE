@@ -55,6 +55,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
+            SimpleIoc.Default.Register<DialogManager>();
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace ParkInspect.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
 
-        public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
+	public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
@@ -86,6 +87,8 @@ namespace ParkInspect.ViewModel
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
+
+        public DialogManager Dialog => ServiceLocator.Current.GetInstance<DialogManager>();
 
         /// <summary>
         /// Cleans up all the resources.
