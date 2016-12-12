@@ -93,7 +93,7 @@
 
                             <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                         </DockPanel>
-                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button"  Content="Opslaan" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="125">
+                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button"  Content="Voeg toe" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="120">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -101,8 +101,8 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=EmployeeBox, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=NewAbsence.start, Path=(Validation.HasError)}" Value="false"/>
-                                                <Condition Binding="{Binding ElementName=NewAbsence.end, Path=(Validation.HasError)}" Value="false"/>
+                                                <Condition Binding="{Binding ElementName=beginDate, Path=(Validation.HasError)}" Value="false"/>
+                                                <Condition Binding="{Binding ElementName=endDate, Path=(Validation.HasError)}" Value="false"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>

@@ -96,16 +96,16 @@ namespace ParkInspect.ViewModel
                 UpdateAbsence();
             }
         }
+        
+        private string _message;
 
-        private string _notification;
 
-
-        public string Notification
+        public string Message
         {
-            get { return _notification; }
+            get { return _message; }
             set
             {
-                _notification = value;
+                _message = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -167,17 +167,20 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private DialogManager _dialog;
 
-        public AbsenceViewModel(IRepository context)
+        public AbsenceViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
+
             Service = new AbsenceService(context);
-            Data = Service.GetAllAbsences();
+            Data = Service.GetAll<Absence>();
             // look at asignment feature for datetime examples.
             Reset(); // Create default absence
             NewAbsence.start = DateTime.Now;
 
-            Absences = new ObservableCollection<Absence>(Service.GetAllAbsences());
-            Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
+            Absences = new ObservableCollection<Absence>(Service.GetAll<Absence>());
+            Employees = new ObservableCollection<Employee>(Service.GetAll<Employee>());
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
             DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod);
@@ -187,11 +190,11 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedAbsence == null)
             {
-                Notification = "Selecteer een afwezigheid";
+                Message = (Service.Update<Absence>(SelectedAbsence) ? "Something went wrong." : "Selecteer een afwezigheid!");
+                _dialog.ShowMessage("Action", Message);
                 return;
             }
 
-            Service.DeleteAbsence(SelectedAbsence);
             Absences.Remove(SelectedAbsence);
 
             base.RaisePropertyChanged();
@@ -205,8 +208,9 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            Service.InsertAbsence(NewAbsence);
-            Notification = "Nieuwe afwezigheid is opgeslagen!";
+            Message = (Service.Add<Absence>(SelectedAbsence) ? "Something went wrong." : "Een nieuwe afwezigheid is opgeslagen!");
+            _dialog.ShowMessage("Action", Message);
+
             Absences.Add(NewAbsence);
             Reset();
             base.RaisePropertyChanged();
@@ -235,6 +239,8 @@ namespace ParkInspect.ViewModel
             Absences = new ObservableCollection<Absence>(result);
             RaisePropertyChanged("Absences");
         }
+
+
 
     }
 }
