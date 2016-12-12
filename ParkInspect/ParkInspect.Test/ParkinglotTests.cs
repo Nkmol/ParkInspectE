@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkInspect.Repository;
@@ -253,6 +254,33 @@ namespace ParkInspect.Test
             var nameIsNotEmpty = !string.IsNullOrEmpty(val);
 
             Assert.AreEqual(false, nameIsNotEmpty);
+        }
+
+        [TestMethod]
+        public void NameFilter()
+        {
+            string filter = "henk";
+
+            vm.NameFilter = filter;
+
+            var list1 = new ObservableCollection<Parkinglot>();
+
+            foreach (var pl in vm.Parkinglots)
+            {
+                list1.Add(pl);
+            }
+
+            vm.UpdateParkinglots();
+
+            
+            var list2 = new ObservableCollection<Parkinglot>();
+
+            foreach (var pl in vm.Parkinglots)
+            {
+                list1.Add(pl);
+            }
+
+            //Assert.AreEqual(list, vm.Parkinglots);
         }
     }
 }

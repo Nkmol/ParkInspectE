@@ -21,7 +21,6 @@ namespace ParkInspect.ViewModel
 
     public class ParkinglotViewModel : ViewModelBase
     {
-
         private IEnumerable<Parkinglot> Data { get; set; }
         public string Message { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
@@ -173,7 +172,7 @@ namespace ParkInspect.ViewModel
             NewParkinglot();          
         }
 
-        private void UpdateParkinglots()
+        public void UpdateParkinglots()
         {
 
             var builder = new FilterBuilder();
