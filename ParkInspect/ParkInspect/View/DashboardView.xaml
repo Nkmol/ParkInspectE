@@ -16,7 +16,7 @@
         GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
-        dialog:DialogParticipation.Register="{Binding Login, Source={StaticResource Locator}}">
+        dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}">
 
     <Window.Resources>
         <ResourceDictionary>
