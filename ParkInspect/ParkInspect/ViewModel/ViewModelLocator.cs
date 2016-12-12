@@ -64,7 +64,7 @@ namespace ParkInspect.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
 
-        public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
+	public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 

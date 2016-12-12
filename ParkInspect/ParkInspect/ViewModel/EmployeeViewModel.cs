@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -50,7 +47,7 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-        
+
 
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
@@ -81,7 +78,7 @@ namespace ParkInspect.ViewModel
             //Collections for comboboxes
             RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
             StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
-            
+
             CreateItemCommand = new RelayCommand(CreateNewEmployee);
             EditItemCommand = new RelayCommand(EditEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
@@ -114,7 +111,7 @@ namespace ParkInspect.ViewModel
 
         private void UpdateDataGrid()
         {
-             _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
+            _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
             var temp = Employees;
             Employees = null;
             Employees = temp;
