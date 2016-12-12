@@ -18,11 +18,8 @@ namespace ParkInspect.Model.Factory
                 var properties = propertyName.Split('.');
                 var obj = target;
 
-                if (obj == null) continue;
-
                 foreach (var property in properties)
                 {
-                    if(obj == null) continue;
                     //Should not happen, unless wrong key is given
                     if (obj.GetType().GetProperty(property) == null)
                         continue;

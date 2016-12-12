@@ -75,7 +75,7 @@ namespace ParkInspect.ViewModel
 
         public string Firstname
         {
-            get { return _selectedContactperson?.firstname; }
+            get { return _selectedContactperson.firstname; }
             set
             {
                 _selectedContactperson.firstname = value;
@@ -85,7 +85,7 @@ namespace ParkInspect.ViewModel
 
         public string Lastname
         {
-            get { return _selectedContactperson?.lastname; }
+            get { return _selectedContactperson.lastname; }
             set
             {
                 _selectedContactperson.lastname = value;
@@ -129,7 +129,8 @@ namespace ParkInspect.ViewModel
 
         private void Reset()
         {
-            SelectedContactperson = new Contactperson();
+            Contactperson cp = new Contactperson();
+            SelectedContactperson = cp;
             RaisePropertyChanged("SelectedContactperson");
             SelectedContactperson.id = -1;
         }
@@ -174,16 +175,22 @@ namespace ParkInspect.ViewModel
 
         private void DeleteContactperson()
         {
-            var cp = new Contactperson();
-            cp = SelectedContactperson;
             Service.Delete(SelectedContactperson);
-            Reset();
-            Contactpersons.Remove(cp);
+            UpdateDataGrid();
             SaveCommand.RaiseCanExecuteChanged();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
             UpdateContactpersons();
 
             _dialog.ShowMessage("Action", "Contactpersoon verwijderd");
+        }
+
+        private void UpdateDataGrid()
+        {
+            Contactpersons = new ObservableCollection<Contactperson>(Service.GetAll<Contactperson>());
+            var temp = Contactpersons;
+            Contactpersons = null;
+            Contactpersons = new ObservableCollection<Contactperson>(temp);
+            Reset();
         }
     }
 }
