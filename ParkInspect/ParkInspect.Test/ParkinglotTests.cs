@@ -12,12 +12,13 @@ namespace ParkInspect.Test
     {
         private EntityFrameworkRepository<ParkInspectEntities> _repo;
         private ParkinglotViewModel vm;
+        private DialogManager dm;
 
         [TestInitialize]
         public void init()
         {
             _repo = new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities());
-            vm = new ParkinglotViewModel(_repo);
+            vm = new ParkinglotViewModel(_repo, dm);
         }
         
         [TestMethod]

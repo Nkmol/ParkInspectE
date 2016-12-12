@@ -20,9 +20,7 @@ namespace ParkInspect.ViewModel
     public class ExportViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
-        private DataService Service { get; set; }
-        public Type ExportableType { get; set; }
-        public IEnumerable ExpandoData { get; set; }
+        public IEnumerable<dynamic> ExpandoData { get; set; }
         private string _available { get; set; }
         private string _selected { get; set; }
 
@@ -40,9 +38,11 @@ namespace ParkInspect.ViewModel
 
         public string AliasSelected { get; set; }
 
-        private IEnumerable _data;
+        public DataView Viewable { get; set; }
 
-        public IEnumerable Data
+        private IEnumerable<dynamic> _data;
+
+        public IEnumerable<dynamic> Data
         {
             get { return _data; }
             set
@@ -86,15 +86,6 @@ namespace ParkInspect.ViewModel
         }
 
         /*
-         * Sets the service that is used to get the corresponding data
-         * DataService service - The Dataservice used to get the data
-         */
-        public void SetService(DataService service)
-        {
-            this.Service = service;
-        }
-
-        /*
          * Used to update the data when the alias is changed
          */
         private void AliasChanged()
@@ -110,7 +101,6 @@ namespace ParkInspect.ViewModel
         { 
 
             var type = Data.GetType().GenericTypeArguments[0];
-            ExportableType = type;
 
             AvailableColumns = new ObservableCollection<string>();
             SelectedColumns = new ObservableCollection<string>();
@@ -200,7 +190,8 @@ namespace ParkInspect.ViewModel
          */
         private void Export()
         {
-            ExportFactory.ExportPdf(ExpandoData.Cast<dynamic>(), ExportableType, SelectedColumns.ToArray(), GetAliases().ToArray());
+            var type = Data.GetType().GenericTypeArguments[0];
+            ExportFactory.ExportPdf(ExpandoData, type, SelectedColumns.ToArray(), GetAliases().ToArray());
         }
 
         /*
@@ -211,7 +202,7 @@ namespace ParkInspect.ViewModel
             RaisePropertyChanged("AvailableColumns");
             RaisePropertyChanged("SelectedColumns");
             RaisePropertyChanged("AliasColumns");
-            RaisePropertyChanged("Data");
+            RaisePropertyChanged("Viewable");
         }
 
         /*
@@ -227,14 +218,10 @@ namespace ParkInspect.ViewModel
                 table.Rows.Clear();
                 table.Columns.Clear();
 
-                object[] param = new object[2];
-                param[0] = SelectedColumns.ToList();
-                param[1] = GetAliases();
+                var type = Data.GetType().GenericTypeArguments[0];
+                ExpandoData = GetAbstractData();
 
-                MethodInfo mi = typeof(DataService).GetMethod("GetData").MakeGenericMethod(ExportableType);
-                ExpandoData = (IEnumerable) mi.Invoke(Service, param);
-
-                foreach (ExpandoObject expando in ExpandoData)
+                foreach (var expando in ExpandoData)
                 {
 
                     var dict = (IDictionary<string, object>)expando;
@@ -250,11 +237,9 @@ namespace ParkInspect.ViewModel
 
                 }
 
-                Data = table.DefaultView;
+                Viewable = table.DefaultView;
 
             }
-
-            
 
         }
 
@@ -271,6 +256,27 @@ namespace ParkInspect.ViewModel
             return aliases;
 
         }
+
+        private IEnumerable<ExpandoObject> GetAbstractData()
+        {
+
+            var columns = SelectedColumns.ToList();
+            var alias = GetAliases();
+
+            var query = Data.AsEnumerable().Select(x =>
+            {
+                var data = new ExpandoObject();
+                for (var i = 0; i < columns.Count; i++)
+                {
+                    ((IDictionary<string, object>)data)
+                     .Add((alias != null ? alias[i] : columns[i]), x.GetType().GetProperty(columns[i]).GetValue(x));
+                }
+                return data;
+            });
+
+            return query;
+        }
+
 
     }
 
@@ -294,4 +300,5 @@ namespace ParkInspect.ViewModel
         }
 
     }
+
 }

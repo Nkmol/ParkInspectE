@@ -18,10 +18,9 @@ namespace ParkInspect
             InitializeComponent();
         }
 
-        public void FillGrid<T>(IEnumerable<T> data, DataService service)
+        public void FillGrid<T>(IEnumerable<T> data)
         {
-            this.ExportGrid.ItemsSource = data;
-            ((ExportViewModel)this.DataContext).SetService(service);
+            this.HiddenGrid.ItemsSource = data;
         }
 
 
