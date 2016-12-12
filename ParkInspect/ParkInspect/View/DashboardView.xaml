@@ -9,10 +9,13 @@
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d ignore"
         Height="600"
-        Width="1000"
+        Width="1010"
         Title="ParkInspect"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="1"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
         dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}"
         popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}">
@@ -26,7 +29,10 @@
     </Window.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <TabControl>
+        <dragablz:TabablzControl>
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>
             <TabItem Header="Klanten">
                 <userControls:CustomerControl />
             </TabItem>
@@ -51,7 +57,7 @@
             <TabItem Header="Afwezigheid">
                 <userControls:AbsenceControl />
             </TabItem>
-        </TabControl>
+        </dragablz:TabablzControl>
     </Grid>
 
     <controls:MetroWindow.RightWindowCommands>
