@@ -236,7 +236,7 @@ namespace ParkInspect.ViewModel
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
-            export.FillGrid(result, Service);
+            export.FillGrid(result);
 
         }
     }
