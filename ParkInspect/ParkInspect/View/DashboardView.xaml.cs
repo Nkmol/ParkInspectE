@@ -1,5 +1,11 @@
-﻿using System.Windows.Media.Converters;
+﻿using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media.Converters;
 using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
 using ParkInspect.ViewModel;
 
 namespace ParkInspect
@@ -14,7 +20,7 @@ namespace ParkInspect
         /// </summary>
         /// 
 
-       
+
 
 
         private DashboardViewModel _datacontext;
@@ -22,6 +28,12 @@ namespace ParkInspect
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
+
+            ButtonAutomationPeer peer = new ButtonAutomationPeer(LoginButton);
+
+            IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+
+            invokeProv.Invoke();
         }
     }
 }

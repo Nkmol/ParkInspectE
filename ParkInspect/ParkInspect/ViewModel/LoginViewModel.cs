@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -46,6 +47,9 @@ namespace ParkInspect.ViewModel
             LogoutButtonEnabled = false;
 
             this.dashboard = dashboard;
+          
+            
+           
         }
 
         public string LoginName
@@ -78,8 +82,9 @@ namespace ParkInspect.ViewModel
             {
                 UsernameWatermark = "Emailadres...",
                 PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Visible,
+                NegativeButtonVisibility = Visibility.Hidden,
                 RememberCheckBoxVisibility = Visibility.Visible
+                
             };
 
             var logged = false;
@@ -91,38 +96,43 @@ namespace ParkInspect.ViewModel
                         _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in",
                             loginDialogSettings);
 
-                if (result == null)
-                    return;
-
-                var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
-
-                if (!rs)
+                if (result != null)
                 {
-                    if (result.ShouldRemember)
+
+
+
+                    var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
+
+                    if (!rs)
                     {
-                        loginDialogSettings.InitialUsername = result.Username;
+                        if (result.ShouldRemember)
+                        {
+                            loginDialogSettings.InitialUsername = result.Username;
+                        }
+
+                        await
+                            _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
+                                "Ongeldig email/wachtwoord");
+
                     }
+                    else
+                    {
+                        await _dialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
+                        logged = true;
+                        LoginName = result.Username;
+                        LoginButtonEnabled = false;
+                        LogoutButtonEnabled = true;
 
-                    await
-                        _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
-                            "Ongeldig email/wachtwoord");
+                        // goes wrong on multiple users with the same username and password with different roles.
+                        _currentUser = Service.GetEmployee(result.Username, result.Password).First();
+                        dashboard.ChangeAuthorization(_currentUser.Role1);
 
-                }
-                else
-                {
-                    await _dialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
-                    logged = true;
-                    LoginName = result.Username;
-                    LoginButtonEnabled = false;
-                    LogoutButtonEnabled = true;
-
-                    // goes wrong on multiple users with the same username and password with different roles.
-                    _currentUser = Service.GetEmployee(result.Username, result.Password).First();
-                    dashboard.ChangeAuthorization(_currentUser.Role1);
-
+                    }
                 }
             }
+            
         }
+        
 
         private void Logout()
         {
@@ -130,6 +140,7 @@ namespace ParkInspect.ViewModel
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
             dashboard.ChangeAuthorization(null);
+            ShowLoginDialog();
         }
     }
 }

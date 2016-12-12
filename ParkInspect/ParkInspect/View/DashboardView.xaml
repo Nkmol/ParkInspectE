@@ -68,7 +68,8 @@
         <controls:WindowCommands ShowLastSeparator="False"
                                  DataContext="{Binding Login, Source={StaticResource Locator}}">
             <Label Content="{Binding LoginName}" />
-            <Button Command="{Binding ShowLoginDialogCommand}"
+            <Button Name="LoginButton" 
+                       Command="{Binding ShowLoginDialogCommand}"
                     Content="Login"
                     IsEnabled="{Binding LoginButtonEnabled}" />
             <Button Command="{Binding LogoutCommand}"

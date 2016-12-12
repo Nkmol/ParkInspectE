@@ -239,6 +239,8 @@ namespace ParkInspect.ViewModel
 
         }
 
+      
+
 
         public void ChangeAuthorization(Role role)
         {
