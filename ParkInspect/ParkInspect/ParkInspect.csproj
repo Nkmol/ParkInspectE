@@ -84,6 +84,7 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -199,6 +200,7 @@
     </Compile>
     <Compile Include="Services\AbsenceService.cs" />
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\ContactpersonService.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ParkinglotService.cs" />
@@ -221,6 +223,9 @@
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\UserControls\ContactpersoonControl.xaml.cs">
+      <DependentUpon>ContactpersoonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ExportView.xaml.cs">
       <DependentUpon>ExportView.xaml</DependentUpon>
     </Compile>
@@ -265,6 +270,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\UserControls\ContactpersoonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\InspectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -272,10 +285,6 @@
     <Page Include="View\UserControls\AbsenceControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\UserControls\InspectionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\CustomerControl.xaml">
       <SubType>Designer</SubType>
