@@ -11,14 +11,14 @@
     <Grid>
         <TabControl SelectedIndex="{Binding SelectedTab}">
             <Custom:MetroTabItem Header="Vragenlijsten" >
-                <ScrollViewer  Background="#aaaaaa">
+                <ScrollViewer >
                     <Grid Name="FormGrid">
                         <Button x:Name="saveButton" Command = "{Binding SaveCommand}"  Content="Opslaan" Margin="692,10,0,411" Height="32" RenderTransformOrigin="0.5,0.5" Width="138" />
                     </Grid>
                 </ScrollViewer>
             </Custom:MetroTabItem>
             <Custom:MetroTabItem Header="Templates" >
-                <Grid Background="#aaaaaa" DataContext="{Binding TemplatesViewModel}" Margin="0,-2,0,2">
+                <Grid DataContext="{Binding TemplatesViewModel}" Margin="0,-2,0,2">
                     <DataGrid ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplateCollection, Mode=TwoWay}" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="233" Width="342">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Template naam" Binding="{Binding name}"/>
@@ -34,7 +34,7 @@
                 </Grid>
             </Custom:MetroTabItem>
             <Custom:MetroTabItem Header="Template editor" Visibility="{Binding EditorVisibility}" >
-                <Grid Background="#aaaaaa" DataContext="{Binding TemplatesViewModel.NewTemplateViewModel}">
+                <Grid DataContext="{Binding TemplatesViewModel.NewTemplateViewModel}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="162*"/>
                         <RowDefinition Height="91*"/>

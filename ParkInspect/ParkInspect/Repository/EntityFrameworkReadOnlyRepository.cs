@@ -23,6 +23,9 @@ namespace ParkInspect.Repository
         {
             try
             {
+                if (Context.Database.Connection.State == System.Data.ConnectionState.Open){
+                    return true;
+                }
                 Context.Database.Connection.Open();
                 return Context.Database.Connection.State == System.Data.ConnectionState.Open;
             } catch (Exception)

@@ -17,6 +17,7 @@ namespace ParkInspect.ViewModel
         public EntityFrameworkRepository<ParkInspectEntities> Context { get; set; }
         public TemplatesViewModel TemplatesViewModel { get; set; }
         private FormService service { get; set; }
+        private Inspection inspection;
 
         private FormControl _view;
         public FormControl View {
@@ -28,8 +29,12 @@ namespace ParkInspect.ViewModel
             {
                 _view = value;
                 List<Template> templates = (List<Template>)Context.GetAll<Template>();
-                CachedForm form = service.createFormFromTemplate(templates.ToArray()[0]);
-                loadForm(form);
+                List<Inspection> inspections = (List<Inspection>)Context.GetAll<Inspection>();
+
+
+                //loadForm(inspections.ToArray()[0]);
+
+                createForm(inspections.ToArray()[0], templates.ToArray()[0]);
             }
         }
 
@@ -62,7 +67,19 @@ namespace ParkInspect.ViewModel
         }
 
         public RelayCommand SaveCommand { get; set; }
-        private CachedForm? cachedForm;
+        private CachedForm _cachedForm;
+        public CachedForm cachedForm
+        {
+            get
+            {
+                return _cachedForm;
+            }
+            set
+            {
+                _cachedForm = value;
+                RaisePropertyChanged("CachedForm");
+            }
+        }
 
 
         public FormViewModel(IRepository context)
@@ -89,19 +106,38 @@ namespace ParkInspect.ViewModel
             EditorVisibility = Visibility.Hidden;
         }
 
-        public void loadForm(Form form)
+        public void loadForm(Inspection inspection)
         {
+            this.inspection = inspection;
+            Form form = inspection.Form;
+            if (form == null)
+            {
+                return;
+            }
             View.clear();
             int i = 0;
+            cachedForm = new CachedForm();
             foreach (Formfield field in form.Formfields)
             {
                 CachedFormField cachedField = new CachedFormField()
                 {
-                    field_title = field.field_title
+                    field_title = field.field_title,
+                    datatype = field.Field.datatype,
+                    value = new CachedValue(field.value)
                 };
-                View.addFormField(cachedField, i);
+                cachedForm.fields.Add(cachedField);
+                View.addFormField(cachedField, i, true);
                 i++;
             }
+        }
+
+        public void createForm(Inspection inspection,Template template)
+        {
+            this.inspection = inspection;
+            Form form = new Form();
+            form.Template = template;
+            CachedForm cachedForm = service.createFormFromTemplate(template);
+            loadForm(cachedForm);
         }
 
         public void loadForm(CachedForm form)
@@ -111,7 +147,7 @@ namespace ParkInspect.ViewModel
             int i = 0;
             foreach (CachedFormField field in form.fields)
             {
-                View.addFormField(field, i);
+                View.addFormField(field, i, false);
                 i++;
             }
         }
@@ -123,37 +159,50 @@ namespace ParkInspect.ViewModel
             {
                 return;
             }
-            service.SaveForm((CachedForm)cachedForm);
+            service.SaveForm(inspection,cachedForm);
         }
     }
 
-    public struct CachedForm
+    public class CachedForm
     {
         public Form form;
-        public List<CachedFormField> fields;
+        public List<CachedFormField> fields { get; set; }
         public int template_id;
+
+        public CachedForm()
+        {
+            fields = new List<CachedFormField>();
+        }
     }
 
-    public struct CachedFormField
+    public class CachedFormField
     {
         public string field_title;
-        public CachedValue value;
+        public CachedValue value { get; set; }
         public string datatype;
     }
 
-    public struct CachedValue{
-        public bool boolvalue;
-        public string stringvalue;
-        public int intvalue;
-        public double doublevalue;
-        public string type;
+    public class CachedValue{
+        public bool boolvalue { get; set; }
+        public string stringvalue { get; set; }
+        public int intvalue { get; set; }
+        public double doublevalue { get; set; }
+        public string type { get; set; }
 
         public CachedValue(string sourceValue)
         {
             boolvalue = sourceValue.Replace("[Boolean]", "") == "true";
             stringvalue = sourceValue.Replace("[String]", "");
+
+            int intvalue;
+            double doublevalue;
+
             int.TryParse(sourceValue.Replace("[Integer]", ""), out intvalue);
             double.TryParse(sourceValue.Replace("[Double]", ""), out doublevalue);
+
+            this.intvalue = intvalue;
+            this.doublevalue = doublevalue;
+
             if (sourceValue.IndexOf("[Boolean]") >= 0)
             {
                 type = "Boolean";
@@ -172,6 +221,7 @@ namespace ParkInspect.ViewModel
                 type = "unknown";
             }
         }
+
 
         public override string ToString()
         {

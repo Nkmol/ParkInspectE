@@ -33,9 +33,18 @@ namespace ParkInspect.Services
             return form;
         }
 
-        public void SaveForm(CachedForm cachedForm)
+        public CachedForm createCachedFormFromForm(Form form)
+        {
+            CachedForm cachedForm = new CachedForm();
+
+            return cachedForm;
+        }
+
+        public void SaveForm(Inspection inspection,CachedForm cachedForm)
         {
             Form form = new Form();
+            inspection.Form = form;
+            form.template_id = cachedForm.template_id;
             foreach(CachedFormField field in cachedForm.fields)
             {
                 Formfield formField = new Formfield()
@@ -50,8 +59,8 @@ namespace ParkInspect.Services
             }
             if (central.IsConnected())
             {
-                //central.Create(form);
-                //central.Save();
+                central.Create(form);
+                central.Save();
             }
             else
             {

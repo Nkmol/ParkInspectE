@@ -39,38 +39,52 @@ namespace ParkInspect.View.UserControls
             }
         }
 
-        public void addFormField(CachedFormField field,int count)
+        public void addFormField(CachedFormField field,int count, bool isReadonly)
         {
+            if (isReadonly)
+            {
+                saveButton.Visibility = Visibility.Hidden;
+            } else
+            {
+                saveButton.Visibility = Visibility.Visible;
+            }
             Control element = null;
-            Debug.WriteLine(field.datatype);
             switch (field.datatype){
                 case "Boolean":
                     element = new CheckBox();
-                    BindingOperations.SetBinding(element, CheckBox.IsCheckedProperty, new Binding("fields[" + count + "].boolvalue"));
+                    ((CheckBox)element).IsHitTestVisible = !isReadonly;
+                    BindingOperations.SetBinding(element, CheckBox.IsCheckedProperty, new Binding("cachedForm.fields[" + count + "].value.boolvalue"));
                     break;
                 case "Date":
                     element = new DatePicker();
-                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("fields[" + count + "].stringvalue"));
+                    ((DatePicker)element).Focusable = !isReadonly;
+                    ((DatePicker)element).IsHitTestVisible = !isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
                     break;
                 case "Double":
                     element = new TextBox();
-                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("fields[" + count + "].doublevalue"));
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.doublevalue"));
                     break;
                 case "Integer":
                     element = new TextBox();
-                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("fields[" + count + "].intvalue"));
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.intvalue"));
                     break;
                 case "String":
                     element = new TextBox();
-                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("fields[" + count + "].stringvalue"));
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
                     break;
                 case "Time":
                     element = new TextBox();
-                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("fields[" + count + "].stringvalue"));
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
                     break;
                 default:
                     element = new TextBox();
-                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("fields[" + count + "].stringvalue"));
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
                     break;
             }
             Label textLabel = new Label();
