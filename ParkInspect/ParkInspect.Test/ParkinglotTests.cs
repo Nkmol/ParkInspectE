@@ -255,32 +255,5 @@ namespace ParkInspect.Test
 
             Assert.AreEqual(false, nameIsNotEmpty);
         }
-
-        [TestMethod]
-        public void NameFilter()
-        {
-            string filter = "henk";
-
-            vm.NameFilter = filter;
-
-            var list1 = new ObservableCollection<Parkinglot>();
-
-            foreach (var pl in vm.Parkinglots)
-            {
-                list1.Add(pl);
-            }
-
-            vm.UpdateParkinglots();
-
-            
-            var list2 = new ObservableCollection<Parkinglot>();
-
-            foreach (var pl in vm.Parkinglots)
-            {
-                list1.Add(pl);
-            }
-
-            //Assert.AreEqual(list, vm.Parkinglots);
-        }
     }
 }
