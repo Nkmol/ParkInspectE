@@ -38,7 +38,7 @@
                 <userControls:ParkeerplaatsControl />
             </TabItem>
             <TabItem Header="Opdrachten">
-		<userControls:AssignmentControl />
+		        <userControls:AssignmentControl />
             </TabItem>
             <TabItem Header="Inspectie">
                 <userControls:InspectionControl />
@@ -58,7 +58,6 @@
             <TabItem Header="Contactpersonen">
                 <userControls:ContactpersoonControl />
             </TabItem>
-        </TabControl>
         </dragablz:TabablzControl>
     </Grid>
 
