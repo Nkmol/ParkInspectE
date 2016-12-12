@@ -53,6 +53,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
+            SimpleIoc.Default.Register<DialogManager>();
         }
 
         /// <summary>
@@ -80,6 +81,8 @@ namespace ParkInspect.ViewModel
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
+
+        public DialogManager Dialog => ServiceLocator.Current.GetInstance<DialogManager>();
 
         /// <summary>
         /// Cleans up all the resources.
