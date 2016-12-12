@@ -13,7 +13,7 @@
         Width="1000"
         Title="ParkInspect"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
-        dialog:DialogParticipation.Register="{Binding Login, Source={StaticResource Locator}}">
+        dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}">
 
     <Window.Resources>
         <ResourceDictionary>
