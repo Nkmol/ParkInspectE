@@ -17,7 +17,7 @@ namespace ParkInspect.Model.ValidationRules
            if (!String.IsNullOrEmpty(val))
                 return new ValidationResult(true, null);
 
-            return new ValidationResult(false, "Je mag het veld niet leeglaten!");
+            return new ValidationResult(false, "Voer een waarde in!");
         }
     }
 }
