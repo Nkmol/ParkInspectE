@@ -17,6 +17,7 @@ using GoogleMapsApi.Entities.Directions.Response;
 using GoogleMapsApi;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.IO;
 
 namespace ParkInspect.ViewModel
 {
@@ -25,21 +26,91 @@ namespace ParkInspect.ViewModel
         protected InspectionService service;
         public ObservableCollection<String> directionItems { get; set; }
         public ObservableCollection<Inspection> inspections { get; set; }
-        private OfflineViewMode offlineViewModel;
+        public ObservableCollection<Direction> directions { get; set; }
+
         public Inspection _selectedInspection;
+        public Direction _selectedDirection;
+        public int _inspection_id;
+        public string _inspection_date;
+        public string _inspection_deadline;
         public string _client_name;
         public string _region_name;
         public string _parkinglot_name;
         public string _region_zip;
         public int _region_number;
         public string _clarification;
-        public string _directionsName;
+        public string _directions_save_name;
         private string _home_adress;
-        public RelayCommand saveDirections{ get; set; }
+        private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        private string _current_direction_item;
+
+        public RelayCommand saveDirections { get; set; }
         public RelayCommand getDirections { get; set; }
+        public RelayCommand setDirections { get; set; }
+        public RelayCommand next_direction { get; set; }
+        public RelayCommand prev_direction { get; set; }
 
+
+        public class Direction
+        {
+            private string _Name;
+            public List<String> direction_items = new List<string>();
+            public int index = 0;
+            public string Name
+            {
+                get
+                {
+                    return _Name;
+                }
+                set
+                {
+                    if (_Name != value)
+                    {
+                        _Name = value;
+                    }
+                }
+            }
+        }
         #region properties
+        public int inspection_id
+        {
+            get
+            {
+                return _inspection_id;
+            }
+            set
+            {
+                _inspection_id = value;
+                base.RaisePropertyChanged();
 
+            }
+        }
+        public String inspection_date
+        {
+            get
+            {
+                return _inspection_date;
+            }
+            set
+            {
+                _inspection_date = value;
+                base.RaisePropertyChanged();
+
+            }
+        }
+        public String inspection_deadline
+        {
+            get
+            {
+                return _inspection_deadline;
+            }
+            set
+            {
+                _inspection_deadline = value;
+                base.RaisePropertyChanged();
+
+            }
+        }
         public String client_name
         {
             get
@@ -137,6 +208,9 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedInspection = value;
+                inspection_id = selectedInspection.id;
+                inspection_date = selectedInspection.date.ToString();
+                inspection_deadline = selectedInspection.deadline.ToString();
                 client_name = selectedInspection.Asignment.Client.name;
                 region_name = selectedInspection.Parkinglot.Region.name;
                 parkinglot_name = selectedInspection.Parkinglot.name;
@@ -146,46 +220,96 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-        public String directions_name
+        public Direction selectedDirection
         {
             get
             {
-                return _directionsName;
+                return _selectedDirection;
             }
             set
             {
-                _directionsName = value;
+                _selectedDirection = value;
+                SetDirectionItems();
+                base.RaisePropertyChanged();
+            }
+        }
+        public String current_direction_item
+        {
+            get
+            {
+                return _current_direction_item;
+            }
+            set
+            {
+                _current_direction_item = value;
+                base.RaisePropertyChanged();
+
+            }
+        }
+        public String directions_save_name
+        {
+            get
+            {
+                return _directions_save_name;
+            }
+            set
+            {
+                _directions_save_name = value;
                 base.RaisePropertyChanged();
 
             }
         }
         #endregion
-        public PrepareViewModel(IRepository context, OfflineViewMode offlineViewModel)
+        public PrepareViewModel(IRepository context)
         {
             service = new InspectionService(context);
+            directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
             inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
             saveDirections = new RelayCommand(SaveDirections);
+            next_direction = new RelayCommand(NextDirection);
+            prev_direction = new RelayCommand(PrevDirection);
             getDirections = new RelayCommand(GetDirections);
-            this.offlineViewModel = offlineViewModel;
-
+            LoadDirections();
         }
+
+        private void PrevDirection()
+        {
+            if (_selectedDirection.index > 0) {
+                int index = _selectedDirection.index;
+                current_direction_item = _selectedDirection.direction_items[index - 1];
+                _selectedDirection.index--;
+               }
+        }
+
+        private void NextDirection()
+        {
+            if (_selectedDirection.index + 1 < _selectedDirection.direction_items.Count)
+            {
+                int index = _selectedDirection.index;
+                current_direction_item = _selectedDirection.direction_items[index + 1];
+                _selectedDirection.index++;
+            }
+        }
+
         private void SaveDirections()
         {
             String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            if (_directionsName != "")
+            if (_directions_save_name != "")
             {
-                System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directionsName + ".txt");
+                System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
                 foreach (var item in directionItems)
                 {
                     SaveFile.WriteLine(item.ToString());
                 }
-                offlineViewModel.LoadDirections();
+                MessageBox.Show("Aufgeslagen");
+                
             }
             else
             {
                 MessageBox.Show("Vul een naam in!");
             }
+            LoadDirections();
         }
         private void GetDirections()
         {
@@ -201,13 +325,36 @@ namespace ParkInspect.ViewModel
             int counter = 1;
             foreach (Step step in leg.Steps)
             {
-               directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
+                directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
                 counter++;
             }
+        }
+
+        private void SetDirectionItems()
+        {
+           String line;
+            System.IO.StreamReader file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
+            while ((line = file.ReadLine()) != null)
+            {
+              _selectedDirection.direction_items.Add(line);
+            }
+            current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
+
         }
         private string StripHTML(string html)
         {
             return Regex.Replace(html, @"<(.|\n)*?>", string.Empty);
         }
+        public void LoadDirections()
+        {
+            directions.Clear();
+            foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
+            {
+                Direction direction = new Direction();
+                direction.Name = name;
+                directions.Add(direction);
+            }
+        }
+
     }
 }
