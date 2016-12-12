@@ -64,7 +64,6 @@ namespace ParkInspect.ViewModel
             {
                 directions.Add(name);
             }
-            //directions = ObservableCollection<string>(Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)));
         }
     }
 }
