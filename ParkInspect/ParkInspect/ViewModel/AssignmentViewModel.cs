@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -16,11 +18,11 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class AssignmentViewModel: ViewModelBase
+    public class AssignmentViewModel : ViewModelBase
     {
-        private ObservableCollection<Asignment> _opdrachtCollection;
+        private IEnumerable<Asignment> _opdrachtCollection;
 
-        public ObservableCollection<Asignment> OpdrachtenCollection
+        public IEnumerable<Asignment> OpdrachtenCollection
         {
             get { return _opdrachtCollection; }
             set
@@ -92,19 +94,74 @@ namespace ParkInspect.ViewModel
 
 
 
+        #region All filters
 
+        private string _clientfilter;
 
-        private string _searchbar;
-
-        public string SearchBar
+        public string ClientFilter
         {
-            get { return _searchbar; }
+            get { return _clientfilter; }
             set
             {
-                _searchbar = value;
+                _clientfilter = value;
+                Search();
                 base.RaisePropertyChanged();
             }
         }
+
+        private string _datefilter;
+
+        public string DateFilter
+        {
+            get { return _datefilter; }
+            set
+            {
+                _datefilter = value;
+                Search();
+                base.RaisePropertyChanged();
+            }
+        }
+        private string _statefilter;
+
+        public string StateFilter
+        {
+            get { return _statefilter; }
+            set
+            {
+                _statefilter = value;
+                Search();
+                base.RaisePropertyChanged();
+            }
+        }
+        private string _deadlineFilter;
+
+        public string DeadlineFilter
+        {
+            get { return _deadlineFilter; }
+            set
+            {
+                _deadlineFilter = value;
+                Search();
+                base.RaisePropertyChanged();
+            }
+        }
+        private string _clarificationFilter;
+
+        public string ClarificationFilter
+        {
+            get { return _clarificationFilter; }
+            set
+            {
+                _clarificationFilter = value;
+                Search();
+                base.RaisePropertyChanged();
+            }
+        }
+
+
+
+
+        #endregion
 
         private IEnumerable<State> _assignmentStateList;
 
@@ -143,7 +200,7 @@ namespace ParkInspect.ViewModel
         }
 
 
-        public ICommand CreateAsignmentCommand { get; set; }
+
         public ICommand EditAsignmentCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand RemoveInspectionCommand { get; set; }
@@ -174,10 +231,9 @@ namespace ParkInspect.ViewModel
             SetEmptySelectedAsignment();
 
 
-            CreateAsignmentCommand = new RelayCommand(CreateAsignment, CanCreateAsignment);
-            EditAsignmentCommand = new RelayCommand(EditAsignment, CanEditAsignment);
+            EditAsignmentCommand = new RelayCommand(EditAsignment);
 
-            RemoveInspectionCommand = new RelayCommand(RemoveInsection);
+            RemoveInspectionCommand = new RelayCommand(RemoveInspection);
             CreateInspectionCommand = new RelayCommand(CreateInspection);
 
             SearchCommand = new RelayCommand(Search);
@@ -189,18 +245,18 @@ namespace ParkInspect.ViewModel
         private void UpdateProperties()
         {
             OpdrachtenCollection = new ObservableCollection<Asignment>(_service.GetAllAsignments());
-            SearchedAsignments = OpdrachtenCollection;
+            SearchedAsignments = new ObservableCollection<Asignment>( OpdrachtenCollection);
             ClientList = _service.GetAllClients();
             AssignmentStatusList = _service.GetAllStates();
             InspectionList = _service.GetAllInspections();
 
-            _searchbar = "";
+            _clientfilter = "";
 
 
         }
 
         // function should be cahnged with popup implementation
-        public void RemoveInsection()
+        public void RemoveInspection()
         {
             if (_selectedInspection != null && EditValidation())
             {
@@ -218,74 +274,14 @@ namespace ParkInspect.ViewModel
         // funcion should be changed to creating a new inspection, will be implemented as ading an existing one for now.
         public void CreateInspection()
         {
-            if (_selectedInspection != null && EditValidation())
-            {
-
-                _selectedAsignment.Inspections.Add(_selectedInspection);
-
-                _service.UpdateAssignment(_selectedAsignment);
-                UpdateProperties();
-            }
-            else
-            {
-                CommandError = "Inspecion addition error.";
-            }
-        }
-
-
-        public void CreateAsignment()
-        {
-            // needs validation
-            if (CreateValidation())
-            {
-                if (_selectedAsignment.date == null)
-                {
-                    _selectedAsignment.date = DateTime.Today;
-                }
-
-
-                _service.CreateNewAssignemnt(_selectedAsignment);
-                SetEmptySelectedAsignment();
-                CommandError = "Created";
-                UpdateProperties();
-            }
-        }
-
-        private bool CanCreateAsignment()
-        {
-            return _selectedAsignment.id == 0;
-        }
-
-        private bool CreateValidation()
-        {
-
-            CommandError = "";
-            // IT messages.
-            if (_selectedAsignment == null)
-            {
-                CommandError = "No Selected Asignment, please contact your IT department.";
-                return false;
-            }
-            if (_selectedAsignment.state == null) CommandError = "State is null, please contact your IT department.";
-
-            // user messages.
-            if (_selectedAsignment.Client == null) CommandError = "Geen klant geselecteerd.";
-            if (_selectedAsignment.State1 == null) CommandError = "Geen status geselecteerd.";
-            if (_selectedAsignment.deadline == DateTime.MinValue) CommandError = "De gestelde deadline is niet geldig.";
-
-            return CommandError.Equals("");
-
-
 
         }
-
-
 
         public void EditAsignment()
         {
-            if (EditValidation())
-            {
 
+            if (SelectedAsignment.id != 0)
+            {
                 try
                 {
                     _service.UpdateAssignment(_selectedAsignment);
@@ -312,15 +308,23 @@ namespace ParkInspect.ViewModel
 
 
                 }
+            }
+            else if (SelectedAsignment.id == 0)
+            {
+                if (_selectedAsignment.date == null)
+                {
+                    _selectedAsignment.date = DateTime.Today;
+                }
 
 
+                _service.CreateNewAssignemnt(_selectedAsignment);
+                SetEmptySelectedAsignment();
+                CommandError = "Created";
+                UpdateProperties();
             }
         }
 
-        private bool CanEditAsignment()
-        {
-            return _selectedAsignment.id != 0;
-        }
+
 
 
         private bool EditValidation()
@@ -343,7 +347,6 @@ namespace ParkInspect.ViewModel
             if (_selectedAsignment.deadline == DateTime.MinValue) CommandError = "Unless your client is jesus christ, your deadline is not set properly.";
             if (OpdrachtenCollection.FirstOrDefault(a => a.id == _selectedAsignment.id) == null) CommandError = "Selected assignment could not be found. Maybe someone removed it.";
 
-
             return CommandError.Equals("");
         }
 
@@ -363,26 +366,17 @@ namespace ParkInspect.ViewModel
 
         private void AlterVisableAsignments()
         {
+            var builder = new FilterBuilder();
+            builder.Add("Client.name", ClientFilter);
+            builder.Add("state", StateFilter);
+            builder.Add("date", DateFilter);
+            builder.Add("deadline", DeadlineFilter);
+            builder.Add("clarification", ClarificationFilter);
 
-            if (SearchBar.Equals("") || SearchBar == null)
-            {
-                SearchedAsignments = OpdrachtenCollection;
-                return;
-            }
-            var temp = new ObservableCollection<Asignment>();
-
-            foreach (var asignment in OpdrachtenCollection)
-            {
-                if (asignment.Client.name != null && asignment.clarification != null)
-                {
-                    if (asignment.Client.name.ToUpper().Contains(SearchBar.ToUpper()) || asignment.clarification.ToUpper().Contains(SearchBar.ToUpper()))
-                    {
-                        temp.Add(asignment);
-                    }
-                }
-            }
-
-            SearchedAsignments = temp;
+            var filters = builder.Get();
+            var result = OpdrachtenCollection.Where(a => a.Like(filters));
+            SearchedAsignments = new ObservableCollection<Asignment>(result);
+            RaisePropertyChanged("SearchedAsignments");
         }
 
         private void SetEmptySelectedAsignment()
