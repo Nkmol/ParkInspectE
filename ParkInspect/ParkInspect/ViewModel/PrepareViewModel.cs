@@ -25,6 +25,7 @@ namespace ParkInspect.ViewModel
         protected InspectionService service;
         public ObservableCollection<String> directionItems { get; set; }
         public ObservableCollection<Inspection> inspections { get; set; }
+        private OfflineViewMode offlineViewModel;
         public Inspection _selectedInspection;
         public string _client_name;
         public string _region_name;
@@ -36,6 +37,8 @@ namespace ParkInspect.ViewModel
         private string _home_adress;
         public RelayCommand saveDirections{ get; set; }
         public RelayCommand getDirections { get; set; }
+
+        #region properties
 
         public String client_name
         {
@@ -156,14 +159,16 @@ namespace ParkInspect.ViewModel
 
             }
         }
-
-        public PrepareViewModel(IRepository context)
+        #endregion
+        public PrepareViewModel(IRepository context, OfflineViewMode offlineViewModel)
         {
             service = new InspectionService(context);
             directionItems = new ObservableCollection<string>();
             inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
             saveDirections = new RelayCommand(SaveDirections);
             getDirections = new RelayCommand(GetDirections);
+            this.offlineViewModel = offlineViewModel;
+
         }
         private void SaveDirections()
         {
@@ -175,7 +180,9 @@ namespace ParkInspect.ViewModel
                 {
                     SaveFile.WriteLine(item.ToString());
                 }
-            } else
+                offlineViewModel.LoadDirections();
+            }
+            else
             {
                 MessageBox.Show("Vul een naam in!");
             }

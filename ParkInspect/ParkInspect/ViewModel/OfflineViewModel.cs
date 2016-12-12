@@ -44,7 +44,7 @@ namespace ParkInspect.ViewModel
         }
         public OfflineViewMode(IRepository context)
         {
-            directions = new ObservableCollection<string>(Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)));
+            directions = new ObservableCollection<string>();
             directionItems = new ObservableCollection<string>();
         }
         private void LoadDirectionItems()
@@ -56,6 +56,15 @@ namespace ParkInspect.ViewModel
                 directionItems.Add(line);
 
             }
+        }
+
+        public void LoadDirections()
+        {
+            foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
+            {
+                directions.Add(name);
+            }
+            //directions = ObservableCollection<string>(Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)));
         }
     }
 }
