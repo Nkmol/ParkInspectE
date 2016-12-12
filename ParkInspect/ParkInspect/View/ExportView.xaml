@@ -15,7 +15,8 @@
     <StackPanel>
 
         <Label x:Name="ExportLabel">You will export the following table:</Label>
-        <DataGrid x:Name="ExportGrid" IsReadOnly="True" ItemsSource="{Binding Data, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
+        <DataGrid x:Name="HiddenGrid" ItemsSource="{Binding Data, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+        <DataGrid x:Name="ExportGrid" IsReadOnly="True" ItemsSource="{Binding Viewable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
 
         <Grid Name="SelectionGrid" Margin="0, 10, 0, 0">
             <Grid.RowDefinitions>

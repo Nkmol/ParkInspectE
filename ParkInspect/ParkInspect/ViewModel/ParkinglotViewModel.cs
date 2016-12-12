@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls.Dialogs;
+using ParkInspect.Model;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
@@ -160,9 +162,11 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public ParkinglotViewModel(IRepository context)
-        {
+        private DialogManager _dialog;
 
+        public ParkinglotViewModel(IRepository context, DialogManager dialog)
+        {
+            _dialog = dialog;
             SaveCommand = new RelayCommand(Save);
             NewCommand = new RelayCommand(NewParkinglot);
             ExportCommand = new RelayCommand(Export);
@@ -192,11 +196,10 @@ namespace ParkInspect.ViewModel
         private void NewParkinglot()
         {
 
-            Message = "Add a new Parkinglot";
+            Message = "Nieuwe parkeerplaats toevoegen";
             Parkinglot = new Parkinglot();
             RaisePropertyChanged("Parkinglot");
             Parkinglot.id = -1;
-
         }
 
         private void Save()
@@ -204,13 +207,14 @@ namespace ParkInspect.ViewModel
 
             if (Parkinglot.id < 0)
             {
-                Message = (Service.Add<Parkinglot>(Parkinglot) ? "The parkinglot was added!" : "Something went wrong.");
+                Message = (Service.Add<Parkinglot>(Parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan.");
+                _dialog.ShowMessage("Action", Message);
             }
             else
             {
                 Message = (Service.Update<Parkinglot>(Parkinglot)
-                    ? "The parkinglot was updated!"
-                    : "Something went wrong.");
+                    ? "Parkeerplaats is bijgewerkt!"
+                    : "Er is iets misgegaan.");
             }
 
             RaisePropertyChanged("Message");
@@ -232,7 +236,7 @@ namespace ParkInspect.ViewModel
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
-            export.FillGrid(result, Service);
+            export.FillGrid(result);
 
         }
     }
