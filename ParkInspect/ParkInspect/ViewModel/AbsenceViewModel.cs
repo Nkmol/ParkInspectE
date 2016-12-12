@@ -199,17 +199,12 @@ namespace ParkInspect.ViewModel
 
         private void SaveNewAbsenceMethod()
         {
-            if (SelectedEmployee == null)
+
+            if (NewAbsence.start > NewAbsence.end)
             {
-                Notification = "Selecteer een werknemer.";
                 return;
             }
 
-            if (NewAbsence.start == null || NewAbsence.end == null)
-            {
-                Notification = "Onjuiste gegevens.";
-                return;
-            }
             Service.InsertAbsence(NewAbsence);
             Notification = "Nieuwe afwezigheid is opgeslagen!";
             Absences.Add(NewAbsence);
