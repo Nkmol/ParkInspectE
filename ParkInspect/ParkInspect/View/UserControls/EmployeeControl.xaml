@@ -78,7 +78,8 @@
                                         <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
+                                                <validationRules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
@@ -89,6 +90,7 @@
                                     <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                            <validationRules:IsValidPhoneNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
