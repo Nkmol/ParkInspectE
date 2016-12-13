@@ -27,14 +27,14 @@ namespace ParkInspect.ViewModel
 
         public void ShowMessage(string title, string message)
         {
-           DialogCoordinator.ShowMessageAsync(this, title, message);
+            DialogCoordinator.ShowMessageAsync(this, title, message);
         }
 
-        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings )
+        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings)
         {
-          LoginDialogData result = await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
+            LoginDialogData result = await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
 
-          return result;
+            return result;
         }
 
         public async void ShowLoginDialog(LoginViewModel lv)
@@ -43,7 +43,7 @@ namespace ParkInspect.ViewModel
             {
                 UsernameWatermark = "Emailadres...",
                 PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Visible,
+                NegativeButtonVisibility = Visibility.Hidden,
                 RememberCheckBoxVisibility = Visibility.Visible
             };
 
@@ -56,34 +56,41 @@ namespace ParkInspect.ViewModel
                         ShowLogin("Authenticatie", "Voer uw inloggegevens in",
                             loginDialogSettings);
 
-                if (result == null)
-                    return;
-
-                var rs = _service.GetEmployee(result.Username, result.Password).Count() != 0;
-
-                if (!rs)
+                if (result != null)
                 {
-                    if (result.ShouldRemember)
+
+                    var rs = _service.GetEmployee(result.Username, result.Password).Count() != 0;
+
+                    if (!rs)
                     {
-                        loginDialogSettings.InitialUsername = result.Username;
-                    }
+                        if (result.ShouldRemember)
+                        {
+                            loginDialogSettings.InitialUsername = result.Username;
+                        }
 
 
-                    await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
+                        await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
                             "Ongeldig email/wachtwoord");
 
-                }
-                else
-                {
-                    await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
-                    logged = true;
+                    }
+                    else
+                    {
+                        await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
+                        logged = true;
 
-                    lv.LoginName = result.Username;
-                    lv.LoginButtonEnabled = false;
-                    lv.LogoutButtonEnabled = true;
+                        lv.LoginName = result.Username;
+                        lv.LoginButtonEnabled = false;
+                        lv.LogoutButtonEnabled = true;
+
+                        // goes wrong on multiple users with the same username and password with different roles.
+                        lv.CurrentUser = lv.Service.GetEmployee(result.Username, result.Password).First();
+                        lv.dashboard.ChangeAuthorization(lv.CurrentUser.Role1);
+                    }
                 }
             }
         }
+
+
 
 
     }

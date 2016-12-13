@@ -14,7 +14,7 @@ namespace ParkInspect.Convertor
             if (value is bool) tempValue = (bool)value;
 
 
-            return tempValue ? Visibility.Visible : Visibility.Collapsed;
+            return tempValue ? Visibility.Visible : Visibility.Hidden;
 
         }
 

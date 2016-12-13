@@ -26,7 +26,7 @@ namespace ParkInspect.ViewModel
 
         private bool _logoutButtonEnabled;
 
-        private Employee _currentUser;
+        public Employee CurrentUser;
 
         private ICommand _showLoginDialogCommand;
 
@@ -39,12 +39,18 @@ namespace ParkInspect.ViewModel
 
         private DialogManager _dialogViewModel;
 
-        private DashboardViewModel dashboard;
+        public DashboardViewModel dashboard;
+        private IDialogCoordinator _dialogCoordinator;
+        
 
-        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context, DashboardViewModel dashboard)
+        public EmployeeService Service;
+
+        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context, DashboardViewModel dashboard, DialogManager dialogViewModel)
         {
             _dialogViewModel = dialogViewModel;
             _dialogViewModel.Service = new EmployeeService(context);
+            _dialogCoordinator = dialogCoordinator;
+            Service = new EmployeeService(context);
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
 
@@ -77,7 +83,7 @@ namespace ParkInspect.ViewModel
 
         public ICommand LogoutCommand => _logoutCommand
                                                   ?? (_logoutCommand = new RelayCommand(Logout));
-
+        /*
         public async void ShowLoginDialog()
         {
             var loginDialogSettings = new LoginDialogSettings
@@ -100,9 +106,6 @@ namespace ParkInspect.ViewModel
 
                 if (result != null)
                 {
-
-
-
                     var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
 
                     if (!rs)
@@ -126,14 +129,15 @@ namespace ParkInspect.ViewModel
                         LogoutButtonEnabled = true;
 
                         // goes wrong on multiple users with the same username and password with different roles.
-                        _currentUser = Service.GetEmployee(result.Username, result.Password).First();
-                        dashboard.ChangeAuthorization(_currentUser.Role1);
+                        CurrentUser = Service.GetEmployee(result.Username, result.Password).First();
+                        dashboard.ChangeAuthorization(CurrentUser.Role1);
 
                     }
                 }
             }
             
         }
+        */
         
 
         private void Logout()
@@ -142,7 +146,7 @@ namespace ParkInspect.ViewModel
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
             dashboard.ChangeAuthorization(null);
-            ShowLoginDialog();
+            _dialogViewModel.ShowLoginDialog(this);
         }
     }
 }
