@@ -15,7 +15,7 @@ namespace ParkInspect.ViewModel
     public class ClientViewModel : ViewModelBase
     {
         private DialogManager _dialog;
-        private readonly IEnumerable<Client> Data;
+        private IEnumerable<Client> Data;
         private string _emailFilter;
 
         private string _nameFilter;
@@ -140,6 +140,8 @@ namespace ParkInspect.ViewModel
 
         private void UpdateClients()
         {
+            Data = Service.GetAll<Client>();
+
             var builder = new FilterBuilder();
             builder.Add("name", NameFilter);
             builder.Add("phonenumber", PhoneFilter);
