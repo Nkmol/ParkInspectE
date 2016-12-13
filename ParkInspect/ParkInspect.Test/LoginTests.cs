@@ -67,5 +67,20 @@ namespace UnitTestProject
             var result = _service.Login("henk@henkie.nl", "ab123");
             Assert.AreEqual(result, false);
         }
+
+        // Not of this class, just as example
+        [TestMethod]
+        public void TestUpdate()
+        {
+            // Arrange
+            _newEmpolyee.firstname = "Jan";
+
+            // Act
+            _service.Update(_newEmpolyee);
+
+            // Assert
+            var employee = _service.Get(_newEmpolyee.id);
+            Assert.AreEqual(employee.firstname, "Jan");
+        }
     }
 }
