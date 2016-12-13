@@ -2,10 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkInspect;
 using ParkInspect.Services;
-using ParkInspect.ViewModel;
-using MahApps.Metro.Controls.Dialogs;
-using Moq;
-using System.Windows;
 
 namespace UnitTestProject
 {
@@ -13,17 +9,17 @@ namespace UnitTestProject
     public class LoginTests
     {
         private MockRepositoryWrapper<Employee, ParkInspectEntities> _mockRepo;
-        private EmployeeService _service;
         private Employee _newEmpolyee;
+        private EmployeeService _service;
 
         [TestInitialize]
-        public void init()
+        public void Init()
         {
             _mockRepo = new MockRepositoryWrapper<Employee, ParkInspectEntities>();
             _service = new EmployeeService(_mockRepo.Repo);
 
             // Arrange
-            _newEmpolyee = new Employee()
+            _newEmpolyee = new Employee
             {
                 id = -1,
                 employee_status = "Example",
@@ -35,7 +31,7 @@ namespace UnitTestProject
                 in_service_date = DateTime.Now,
                 out_service_date = null,
                 email = "henk@henk.nl",
-                password = "ab123",
+                password = "ab123"
             };
 
             _service.Add(_newEmpolyee); // Fake employee
@@ -70,7 +66,7 @@ namespace UnitTestProject
 
         // Not of this class, just as example
         [TestMethod]
-        public void TestUpdate()
+        public void EmployeeUpdate()
         {
             // Arrange
             _newEmpolyee.firstname = "Jan";
