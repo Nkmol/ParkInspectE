@@ -15,7 +15,7 @@
     
     <Grid>
         <TabControl>
-            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[19], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[19], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <DataGrid ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible" 

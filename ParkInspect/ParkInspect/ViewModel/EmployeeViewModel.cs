@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -50,7 +47,7 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-        
+
 
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
@@ -81,7 +78,7 @@ namespace ParkInspect.ViewModel
             //Collections for comboboxes
             RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
             StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
-            
+
             CreateItemCommand = new RelayCommand(CreateNewEmployee);
             EditItemCommand = new RelayCommand(EditEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
@@ -90,12 +87,6 @@ namespace ParkInspect.ViewModel
         //CRU METHODS
         private void CreateNewEmployee()
         {
-            if(SelectedEmployee.firstname == null || SelectedEmployee.lastname == null || 
-                SelectedEmployee.email == null || SelectedEmployee.role == null || 
-                SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
-                SelectedEmployee.phonenumber == null)
-                return;
-
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
 
@@ -106,12 +97,6 @@ namespace ParkInspect.ViewModel
 
         private void EditEmployee()
         {
-            if (SelectedEmployee.firstname == null || SelectedEmployee.lastname == null ||
-                SelectedEmployee.email == null || SelectedEmployee.role == null ||
-                SelectedEmployee.password == null || SelectedEmployee.employee_status == null ||
-                SelectedEmployee.phonenumber == null)
-                return;
-
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
 
@@ -123,21 +108,23 @@ namespace ParkInspect.ViewModel
         /// <summary>
         /// Initializes a new instance of the PersoneelViewModel class.
         /// </summary>
+
+        private void UpdateDataGrid()
+        {
+            _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
+            var temp = Employees;
+            Employees = null;
+            Employees = temp;
+            SetNewEmployee();
+        }
+
         private void SetNewEmployee()
         {
             Employee e = new Employee();
             e.in_service_date = DateTime.Today;
             e.out_service_date = DateTime.Today;
-            SelectedEmployee = e;
-        }
 
-        private void UpdateDataGrid()
-        {
-            SetNewEmployee();
-             _employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
-            var temp = Employees;
-            Employees = null;
-            Employees = temp;
+            SelectedEmployee = e;
         }
     }
 }

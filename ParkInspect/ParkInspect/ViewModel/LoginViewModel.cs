@@ -5,6 +5,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro.Controls.Dialogs;
+using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -18,7 +19,6 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class LoginViewModel : ViewModelBase
     {
-        private readonly IDialogCoordinator _dialogCoordinator;
 
         private bool _loginButtonEnabled;
 
@@ -35,14 +35,16 @@ namespace ParkInspect.ViewModel
         /// <summary>
         ///     Initializes a new instance of the LoginViewModel class.
         /// </summary>
-        protected EmployeeService Service;
+
+
+        private DialogManager _dialogViewModel;
 
         private DashboardViewModel dashboard;
 
         public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context, DashboardViewModel dashboard)
         {
-            _dialogCoordinator = dialogCoordinator;
-            Service = new EmployeeService(context);
+            _dialogViewModel = dialogViewModel;
+            _dialogViewModel.Service = new EmployeeService(context);
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
 
@@ -71,7 +73,7 @@ namespace ParkInspect.ViewModel
         }
 
         public ICommand ShowLoginDialogCommand => _showLoginDialogCommand
-                                                  ?? (_showLoginDialogCommand = new RelayCommand(ShowLoginDialog));
+                                                  ?? (_showLoginDialogCommand = new RelayCommand(() =>_dialogViewModel.ShowLoginDialog(this)));
 
         public ICommand LogoutCommand => _logoutCommand
                                                   ?? (_logoutCommand = new RelayCommand(Logout));

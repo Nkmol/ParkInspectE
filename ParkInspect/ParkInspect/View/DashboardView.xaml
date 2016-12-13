@@ -8,13 +8,18 @@
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:convertor="clr-namespace:ParkInspect.Convertor"
         mc:Ignorable="d ignore"
         Height="600"
-        Width="1000"
+        Width="1010"
         Title="ParkInspect"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="1"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
-        dialog:DialogParticipation.Register="{Binding Login, Source={StaticResource Locator}}">
+        dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}"
+        popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -31,7 +36,11 @@
     Add a new bool property in the dashboardViewModel and set it on true in the showAllTabs method.
     -->
     <Grid x:Name="LayoutRoot">
-        <TabControl>
+        <dragablz:TabablzControl>
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>
+        
             <TabItem Visibility="{Binding TabStatus[0], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
                 <userControls:CustomerControl />
             </TabItem>
@@ -56,7 +65,10 @@
             <TabItem Visibility="{Binding TabStatus[7], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
                 <userControls:AbsenceControl />
             </TabItem>
-        </TabControl>
+            <TabItem Header="Contactpersonen">
+                <userControls:ContactpersoonControl />
+          </TabItem>
+        </dragablz:TabablzControl>
     </Grid>
 
     <!--

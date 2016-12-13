@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
-             d:DesignHeight="386" d:DesignWidth="800"
+             Width="1000"
+             Height="600"
              DataContext="{Binding Client, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
@@ -13,14 +14,16 @@
     </UserControl.Resources>
     
     <Grid>
-
         <TabControl>
-            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[15], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" >
+            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[15], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" >
                 <DataGrid 
                     ItemsSource="{Binding Clients}" 
                     SelectedItem="{Binding SelectedClient}"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True">
+                    ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                    SelectionMode="Single" AutoGenerateColumns="False" 
+                    IsReadOnly="True" MaxHeight="500">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="150" Header="Naam" Binding="{Binding name}"/>
@@ -31,21 +34,32 @@
             </TabItem>
 
             <TabItem Header="Management" DataContext="{Binding SelectedClient}" Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <DockPanel LastChildFill="False">
-                    <Grid DockPanel.Dock="Top" Height="223" Margin="0,0,0.4,0">
-                        <Label x:Name="NameLabel" Content="Naam:" Margin="89,47,255,148"/>
-                        <Label x:Name="TelnrLabel" Content="Telefoonnummer:" Margin="89,75,186,122"/>
-                        <Label x:Name="EmailLabel" Content="Emailadres:" HorizontalAlignment="Left" Height="25" Margin="89,106,0,0" VerticalAlignment="Top" Width="99"/>
-                        <TextBox x:Name="Name" Text="{Binding name}" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0" VerticalAlignment="Top" Width="150"/>
-                        <TextBox x:Name="Telnr" Text="{Binding phonenumber}" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0" VerticalAlignment="Top" Width="150"/>
-                        <TextBox x:Name="Email" Text="{Binding email}" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0" VerticalAlignment="Top" Width="150"/>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" DataContext="{Binding Client, Source={StaticResource Locator}}" Height="148" Margin="0,0,0.4,0">
-                        <Button Command="{Binding CompleteClientCommand}" Content="Maak nieuwe klant aan" Margin="30,0,0,70" Height="78" Width="195" />
-                        <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="70,0,0,0" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195"/>
-                        <Button Command="{Binding UpdateButtonCommand}" Content="Update klant" Margin="80,0,0,0" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195"/>
+                <Grid>
+                    <DockPanel Width="255" Height="250" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,0,0,0">
+                        <StackPanel>
+                            <Label x:Name="NameLabel" Content="Naam"/>
+                            <TextBox x:Name="Name" Text="{Binding name}" Margin="5,0,0,10" Width="250" HorizontalAlignment="Left"/>
+
+                            <Label x:Name="TelnrLabel" Content="Telefoonnummer"/>
+                            <TextBox x:Name="Telnr" Text="{Binding phonenumber}" HorizontalAlignment="Left" Margin="5,0,0,10" Width="250"/>
+
+                            <Label x:Name="EmailLabel" Content="Emailadres"/>
+                            <TextBox x:Name="Email" Text="{Binding email}" HorizontalAlignment="Left" Margin="5,0,0,10" Width="250"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <DockPanel Width="255" Height="250" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,100,0">
+                        <StackPanel>
+                            <Label>Overige informatie ofso?</Label>
+                            <Label>Geselecteerde klant zijn contactpersoon info tonen?</Label>
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding Client, Source={StaticResource Locator}}" Margin="100,250,100,0">
+                        <Label Width="300" Height="50" VerticalAlignment="Top"></Label>
+                        <Button Width="120" Command="{Binding CompleteClientCommand}" Content="Voeg toe" Margin="110,0,10,0" VerticalAlignment="Top"/>
+                        <Button Width="120" Command="{Binding UpdateButtonCommand}" Content="Bewerken" Margin="0,0,10,0" VerticalAlignment="Top"/>
+                        <Button Width="120" Command="{Binding ResetButtonCommand}" Content="Deselecteren" Margin="0,0,0,0" VerticalAlignment="Top"/>
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

@@ -14,7 +14,7 @@
     
     <Grid>
         <TabControl>
-            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[21], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[21], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <Label Content="Overview goes here..." />
             </TabItem>
             <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[22], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
