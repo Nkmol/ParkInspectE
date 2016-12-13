@@ -1,16 +1,15 @@
-﻿<controls:MetroWindow x:Class="ParkInspect.MainWindow"
+﻿<controls:MetroWindow x:Class="ParkInspect.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"            
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:local="using:ParkInspect.View.UserControls"
-        xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+        xmlns:userControls1="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1010"
@@ -42,31 +41,31 @@
             </dragablz:TabablzControl.InterTabController>
         
             <TabItem Visibility="{Binding TabStatus[0], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
-                <userControls:CustomerControl />
+                <userControls1:CustomerControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[1], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Parkeerplaatsen">
-                <userControls:ParkeerplaatsControl />
+                <userControls1:ParkeerplaatsControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[2], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Opdrachten">
-                <userControls:AssignmentControl />
+                <userControls1:AssignmentControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[3], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Inspectie">
-                <userControls:InspectionControl />
+                <userControls1:InspectionControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[4], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Vragenlijst">
-                <userControls:FormControl />
+                <userControls1:FormControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[5], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Personeel">
-                <userControls:EmployeeControl />
+                <userControls1:EmployeeControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[6], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Rapportage">
-                <userControls:ReportControl />
+                <userControls1:ReportControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[7], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
-                <userControls:AbsenceControl />
+                <userControls1:AbsenceControl />
             </TabItem>
             <TabItem Header="Contactpersonen">
-                <userControls:ContactpersoonControl />
+                <userControls1:ContactpersoonControl />
           </TabItem>
         </dragablz:TabablzControl>
     </Grid>

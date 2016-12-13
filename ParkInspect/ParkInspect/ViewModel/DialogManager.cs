@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -84,7 +81,7 @@ namespace ParkInspect.ViewModel
 
                         // goes wrong on multiple users with the same username and password with different roles.
                         lv.CurrentUser = lv.Service.GetEmployee(result.Username, result.Password).First();
-                        lv.dashboard.ChangeAuthorization(lv.CurrentUser.Role1);
+                        lv.Dashboard.ChangeAuthorization(lv.CurrentUser.Role1);
                     }
                 }
             }

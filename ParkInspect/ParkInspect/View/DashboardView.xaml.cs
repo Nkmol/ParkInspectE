@@ -1,19 +1,14 @@
-﻿using System.Windows;
-using System.Windows.Automation.Peers;
+﻿using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media.Converters;
 using MahApps.Metro.Controls;
-using MaterialDesignThemes.Wpf;
 using ParkInspect.ViewModel;
 
-namespace ParkInspect
+namespace ParkInspect.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow
     {
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -23,7 +18,7 @@ namespace ParkInspect
 
 
 
-        private DashboardViewModel _datacontext;
+       
         public MainWindow()
         {
             InitializeComponent();

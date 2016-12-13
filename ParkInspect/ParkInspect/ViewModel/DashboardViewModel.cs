@@ -321,7 +321,7 @@ namespace ParkInspect.ViewModel
         }
 
 
-        // security lockdown. hides all functionality exept login
+        /* security lockdown. hides all functionality exept login
         private void HideAllTabs()
         {
             ShowAssignments = false;
@@ -333,7 +333,7 @@ namespace ParkInspect.ViewModel
             ShowEmployee = false;
             ShowAbsence = false;
         }
-
+        */
 
 
     }

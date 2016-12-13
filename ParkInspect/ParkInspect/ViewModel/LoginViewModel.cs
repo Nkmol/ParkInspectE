@@ -1,11 +1,6 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MahApps.Metro.Controls.Dialogs;
-using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -37,27 +32,27 @@ namespace ParkInspect.ViewModel
         /// </summary>
 
 
-        private DialogManager _dialogViewModel;
+        private readonly DialogManager _dialogViewModel;
 
-        public DashboardViewModel dashboard;
-        private IDialogCoordinator _dialogCoordinator;
-        
+        public DashboardViewModel Dashboard;
+
+
 
         public EmployeeService Service;
 
-        public LoginViewModel(IDialogCoordinator dialogCoordinator, IRepository context, DashboardViewModel dashboard, DialogManager dialogViewModel)
+        public LoginViewModel(IRepository context, DashboardViewModel dashboard, DialogManager dialogViewModel)
         {
             _dialogViewModel = dialogViewModel;
             _dialogViewModel.Service = new EmployeeService(context);
-            _dialogCoordinator = dialogCoordinator;
+
             Service = new EmployeeService(context);
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
 
-            this.dashboard = dashboard;
-          
-            
-           
+            Dashboard = dashboard;
+
+
+
         }
 
         public string LoginName
@@ -79,7 +74,7 @@ namespace ParkInspect.ViewModel
         }
 
         public ICommand ShowLoginDialogCommand => _showLoginDialogCommand
-                                                  ?? (_showLoginDialogCommand = new RelayCommand(() =>_dialogViewModel.ShowLoginDialog(this)));
+                                                  ?? (_showLoginDialogCommand = new RelayCommand(() => _dialogViewModel.ShowLoginDialog(this)));
 
         public ICommand LogoutCommand => _logoutCommand
                                                   ?? (_logoutCommand = new RelayCommand(Logout));
@@ -138,14 +133,14 @@ namespace ParkInspect.ViewModel
             
         }
         */
-        
+
 
         private void Logout()
         {
             LoginName = "";
             LoginButtonEnabled = true;
             LogoutButtonEnabled = false;
-            dashboard.ChangeAuthorization(null);
+            Dashboard.ChangeAuthorization(null);
             _dialogViewModel.ShowLoginDialog(this);
         }
     }
