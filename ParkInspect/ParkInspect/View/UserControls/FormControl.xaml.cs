@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using ParkInspect.ViewModel;
 using ParkInspect;
 using System.Diagnostics;
+using System.Timers;
 
 namespace ParkInspect.View.UserControls
 {
@@ -27,6 +28,24 @@ namespace ParkInspect.View.UserControls
             FormViewModel viewmodel = (FormViewModel) DataContext;
             fields = new List<CachedFormField>();
             viewmodel.View = this;
+            Timer timer = new Timer(1000);
+            timer.Elapsed += async (sender, e) => await HandleTimer();
+            timer.Start();
+        }
+
+        public Task HandleTimer()
+        {
+            changeColor();
+            return new Task(changeColor);
+        }
+
+        public void changeColor()
+        {
+            Random random = new Random();
+            int R = random.Next(0, 255);
+            int G = random.Next(0, 255);
+            int B = random.Next(0, 255);
+            FormGrid.Background = new SolidColorBrush(Color.FromArgb(255, (byte)R, (byte)G, (byte)B));
         }
 
         public void clear()
