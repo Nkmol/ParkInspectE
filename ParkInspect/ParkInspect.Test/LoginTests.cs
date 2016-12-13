@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using ParkInspect;
-using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.ViewModel;
-using ParkInspect.View;
-using System.Data.Entity;
+using MahApps.Metro.Controls.Dialogs;
+using Moq;
+using System.Windows;
 
 namespace UnitTestProject
 {
@@ -40,34 +38,34 @@ namespace UnitTestProject
                 password = "ab123",
             };
 
-            _service.Add(_newEmpolyee);
+            _service.Add(_newEmpolyee); // Fake employee
         }
 
         // Small/single asserts are good!
         // http://softwareengineering.stackexchange.com/questions/7823/is-it-ok-to-have-multiple-asserts-in-a-single-unit-test
 
         [TestMethod]
-        public void UserIdExists()
+        public void CanLogin()
         {
             // Assert
-            var employee = _service.Get(_newEmpolyee.id);
-            Assert.AreEqual(employee.id, _newEmpolyee.id);
+            var result = _service.Login("henk@henk.nl", "ab123");
+            Assert.AreEqual(result, true);
         }
 
         [TestMethod]
-        public void UserIdExists_False()
+        public void WrongPassword()
         {
             // Assert
-            var employee = _service.Get(_newEmpolyee.id);
-            Assert.AreNotEqual(employee.id, 2);
+            var result = _service.Login("henk@henk.nl", "ab12333");
+            Assert.AreEqual(result, false);
         }
 
         [TestMethod]
-        public void UserEmailExists()
+        public void WrongUsername()
         {
             // Assert
-            var employee = _service.Get(_newEmpolyee.id);
-            Assert.AreEqual(employee.id, _newEmpolyee.id);
+            var result = _service.Login("henk@henkie.nl", "ab123");
+            Assert.AreEqual(result, false);
         }
     }
 }

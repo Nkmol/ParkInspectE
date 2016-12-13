@@ -17,15 +17,16 @@ namespace ParkInspect.Services
             _context = context;
         }
 
-        public IEnumerable<Employee> GetEmployee(string email, string password)
-        {
-            return _context.Get<Employee>()
-                .Where(k => k.email == email && k.password == password);
-        }
-
         public Employee Get(int id)
         {
             return _context.Get<Employee>().Where(x => x.id == id).FirstOrDefault();
+        }
+
+        public bool Login(string email, string password)
+        {
+            return _context.Get<Employee>()
+                .Where(k => k.email == email && k.password == password)
+                .Count() != 0;
         }
 
         public IEnumerable<Employee> GetAllEmployees()
