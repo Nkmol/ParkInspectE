@@ -14,7 +14,7 @@
         <TabControl>
             <TabItem Header="Overzicht">
                 <StackPanel>
-                    <Label Name="SearchLabel">Zoeken</Label>
+                    <Label Name="SearchLabel">Zoeken in voornaam (eerste veld) en/of achternaam (tweede veld)</Label>
                     <Grid Name="FilterGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />

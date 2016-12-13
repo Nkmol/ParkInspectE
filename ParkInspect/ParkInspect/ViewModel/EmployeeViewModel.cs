@@ -127,8 +127,23 @@ namespace ParkInspect.ViewModel
         //CRU METHODS
         private void SaveEmployee()
         {
+            if (SelectedEmployee.employee_status.Equals("Retired") && SelectedEmployee.active)
+            {
+                Notification = "Een medewerker kan niet 'actief' zijn als hij/zij met pensioen is.";
+                _dialog.ShowMessage("Fout opgetreden!", Notification);
+                return;
+            }
+
             if (SelectedEmployee.active)
+            {
                 SelectedEmployee.out_service_date = null;
+            }
+            else if(SelectedEmployee.out_service_date < SelectedEmployee.in_service_date)
+            {
+                Notification = "De datum uit dienst kan niet voor de datum in dienst zijn";
+                _dialog.ShowMessage("Fout opgetreden!", Notification);
+                return;
+            }
 
             if(SelectedEmployee.id == 0)
             { 
@@ -140,7 +155,7 @@ namespace ParkInspect.ViewModel
                 Service.UpdateEntity(SelectedEmployee);
                 Notification = "De medewerker is aangepast";
             }
-            _dialog.ShowMessage("Actie", Notification);
+            _dialog.ShowMessage("Gelukt!", Notification);
             UpdateDataGrid();
         }
 
