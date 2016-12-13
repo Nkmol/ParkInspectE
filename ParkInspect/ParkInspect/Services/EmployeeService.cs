@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ParkInspect.Repository;
+using System.Collections;
 
 namespace ParkInspect.Services
 {
-    public class EmployeeService
+    public class EmployeeService : DataService
     {
         private readonly IRepository _context;
 
-        public EmployeeService(IRepository context)
+        public EmployeeService(IRepository context) : base(context)
         {
             _context = context;
         }
@@ -20,6 +21,11 @@ namespace ParkInspect.Services
         {
             return _context.Get<Employee>()
                 .Where(k => k.email == email && k.password == password);
+        }
+
+        public Employee Get(int id)
+        {
+            return _context.Get<Employee>().Where(x => x.id == id).FirstOrDefault();
         }
 
         public IEnumerable<Employee> GetAllEmployees()
