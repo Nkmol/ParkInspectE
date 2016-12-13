@@ -106,7 +106,7 @@
                     </DockPanel>
                     <StackPanel Margin="100,255,100,0" Orientation="Horizontal">
                         <Label x:Name="MessageLabel" Content="{Binding Message}" Width="300" Height="50" VerticalAlignment="Top"/>
-                        <Button x:Name="SaveButton2" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Voeg toe" VerticalAlignment="Top" Margin="110,0,10,0" Width="120">
+                        <Button x:Name="SaveButton2" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Opslaan" VerticalAlignment="Top" Margin="240,0,10,0" Width="120">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -124,7 +124,6 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button x:Name="NewButton" Content="Bewerken"  Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Margin="0,0,10,0"/>
                         <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="120"/>
                     </StackPanel>
                 </Grid>
