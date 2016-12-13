@@ -56,6 +56,20 @@ namespace ParkInspect.Services
 
         }
 
+        public bool Delete<T>(T p) where T : class
+        {
+            try
+            {
+                Context.Delete(p);
+                Context.Save();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         /*
          * Get all data, corresponding to the columns and aliases, using ExpandoObjects.
          */
