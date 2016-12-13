@@ -66,6 +66,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private DialogManager _dialog;
+
         //Data for comboBoxes
         public ObservableCollection<Role> RoleCollection { get; set; }
         public ObservableCollection<Employee_Status> StatusCollection { get; set; }
@@ -97,49 +99,48 @@ namespace ParkInspect.ViewModel
         }
 
         //Commands
-        public ICommand CreateItemCommand { get; set; }
-        public ICommand EditItemCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
         public ICommand DeselectEmployeeCommand { get; set; }
 
-        public EmployeeViewModel(IRepository context)
+        public EmployeeViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
             //Service and employees
             Service = new EmployeeService(context);
             Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
-
+            Data = Service.GetAllEmployees();
+            
+            //Initialize startup Employee
             SelectedEmployee = new Employee();
             SelectedEmployee.in_service_date = DateTime.Today;
             SelectedEmployee.out_service_date = DateTime.Today;
-
-            Data = Service.GetAllEmployees();
 
             //Collections for comboboxes
             RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
             StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
 
-            CreateItemCommand = new RelayCommand(CreateNewEmployee);
-            EditItemCommand = new RelayCommand(EditEmployee);
+            //Initialize commands
+            SaveCommand = new RelayCommand(SaveEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
         }
 
         //CRU METHODS
-        private void CreateNewEmployee()
+        private void SaveEmployee()
         {
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
 
-            Service.InsertEntity(SelectedEmployee);
-            Notification = "De medewerker is opgeslagen";
-            UpdateDataGrid();
-        }
-
-        private void EditEmployee()
-        {
-            if (SelectedEmployee.active)
-                SelectedEmployee.out_service_date = null;
-
-            Service.UpdateEntity(SelectedEmployee);
-            Notification = "De medewerker is aangepast";
+            if(SelectedEmployee.id == 0)
+            { 
+                Service.InsertEntity(SelectedEmployee);
+                Notification = "De medewerker is opgeslagen.";
+            }
+            else
+            { 
+                Service.UpdateEntity(SelectedEmployee);
+                Notification = "De medewerker is aangepast";
+            }
+            _dialog.ShowMessage("Actie", Notification);
             UpdateDataGrid();
         }
 
