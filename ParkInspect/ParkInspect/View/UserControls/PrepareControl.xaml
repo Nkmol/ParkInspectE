@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="ParkInspect.View.UserControls.PrepareControl"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000"
-                DataContext="{Binding Prepare, Source={StaticResource Locator}}">
+             d:DesignHeight="800"
+                DataContext="{Binding Prepare, Source={StaticResource Locator}}" Width="995">
 
-    <TabControl>
+    <TabControl Margin="0,0,0,-59">
         <TabItem Header="Overzicht">
             <Grid>
-                <ScrollViewer HorizontalAlignment="Left" Width="994" Margin="0,0,0,0">
-                    <Grid Width="984">
+                <ScrollViewer HorizontalAlignment="Left" Width="989" Margin="0,0,-27,0">
+                    <Grid Width="960" Height="825">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="57*"/>
                             <ColumnDefinition Width="271*"/>
@@ -47,12 +48,21 @@
                             </Grid>
                         </GroupBox>
                         <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" Margin="209,67,0,0" VerticalAlignment="Top" Width="578" Height="640" Grid.Column="1">
-                            <Grid>
-                                <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="553" VerticalAlignment="Top" Width="557"/>
-                                <TextBox x:Name="txt_home_adres"  HorizontalAlignment="Left" Height="20" Margin="93,568,0,0" TextWrapping="Wrap" Text="{Binding home_adress}" VerticalAlignment="Top" Width="276"/>
-                                <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="10,562,0,0" VerticalAlignment="Top"/>
+                            <Grid Margin="0,0,0,-32">
+                                <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="527" VerticalAlignment="Top" Width="557" Margin="0,26,0,0"/>
+                                <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left"  Height="35" Margin="93,500,0,0"  TextWrapping="Wrap" Width="218" Grid.Column="1">
+                                    <TextBox.Text>
+                                        <Binding Path="home_adress" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="0,561,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="374,561,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
+                                <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="361,561,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
+                                <Label x:Name="l_distance" Content="Afstand:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </Grid>
                         </GroupBox>
                         <GroupBox x:Name="groupBox2" Header="Route beschrijving" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="347" Height="332" Grid.ColumnSpan="2">
@@ -63,10 +73,18 @@
                         </GroupBox>
                         <Label x:Name="label4" Content =" Naam voor offline opslaan:" HorizontalAlignment="Left" Margin="288,722,0,0" VerticalAlignment="Top" Grid.Column="1"/>
                         <Button x:Name="button1" Content="Opslaan" Command="{Binding saveDirections}" HorizontalAlignment="Left" Margin="695,719,0,0" VerticalAlignment="Top" Width="92" Height="26" Grid.Column="1"/>
-                        <TextBox x:Name="textBox" HorizontalAlignment="Left"  Height="23" Margin="461,722,0,0" TextWrapping="Wrap" Text="{Binding directions_save_name}" VerticalAlignment="Top" Width="218" Grid.Column="1"/>
+                        <TextBox x:Name="NameBox" HorizontalAlignment="Left"  Height="23" Margin="460,650,0,7" TextWrapping="Wrap" Width="218" Grid.Column="1">
+                            <TextBox.Text>
+                                <Binding Path="directions_save_name" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
                     </Grid>
                 </ScrollViewer>
-                <GroupBox x:Name="groupBox6" Header="GroupBox" HorizontalAlignment="Left" Margin="1143,30,-249,0" VerticalAlignment="Top" Width="100"/>
             </Grid>
         </TabItem>
         <TabItem Header="Offline">

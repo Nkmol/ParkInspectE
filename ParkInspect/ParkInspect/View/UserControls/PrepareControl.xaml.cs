@@ -82,6 +82,7 @@ namespace ParkInspect.View.UserControls
                 gmap.Markers.Add(mRoute);
 
                 gmap.ZoomAndCenterMarkers(null);
+                l_distance.Content = "Afstand: " +  Math.Round(route.Distance,1) + "KM";
             }
             else
             {

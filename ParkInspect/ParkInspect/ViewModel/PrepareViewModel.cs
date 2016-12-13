@@ -18,6 +18,7 @@ using GoogleMapsApi;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.IO;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace ParkInspect.ViewModel
 {
@@ -43,7 +44,7 @@ namespace ParkInspect.ViewModel
         private string _home_adress;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _current_direction_item;
-
+        private DialogManager _dialog;
         public RelayCommand saveDirections { get; set; }
         public RelayCommand getDirections { get; set; }
         public RelayCommand setDirections { get; set; }
@@ -260,8 +261,9 @@ namespace ParkInspect.ViewModel
             }
         }
         #endregion
-        public PrepareViewModel(IRepository context)
+        public PrepareViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
             service = new InspectionService(context);
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
@@ -273,13 +275,15 @@ namespace ParkInspect.ViewModel
             LoadDirections();
         }
 
+
         private void PrevDirection()
         {
-            if (_selectedDirection.index > 0) {
+            if (_selectedDirection.index > 0)
+            {
                 int index = _selectedDirection.index;
                 current_direction_item = _selectedDirection.direction_items[index - 1];
                 _selectedDirection.index--;
-               }
+            }
         }
 
         private void NextDirection()
@@ -294,49 +298,72 @@ namespace ParkInspect.ViewModel
 
         private void SaveDirections()
         {
-            String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            if (_directions_save_name != "")
+            if (directionItems.Count > 0)
             {
-                System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
-                foreach (var item in directionItems)
+                String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                if (String.IsNullOrWhiteSpace(_directions_save_name))
                 {
-                    SaveFile.WriteLine(item.ToString());
+                    _dialog.ShowMessage("Fout!", "Vul een geldige naam in!");
                 }
-                MessageBox.Show("Aufgeslagen");
-                
+                else
+                {
+                    System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
+                    foreach (String s in directionItems)
+                    {
+                        SaveFile.WriteLine(s);
+                    }
+                    SaveFile.Close();
+                    _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
+                }
+
+                LoadDirections();
             }
             else
             {
-                MessageBox.Show("Vul een naam in!");
+                _dialog.ShowMessage("Fout!", "Laad eerst een navigatie in!");
             }
-            LoadDirections();
         }
+
         private void GetDirections()
         {
-            var drivingDirectionRequest = new DirectionsRequest
+            if (String.IsNullOrWhiteSpace(home_adress))
             {
-                Origin = home_adress,
-                Destination = region_zip + " " + region_name
-            };
-            drivingDirectionRequest.Language = "nl";
-            DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
-            Route nRoute = drivingDirections.Routes.First();
-            Leg leg = nRoute.Legs.First();
-            int counter = 1;
-            foreach (Step step in leg.Steps)
+                _dialog.ShowMessage("Fout!", "Voer een geldig vertrek adres in!");
+            }
+            else
             {
-                directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
-                counter++;
+                try
+                {
+                    var drivingDirectionRequest = new DirectionsRequest
+                    {
+                        Origin = home_adress,
+                        Destination = region_zip + " " + region_name
+                    };
+                    drivingDirectionRequest.Language = "nl";
+                    DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
+                    Route nRoute = drivingDirections.Routes.First();
+                    Leg leg = nRoute.Legs.First();
+                    int counter = 1;
+                    foreach (Step step in leg.Steps)
+                    {
+                        directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
+                        counter++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving!");
+                }
             }
         }
 
         private void SetDirectionItems()
         {
-           String line;
+            String line;
             System.IO.StreamReader file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
             while ((line = file.ReadLine()) != null)
             {
-              _selectedDirection.direction_items.Add(line);
+                _selectedDirection.direction_items.Add(line);
             }
             current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
 

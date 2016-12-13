@@ -8,6 +8,7 @@
         xmlns:local="using:ParkInspect.View.UserControls"
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d ignore"
         Height="600"
@@ -16,7 +17,8 @@
         GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
         DataContext="{Binding Dashboard, Source={StaticResource Locator}}"
-        dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}">
+        dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}"
+        popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}">
 
     <Window.Resources>
         <ResourceDictionary>
