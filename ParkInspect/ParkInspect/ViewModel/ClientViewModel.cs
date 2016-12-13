@@ -14,6 +14,7 @@ namespace ParkInspect.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
+        private DialogManager _dialog;
         private readonly IEnumerable<Client> Data;
         private string _emailFilter;
 
@@ -22,8 +23,9 @@ namespace ParkInspect.ViewModel
         private Client _selectedClient;
         protected ClientService Service;
 
-        public ClientViewModel(IRepository context)
+        public ClientViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
             Service = new ClientService(context);
             ResetButtonCommand = new RelayCommand(Reset);
             SaveCommand = new RelayCommand(SaveClient);
@@ -125,12 +127,12 @@ namespace ParkInspect.ViewModel
             if (SelectedClient.id == 0)
             {
                 Service.Add(SelectedClient);
-                MessageBox.Show("Klant toegevoegd");
+                _dialog.ShowMessage("Actie", "Klant toegevoegd");
             }
             else
             {
                 Service.Update(SelectedClient);
-                MessageBox.Show("Klant geupdate");
+                _dialog.ShowMessage("Actie", "Klant geupdate");
             }
 
             UpdateClients();
