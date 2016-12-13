@@ -13,7 +13,7 @@
             <TabItem Header="Overview">
                 <StackPanel>
                     <DockPanel>
-                        <!-- Textbox needs to activete search command afther an enter press.-->
+                      
                         <TextBox Width="118" Margin="0,3" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Width="189" Margin="5,3,0,3" Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Width="157" Margin="5,3,0,3" Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />

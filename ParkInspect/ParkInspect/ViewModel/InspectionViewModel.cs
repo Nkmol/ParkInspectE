@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Migrations.Model;
+using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -17,6 +21,8 @@ namespace ParkInspect.ViewModel
     public class InspectionViewModel : ViewModelBase
     {
         // collections
+        private ObservableCollection<Inspection> AllInspections;
+
         private ObservableCollection<Inspection> _inspections;
         public ObservableCollection<Inspection> InspectieCollection
         {
@@ -91,9 +97,77 @@ namespace ParkInspect.ViewModel
         public ICommand RemoveInspecteurCommand { get; set; }
 
         private readonly InspectionService _service;
+
         /// <summary>
         /// Initializes a new instance of the InspectieViewModel class.
         /// </summary>
+        /// 
+
+        #region List of filters
+        private string _parkinglotFilter;
+
+        public string ParkinglotFilter
+        {
+            get
+            {
+                return _parkinglotFilter;
+            }
+            set
+            {
+                _parkinglotFilter = value;
+                UpdateOverview();
+            }
+        }
+
+        private string _stateFilter;
+
+        public string StateFilter
+        {
+            get
+            {
+                return _stateFilter;
+            }
+            set
+            {
+                _stateFilter = value;
+                UpdateOverview();
+            }
+        }
+
+        private string _dateFilter;
+
+        public string DateFilter
+        {
+            get
+            {
+                return _dateFilter;
+            }
+            set
+            {
+                _dateFilter = value;
+                UpdateOverview();
+            }
+        }
+
+        private string _deadlineFilter;
+
+        public string DeadlineFIlter
+        {
+            get
+            {
+                return _deadlineFilter;
+            }
+            set
+            {
+                _deadlineFilter = value;
+                UpdateOverview();
+            }
+        }
+
+
+
+
+        #endregion
         public InspectionViewModel(IRepository context)
         {
             // set services and Lists
@@ -109,6 +183,21 @@ namespace ParkInspect.ViewModel
             RemoveInspecteurCommand = new RelayCommand(RemoveInspecteur);
             AddInspecteurCommand = new RelayCommand(AddInspecteur);
 
+        }
+
+        private void UpdateOverview()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("Parkinglot.name", ParkinglotFilter);
+            builder.Add("State1.state1", StateFilter);
+            builder.Add("date", DateFilter);
+            builder.Add("deadline", DeadlineFIlter);
+         
+
+            var filters = builder.Get();
+            var result = AllInspections.Where(a => a.Like(filters));
+            InspectieCollection = new ObservableCollection<Inspection>(result);
+            RaisePropertyChanged("InspectieCollection");
         }
 
         private void AddInspecteur()
@@ -129,7 +218,7 @@ namespace ParkInspect.ViewModel
         private void RemoveInspecteur()
         {
             // popup window to select and inspecteur
-            
+
             // validation
             //action
             SelectedInspection.Employees.Remove(SelectedInspecteur);
@@ -149,6 +238,7 @@ namespace ParkInspect.ViewModel
         private void UpdateProperties()
         {
             InspectieCollection = new ObservableCollection<Inspection>(_service.GetAllInspections());
+            AllInspections = new ObservableCollection<Inspection>(_service.GetAllInspections());
             ParkinglotList = new ObservableCollection<Parkinglot>(_service.GetAllParkinglots());
             InspectionStateList = new ObservableCollection<State>(_service.GetAllStates());
             Assignmentlist = new ObservableCollection<Asignment>(_service.GetallAsignments());
@@ -231,7 +321,7 @@ namespace ParkInspect.ViewModel
 
         private void SetNewInspection()
         {
-            SelectedInspection = new Inspection {deadline = DateTime.Now};
+            SelectedInspection = new Inspection { deadline = DateTime.Now };
             base.RaisePropertyChanged();
 
         }

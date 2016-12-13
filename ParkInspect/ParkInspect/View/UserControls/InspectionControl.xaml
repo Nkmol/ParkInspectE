@@ -9,8 +9,16 @@
     <Grid>
         <TabControl Width="982" Height="482">
             <TabItem Header="Overzicht">
-                <DockPanel>
-                    <DataGrid Width="971" ItemsSource="{Binding InspectieCollection}"  SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="0,0,0,10" >
+                <StackPanel>
+                    <DockPanel>
+                        <TextBox Width="128" Margin="0,3" Text="{Binding ParkinglotFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="157" Margin="5,3,0,3" Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="157" Margin="5,3,0,3" Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="154" Margin="5,3,0,3" Text="{Binding DeadlineFIlter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="148" Margin="5,3,0,3" IsEnabled="False" HorizontalAlignment="Left"/>
+                        <TextBox Width="195" Margin="5,3,0,3" IsEnabled="False"  Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                    </DockPanel>
+                    <DataGrid Width="971" ItemsSource="{Binding InspectieCollection}"  SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="0,0,0,10" Height="431" >
                         <DataGrid.Columns>
                             <!-- removes parkeeplaats name after selection-->
                             <DataGridTextColumn Header="Parkeerplaats" Width="*" Binding="{Binding Parkinglot.name }" />
@@ -26,7 +34,7 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-                </DockPanel>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Management">
                 <DockPanel>
