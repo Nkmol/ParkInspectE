@@ -231,7 +231,7 @@ namespace ParkInspect.ViewModel
             SetEmptySelectedAsignment();
 
 
-            EditAsignmentCommand = new RelayCommand(EditAsignment);
+            EditAsignmentCommand = new RelayCommand(EditAsignment, CanEditAsignment);
 
             RemoveInspectionCommand = new RelayCommand(RemoveInspection);
             CreateInspectionCommand = new RelayCommand(CreateInspection);
@@ -240,6 +240,10 @@ namespace ParkInspect.ViewModel
             ResetCommand = new RelayCommand(ResetAsignement);
         }
 
+        private bool CanEditAsignment()
+        {
+            return true;
+        }
 
 
         private void UpdateProperties()

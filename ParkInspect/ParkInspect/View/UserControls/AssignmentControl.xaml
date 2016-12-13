@@ -51,7 +51,7 @@
 
 
                             <Label Height="25" Margin="10,5,151,0" Content="Deadline"  />
-                            <DatePicker Name="DeadlinePicker" Margin="10,0,57,0"  DisplayDate="{Binding SelectedAsignment.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" >
+                            <DatePicker x:Name="DeadlinePicker" Margin="10,0,57,0"  DisplayDate="{Binding SelectedAsignment.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" >
                                 <DatePicker.SelectedDate>
                                     <Binding Path="SelectedAsignment.deadline" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -64,7 +64,7 @@
 
 
                             <Label Height="25" Margin="10,5,151,0" Content="Status"  />
-                            <ComboBox Name="StatusBox" Height="25" Margin="10,0,57,0"  ItemsSource="{Binding AssignmentStatusList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedAsignment.State1}" >
+                            <ComboBox x:Name="StatusBox" Height="25" Margin="10,0,57,0"  ItemsSource="{Binding AssignmentStatusList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedAsignment.State1}" >
                                 <ComboBox.Text>
                                     <Binding Path="SelectedAsignment.state" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -76,7 +76,7 @@
 
 
                             <Label Height="25" Margin="10,5,151,0" Content="Klant" />
-                            <ComboBox Name="ClientBox"  Margin="10,0,57,0"  ItemsSource="{Binding ClientList}" DisplayMemberPath="name" SelectedItem="{Binding SelectedAsignment.Client}"  >
+                            <ComboBox x:Name="ClientBox"  Margin="10,0,57,0"  ItemsSource="{Binding ClientList}" DisplayMemberPath="name" SelectedItem="{Binding SelectedAsignment.Client}"  >
                                 <ComboBox.Text>
                                     <Binding Path="SelectedAsignment.Client.name" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -94,7 +94,7 @@
                             <Label Height="27" Foreground="Red" Content="{Binding CommandError}" FontSize="12"  Margin="10,0,24,0" Background="{x:Null}"/>
                             <DockPanel Width="243" HorizontalAlignment="Left">
 
-                                <Button  Margin="5,0,0,0" Content="Bewerken" Command="{Binding EditAsignmentCommand, UpdateSourceTrigger=PropertyChanged}" Width="82" HorizontalAlignment="Right">
+                                <Button  Margin="5,0,0,0" Content="Bewerken" Command="{Binding EditAsignmentCommand}" Width="82" HorizontalAlignment="Right">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                             <Style.Triggers>
