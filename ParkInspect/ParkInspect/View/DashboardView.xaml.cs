@@ -33,7 +33,7 @@ namespace ParkInspect
 
             IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
 
-            invokeProv.Invoke();
+          //  invokeProv.Invoke();
         }
     }
 }
