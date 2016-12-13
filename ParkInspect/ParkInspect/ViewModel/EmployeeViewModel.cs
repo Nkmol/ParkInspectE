@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -32,6 +36,36 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private string _firstNameFilter;
+
+        public string FirstNameFilter
+        {
+            get
+            {
+                return _firstNameFilter;
+            }
+            set
+            {
+                _firstNameFilter = value;
+                Filter();
+            }
+        }
+
+        private string _lastNameFilter;
+
+        public string LastNameFilter
+        {
+            get
+            {
+                return _lastNameFilter;
+            }
+            set
+            {
+                _lastNameFilter = value;
+                Filter();
+            }
+        }
+
         //Data for comboBoxes
         public ObservableCollection<Role> RoleCollection { get; set; }
         public ObservableCollection<Employee_Status> StatusCollection { get; set; }
@@ -47,6 +81,8 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
+
+        private IEnumerable<Employee> Data { get; set; }
 
 
         private Employee _selectedEmployee;
@@ -74,6 +110,8 @@ namespace ParkInspect.ViewModel
             SelectedEmployee = new Employee();
             SelectedEmployee.in_service_date = DateTime.Today;
             SelectedEmployee.out_service_date = DateTime.Today;
+
+            Data = Service.GetAllEmployees();
 
             //Collections for comboboxes
             RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
@@ -116,6 +154,18 @@ namespace ParkInspect.ViewModel
             Employees = null;
             Employees = temp;
             SetNewEmployee();
+        }
+
+        private void Filter()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("firstname", FirstNameFilter);
+            builder.Add("lastname", LastNameFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Employees = new ObservableCollection<Employee>(result);
+            RaisePropertyChanged("Employees");
         }
 
         private void SetNewEmployee()

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              Width="1000"
              Height="600"
@@ -12,24 +13,38 @@
     <Grid>
         <TabControl>
             <TabItem Header="Overzicht">
-                <DataGrid ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible"
-                              ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                              SelectionMode="Single" AutoGenerateColumns="False" 
-                              IsReadOnly="True" Height="500" ItemsSource="{Binding Employees}" 
-                              SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
-                        <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
-                        <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
-                        <DataGridTextColumn Header="In dienst" Binding="{Binding in_service_date, StringFormat={}{0:dd/MM/yyyy}}" />
-                        <DataGridTextColumn Header="Uit dienst" Binding="{Binding out_service_date, StringFormat={}{0:dd/MM/yyyy}}"/>
-                        <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
-                        <DataGridTextColumn Header="Actief" Binding="{Binding active}" />
-                        <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
-                        <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <StackPanel>
+                    <Label Name="SearchLabel">Zoeken</Label>
+                    <Grid Name="FilterGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox controls:TextBoxHelper.Watermark="Zoek in voornaam" Grid.Column="0" Name="NameFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding FirstNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox controls:TextBoxHelper.Watermark="Zoek in achternaam" Grid.Column="1" Name="ZipFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </Grid>
+                    <DataGrid ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                                  SelectionMode="Single" AutoGenerateColumns="False" 
+                                  IsReadOnly="True" Height="500" ItemsSource="{Binding Employees}" 
+                                  SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
+                            <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
+                            <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
+                            <DataGridTextColumn Header="In dienst" Binding="{Binding in_service_date, StringFormat={}{0:dd/MM/yyyy}}" />
+                            <DataGridTextColumn Header="Uit dienst" Binding="{Binding out_service_date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                            <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
+                            <DataGridTextColumn Header="Actief" Binding="{Binding active}" />
+                            <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
                 <Grid>
