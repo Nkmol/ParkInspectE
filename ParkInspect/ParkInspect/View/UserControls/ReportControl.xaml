@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <TabControl>
-            <TabItem Header="Overview">
+            <TabItem Header="Overzicht">
                 <Label Content="Overview goes here..." />
             </TabItem>
             <TabItem Header="Management">

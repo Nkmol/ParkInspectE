@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -17,13 +18,14 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls;
+using ParkInspect.View.UserControls.Popup;
 
 namespace ParkInspect.ViewModel
 {
 
     public class ParkinglotViewModel : ViewModelBase
     {
-
         private IEnumerable<Parkinglot> Data { get; set; }
         public string Message { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
@@ -174,10 +176,10 @@ namespace ParkInspect.ViewModel
             Data = Service.GetAll<Parkinglot>();
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
-            NewParkinglot();          
+            NewParkinglot();
         }
 
-        private void UpdateParkinglots()
+        public void UpdateParkinglots()
         {
 
             var builder = new FilterBuilder();
@@ -196,7 +198,7 @@ namespace ParkInspect.ViewModel
         private void NewParkinglot()
         {
 
-            Message = "Add a new Parkinglot";
+            Message = "Nieuwe parkeerplaats toevoegen";
             Parkinglot = new Parkinglot();
             RaisePropertyChanged("Parkinglot");
             Parkinglot.id = -1;
@@ -207,14 +209,14 @@ namespace ParkInspect.ViewModel
 
             if (Parkinglot.id < 0)
             {
-                Message = (Service.Add<Parkinglot>(Parkinglot) ? "The parkinglot was added!" : "Something went wrong.");
+                Message = (Service.Add<Parkinglot>(Parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan.");
                 _dialog.ShowMessage("Action", Message);
             }
             else
             {
                 Message = (Service.Update<Parkinglot>(Parkinglot)
-                    ? "The parkinglot was updated!"
-                    : "Something went wrong.");
+                    ? "Parkeerplaats is bijgewerkt!"
+                    : "Er is iets misgegaan.");
             }
 
             RaisePropertyChanged("Message");

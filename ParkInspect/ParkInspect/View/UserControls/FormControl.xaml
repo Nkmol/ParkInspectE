@@ -48,12 +48,12 @@
                     <Button x:Name="confirm" Command="{Binding SaveTemplateCommand}" Content="Opslaan" HorizontalAlignment="Left" Margin="624,55.75,0,0" VerticalAlignment="Top" Width="110" Grid.Row="1"/>
                     <Button x:Name="removeField" Command="{Binding RemoveFieldCommand}" Content="Veld verwijderen" HorizontalAlignment="Left" Margin="624,10,0,0" VerticalAlignment="Top" Width="110"/>
                     <Button x:Name="addField" Command="{Binding AddFieldCommand}" Content="Veld Toevoegen" HorizontalAlignment="Left" Margin="178,113,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="9" Margin="114,51,0,0" TextWrapping="Wrap" Text="{Binding FieldLabel, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="164"/>
+                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="114,51,0,0" TextWrapping="Wrap" Text="{Binding FieldLabel, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="164"/>
                     <Label x:Name="label1" Content="Veld label:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="label2" Content="Veld type:" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="114,82,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding FieldTypes}" DisplayMemberPath="datatype1" SelectedItem="{Binding SelectedFieldType}"/>
                     <Label x:Name="label3" Content="Template naam" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox Text="{Binding Template.name, UpdateSourceTrigger=PropertyChanged}" x:Name="templateName" HorizontalAlignment="Left" Height="9" Margin="114,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="164"/>
+                    <TextBox Text="{Binding Template.name, UpdateSourceTrigger=PropertyChanged}" x:Name="templateName" HorizontalAlignment="Left" Height="20" Margin="114,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="164"/>
                 </Grid>
             </Custom:MetroTabItem>
             <Button x:Name="button" Content="Button" Height="100" Width="75"/>

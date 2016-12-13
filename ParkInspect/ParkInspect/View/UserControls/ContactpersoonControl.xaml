@@ -1,0 +1,155 @@
+﻿<UserControl x:Class="ParkInspect.View.UserControls.ContactpersoonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             mc:Ignorable="d"
+             d:DesignHeight="386" d:DesignWidth="800"
+             DataContext="{Binding Contactperson, Source={StaticResource Locator}}">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Overview">
+                <StackPanel>
+                    <Label Name="SearchLabel">
+                        Search:
+                    </Label>
+
+                    <Grid Name="FilterGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Name="FirstnameFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding FirstnameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Column="1" Name="LastnameFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding LastnameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Column="2" Name="ClientFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+
+                    <DataGrid ItemsSource="{Binding Contactpersons, UpdateSourceTrigger=PropertyChanged}"
+                              IsReadOnly="True" AutoGenerateColumns="False"
+                              SelectedItem="{Binding SelectedContactperson}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="150" Header="Voornaam" Binding="{Binding firstname}" />
+                            <DataGridTextColumn Width="150" Header="Achternaam" Binding="{Binding lastname}" />
+                            <DataGridTextColumn Width="150" Header="Klant" Binding="{Binding Client.name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Management">
+                <Grid>
+                    <Label x:Name="NameLabel" Content="Voornaam:" Margin="89,43,196.4,185.2" />
+                    <Label x:Name="TelnrLabel" Content="Achternaam:" Margin="89,75,196.4,154.2" />
+                    <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
+                           VerticalAlignment="Top" Width="109" />
+                    <TextBox x:Name="Firstname" HorizontalAlignment="Left" Height="23"
+                             Margin="204,47,0,0" VerticalAlignment="Top" Width="150">
+                        <TextBox.Text>
+                            <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="Lastname" HorizontalAlignment="Left" Height="23"
+                             Margin="204,75,0,0" VerticalAlignment="Top" Width="150">
+                        <TextBox.Text>
+                            <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <Label Content="Klant:" HorizontalAlignment="Left" Height="26" Margin="89,106,0,0"
+                           VerticalAlignment="Top" Width="109" />
+                    <ComboBox Name="Customer" HorizontalAlignment="Left" Height="27" Margin="205,105,0,0"
+                              VerticalAlignment="Top"
+                              Width="149" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                              SelectedItem="{Binding SelectedClient}">
+                        <ComboBox.Text>
+                            <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.Text>
+                    </ComboBox>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom"
+                                DataContext="{Binding Contactperson, Source={StaticResource Locator}}" Height="148"
+                                Margin="0,191,0.4,1">
+                        <Button Command="{Binding ResetButtonCommand}" Content="Reset" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" Margin="30,35,50,0" Height="78" Width="100" />
+                        <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Sla contactpersoon op"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,50,0" Height="78"
+                                Width="195">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition
+                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijder contactpersoon"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,35,0,0" Height="78"
+                                Width="195">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition
+                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

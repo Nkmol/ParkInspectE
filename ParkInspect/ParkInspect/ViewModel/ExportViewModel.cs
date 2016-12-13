@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,7 +76,6 @@ namespace ParkInspect.ViewModel
 
         public ExportViewModel(IRepository context)
         {
-
             ExportCommand = new RelayCommand(Export);
             AddCommand = new RelayCommand(AddColumn);
             RemoveCommand = new RelayCommand(RemoveColumn);
