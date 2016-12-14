@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -14,13 +13,13 @@ namespace ParkInspect.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
-        private DialogManager _dialog;
-        private IEnumerable<Client> Data;
+        private readonly DialogManager _dialog;
         private string _emailFilter;
 
         private string _nameFilter;
         private string _phoneFilter;
         private Client _selectedClient;
+        private IEnumerable<Client> Data;
         protected ClientService Service;
 
         public ClientViewModel(IRepository context, DialogManager dialog)
@@ -46,7 +45,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.name = value;
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged(("Name"));
             }
         }
 
@@ -56,7 +55,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.phonenumber = value;
-                RaisePropertyChanged("Phonenumber");
+                RaisePropertyChanged(("Phonenumber"));
             }
         }
 
@@ -66,7 +65,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.email = value;
-                RaisePropertyChanged("Email");
+                RaisePropertyChanged(("Email"));
             }
         }
 
@@ -132,7 +131,7 @@ namespace ParkInspect.ViewModel
             else
             {
                 Service.Update(SelectedClient);
-                _dialog.ShowMessage("Actie", "Klant geupdate");
+                _dialog.ShowMessage("Actie", "Klant bijgewerkt");
             }
 
             UpdateClients();

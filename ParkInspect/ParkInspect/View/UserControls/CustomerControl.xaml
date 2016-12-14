@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              Width="1000"
              Height="600"
              DataContext="{Binding Client, Source={StaticResource Locator}}">
@@ -14,7 +14,7 @@
                 <StackPanel>
 
                     <Label Name="SearchLabel">
-                        Search:
+                        Zoeken:
                     </Label>
 
                     <Grid Name="FilterGrid">
@@ -52,11 +52,11 @@
             <TabItem Header="Management">
                 <DockPanel LastChildFill="False">
                     <Grid DockPanel.Dock="Top" Height="223" Margin="0,0,0.4,0">
-                        <Label x:Name="NameLabel" Content="Naam:" Margin="89,47,255,148" />
-                        <Label x:Name="TelnrLabel" Content="Telefoonnummer:" Margin="89,75,186,122" />
+                        <Label x:Name="NameLabel" Content="Naam:" Margin="89,48,255,148" />
+                        <Label x:Name="TelnrLabel" Content="Telefoonnummer:" Margin="89,88,186,109" />
                         <Label x:Name="EmailLabel" Content="Emailadres:" HorizontalAlignment="Left" Height="25"
-                               Margin="89,106,0,0" VerticalAlignment="Top" Width="99" />
-                        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="204,47,0,0"
+                               Margin="89,128,0,0" VerticalAlignment="Top" Width="99" />
+                        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="204,48,0,0"
                                  VerticalAlignment="Top" Width="150">
                             <TextBox.Text>
                                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
@@ -67,24 +67,25 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Height="23" Margin="204,75,0,0"
+                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Height="23" Margin="204,88,0,0"
                                  VerticalAlignment="Top" Width="150">
                             <TextBox.Text>
                                 <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
-                                                                                   ValidatesOnTargetUpdated="True" />
+                                                                                ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox x:Name="Email" HorizontalAlignment="Left" Height="23" Margin="204,103,0,0"
+                        <TextBox x:Name="Email" HorizontalAlignment="Left" Height="23" Margin="204,128,0,0"
                                  VerticalAlignment="Top" Width="150">
                             <TextBox.Text>
                                 <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <validationrules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsValidEmailValidationRule
+                                            ValidationStep="ConvertedProposedValue"
+                                            ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
