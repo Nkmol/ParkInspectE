@@ -190,7 +190,7 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedAbsence == null)
             {
-                Message = (Service.Update<Absence>(SelectedAbsence) ? "Something went wrong." : "Selecteer een afwezigheid!");
+                Message = (Service.Delete<Absence>(SelectedAbsence) ? "Something went wrong." : "Selecteer een afwezigheid!");
                 _dialog.ShowMessage("Action", Message);
                 return;
             }
@@ -214,6 +214,8 @@ namespace ParkInspect.ViewModel
             Absences.Add(NewAbsence);
             Reset();
             base.RaisePropertyChanged();
+            SelectedEmployee = new Employee();
+
         }
 
         public void Reset()
