@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,13 +15,13 @@ namespace ParkInspect.ViewModel
     {
         private string _clientFilter;
 
+        private readonly DialogManager _dialog;
+
         private string _firstnameFilter;
         private string _lastnameFilter;
         private Client _selectedClient;
 
         private Contactperson _selectedContactperson;
-
-        private DialogManager _dialog;
 
         protected ContactpersonService Service;
 
@@ -50,7 +49,7 @@ namespace ParkInspect.ViewModel
             get { return _selectedContactperson; }
             set
             {
-                _selectedContactperson = value;
+                _selectedContactperson = value ?? new Contactperson();
 
                 if (_selectedContactperson?.Client != null)
                     SelectedClient = _selectedContactperson.Client;
@@ -68,7 +67,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedClient, value);
-                RaisePropertyChanged(("SelectedClient"));
+                RaisePropertyChanged("SelectedClient");
             }
         }
 
@@ -78,7 +77,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedContactperson.firstname = value;
-                RaisePropertyChanged(("Firstname"));
+                RaisePropertyChanged("Firstname");
             }
         }
 
@@ -88,7 +87,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedContactperson.lastname = value;
-                RaisePropertyChanged(("Lastname"));
+                RaisePropertyChanged("Lastname");
             }
         }
 
@@ -131,6 +130,8 @@ namespace ParkInspect.ViewModel
             SelectedContactperson = new Contactperson();
             RaisePropertyChanged("SelectedContactperson");
             SelectedContactperson.id = -1;
+            SelectedContactperson.firstname = "";
+            SelectedContactperson.lastname = "";
         }
 
         private void UpdateContactpersons()
@@ -166,7 +167,7 @@ namespace ParkInspect.ViewModel
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Update(SelectedContactperson);
-                _dialog.ShowMessage("Actie", "Contactpersoon geupdate");
+                _dialog.ShowMessage("Actie", "Contactpersoon bijgewerkt");
             }
 
             UpdateContactpersons();
@@ -175,7 +176,7 @@ namespace ParkInspect.ViewModel
 
         private void DeleteContactperson()
         {
-            Service.Delete<Contactperson>(SelectedContactperson);          
+            Service.Delete(SelectedContactperson);
             UpdateContactpersons();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
             _dialog.ShowMessage("Action", "Contactpersoon verwijderd");

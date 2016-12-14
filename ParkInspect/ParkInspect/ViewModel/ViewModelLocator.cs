@@ -44,6 +44,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
 
             SimpleIoc.Default.Register<ClientViewModel>();
+            SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<EmployeeViewModel>();
