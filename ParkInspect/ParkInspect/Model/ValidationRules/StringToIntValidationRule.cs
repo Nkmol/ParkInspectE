@@ -13,7 +13,7 @@ namespace ParkInspect.Model.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             int i;
-            if (int.TryParse(value.ToString(), out i))
+            if (value != null && int.TryParse(value.ToString(), out i))
                 return new ValidationResult(true, null);
 
             return new ValidationResult(false, "Voer hier een getal in!");
