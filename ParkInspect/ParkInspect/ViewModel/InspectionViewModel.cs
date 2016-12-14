@@ -40,6 +40,7 @@ namespace ParkInspect.ViewModel
         public ObservableCollection<State> InspectionStateList { get; set; }
         public ObservableCollection<Parkinglot> ParkinglotList { get; set; }
         public ObservableCollection<Asignment> Assignmentlist { get; set; }
+        public ObservableCollection<Form> FormList { get; set; }
 
 
         // functional properties
@@ -242,6 +243,7 @@ namespace ParkInspect.ViewModel
             ParkinglotList = new ObservableCollection<Parkinglot>(_service.GetAllParkinglots());
             InspectionStateList = new ObservableCollection<State>(_service.GetAllStates());
             Assignmentlist = new ObservableCollection<Asignment>(_service.GetallAsignments());
+            FormList = new ObservableCollection<Form>(_service.GetAllForms());
         }
 
         public void ResetInspection()
@@ -278,6 +280,7 @@ namespace ParkInspect.ViewModel
             if (_selectedInspection.Asignment == null) CommandError = "Geen opdracht geselecteerd";
             if (_selectedInspection.Parkinglot == null) CommandError = "Geen Parkeerplaats geselecteerd";
             if (_selectedInspection.State1 == null) CommandError = "Geen status geselecteerd";
+            if (_selectedInspection.deadline < DateTime.Today) CommandError = "Deadline te vroeg.";
 
 
             return CommandError.Equals("");

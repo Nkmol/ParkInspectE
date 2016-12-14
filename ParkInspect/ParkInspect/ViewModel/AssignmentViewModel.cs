@@ -200,7 +200,7 @@ namespace ParkInspect.ViewModel
         }
 
 
-
+        public ICommand CreateAsignmentCommand { get; set; }
         public ICommand EditAsignmentCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand RemoveInspectionCommand { get; set; }
@@ -230,7 +230,7 @@ namespace ParkInspect.ViewModel
             UpdateProperties();
             SetEmptySelectedAsignment();
 
-
+            CreateAsignmentCommand = new RelayCommand(CreateAsignment, CanCreateAsignment);
             EditAsignmentCommand = new RelayCommand(EditAsignment, CanEditAsignment);
 
             RemoveInspectionCommand = new RelayCommand(RemoveInspection);
@@ -242,7 +242,7 @@ namespace ParkInspect.ViewModel
 
         private bool CanEditAsignment()
         {
-            return true;
+            return _selectedAsignment.id != 0;
         }
 
 
@@ -280,12 +280,58 @@ namespace ParkInspect.ViewModel
         {
 
         }
+        public void CreateAsignment()
+        {
+          
+            if (CreateValidation())
+            {
+                if (_selectedAsignment.date == null)
+                {
+                    _selectedAsignment.date = DateTime.Today;
+                }
 
+
+                _service.CreateNewAssignemnt(_selectedAsignment);
+                SetEmptySelectedAsignment();
+                CommandError = "Created";
+                UpdateProperties();
+            }
+        }
+
+        private bool CanCreateAsignment()
+        {
+            return _selectedAsignment.id == 0;
+        }
+
+        private bool CreateValidation()
+        {
+
+            CommandError = "";
+            // IT messages.
+            if (_selectedAsignment == null)
+            {
+                CommandError = "No Selected Asignment, please contact your IT department.";
+                return false;
+            }
+            if (_selectedAsignment.state == null) CommandError = "State is null, please contact your IT department.";
+
+            // user messages.
+            if (_selectedAsignment.Client == null) CommandError = "Geen klant geselecteerd.";
+            if (_selectedAsignment.State1 == null) CommandError = "Geen status geselecteerd.";
+            if (_selectedAsignment.deadline == DateTime.MinValue) CommandError = "De gestelde deadline is niet geldig.";
+            if (_selectedAsignment.deadline < DateTime.Today) CommandError = "De deadline is al geweest";
+
+            return CommandError.Equals("");
+
+
+
+        }
         public void EditAsignment()
         {
 
-            if (SelectedAsignment.id != 0)
+            if (EditValidation())
             {
+
                 try
                 {
                     _service.UpdateAssignment(_selectedAsignment);
@@ -312,19 +358,8 @@ namespace ParkInspect.ViewModel
 
 
                 }
-            }
-            else if (SelectedAsignment.id == 0)
-            {
-                if (_selectedAsignment.date == null)
-                {
-                    _selectedAsignment.date = DateTime.Today;
-                }
 
 
-                _service.CreateNewAssignemnt(_selectedAsignment);
-                SetEmptySelectedAsignment();
-                CommandError = "Created";
-                UpdateProperties();
             }
         }
 
@@ -349,6 +384,7 @@ namespace ParkInspect.ViewModel
             if (_selectedAsignment.Client == null) CommandError = "No Client Selected.";
             if (_selectedAsignment.State1 == null) CommandError = "No Status selected.";
             if (_selectedAsignment.deadline == DateTime.MinValue) CommandError = "Unless your client is jesus christ, your deadline is not set properly.";
+            if (_selectedAsignment.deadline < _selectedAsignment.date) CommandError = "De deadline is al geweest";
             if (OpdrachtenCollection.FirstOrDefault(a => a.id == _selectedAsignment.id) == null) CommandError = "Selected assignment could not be found. Maybe someone removed it.";
 
             return CommandError.Equals("");

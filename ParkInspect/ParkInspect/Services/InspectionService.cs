@@ -27,6 +27,11 @@ namespace ParkInspect.Services
             return _context.GetAll<Inspection>();
         }
 
+        public IEnumerable<Form> GetAllForms()
+        {
+            return _context.GetAll<Form>();
+        }
+
         public IEnumerable<State> GetAllStates()
         {
             return _context.GetAll<State>();
