@@ -96,13 +96,13 @@
                         </StackPanel>
                         <DockPanel Width="363" HorizontalAlignment="Left">
                             <Button  Margin="5,0" Content="Toevoegen" Command="{Binding CreateInspectionCommand}" Width="126" HorizontalAlignment="Left"/>
-                            <Button Margin="5,0" Content="Verwijderen" Width="112" HorizontalAlignment="Left"/>
+
 
 
 
                         </DockPanel>
-                        <ComboBox Margin="5,5,57,0"  ItemsSource="{Binding InspectionList}" DisplayMemberPath="Identifier" SelectedItem="{Binding SelectedInspection}" Height="15" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
-                        <Label Height="33" Foreground="Red" Content="{Binding CommandError}" FontSize="8" RenderTransformOrigin="0.5,0.5">
+                        <ComboBox Margin="5,5,0,0"  ItemsSource="{Binding InspectionList}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection}" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
+                        <Label Height="111" Foreground="Red" Content="{Binding CommandError}" FontSize="8" RenderTransformOrigin="0.5,0.5" Margin="-1,0,1,0">
                             <Label.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>

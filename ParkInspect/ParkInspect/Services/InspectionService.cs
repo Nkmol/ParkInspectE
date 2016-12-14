@@ -26,6 +26,11 @@ namespace ParkInspect.Services
         {
             return _context.GetAll<Inspection>();
         }
+        public IEnumerable<Employee> GetAllInspecteurs()
+        {
+            return _context.GetAll<Employee>().Where(e => e.role == "Inspector");
+        }
+
 
         public IEnumerable<Form> GetAllForms()
         {

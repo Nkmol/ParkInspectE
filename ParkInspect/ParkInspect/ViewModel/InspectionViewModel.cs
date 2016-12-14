@@ -39,6 +39,16 @@ namespace ParkInspect.ViewModel
 
         public ObservableCollection<State> InspectionStateList { get; set; }
         public ObservableCollection<Parkinglot> ParkinglotList { get; set; }
+        private ObservableCollection<Employee> _employeelist;
+        public ObservableCollection<Employee> EmployeesList
+        {
+            get { return _employeelist; }
+            set
+            {
+                _employeelist = value;
+                base.RaisePropertyChanged();
+            }
+        }
         public ObservableCollection<Asignment> Assignmentlist { get; set; }
         public ObservableCollection<Form> FormList { get; set; }
 
@@ -57,6 +67,7 @@ namespace ParkInspect.ViewModel
                 Set(ref _selectedInspection, value);
 
                 base.RaisePropertyChanged();
+                base.RaisePropertyChanged();
             }
         }
 
@@ -70,6 +81,23 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedInspecteur = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+
+
+        private Employee _selectedEmployee;
+        public Employee SelectedEmployee
+
+        {
+            get
+            {
+                return _selectedEmployee;
+            }
+            set
+            {
+                _selectedEmployee = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -204,13 +232,9 @@ namespace ParkInspect.ViewModel
         private void AddInspecteur()
         {
             // popup window to select and inspecteur
-            var tempInspecteur = new Employee
-            {
-                firstname = "john",
-                lastname = "Cena"
-            };
+
             // validation
-            SelectedInspection.Employees.Add(tempInspecteur);
+            SelectedInspection.Employees.Add(SelectedEmployee);
             UpdateProperties();
 
 
@@ -222,8 +246,11 @@ namespace ParkInspect.ViewModel
 
             // validation
             //action
-            SelectedInspection.Employees.Remove(SelectedInspecteur);
-            UpdateProperties();
+            if (SelectedInspecteur != null)
+            {
+                SelectedInspection.Employees.Remove(SelectedInspecteur);
+                UpdateProperties();
+            }
         }
 
         private bool CanEditInspection()
@@ -244,6 +271,7 @@ namespace ParkInspect.ViewModel
             InspectionStateList = new ObservableCollection<State>(_service.GetAllStates());
             Assignmentlist = new ObservableCollection<Asignment>(_service.GetallAsignments());
             FormList = new ObservableCollection<Form>(_service.GetAllForms());
+            EmployeesList = new ObservableCollection<Employee>(_service.GetAllInspecteurs());
         }
 
         public void ResetInspection()

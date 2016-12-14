@@ -81,7 +81,7 @@
                     <StackPanel>
 
                         <GroupBox x:Name="Inspecteurs" Header="Inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
-                            <DataGrid ItemsSource="{Binding SelectedInspection.Employees}" SelectedItem="{Binding SelectedInspecteur}" DisplayMemberPath="firstname" AutoGenerateColumns="False" Margin="0,0,-2,0">
+                            <DataGrid ItemsSource="{Binding SelectedInspection.Employees, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInspecteur}" DisplayMemberPath="firstname" AutoGenerateColumns="False" Margin="0,0,-2,0">
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="voornaam" Width="*" Binding="{Binding firstname}" />
@@ -98,11 +98,12 @@
                         <DockPanel Width="363" HorizontalAlignment="Left">
 
                             <Button  Margin="5,0" Content="Toevoegen" Command="{Binding AddInspecteurCommand}" Width="125" HorizontalAlignment="Left"/>
-                            <Button Margin="5,0" Content="Verwijderen" Width="88" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
+                            <Button Margin="5,0" Content="Verwijderen" Width="125" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
 
                         </DockPanel>
-                        <Label Height="63" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
-                        <Button  Margin="0,0,5,0" Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="111" HorizontalAlignment="Left"/>
+                        <ComboBox Margin="5,5,57,0"  ItemsSource="{Binding EmployeesList}" DisplayMemberPath="firstname" Text="{Binding SelectedEmployee.firstname}" SelectedItem="{Binding SelectedEmployee}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
+                        <Label Height="98" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
+                        <Button  Margin="0,0,5,0" Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="122" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </DockPanel>
 

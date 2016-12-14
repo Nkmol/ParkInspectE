@@ -249,7 +249,7 @@ namespace ParkInspect.ViewModel
         private void UpdateProperties()
         {
             OpdrachtenCollection = new ObservableCollection<Asignment>(_service.GetAllAsignments());
-            SearchedAsignments = new ObservableCollection<Asignment>( OpdrachtenCollection);
+            SearchedAsignments = new ObservableCollection<Asignment>(OpdrachtenCollection);
             ClientList = _service.GetAllClients();
             AssignmentStatusList = _service.GetAllStates();
             InspectionList = _service.GetAllInspections();
@@ -278,11 +278,15 @@ namespace ParkInspect.ViewModel
         // funcion should be changed to creating a new inspection, will be implemented as ading an existing one for now.
         public void CreateInspection()
         {
-
+            if (SelectedInspection != null)
+            {
+                SelectedAsignment.Inspections.Add(SelectedInspection);
+            }
         }
+
         public void CreateAsignment()
         {
-          
+
             if (CreateValidation())
             {
                 if (_selectedAsignment.date == null)
