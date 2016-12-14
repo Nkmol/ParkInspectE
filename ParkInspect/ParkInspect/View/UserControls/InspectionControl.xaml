@@ -25,11 +25,6 @@
                             <DataGridTextColumn Header="Parkeerplaats" Width="*" Binding="{Binding Parkinglot.name }" />
                             <DataGridTextColumn  Header="Status" Width="*" Binding="{Binding State1.state1}"/>
                             <DataGridTextColumn  Header="Aangemaakt" Width="*" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}}"/>
-                            <DataGridTextColumn  Header="Deadline" Width="*" Binding="{Binding deadline , StringFormat={}{0:dd/MM/yyyy}}"/>
-
-
-                            <DataGridComboBoxColumn Width="*" Header="Inspecteurs" SelectedValueBinding="{Binding Employees}" IsReadOnly="False" />
-
                             <DataGridTextColumn  Header="Toelichting" Width="*" Binding="{Binding clarification}"/>
 
 
@@ -49,13 +44,13 @@
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot.name}" DisplayMemberPath="name" SelectedItem="{Binding SelectedInspection.Parkinglot}" ItemsSource="{Binding ParkinglotList}"/>
 
                             <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst"  />
-                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Form.Template.name}" ItemsSource="{Binding FormList}" DisplayMemberPath="Form.Template.name" SelectedItem="{Binding SelectedInspection.Form}" IsEnabled="False" />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Form.Template.name}" ItemsSource="{Binding FormList}" DisplayMemberPath="Template.name" SelectedItem="{Binding SelectedInspection.Form}" />
 
                             <Label Height="25" Margin="10,5,151,0" Content="Status"  />
                             <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedInspection.state}" ItemsSource="{Binding InspectionStateList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedInspection.State1}" />
 
                             <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
-                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="name" SelectedItem="{Binding SelectedInspection.Inspection2}" IsEnabled="False" />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection.Inspection2}"/>
 
                             <Label Height="25" Margin="10,0,151,0" Content="Date"  />
                             <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedInspection.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>

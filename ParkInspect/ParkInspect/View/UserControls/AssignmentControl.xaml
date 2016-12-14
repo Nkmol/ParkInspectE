@@ -28,11 +28,6 @@
                             <DataGridTextColumn Header="Client" Width="*"  Binding="{Binding Client.name, Mode=OneWay}" />
                             <DataGridTextColumn  Header="State" Width="*" Binding="{Binding state, Mode=OneWay}"/>
                             <DataGridTextColumn  Header="Aangemaakt" Width="*" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
-                            <DataGridTextColumn  Header="Deadline" Width="*" Binding="{Binding deadline, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
-
-
-                            <DataGridComboBoxColumn Width="*" Header="Inspections" SelectedValueBinding="{Binding Inspections}" IsReadOnly="True" />
-
                             <DataGridTextColumn  Header="Clarification" Width="*" Binding="{Binding clarification}"/>
 
 
