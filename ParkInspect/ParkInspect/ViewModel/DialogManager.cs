@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Services;
+using System.Security.Cryptography;
 
 namespace ParkInspect.ViewModel
 {
@@ -57,6 +58,16 @@ namespace ParkInspect.ViewModel
 
                 if (result == null)
                     return;
+
+                SHA256 sha = SHA256.Create();
+
+                byte[] bytes = new byte[result.Password.Length * sizeof(char)];
+                System.Buffer.BlockCopy(result.Password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+                sha.ComputeHash(bytes);
+
+                char[] chars = new char[sha.Hash.Length / sizeof(char)];
+                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
 
                 var rs = _service.Login(result.Username, result.Password);
 

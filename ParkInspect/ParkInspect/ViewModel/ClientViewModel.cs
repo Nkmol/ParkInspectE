@@ -1,7 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -9,28 +13,92 @@ namespace ParkInspect.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
-        private Client _selectedClient;
+        private readonly DialogManager _dialog;
+        private string _emailFilter;
 
+        private string _nameFilter;
+        private string _phoneFilter;
+        private Client _selectedClient;
+        private IEnumerable<Client> Data;
         protected ClientService Service;
 
-        public ClientViewModel(IRepository context)
+        public ClientViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
             Service = new ClientService(context);
-            Clients = new ObservableCollection<Client>(Service.GetAllClients());
-            SelectedClient = new Client();
+            ResetButtonCommand = new RelayCommand(Reset);
+            SaveCommand = new RelayCommand(SaveClient);
+            Data = Service.GetAll<Client>();
+            UpdateClients();
+            Reset();
             Assignments = new ObservableCollection<Asignment>(SelectedClient.Asignments);
             Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
-
-            CompleteClientCommand = new RelayCommand(CompleteClient);
-            ResetButtonCommand = new RelayCommand(Reset);
-            UpdateButtonCommand = new RelayCommand(UpdateClient);
         }
 
         public ObservableCollection<Client> Clients { get; set; }
-
         public ObservableCollection<Asignment> Assignments { get; set; }
-
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
+
+        public string Name
+        {
+            get { return _selectedClient.name; }
+            set
+            {
+                _selectedClient.name = value;
+                RaisePropertyChanged(("Name"));
+            }
+        }
+
+        public string Phonenumber
+        {
+            get { return _selectedClient.phonenumber; }
+            set
+            {
+                _selectedClient.phonenumber = value;
+                RaisePropertyChanged(("Phonenumber"));
+            }
+        }
+
+        public string Email
+        {
+            get { return _selectedClient.email; }
+            set
+            {
+                _selectedClient.email = value;
+                RaisePropertyChanged(("Email"));
+            }
+        }
+
+        public string NameFilter
+        {
+            get { return _nameFilter; }
+            set
+            {
+                _nameFilter = value;
+                UpdateClients();
+            }
+        }
+
+        public string PhoneFilter
+        {
+            get { return _phoneFilter; }
+            set
+            {
+                _phoneFilter = value;
+                UpdateClients();
+            }
+        }
+
+        public string EmailFilter
+        {
+            get { return _emailFilter; }
+            set
+            {
+                _emailFilter = value;
+                UpdateClients();
+            }
+        }
+
 
         public Client SelectedClient
         {
@@ -38,32 +106,50 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedClient, value);
-                RaisePropertyChanged();
+                RaisePropertyChanged("name");
+                RaisePropertyChanged("phonenumber");
+                RaisePropertyChanged("email");
             }
         }
 
-        public ICommand CompleteClientCommand { get; set; }
         public ICommand ResetButtonCommand { get; set; }
-        public ICommand UpdateButtonCommand { get; set; }
-
-        private void CompleteClient()
-        {
-            if (string.IsNullOrEmpty(SelectedClient.name) || string.IsNullOrEmpty(SelectedClient.phonenumber) || string.IsNullOrEmpty(SelectedClient.email))
-                return;
-            Service.AddClient(SelectedClient);
-            Clients.Add(SelectedClient);
-        }
+        public RelayCommand SaveCommand { get; set; }
 
         private void Reset()
         {
             SelectedClient = new Client();
+            RaisePropertyChanged("SelectedClient");
         }
 
-        private void UpdateClient()
+        private void SaveClient()
         {
-            if (string.IsNullOrEmpty(SelectedClient.name) || string.IsNullOrEmpty(SelectedClient.phonenumber) || string.IsNullOrEmpty(SelectedClient.email))
-                return;
-            Service.UpdateClient(SelectedClient);
+            if (SelectedClient.id == 0)
+            {
+                Service.Add(SelectedClient);
+                _dialog.ShowMessage("Actie", "Klant toegevoegd");
+            }
+            else
+            {
+                Service.Update(SelectedClient);
+                _dialog.ShowMessage("Actie", "Klant bijgewerkt");
+            }
+
+            UpdateClients();
+        }
+
+        private void UpdateClients()
+        {
+            Data = Service.GetAll<Client>();
+
+            var builder = new FilterBuilder();
+            builder.Add("name", NameFilter);
+            builder.Add("phonenumber", PhoneFilter);
+            builder.Add("email", EmailFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Clients = new ObservableCollection<Client>(result);
+            RaisePropertyChanged("Clients");
         }
     }
 }
