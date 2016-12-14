@@ -9,6 +9,8 @@
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
+             d:DesignHeight="300"
+             d:DesignWidth="480.172"
              Width="1000"
              Height="600"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">

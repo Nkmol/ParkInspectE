@@ -15,6 +15,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
+using ParkInspect.View.UserControls.Popup;
 
 namespace ParkInspect.ViewModel
 {
@@ -42,6 +43,7 @@ namespace ParkInspect.ViewModel
 
             SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
+            SimpleIoc.Default.Register<PopupCoordinator>();
 
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<ContactpersonViewModel>();
@@ -54,6 +56,9 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
+
+            SimpleIoc.Default.Register<PopupViewModel>();
+            SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
         }
 
@@ -85,6 +90,8 @@ namespace ParkInspect.ViewModel
 
         public ContactpersonViewModel Contactperson => ServiceLocator.Current.GetInstance<ContactpersonViewModel>();
 
+        public PopupViewModel Popup => new PopupViewModel(); // Always new link
+        public PopupManager PopupManager => ServiceLocator.Current.GetInstance<PopupManager>();
         public DialogManager Dialog => ServiceLocator.Current.GetInstance<DialogManager>();
 
         /// <summary>
