@@ -193,7 +193,7 @@ namespace ParkInspect.ViewModel
             builder.Add("State1.state1", StateFilter);
             builder.Add("date", DateFilter);
             builder.Add("deadline", DeadlineFIlter);
-         
+
 
             var filters = builder.Get();
             var result = AllInspections.Where(a => a.Like(filters));
@@ -273,14 +273,21 @@ namespace ParkInspect.ViewModel
             if (_selectedInspection == null)
             {
                 CommandError =
-              "_selectedAsignment is null, please contact your ICT department, something went horrably wrong";
+                    "_selectedAsignment is null, please contact your ICT department, something went horrably wrong";
                 return false;
             }
 
-            if (_selectedInspection.Asignment == null) CommandError = "Geen opdracht geselecteerd";
+            if (_selectedInspection.Asignment == null)
+            {
+                CommandError = "Geen opdracht geselecteerd";
+                return false;
+            }
+
             if (_selectedInspection.Parkinglot == null) CommandError = "Geen Parkeerplaats geselecteerd";
             if (_selectedInspection.State1 == null) CommandError = "Geen status geselecteerd";
             if (_selectedInspection.deadline < DateTime.Today) CommandError = "Deadline te vroeg.";
+            if (_selectedInspection.deadline > _selectedInspection.Asignment.deadline)
+                CommandError = "Inspectie deadline valt buiten de opdracht.";
 
 
             return CommandError.Equals("");
