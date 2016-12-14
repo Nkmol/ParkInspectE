@@ -101,9 +101,11 @@
                             <Button Margin="5,0" Content="Verwijderen" Width="125" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
 
                         </DockPanel>
+                        
                         <ComboBox Margin="5,5,57,0"  ItemsSource="{Binding EmployeesList}" DisplayMemberPath="firstname" Text="{Binding SelectedEmployee.firstname}" SelectedItem="{Binding SelectedEmployee}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
                         <Label Height="98" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
                         <Button  Margin="0,0,5,0" Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="122" HorizontalAlignment="Left"/>
+                        
                     </StackPanel>
                 </DockPanel>
 
