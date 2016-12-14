@@ -121,6 +121,14 @@ namespace ParkInspect.ViewModel
 
         public void AddField()
         {
+            foreach (Field f in Template.Fields)
+            {
+                if (f.title == FieldLabel)
+                {
+                    superViewModel.superViewModel._dialog.ShowMessage("Template editor", "Een vragenlijst kan niet 2 keer dezelfde vraag bevatten");
+                    return;
+                }
+            }
             Field field = new Field() { title = FieldLabel, datatype = SelectedFieldType.datatype1 };
             Template.Fields.Add(field);
             Fields.Add(field);
@@ -173,6 +181,8 @@ namespace ParkInspect.ViewModel
         {
             Service.SaveTemplate(Template);
             superViewModel.superViewModel.disableEditor();
+            superViewModel.fillTemplates();
+            superViewModel.superViewModel._dialog.ShowMessage("Template editor","Je template is opgeslagen als versie " + Template.version_number);
         }
 
         public bool CanSaveTemplate()

@@ -18,6 +18,7 @@ namespace ParkInspect.ViewModel
         public TemplatesViewModel TemplatesViewModel { get; set; }
         private FormService service { get; set; }
         private Inspection inspection;
+        public DialogManager _dialog;
 
         private FormControl _view;
         public FormControl View {
@@ -82,13 +83,14 @@ namespace ParkInspect.ViewModel
         }
 
 
-        public FormViewModel(IRepository context)
+        public FormViewModel(IRepository context, DialogManager dialog)
         {
             Context = (EntityFrameworkRepository<ParkInspectEntities>)context;
             service = new FormService(Context, Context);
             EditorVisibility = Visibility.Hidden;
             TemplatesViewModel = new TemplatesViewModel(this);
             SaveCommand = new RelayCommand(saveForm);
+            _dialog = dialog;
         }
 
         public void enableEditor()
@@ -160,6 +162,7 @@ namespace ParkInspect.ViewModel
                 return;
             }
             service.SaveForm(inspection,cachedForm);
+            _dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
         }
     }
 

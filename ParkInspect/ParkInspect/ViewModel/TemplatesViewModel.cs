@@ -56,7 +56,7 @@ namespace ParkInspect.ViewModel
             {
                 _versions = value;
                 RaisePropertyChanged("Versions");
-                SelectedVersion = _versions.Last();
+                SelectedVersion = _versions.Max();
             }
         }
 
@@ -107,7 +107,6 @@ namespace ParkInspect.ViewModel
 
             NewTemplateViewModel = new NewTemplateViewModel(this);
             fillTemplates();
-            RaisePropertyChanged("Templates");
             SelectedTemplateCollection = Templates.First();
         }
 
@@ -135,6 +134,7 @@ namespace ParkInspect.ViewModel
                     Templates.Add(collection);
                 }
             }
+            RaisePropertyChanged("Templates");
         }
 
         public void newTemplate()
@@ -165,7 +165,7 @@ namespace ParkInspect.ViewModel
                 string highest = "0.0";
                 foreach (Template t in templates)
                 {
-                    if (int.Parse(highest.Replace(".0", "")) < int.Parse(t.version_number.Replace(".0", "")))
+                    if (Version.Parse(highest) < Version.Parse(t.version_number))
                     {
                         highest = t.version_number;
                     }
