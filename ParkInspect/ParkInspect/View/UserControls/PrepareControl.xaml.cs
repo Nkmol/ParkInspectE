@@ -44,51 +44,65 @@ namespace ParkInspect.View.UserControls
             gmap.MaxZoom = 18;
             gmap.Zoom = 8;
             gmap.ShowCenter = false;
+
+            gmap_offline.MapProvider = OpenStreetMapProvider.Instance;
+            gmap_offline.Manager.Mode = AccessMode.ServerAndCache;
+            gmap_offline.Manager.UseGeocoderCache = true;
+            gmap_offline.SetPositionByKeywords("Amsterdam");
+            gmap_offline.MinZoom = 1;
+            gmap_offline.MaxZoom = 18;
+            gmap_offline.Zoom = 8;
+            gmap_offline.ShowCenter = false;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
             gmap.Markers.Clear();
-            zip = l_zip_text.Content.ToString();
-            region = l_region_text.Content.ToString();
-            zip = zip.Trim();
-            PointLatLng start = getPointFromKeyWord(txt_home_adres.Text);
-            PointLatLng end = getPointFromKeyWord(zip + " " + region);
-   
-            RoutingProvider rp = gmap.MapProvider as RoutingProvider;
-            if (rp == null)
+            if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
+                !String.IsNullOrWhiteSpace(txt_home_adres.Text))
             {
-                rp = GMapProviders.OpenStreetMap; ; // use OpenStreetMap if provider does not implement routing
-            }
+                zip = l_zip_text.Content.ToString();
+                region = l_region_text.Content.ToString();
+                zip = zip.Trim();
+                PointLatLng start = getPointFromKeyWord(txt_home_adres.Text);
+                PointLatLng end = getPointFromKeyWord(zip + " " + region);
 
-            MapRoute route = rp.GetRoute(start, end, false, false, (int)gmap.Zoom);
-            if (route != null)
-            {
-                GMapMarker m1 = new GMapMarker(start);
-                m1.Shape = new CustomMarkerDemo(this, m1, "Start: " + route.Name);
-                m1.Shape.IsEnabled = false;
-
-                GMapMarker m2 = new GMapMarker(end);
-                m2.Shape = new CustomMarkerDemo(this, m2, "End: " + start.ToString());
-                m2.Shape.IsEnabled = false;
-
-                GMapRoute mRoute = new GMapRoute(route.Points);
+                RoutingProvider rp = gmap.MapProvider as RoutingProvider;
+                if (rp == null)
                 {
-                    mRoute.ZIndex = -1;
+                    rp = GMapProviders.OpenStreetMap;
+                    ; // use OpenStreetMap if provider does not implement routing
                 }
 
-                gmap.Markers.Add(m1);
-                gmap.Markers.Add(m2);
-                gmap.Markers.Add(mRoute);
+                MapRoute route = rp.GetRoute(start, end, false, false, (int) gmap.Zoom);
+                if (route != null)
+                {
+                    GMapMarker m1 = new GMapMarker(start);
+                    m1.Shape = new CustomMarkerDemo(this, m1, "Start: " + route.Name);
+                    m1.Shape.IsEnabled = false;
 
-                gmap.ZoomAndCenterMarkers(null);
-                l_distance.Content = "Afstand: " +  Math.Round(route.Distance,1) + "KM";
-            }
-            else
-            {
-                MessageBox.Show("Het navigeren vereist een internet verbinding!");
-            }
+                    GMapMarker m2 = new GMapMarker(end);
+                    m2.Shape = new CustomMarkerDemo(this, m2, "End: " + start.ToString());
+                    m2.Shape.IsEnabled = false;
 
+                    GMapRoute mRoute = new GMapRoute(route.Points);
+                    {
+                        mRoute.ZIndex = -1;
+                    }
+
+                    gmap.Markers.Add(m1);
+                    gmap.Markers.Add(m2);
+                    gmap.Markers.Add(mRoute);
+
+                    gmap.ZoomAndCenterMarkers(null);
+                    l_distance.Content = "Afstand: " + Math.Round(route.Distance, 1) + "KM";
+                }
+                else
+                {
+                    MessageBox.Show("Het navigeren vereist een internet verbinding!");
+                }
+
+            }
         }
 
         private PointLatLng getPointFromKeyWord(String keyword)

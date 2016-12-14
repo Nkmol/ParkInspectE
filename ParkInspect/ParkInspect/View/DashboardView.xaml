@@ -11,7 +11,7 @@
         xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d ignore"
-        Height="600"
+        Height="700"
         Width="1010"
         Title="ParkInspect"
         GlowBrush="{DynamicResource AccentColorBrush}"
