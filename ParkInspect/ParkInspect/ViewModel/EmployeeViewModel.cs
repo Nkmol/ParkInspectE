@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using System.Security.Cryptography;
 
 namespace ParkInspect.ViewModel
 {
@@ -18,6 +19,7 @@ namespace ParkInspect.ViewModel
     {
         //Service
         protected EmployeeService Service { get; set; }
+        private string oldPass;
 
         //Fields and Properties
         private string _notification;
@@ -57,6 +59,10 @@ namespace ParkInspect.ViewModel
             {
                 Set(ref _selectedEmployee, value);
                 base.RaisePropertyChanged();
+                if (_selectedEmployee != null)
+                {
+                    oldPass = _selectedEmployee.password;
+                }
             }
         }
 
@@ -90,6 +96,18 @@ namespace ParkInspect.ViewModel
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
 
+            SHA256 sha = SHA256.Create();
+
+            byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
+            System.Buffer.BlockCopy(SelectedEmployee.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+            sha.ComputeHash(bytes);
+
+            char[] chars = new char[sha.Hash.Length / sizeof(char)];
+            System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+            SelectedEmployee.password = new string(chars);
+
             Service.InsertEntity(SelectedEmployee);
             Notification = "De medewerker is opgeslagen";
             UpdateDataGrid();
@@ -99,7 +117,20 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
+            if (SelectedEmployee.password != oldPass)
+            {
+                SHA256 sha = SHA256.Create();
 
+                byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
+                System.Buffer.BlockCopy(SelectedEmployee.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+                sha.ComputeHash(bytes);
+
+                char[] chars = new char[sha.Hash.Length / sizeof(char)];
+                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+                SelectedEmployee.password = new string(chars);
+            }
             Service.UpdateEntity(SelectedEmployee);
             Notification = "De medewerker is aangepast";
             UpdateDataGrid();
