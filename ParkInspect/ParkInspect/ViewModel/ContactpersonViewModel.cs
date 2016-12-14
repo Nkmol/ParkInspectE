@@ -40,7 +40,7 @@ namespace ParkInspect.ViewModel
             Reset();
         }
 
-        private IEnumerable<Contactperson> Data { get; }
+        private IEnumerable<Contactperson> Data { get; set; }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
         public ObservableCollection<Client> Clients { get; set; }
@@ -55,10 +55,9 @@ namespace ParkInspect.ViewModel
                 if (_selectedContactperson?.Client != null)
                     SelectedClient = _selectedContactperson.Client;
 
-                RaisePropertyChanged("Firstname");
-                RaisePropertyChanged("Lastname");
-                RaisePropertyChanged("SelectedClient");
-                SaveCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged("firstname");
+                RaisePropertyChanged("lastname");
+                RaisePropertyChanged("client_id");
                 DeleteContactpersonCommand.RaiseCanExecuteChanged();
             }
         }
@@ -129,14 +128,15 @@ namespace ParkInspect.ViewModel
 
         private void Reset()
         {
-            Contactperson cp = new Contactperson();
-            SelectedContactperson = cp;
+            SelectedContactperson = new Contactperson();
             RaisePropertyChanged("SelectedContactperson");
             SelectedContactperson.id = -1;
         }
 
         private void UpdateContactpersons()
         {
+            Data = Service.GetAll<Contactperson>();
+
             var builder = new FilterBuilder();
             builder.Add("firstname", FirstnameFilter);
             builder.Add("lastname", LastnameFilter);
@@ -145,6 +145,7 @@ namespace ParkInspect.ViewModel
             var result = Data.Where(x => x.Like(builder.Get()));
 
             Contactpersons = new ObservableCollection<Contactperson>(result);
+            Reset();
             RaisePropertyChanged("Contactpersons");
         }
 
@@ -159,38 +160,25 @@ namespace ParkInspect.ViewModel
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Add(SelectedContactperson);
-                _dialog.ShowMessage("Action", "Contactpersoon toegevoegd");
+                _dialog.ShowMessage("Actie", "Contactpersoon toegevoegd");
             }
             else
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Update(SelectedContactperson);
-                _dialog.ShowMessage("Action", "Contactpersoon geupdate");
+                _dialog.ShowMessage("Actie", "Contactpersoon geupdate");
             }
 
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
-            RaisePropertyChanged("Contactpersons");
             UpdateContactpersons();
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
         }
 
         private void DeleteContactperson()
         {
-            Service.Delete(SelectedContactperson);
-            UpdateDataGrid();
-            SaveCommand.RaiseCanExecuteChanged();
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            Service.Delete<Contactperson>(SelectedContactperson);          
             UpdateContactpersons();
-
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
             _dialog.ShowMessage("Action", "Contactpersoon verwijderd");
-        }
-
-        private void UpdateDataGrid()
-        {
-            Contactpersons = new ObservableCollection<Contactperson>(Service.GetAll<Contactperson>());
-            var temp = Contactpersons;
-            Contactpersons = null;
-            Contactpersons = new ObservableCollection<Contactperson>(temp);
-            Reset();
         }
     }
 }
