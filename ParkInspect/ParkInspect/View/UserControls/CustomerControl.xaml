@@ -38,12 +38,13 @@
                         ItemsSource="{Binding Clients}"
                         SelectedItem="{Binding SelectedClient}"
                         AutoGenerateColumns="False"
-                        IsReadOnly="True">
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Visible" Height="400" Margin="0,0,0.4,0">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="150" Header="Naam" Binding="{Binding name}" />
-                            <DataGridTextColumn Width="150" Header="Telefoonnummer" Binding="{Binding phonenumber}" />
-                            <DataGridTextColumn Width="150" Header="Emailadres" Binding="{Binding email}" />
+                            <DataGridTextColumn Width="350" Header="Naam" Binding="{Binding name}" />
+                            <DataGridTextColumn Width="250" Header="Telefoonnummer" Binding="{Binding phonenumber}" />
+                            <DataGridTextColumn Width="350" Header="Emailadres" Binding="{Binding email}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -95,10 +96,10 @@
                                 DataContext="{Binding Client, Source={StaticResource Locator}}" Height="148"
                                 Margin="0,0,0.4,0">
                         <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="70,0,0,0"
-                                HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195" />
+                                HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="120" />
                         <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
                                 Content="Sla klant op" Margin="80,0,0,0"
-                                HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="195">
+                                HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="120">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="IsEnabled" Value="false" />
