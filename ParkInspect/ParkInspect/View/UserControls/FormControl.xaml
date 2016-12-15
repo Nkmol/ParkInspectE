@@ -4,12 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Personeel, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <TabControl>
-            <TabItem Header="Overzicht">
+            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[19], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <DataGrid ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible" 
@@ -29,7 +35,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
+            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}" Visibility="{Binding Dashboard.TabStatus[20], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <ScrollViewer>
                     <StackPanel Margin="15,5" Height="680">
 

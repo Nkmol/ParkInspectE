@@ -4,16 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
              Height="Auto" Width="Auto"
              DataContext="{Binding Absence, Source={StaticResource Locator}}">
-
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
 
 
     <Grid>
 
         <TabControl Margin="0,0,-0.2,0">
-            <TabItem Header="Overview">
+            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[10], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <ScrollViewer>
                     <StackPanel>
                         <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -32,7 +35,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem  Header="Afwezigheid invoeren">
+            <TabItem  Header="Afwezigheid invoeren"  Visibility="{Binding Dashboard.TabStatus[11], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
 
                 <ScrollViewer>
                     <StackPanel>

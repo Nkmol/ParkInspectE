@@ -5,14 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
              Width="1000"
              Height="600"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
         <TabControl>
-            <TabItem Header="Overzicht">
-                <DataGrid ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
+            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[17], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+                <DataGrid ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                               SelectionMode="Single" AutoGenerateColumns="False" 
@@ -31,7 +35,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
+            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}" Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <Grid>
                     <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <StackPanel>
