@@ -164,6 +164,7 @@
     <Compile Include="Model\ValidationRules\IsPositiveNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidDateTimeRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidEmailValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsValidNameValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidPhoneNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidZipCodeValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
@@ -216,6 +217,7 @@
     </Compile>
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Compile Include="ViewModel\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
