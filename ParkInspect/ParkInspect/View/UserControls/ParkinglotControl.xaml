@@ -10,39 +10,34 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="480.172"
-             Width="1000"
-             Height="600"
-             DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
-	<Grid>
+             d:DesignHeight="600"
+             d:DesignWidth="1000"
+             DataContext="{Binding Parkinglots, Source={StaticResource Locator}}" 
+             VerticalAlignment="Top">
 		<TabControl Name="Tabs">
 			<TabItem Header="Overzicht">
-				<StackPanel>
-					<Label Name="SearchLabel">Zoeken</Label>
-					<Grid Name="FilterGrid">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="1*" />
-						</Grid.ColumnDefinitions>
-
-						<TextBox materialDesign:HintAssist.Hint="Zoek in naam" Grid.Column="0" Name="NameFilter" Margin="0,0,5,10"
-						         HorizontalAlignment="Stretch" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
-						<TextBox materialDesign:HintAssist.Hint="Zoek in postcode" Grid.Column="1" Name="ZipFilter" Margin="0,0,5,10"
-						         HorizontalAlignment="Stretch" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
-						<TextBox materialDesign:HintAssist.Hint="Zoek in nummer" Grid.Column="2" Name="NumberFilter" Margin="0,0,5,10"
-						         HorizontalAlignment="Stretch" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
-						<TextBox materialDesign:HintAssist.Hint="Zoek in regio" Grid.Column="3" Name="RegionFilter" Margin="0,0,5,10"
-						         HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
-						<TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" Grid.Column="4" Name="ClarificationFilter"
-						         Margin="0,0,5,10" HorizontalAlignment="Stretch"
-						         Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
-					</Grid>
-
-					<DataGrid Name="DataGrid" AutoGenerateColumns="False"
+				<Grid Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition> <!-- Datagrid row -->
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Name="SearchLabel">Zoeken</Label>
+                <UniformGrid Grid.Row="1" Name="FilterGrid" Rows="1">
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in naam" Grid.Column="0" Name="NameFilter" Margin="0,0,5,10"
+						                 HorizontalAlignment="Stretch" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox materialDesign:HintAssist.Hint="Zoek in postcode" Grid.Column="1" Name="ZipFilter" Margin="0,0,5,10"
+						                 HorizontalAlignment="Stretch" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox materialDesign:HintAssist.Hint="Zoek in nummer" Grid.Column="2" Name="NumberFilter" Margin="0,0,5,10"
+						                 HorizontalAlignment="Stretch" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox materialDesign:HintAssist.Hint="Zoek in regio" Grid.Column="3" Name="RegionFilter" Margin="0,0,5,10"
+						                 HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" Grid.Column="4" Name="ClarificationFilter"
+						                 Margin="0,0,5,10" HorizontalAlignment="Stretch"
+						                 Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    </UniformGrid>
+                    <DataGrid Grid.Row="2"  Name="DataGrid" AutoGenerateColumns="False"
 					          ItemsSource="{Binding Parkinglots, UpdateSourceTrigger=PropertyChanged}"
 					          SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
 						<DataGrid.Columns>
@@ -53,12 +48,10 @@
 							<DataGridTextColumn Header="Verduidelijking" Width="1*" Binding="{Binding clarification}" />
 						</DataGrid.Columns>
 					</DataGrid>
-
-					<Button x:Name="ExportButton" Content="Export Data" PreviewMouseDown="Unselect"
+					<Button Grid.Row="3" x:Name="ExportButton" Content="Export Data" PreviewMouseDown="Unselect"
 					        Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
 					        Margin="0,10,0,0" VerticalAlignment="Top" />
-
-				</StackPanel>
+				</Grid>
 			</TabItem>
 			<TabItem Header="Management">
 				<Grid>
@@ -152,5 +145,4 @@
 				</Grid>
 			</TabItem>
 		</TabControl>
-	</Grid>
 </UserControl>
