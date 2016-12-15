@@ -266,7 +266,7 @@ namespace ParkInspect.ViewModel
             //action
             if (SelectedInspecteur == null) return;
             SelectedInspection.Employees.Remove(SelectedInspecteur);
-
+            SelectedInspecteur = null;
             UpdateProperties();
         }
 

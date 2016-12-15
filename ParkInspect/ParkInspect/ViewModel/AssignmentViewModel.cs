@@ -268,7 +268,7 @@ namespace ParkInspect.ViewModel
             if (_selectedInspection != null)
             {
                 _selectedAsignment.Inspections.Remove(_selectedInspection);
-
+                
 
 
             }
