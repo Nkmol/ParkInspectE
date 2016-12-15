@@ -80,7 +80,7 @@
         </TabItem>
         <TabItem Header="Offline">
             <Grid Margin="0,-1,0,242">
-                <GroupBox x:Name="groupBox3" Header="Opgeslagen route beschrijvingen" HorizontalAlignment="Left" Margin="10,10,0,-119" VerticalAlignment="Top" Width="245" Height="246">
+                <GroupBox x:Name="groupBox3" Header="Opgeslagen Inspecties" HorizontalAlignment="Left" Margin="10,10,0,-119" VerticalAlignment="Top" Width="245" Height="246">
                     <Grid Width="235">
                         <ListBox x:Name="listBox1" ItemsSource="{Binding directions}" SelectedItem="{Binding selectedDirection}" DisplayMemberPath="Name" Height="204" VerticalAlignment="Top" Width="234" Margin="0,0,1,0"/>
                     </Grid>
@@ -109,8 +109,9 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox6" Header="Kaart" HorizontalAlignment="Left" Margin="260,261,0,-200" VerticalAlignment="Top" Width="703" Height="275">
-                    <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="714"/>
+                    <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="693"/>
                 </GroupBox>
+                <Button x:Name="button2" Content="Laad route" HorizontalAlignment="Left" Margin="260,541,0,-237" VerticalAlignment="Top" Width="703" Click="button2_Click"/>
             </Grid>
         </TabItem>
     </TabControl>

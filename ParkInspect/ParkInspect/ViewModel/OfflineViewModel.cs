@@ -22,7 +22,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace ParkInspect.ViewModel
 {
-    public class PrepareViewModel : ViewModelBase
+    public class OfflineViewModel : ViewModelBase
     {
         public InspectionService service;
         public ObservableCollection<String> directionItems { get; set; }
@@ -261,7 +261,7 @@ namespace ParkInspect.ViewModel
             }
         }
         #endregion
-        public PrepareViewModel(IRepository context, DialogManager dialog)
+        public OfflineViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
             service = new InspectionService(context);

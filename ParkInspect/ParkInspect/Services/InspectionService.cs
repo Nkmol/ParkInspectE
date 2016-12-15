@@ -29,10 +29,9 @@ namespace ParkInspect.Services
             return _context.GetAll<Inspection>();
         }
 
-        public IEnumerable<Inspection> GetInspectionByID(int id)
+        public Inspection GetInspectionByID(int id)
         {
-            return _context.GetAll<Inspection>()
-                .Where(i => i.id == id);
+            return _context.Get<Inspection>().Where(i => i.id == id).First();
         }
     }
 }
