@@ -22,8 +22,8 @@ namespace ParkInspect.Services
         public bool Login(string email, string password)
         {
             return Context.Get<Employee>()
-                .Where(k => k.email == email && k.password == password)
-                .Count() != 0;
+                       .Where(k => k.email == email && k.password == password)
+                       .Count() != 0;
         }
 
         public IEnumerable<Employee> GetAllEmployees()
@@ -33,10 +33,23 @@ namespace ParkInspect.Services
 
         public void DeleteEntity(Employee e)
         {
-            if(Context.Get<Employee>(x => x.id == e.id).Any())
+            if (Context.Get<Employee>(x => x.id == e.id).Any())
             {
                 Delete(e);
             }
+        }
+
+        public IEnumerable<Role> GetAllRoles()
+        {
+            return Context.GetAll<Role>();
+        }
+
+        public Employee GetEmployee(string resultUsername, string resultPassword)
+        {
+            return
+                Context.GetAll<Employee>()
+                    .FirstOrDefault(k => k.email == resultUsername && k.password == resultPassword);
+
         }
     }
 }
