@@ -78,7 +78,7 @@
                     <StackPanel Height="435" Width="380">
 
                         <GroupBox x:Name="Inspecties" Header="Inspecties" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
-                            <DataGrid IsReadOnly="True" ItemsSource="{Binding AsignmentInspections}" SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" Margin="0,0,-2,0"
+                            <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignmentInspections}" SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" Margin="0,0,-2,0"
                                        ScrollViewer.CanContentScroll="True" 
                                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                                        ScrollViewer.HorizontalScrollBarVisibility="Auto">
