@@ -242,7 +242,10 @@ namespace ParkInspect.ViewModel
 
         private bool CanEditAsignment()
         {
+            if (SelectedAsignment == null) return false;
+
             return _selectedAsignment.id != 0;
+
         }
 
 
@@ -262,12 +265,12 @@ namespace ParkInspect.ViewModel
         // function should be cahnged with popup implementation
         public void RemoveInspection()
         {
-            if (_selectedInspection != null && EditValidation())
+            if (_selectedInspection != null)
             {
                 _selectedAsignment.Inspections.Remove(_selectedInspection);
 
-                _service.UpdateAssignment(_selectedAsignment);
-                UpdateProperties();
+
+
             }
             else
             {
@@ -324,6 +327,16 @@ namespace ParkInspect.ViewModel
             if (_selectedAsignment.State1 == null) CommandError = "Geen status geselecteerd.";
             if (_selectedAsignment.deadline == DateTime.MinValue) CommandError = "De gestelde deadline is niet geldig.";
             if (_selectedAsignment.deadline < DateTime.Today) CommandError = "De deadline is al geweest";
+
+            foreach (var temp in _selectedAsignment.Inspections)
+            {
+                if (temp.date < _selectedAsignment.date || temp.deadline > _selectedAsignment.deadline)
+                {
+                    CommandError = "Een van de inspecties valt buiten de opdracht.";
+                    break;
+                }
+
+            }
 
             return CommandError.Equals("");
 
@@ -391,6 +404,15 @@ namespace ParkInspect.ViewModel
             if (_selectedAsignment.deadline < _selectedAsignment.date) CommandError = "De deadline is al geweest";
             if (OpdrachtenCollection.FirstOrDefault(a => a.id == _selectedAsignment.id) == null) CommandError = "Selected assignment could not be found. Maybe someone removed it.";
 
+            foreach (var temp in _selectedAsignment.Inspections)
+            {
+                if (temp.date < _selectedAsignment.date || temp.deadline > _selectedAsignment.deadline)
+                {
+                    CommandError = "Een van de inspecties valt buiten de opdracht.";
+                    break;
+                }
+
+            }
             return CommandError.Equals("");
         }
 
@@ -426,6 +448,10 @@ namespace ParkInspect.ViewModel
         private void SetEmptySelectedAsignment()
         {
             SelectedAsignment = new Asignment { deadline = DateTime.Today };
+            if (SelectedAsignment.date == null)
+            {
+                SelectedAsignment.date = DateTime.Today;
+            }
             base.RaisePropertyChanged();
 
         }

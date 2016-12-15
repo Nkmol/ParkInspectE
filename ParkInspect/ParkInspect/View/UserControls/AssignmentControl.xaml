@@ -10,24 +10,27 @@
 
     <Grid>
         <TabControl HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TabItem Header="Overview">
+            <TabItem Header="Overzicht">
                 <StackPanel>
                     <DockPanel>
 
-                        <TextBox Width="118" Margin="0,3" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="162" Margin="0,3" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Width="189" Margin="5,3,0,3" Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="157" Margin="5,3,0,3" Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="154" Margin="5,3,0,3" Text="{Binding DeadlineFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="148" Margin="5,3,0,3" IsEnabled="False" HorizontalAlignment="Left"/>
-                        <TextBox Width="170" Margin="5,3,0,3" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                        <TextBox Width="180" Margin="5,3,0,3" Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="186" Margin="5,3,0,3" Text="{Binding DeadlineFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="229" Margin="5,3,0,3" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
                     </DockPanel>
 
                     <!-- na het wijzigen van een item, is het niet mogelijk het gewijzigde item met een klik te selecteren.-->
-                    <DataGrid Width="969" ItemsSource="{Binding SearchedAsignments}"  SelectedItem="{Binding SelectedAsignment, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="392" Margin="0,0,-2,0" >
+                    <DataGrid Width="969" ItemsSource="{Binding SearchedAsignments}"  SelectedItem="{Binding SelectedAsignment, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="401" Margin="0,0,-2,0" 
+                              ScrollViewer.CanContentScroll="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Client" Width="*"  Binding="{Binding Client.name, Mode=OneWay}" />
                             <DataGridTextColumn  Header="State" Width="*" Binding="{Binding state, Mode=OneWay}"/>
                             <DataGridTextColumn  Header="Aangemaakt" Width="*" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
+                            <DataGridTextColumn  Header="Deadline" Width="*" Binding="{Binding deadline, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
                             <DataGridTextColumn  Header="Clarification" Width="*" Binding="{Binding clarification}"/>
 
 
@@ -91,6 +94,8 @@
                         </StackPanel>
                         <DockPanel Width="363" HorizontalAlignment="Left">
                             <Button  Margin="5,0" Content="Toevoegen" Command="{Binding CreateInspectionCommand}" Width="126" HorizontalAlignment="Left"/>
+                            <Button  Margin="5,0" Content="Verwijderen" Command="{Binding RemoveInspectionCommand}" Width="126" HorizontalAlignment="Left"/>
+
 
 
 

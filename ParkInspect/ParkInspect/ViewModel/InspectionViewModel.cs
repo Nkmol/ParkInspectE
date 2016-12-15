@@ -193,7 +193,22 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private string _clarificationFilter;
 
+        public string ClarificationFilter
+        {
+            get
+            {
+                return _clarificationFilter;
+            }
+            set
+            {
+                _clarificationFilter = value;
+                UpdateOverview();
+            }
+        }
+
+        
 
 
         #endregion
@@ -221,7 +236,7 @@ namespace ParkInspect.ViewModel
             builder.Add("State1.state1", StateFilter);
             builder.Add("date", DateFilter);
             builder.Add("deadline", DeadlineFIlter);
-
+            builder.Add("clarification", ClarificationFilter);
 
             var filters = builder.Get();
             var result = AllInspections.Where(a => a.Like(filters));
