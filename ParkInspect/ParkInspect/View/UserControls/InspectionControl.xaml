@@ -85,7 +85,7 @@
                     <StackPanel>
 
                         <GroupBox x:Name="Inspecteurs" Header="Inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
-                            <DataGrid ItemsSource="{Binding SelectedInspection.Employees, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInspecteur}" AutoGenerateColumns="False" Margin="0,0,-2,0"
+                            <DataGrid IsReadOnly="True" ItemsSource="{Binding InspectionInspectors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInspecteur}" AutoGenerateColumns="False" Margin="0,0,-2,0"
                                        ScrollViewer.CanContentScroll="True" 
       ScrollViewer.VerticalScrollBarVisibility="Auto"
       ScrollViewer.HorizontalScrollBarVisibility="Auto">

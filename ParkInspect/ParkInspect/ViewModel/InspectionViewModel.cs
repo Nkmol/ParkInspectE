@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -10,7 +8,6 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using System.Collections.Generic;
 
 namespace ParkInspect.ViewModel
 {
@@ -23,7 +20,11 @@ namespace ParkInspect.ViewModel
     public class InspectionViewModel : ViewModelBase
     {
         // collections
-        private ObservableCollection<Inspection> AllInspections;
+        private ObservableCollection<Inspection> _allInspections;
+        public ObservableCollection<State> InspectionStateList { get; set; }
+        public ObservableCollection<Parkinglot> ParkinglotList { get; set; }
+        public ObservableCollection<Asignment> Assignmentlist { get; set; }
+        public ObservableCollection<Form> FormList { get; set; }
 
         private ObservableCollection<Inspection> _inspections;
         public ObservableCollection<Inspection> InspectieCollection
@@ -39,8 +40,7 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public ObservableCollection<State> InspectionStateList { get; set; }
-        public ObservableCollection<Parkinglot> ParkinglotList { get; set; }
+       
         private ObservableCollection<Employee> _employeelist;
         public ObservableCollection<Employee> EmployeesList
         {
@@ -51,9 +51,7 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-        public ObservableCollection<Asignment> Assignmentlist { get; set; }
-        public ObservableCollection<Form> FormList { get; set; }
-
+     
 
         // functional properties
         private Inspection _selectedInspection;
@@ -67,12 +65,27 @@ namespace ParkInspect.ViewModel
             set
             {
                 Set(ref _selectedInspection, value);
+                InspectionInspectors = new ObservableCollection<Employee>(value.Employees);
 
                 base.RaisePropertyChanged();
             }
         }
 
 
+        private ObservableCollection<Employee> _inspecteurs;
+        public ObservableCollection<Employee> InspectionInspectors
+        {
+            get
+            {
+                return _inspecteurs;
+            }
+            set
+            {
+                _inspecteurs = value;
+                base.RaisePropertyChanged();
+            }
+        }
+       
 
         private Employee _selectedInspecteur;
         public Employee SelectedInspecteur
@@ -89,7 +102,6 @@ namespace ParkInspect.ViewModel
         }
 
 
-
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
 
@@ -104,36 +116,6 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-
-        private string _commandError;
-        public string CommandError
-        {
-            get
-            {
-                return _commandError;
-
-            }
-
-            set
-            {
-                _commandError = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        // commands
-        public ICommand ResetCommand { get; set; }
-        public ICommand CreateInspectionCommand { get; set; }
-        public ICommand EditInspectionCommand { get; set; }
-        public ICommand AddInspecteurCommand { get; set; }
-        public ICommand RemoveInspecteurCommand { get; set; }
-
-        private readonly InspectionService _service;
-
-        /// <summary>
-        /// Initializes a new instance of the InspectieViewModel class.
-        /// </summary>
-        /// 
 
         #region List of filters
         private string _parkinglotFilter;
@@ -215,6 +197,32 @@ namespace ParkInspect.ViewModel
 
 
         #endregion
+
+        private string _commandError;
+        public string CommandError
+        {
+            get
+            {
+                return _commandError;
+
+            }
+
+            set
+            {
+                _commandError = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        // commands
+        public ICommand ResetCommand { get; set; }
+        public ICommand CreateInspectionCommand { get; set; }
+        public ICommand EditInspectionCommand { get; set; }
+        public ICommand AddInspecteurCommand { get; set; }
+        public ICommand RemoveInspecteurCommand { get; set; }
+
+        private readonly InspectionService _service;
+       
         public InspectionViewModel(IRepository context)
         {
             // set services and Lists
@@ -242,30 +250,38 @@ namespace ParkInspect.ViewModel
             builder.Add("clarification", ClarificationFilter);
 
             var filters = builder.Get();
-            var result = AllInspections.Where(a => a.Like(filters));
+            var result = _allInspections.Where(a => a.Like(filters));
             InspectieCollection = new ObservableCollection<Inspection>(result);
-            RaisePropertyChanged("InspectieCollection");
+            RaisePropertyChanged();
+        }
+
+        private void UpdateProperties()
+        {
+            InspectieCollection = new ObservableCollection<Inspection>(_service.GetAllInspections());
+            _allInspections = new ObservableCollection<Inspection>(_service.GetAllInspections());
+            ParkinglotList = new ObservableCollection<Parkinglot>(_service.GetAllParkinglots());
+            InspectionStateList = new ObservableCollection<State>(_service.GetAllStates());
+            Assignmentlist = new ObservableCollection<Asignment>(_service.GetallAsignments());
+            FormList = new ObservableCollection<Form>(_service.GetAllForms());
+            EmployeesList = new ObservableCollection<Employee>(_service.GetAllInspecteurs());
         }
 
         private void AddInspecteur()
         {
-            // popup window to select and inspecteur
-
-            // validation
+          
             if (SelectedEmployee == null) return;
             SelectedInspection.Employees.Add(SelectedEmployee);
+            InspectionInspectors.Add(SelectedEmployee);
 
             UpdateProperties();
         }
 
         private void RemoveInspecteur()
         {
-            // popup window to select and inspecteur
-
-            // validation
-            //action
             if (SelectedInspecteur == null) return;
             SelectedInspection.Employees.Remove(SelectedInspecteur);
+            InspectionInspectors.Remove(SelectedInspecteur);
+
             SelectedInspecteur = null;
             UpdateProperties();
         }
@@ -280,16 +296,7 @@ namespace ParkInspect.ViewModel
             return _selectedInspection.id == 0;
         }
 
-        private void UpdateProperties()
-        {
-            InspectieCollection = new ObservableCollection<Inspection>(_service.GetAllInspections());
-            AllInspections = new ObservableCollection<Inspection>(_service.GetAllInspections());
-            ParkinglotList = new ObservableCollection<Parkinglot>(_service.GetAllParkinglots());
-            InspectionStateList = new ObservableCollection<State>(_service.GetAllStates());
-            Assignmentlist = new ObservableCollection<Asignment>(_service.GetallAsignments());
-            FormList = new ObservableCollection<Form>(_service.GetAllForms());
-            EmployeesList = new ObservableCollection<Employee>(_service.GetAllInspecteurs());
-        }
+       
 
         public void ResetInspection()
         {
@@ -299,17 +306,14 @@ namespace ParkInspect.ViewModel
 
         public void CreateInspection()
         {
-            if (CreateInspectionValidation())
-            {
-                if (_selectedInspection.date == null) { _selectedInspection.date = DateTime.Today; }
+            if (!CreateInspectionValidation()) return;
+            if (_selectedInspection.date == null) { _selectedInspection.date = DateTime.Today; }
 
 
-                _service.CreateNewAssignemnt(_selectedInspection);
-                SetNewInspection();
-                CommandError = "Created";
-                UpdateProperties();
-
-            }
+            _service.CreateNewAssignemnt(_selectedInspection);
+            SetNewInspection();
+            CommandError = "Created";
+            UpdateProperties();
         }
 
         private bool CreateInspectionValidation()
@@ -334,11 +338,8 @@ namespace ParkInspect.ViewModel
             if (_selectedInspection.deadline > _selectedInspection.Asignment.deadline)
                 CommandError = "Inspectie deadline valt buiten de opdracht.";
 
-
             return CommandError.Equals("");
         }
-
-
 
 
         public void EditInspection()
@@ -353,7 +354,7 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        // same code as createInspection validtion
+
         private bool EditInspectionValidation()
         {
 
@@ -376,7 +377,11 @@ namespace ParkInspect.ViewModel
 
         private void SetNewInspection()
         {
-            SelectedInspection = new Inspection { deadline = DateTime.Now };
+            SelectedInspection = new Inspection
+            {
+                deadline = DateTime.Now,
+                date = DateTime.Today
+            };
             base.RaisePropertyChanged();
 
         }

@@ -78,10 +78,10 @@
                     <StackPanel Height="435" Width="380">
 
                         <GroupBox x:Name="Inspecties" Header="Inspecties" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
-                            <DataGrid ItemsSource="{Binding SelectedAsignment.Inspections}" SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" Margin="0,0,-2,0"
+                            <DataGrid IsReadOnly="True" ItemsSource="{Binding AsignmentInspections}" SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" Margin="0,0,-2,0"
                                        ScrollViewer.CanContentScroll="True" 
-      ScrollViewer.VerticalScrollBarVisibility="Auto"
-      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                       ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="Parkeerplaats" Width="*" Binding="{Binding Parkinglot.name}" />
