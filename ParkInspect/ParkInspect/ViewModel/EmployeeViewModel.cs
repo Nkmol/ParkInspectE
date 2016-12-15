@@ -82,8 +82,8 @@ namespace ParkInspect.ViewModel
             SelectedEmployee.out_service_date = DateTime.Today;
 
             //Collections for comboboxes
-            RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
-            StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
+            RoleCollection = new ObservableCollection<Role>(Service.GetAll<Role>());
+            StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAll<Employee_Status>());
 
             CreateItemCommand = new RelayCommand(CreateNewEmployee);
             EditItemCommand = new RelayCommand(EditEmployee);
@@ -108,7 +108,8 @@ namespace ParkInspect.ViewModel
 
             SelectedEmployee.password = new string(chars);
 
-            Service.InsertEntity(SelectedEmployee);
+            Service.Add(SelectedEmployee);
+
             Notification = "De medewerker is opgeslagen";
             UpdateDataGrid();
         }
@@ -131,7 +132,7 @@ namespace ParkInspect.ViewModel
 
                 SelectedEmployee.password = new string(chars);
             }
-            Service.UpdateEntity(SelectedEmployee);
+            Service.Update(SelectedEmployee);
             Notification = "De medewerker is aangepast";
             UpdateDataGrid();
         }

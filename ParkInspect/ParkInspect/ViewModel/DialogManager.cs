@@ -12,7 +12,8 @@ namespace ParkInspect.ViewModel
 {
     public class DialogManager
     {
-        public IDialogCoordinator DialogCoordinator;
+        // Virtual = Used for Moq
+        public virtual IDialogCoordinator DialogCoordinator { get; set; }
 
         protected EmployeeService _service;
 
@@ -33,14 +34,12 @@ namespace ParkInspect.ViewModel
 
         public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings )
         {
-          LoginDialogData result = await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
-
-          return result;
+            return await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
         }
 
-        public async void ShowLoginDialog(LoginViewModel lv)
+        public async void ShowLoginDialog(LoginViewModel lv, LoginDialogSettings LogindialogSetting = null)
         {
-            var loginDialogSettings = new LoginDialogSettings
+            var loginDialogSettings = LogindialogSetting ?? new LoginDialogSettings
             {
                 UsernameWatermark = "Emailadres...",
                 PasswordWatermark = "Wachtwoord...",
@@ -70,7 +69,7 @@ namespace ParkInspect.ViewModel
                 char[] chars = new char[sha.Hash.Length / sizeof(char)];
                 System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
 
-                var rs = _service.GetEmployee(result.Username, new string(chars)).Count() != 0;
+                var rs = _service.Login(result.Username, result.Password);
 
                 if (!rs)
                 {
@@ -79,10 +78,8 @@ namespace ParkInspect.ViewModel
                         loginDialogSettings.InitialUsername = result.Username;
                     }
 
-
                     await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
                             "Ongeldig email/wachtwoord");
-
                 }
                 else
                 {
