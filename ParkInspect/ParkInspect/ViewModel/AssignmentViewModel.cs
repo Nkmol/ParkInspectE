@@ -58,7 +58,7 @@ namespace ParkInspect.ViewModel
 
             set
             {
-                Set(ref _selectedAsignment, value);
+                 _selectedAsignment = value;
 
                 base.RaisePropertyChanged();
             }

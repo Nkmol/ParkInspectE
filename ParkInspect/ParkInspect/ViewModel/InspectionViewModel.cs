@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Migrations.Model;
 using System.Linq;
@@ -9,6 +10,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using System.Collections.Generic;
 
 namespace ParkInspect.ViewModel
 {
@@ -67,9 +69,10 @@ namespace ParkInspect.ViewModel
                 Set(ref _selectedInspection, value);
 
                 base.RaisePropertyChanged();
-                base.RaisePropertyChanged();
             }
         }
+
+
 
         private Employee _selectedInspecteur;
         public Employee SelectedInspecteur
@@ -208,7 +211,7 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        
+
 
 
         #endregion
@@ -249,10 +252,10 @@ namespace ParkInspect.ViewModel
             // popup window to select and inspecteur
 
             // validation
+            if (SelectedEmployee == null) return;
             SelectedInspection.Employees.Add(SelectedEmployee);
+
             UpdateProperties();
-
-
         }
 
         private void RemoveInspecteur()
@@ -261,11 +264,10 @@ namespace ParkInspect.ViewModel
 
             // validation
             //action
-            if (SelectedInspecteur != null)
-            {
-                SelectedInspection.Employees.Remove(SelectedInspecteur);
-                UpdateProperties();
-            }
+            if (SelectedInspecteur == null) return;
+            SelectedInspection.Employees.Remove(SelectedInspecteur);
+
+            UpdateProperties();
         }
 
         private bool CanEditInspection()
