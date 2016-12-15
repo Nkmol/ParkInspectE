@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using System.Security.Cryptography;
 
 namespace ParkInspect.ViewModel
 {
@@ -18,6 +19,7 @@ namespace ParkInspect.ViewModel
     {
         //Service
         protected EmployeeService Service { get; set; }
+        private string oldPass;
 
         //Fields and Properties
         private string _notification;
@@ -57,6 +59,10 @@ namespace ParkInspect.ViewModel
             {
                 Set(ref _selectedEmployee, value);
                 base.RaisePropertyChanged();
+                if (_selectedEmployee != null)
+                {
+                    oldPass = _selectedEmployee.password;
+                }
             }
         }
 
@@ -76,8 +82,8 @@ namespace ParkInspect.ViewModel
             SelectedEmployee.out_service_date = DateTime.Today;
 
             //Collections for comboboxes
-            RoleCollection = new ObservableCollection<Role>(Service.GetAllRoles());
-            StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAllStatusses());
+            RoleCollection = new ObservableCollection<Role>(Service.GetAll<Role>());
+            StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAll<Employee_Status>());
 
             CreateItemCommand = new RelayCommand(CreateNewEmployee);
             EditItemCommand = new RelayCommand(EditEmployee);
@@ -90,7 +96,20 @@ namespace ParkInspect.ViewModel
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
 
-            Service.InsertEntity(SelectedEmployee);
+            SHA256 sha = SHA256.Create();
+
+            byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
+            System.Buffer.BlockCopy(SelectedEmployee.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+            sha.ComputeHash(bytes);
+
+            char[] chars = new char[sha.Hash.Length / sizeof(char)];
+            System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+            SelectedEmployee.password = new string(chars);
+
+            Service.Add(SelectedEmployee);
+
             Notification = "De medewerker is opgeslagen";
             UpdateDataGrid();
         }
@@ -99,8 +118,21 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedEmployee.active)
                 SelectedEmployee.out_service_date = null;
+            if (SelectedEmployee.password != oldPass)
+            {
+                SHA256 sha = SHA256.Create();
 
-            Service.UpdateEntity(SelectedEmployee);
+                byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
+                System.Buffer.BlockCopy(SelectedEmployee.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+                sha.ComputeHash(bytes);
+
+                char[] chars = new char[sha.Hash.Length / sizeof(char)];
+                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+                SelectedEmployee.password = new string(chars);
+            }
+            Service.Update(SelectedEmployee);
             Notification = "De medewerker is aangepast";
             UpdateDataGrid();
         }
