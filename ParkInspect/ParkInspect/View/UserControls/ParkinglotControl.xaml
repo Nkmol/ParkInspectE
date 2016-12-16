@@ -7,6 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300"
@@ -14,9 +15,14 @@
              Width="1000"
              Height="600"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <TabControl Name="Tabs">
-            <TabItem Header="Overzicht">
+            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <StackPanel>
                     <Label Name="SearchLabel">Zoeken</Label>
                     <Grid Name="FilterGrid">
@@ -49,7 +55,8 @@
                     
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Management">
+            <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[24], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+
                 <Grid>
                     <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="255" Height="250" Margin="100,0,0,0">
                         <StackPanel>

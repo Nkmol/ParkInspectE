@@ -108,6 +108,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -269,6 +270,7 @@
     <Compile Include="View\UserControls\FormControl.xaml.cs">
       <DependentUpon>FormControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Convertor\VisibilityConverter.cs" />
     <Page Include="View\DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -382,6 +384,7 @@
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
       <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="View\TabsStatusInfo.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

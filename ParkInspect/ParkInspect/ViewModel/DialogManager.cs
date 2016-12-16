@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -29,10 +26,10 @@ namespace ParkInspect.ViewModel
 
         public void ShowMessage(string title, string message)
         {
-           DialogCoordinator.ShowMessageAsync(this, title, message);
+            DialogCoordinator.ShowMessageAsync(this, title, message);
         }
 
-        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings )
+        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings)
         {
             return await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
         }
@@ -43,7 +40,7 @@ namespace ParkInspect.ViewModel
             {
                 UsernameWatermark = "Emailadres...",
                 PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Visible,
+                NegativeButtonVisibility = Visibility.Hidden,
                 RememberCheckBoxVisibility = Visibility.Visible
             };
 
@@ -56,8 +53,8 @@ namespace ParkInspect.ViewModel
                         ShowLogin("Authenticatie", "Voer uw inloggegevens in",
                             loginDialogSettings);
 
-                if (result == null)
-                    return;
+                if (result != null)
+                {
 
                 SHA256 sha = SHA256.Create();
 
@@ -71,12 +68,12 @@ namespace ParkInspect.ViewModel
 
                 var rs = _service.Login(result.Username, result.Password);
 
-                if (!rs)
-                {
-                    if (result.ShouldRemember)
+                    if (!rs)
                     {
-                        loginDialogSettings.InitialUsername = result.Username;
-                    }
+                        if (result.ShouldRemember)
+                        {
+                            loginDialogSettings.InitialUsername = result.Username;
+                        }
 
                     await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
                             "Ongeldig email/wachtwoord");
@@ -86,12 +83,19 @@ namespace ParkInspect.ViewModel
                     await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
                     logged = true;
 
-                    lv.LoginName = result.Username;
-                    lv.LoginButtonEnabled = false;
-                    lv.LogoutButtonEnabled = true;
+                        lv.LoginName = result.Username;
+                        lv.LoginButtonEnabled = false;
+                        lv.LogoutButtonEnabled = true;
+
+                        // goes wrong on multiple users with the same username and password with different roles.
+                        lv.CurrentUser = lv.Service.GetEmployee(result.Username, result.Password);
+                        lv.Dashboard.ChangeAuthorization(lv.CurrentUser.Role1);
+                    }
                 }
             }
         }
+
+
 
 
     }

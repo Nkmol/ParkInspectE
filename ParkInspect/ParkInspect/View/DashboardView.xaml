@@ -1,15 +1,15 @@
-﻿<controls:MetroWindow x:Class="ParkInspect.MainWindow"
+﻿<controls:MetroWindow x:Class="ParkInspect.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"            
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:local="using:ParkInspect.View.UserControls"
-        xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+        xmlns:userControls1="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1010"
@@ -22,52 +22,65 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
+    <!--
+    Waring, adding more tabs will require you to make them vissible in the dashboardViewModel.
+    Add a new bool property in the dashboardViewModel and set it on true in the showAllTabs method.
+    -->
     <Grid x:Name="LayoutRoot">
         <dragablz:TabablzControl>
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController />
             </dragablz:TabablzControl.InterTabController>
-            <TabItem Header="Klanten">
-                <userControls:CustomerControl />
+        
+            <TabItem Visibility="{Binding TabStatus[0], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
+                <userControls1:CustomerControl />
             </TabItem>
-            <TabItem Header="Parkeerplaatsen">
-                <userControls:ParkeerplaatsControl />
+            <TabItem Visibility="{Binding TabStatus[1], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Parkeerplaatsen">
+                <userControls1:ParkeerplaatsControl />
             </TabItem>
-            <TabItem Header="Opdrachten">
-		        <userControls:AssignmentControl />
+            <TabItem Visibility="{Binding TabStatus[2], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Opdrachten">
+                <userControls1:AssignmentControl />
             </TabItem>
-            <TabItem Header="Inspectie">
-                <userControls:InspectionControl />
+            <TabItem Visibility="{Binding TabStatus[3], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Inspectie">
+                <userControls1:InspectionControl />
             </TabItem>
-            <TabItem Header="Vragenlijst">
-                <userControls:FormControl />
+            <TabItem Visibility="{Binding TabStatus[4], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Vragenlijst">
+                <userControls1:FormControl />
             </TabItem>
-            <TabItem Header="Personeel">
-                <userControls:EmployeeControl />
+            <TabItem Visibility="{Binding TabStatus[5], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Personeel">
+                <userControls1:EmployeeControl />
             </TabItem>
-            <TabItem Header="Rapportage">
-                <userControls:ReportControl />
+            <TabItem Visibility="{Binding TabStatus[6], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Rapportage">
+                <userControls1:ReportControl />
             </TabItem>
-            <TabItem Header="Afwezigheid">
-                <userControls:AbsenceControl />
+            <TabItem Visibility="{Binding TabStatus[7], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
+                <userControls1:AbsenceControl />
             </TabItem>
             <TabItem Header="Contactpersonen">
-                <userControls:ContactpersoonControl />
+                <userControls1:ContactpersoonControl />
             </TabItem>
         </dragablz:TabablzControl>
     </Grid>
+
+    <!--
+    Warning: only works with registered roles.
+    all registered roles can be found in the dashboardViewModel.
+    -->
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="False"
                                  DataContext="{Binding Login, Source={StaticResource Locator}}">
             <Label Content="{Binding LoginName}" />
-            <Button Command="{Binding ShowLoginDialogCommand}"
+            <Button Name="LoginButton" 
+                       Command="{Binding ShowLoginDialogCommand}"
                     Content="Login"
                     IsEnabled="{Binding LoginButtonEnabled}" />
             <Button Command="{Binding LogoutCommand}"
