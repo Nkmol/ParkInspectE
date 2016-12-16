@@ -128,27 +128,59 @@ namespace ParkInspect.ViewModel
         private void SaveEmployee()
         {
             bool error = false;
-            if (SelectedEmployee.employee_status.Equals("Retired") && SelectedEmployee.active)
-            {
-                Notification = "Een medewerker kan niet 'actief' zijn als hij/zij met pensioen is.";
-                error = true;
-            }
 
-            if (SelectedEmployee.employee_status.Equals("Terminated") && SelectedEmployee.active)
-            {
-                Notification = "Een medewerker kan niet 'actief' zijn als hij/zij ontslagen is.";
-                error = true;
-            }
+            //Checking all combinations between 'Active' AND 'status' for not possible combinations.
+            //Using a boolean error to trigger error message and popup the error dialog.
 
             if (SelectedEmployee.active)
             {
+                if (SelectedEmployee.employee_status.Equals("Retired"))
+                {
+                    Notification = "Een medewerker kan niet 'actief' zijn als hij/zij met pensioen is.";
+                    error = true;
+                }
+                else if (SelectedEmployee.employee_status.Equals("Terminated"))
+                {
+                    Notification = "Een medewerker kan niet 'actief' zijn als hij/zij ontslagen is.";
+                    error = true;
+                }
+
                 SelectedEmployee.out_service_date = null;
             }
-            else if(SelectedEmployee.out_service_date < SelectedEmployee.in_service_date)
+            else
             {
-                Notification = "De datum uit dienst kan niet voor de datum in dienst zijn";
-                error = true;
+                if (SelectedEmployee.employee_status.Equals("Available"))
+                {
+                    Notification = "Een medewerker kan niet 'beschikbaar' zijn als hij/zij geen lopend contract heeft.";
+                    error = true;
+                }
+
+                if (SelectedEmployee.employee_status.Equals("On Non-Pay leave"))
+                {
+                    Notification = "Een medewerker kan niet 'Op betaald verlof' zijn als hij/zij geen lopend contract heeft.";
+                    error = true;
+                }
+
+                if (SelectedEmployee.employee_status.Equals("Suspended"))
+                {
+                    Notification = "Een medewerker kan niet 'Geschorst' zijn als hij/zij geen lopend contract heeft.";
+                    error = true;
+                }
+
+                if (SelectedEmployee.out_service_date.Equals(null))
+                {
+                    Notification = "Er moet een datum uit dienst ingevoerd worden";
+                    error = true;
+                }
+
+                if (SelectedEmployee.out_service_date < SelectedEmployee.in_service_date)
+                {
+                    Notification = "De datum uit dienst kan niet voor de datum in dienst zijn";
+                    error = true;
+                }
             }
+
+
 
             if (error)
             {
