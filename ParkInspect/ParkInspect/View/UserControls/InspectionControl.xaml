@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     
@@ -12,13 +14,117 @@
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
     
+             d:DesignHeight="382" d:DesignWidth="782"
+             DataContext="{Binding Inspections, Source={StaticResource Locator}}" Width="982" Height="482">
     <Grid>
-        <TabControl>
-            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[21], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Label Content="Overview goes here..." />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.ColumnSpan="2">
+            <TabItem Header="Overzicht">
+                <StackPanel>
+                    
+                    <DockPanel>
+                        <TextBox Width="138" Margin="0,3" Text="{Binding ParkinglotFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="181" Margin="5,3,0,3" Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="225" Margin="5,3,0,3" Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="192" Margin="5,3,0,3" Text="{Binding DeadlineFIlter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="195" Margin="5,3,0,3"  Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                    </DockPanel>
+                    
+                    <DataGrid Width="971" ItemsSource="{Binding InspectieCollection}"  SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="0,0,0,10" Height="431" 
+                              ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            
+                            <!-- removes parkeeplaats name after selection-->
+                            <DataGridTextColumn Header="Parkeerplaats" Width="*" Binding="{Binding Parkinglot.name }"/>
+                            <DataGridTextColumn  Header="Status" Width="*" Binding="{Binding State1.state1}"/>
+                            <DataGridTextColumn  Header="Aangemaakt" Width="*" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                            <DataGridTextColumn  Header="Deadline" Width="*" Binding="{Binding deadline, StringFormat={}{0:dd/MM/yyyy}}"/>
+                            <DataGridTextColumn  Header="Toelichting" Width="*" Binding="{Binding clarification}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
             </TabItem>
-            <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[22], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Label Content="Management goes here..." />
+            <TabItem Header="Management">
+                <DockPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="327" VerticalAlignment="Top" Height="423">
+                        <StackPanel Width="300" Height="623" VerticalAlignment="Top">
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Opdracht"  />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Asignment.Client.name}" DisplayMemberPath="Client.name" ItemsSource="{Binding Assignmentlist}" SelectedItem="{Binding SelectedInspection.Asignment}" />
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Parkeerplaats"  />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot.name}" DisplayMemberPath="name" SelectedItem="{Binding SelectedInspection.Parkinglot}" ItemsSource="{Binding ParkinglotList}"/>
+
+                            <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst"  />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Form.Template.name}" ItemsSource="{Binding FormList}" DisplayMemberPath="Template.name" SelectedItem="{Binding SelectedInspection.Form}" />
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Status"  />
+                            <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedInspection.state}" ItemsSource="{Binding InspectionStateList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedInspection.State1}" />
+
+                            <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection.Inspection2}"/>
+
+                            <Label Height="25" Margin="10,0,151,0" Content="Date"  />
+                            <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedInspection.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
+                            <DatePicker Margin="10,0,57,0" SelectedDate="{Binding SelectedInspection.deadline}" DisplayDate="{Binding SelectedInspection.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" />
+
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Toelichting"  />
+                            <TextBox Margin="10,0,57,0" Height="105" Text="{Binding SelectedInspection.clarification}"/>
+
+                            <Label Height="35" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
+                            <DockPanel Width="363" HorizontalAlignment="Left">
+
+                                <Button  Margin="5,0" Content="Bewerken" Command="{Binding EditInspectionCommand}" Width="85" HorizontalAlignment="Left"/>
+                                <Button  Margin="5,0" Content="Toevoegen" Command="{Binding CreateInspectionCommand}" Width="96" HorizontalAlignment="Left"/>
+
+
+                            </DockPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Width="263"/>
+                    <StackPanel>
+
+                        <GroupBox x:Name="Inspecteurs" Header="Inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
+                            <DataGrid IsReadOnly="True" ItemsSource="{Binding InspectionInspectors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInspecteur}" AutoGenerateColumns="False" Margin="0,0,-2,0"
+                                       ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+
+                                    <DataGridTextColumn Header="voornaam" Width="*" Binding="{Binding firstname}" />
+                                    <DataGridTextColumn  Header="achternaam" Width="*" Binding="{Binding lastname}"/>
+                                    <DataGridTextColumn  Header="email" Width="*" Binding="{Binding email}"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </GroupBox>
+
+                        <StackPanel Height="7">
+                        </StackPanel>
+                        <DockPanel Width="363" HorizontalAlignment="Left">
+
+                            <Button  Margin="5,0" Content="Toevoegen" Command="{Binding AddInspecteurCommand}" Width="125" HorizontalAlignment="Left"/>
+                            <Button Margin="5,0" Content="Verwijderen" Width="125" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
+
+                        </DockPanel>
+
+                        <ComboBox Margin="5,5,57,0"  ItemsSource="{Binding EmployeesList}" DisplayMemberPath="firstname" Text="{Binding SelectedEmployee.firstname}" SelectedItem="{Binding SelectedEmployee}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
+                        <Label Height="98" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
+                        <Button  Margin="0,0,5,0" Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="122" HorizontalAlignment="Left"/>
+
+                    </StackPanel>
+                </DockPanel>
+
             </TabItem>
         </TabControl>
     </Grid>
