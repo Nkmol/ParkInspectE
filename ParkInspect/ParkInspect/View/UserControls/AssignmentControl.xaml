@@ -27,11 +27,11 @@
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ScrollViewer.HorizontalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Client" Width="*"  Binding="{Binding Client.name, Mode=OneWay}" />
-                            <DataGridTextColumn  Header="State" Width="*" Binding="{Binding state, Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Klant Naam" Width="*"  Binding="{Binding Client.name, Mode=OneWay}" />
+                            <DataGridTextColumn  Header="Status" Width="*" Binding="{Binding state, Mode=OneWay}"/>
                             <DataGridTextColumn  Header="Aangemaakt" Width="*" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
                             <DataGridTextColumn  Header="Deadline" Width="*" Binding="{Binding deadline, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
-                            <DataGridTextColumn  Header="Clarification" Width="*" Binding="{Binding clarification}"/>
+                            <DataGridTextColumn  Header="Toelichting" Width="*" Binding="{Binding clarification}"/>
 
 
                         </DataGrid.Columns>
@@ -44,7 +44,7 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Width="381" VerticalAlignment="Top" Height="431">
                         <StackPanel Width="300" Height="454">
 
-                            <Label Height="25" Margin="10,0,151,0" Content="Date"  />
+                            <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt"  />
                             <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedAsignment.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
 
 

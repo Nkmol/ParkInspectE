@@ -61,7 +61,7 @@
                             <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection.Inspection2}"/>
 
-                            <Label Height="25" Margin="10,0,151,0" Content="Date"  />
+                            <Label Height="25" Margin="10,0,151,0" Content="Datum"  />
                             <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedInspection.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
 
                             <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
