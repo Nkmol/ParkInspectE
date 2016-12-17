@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -15,224 +14,36 @@ using ParkInspect.View.UserControls;
 namespace ParkInspect.ViewModel
 {
     /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
+    ///     This class contains properties that a View can data bind to.
+    ///     <para>
+    ///         See http://www.galasoft.ch/mvvm
+    ///     </para>
     /// </summary>
     public class AssignmentViewModel : ViewModelBase
     {
-        private IEnumerable<Asignment> _opdrachtCollection;
-        public IEnumerable<Asignment> OpdrachtenCollection
-        {
-            get { return _opdrachtCollection; }
-            set
-            {
-                _opdrachtCollection = value;
-
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private ObservableCollection<Asignment> _searchedAsignments;
-        public ObservableCollection<Asignment> SearchedAsignments
-        {
-            get { return _searchedAsignments; }
-            set
-            {
-                _searchedAsignments = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        //used to update the datagrid in the managements tab.
-        private ObservableCollection<Inspection> _inspections;
-        public ObservableCollection<Inspection> AssignmentInspections
-        {
-            get
-            {
-                return _inspections;
-            }
-            set
-            {
-                _inspections = value;
-                base.RaisePropertyChanged();
-            }
-        }
+        private readonly AssignmentService _service;
+        private readonly PopupManager popup;
 
         private IEnumerable<State> _assignmentStateList;
-        public IEnumerable<State> AssignmentStatusList
-        {
-            get { return _assignmentStateList; }
-            set
-            {
-                _assignmentStateList = value;
-                base.RaisePropertyChanged();
-            }
-        }
 
         private IEnumerable<Client> _clientList;
-        public IEnumerable<Client> ClientList
-        {
-            get { return _clientList; }
-            set
-            {
-                _clientList = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private IEnumerable<Inspection> _inspectionlist;
-        public IEnumerable<Inspection> InspectionList
-        {
-            get { return _inspectionlist; }
-            set
-            {
-                _inspectionlist = value;
-                base.RaisePropertyChanged();
-
-            }
-        }
-
-
-        private Asignment _selectedAsignment;
-        public Asignment SelectedAsignment
-        {
-            get { return _selectedAsignment; }
-
-            set
-            {
-                _selectedAsignment = value;
-                AssignmentInspections = new ObservableCollection<Inspection>(value.Inspections);
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private Inspection _selectedInspection;
-        public Inspection SelectedInspection
-        {
-            get
-            {
-                return _selectedInspection;
-            }
-            set
-            {
-                _selectedInspection = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private Inspection _newInspection;
-        public Inspection NewInspection
-        {
-            get
-            {
-                return _newInspection;
-            }
-            set
-            {
-                _newInspection = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-
-
-        #region All filters
-
-        private string _clientfilter;
-
-        public string ClientFilter
-        {
-            get { return _clientfilter; }
-            set
-            {
-                _clientfilter = value;
-                AlterVisableAsignments();
-                base.RaisePropertyChanged();
-            }
-        }
-
-        private string _datefilter;
-
-        public string DateFilter
-        {
-            get { return _datefilter; }
-            set
-            {
-                _datefilter = value;
-                AlterVisableAsignments();
-                base.RaisePropertyChanged();
-            }
-        }
-        private string _statefilter;
-
-        public string StateFilter
-        {
-            get { return _statefilter; }
-            set
-            {
-                _statefilter = value;
-                AlterVisableAsignments();
-                base.RaisePropertyChanged();
-            }
-        }
-        private string _deadlineFilter;
-
-        public string DeadlineFilter
-        {
-            get { return _deadlineFilter; }
-            set
-            {
-                _deadlineFilter = value;
-                AlterVisableAsignments();
-                base.RaisePropertyChanged();
-            }
-        }
-        private string _clarificationFilter;
-
-        public string ClarificationFilter
-        {
-            get { return _clarificationFilter; }
-            set
-            {
-                _clarificationFilter = value;
-                AlterVisableAsignments();
-                base.RaisePropertyChanged();
-            }
-        }
-
-
-
-
-        #endregion
-
-
-        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
-        public ObservableCollection<Form> Forms { get; set; }
-        public ObservableCollection<State> States { get; set; }
-        public ObservableCollection<Inspection> Inspections { get; set; }
-        public ObservableCollection<Asignment> Assignments { get; set; }
-        private readonly PopupManager popup;
-        private readonly AssignmentService _service;
-        public ICommand CreateAsignmentCommand { get; set; }
-        public ICommand EditAsignmentCommand { get; set; }
-        public ICommand RemoveInspectionCommand { get; set; }
-        public ICommand CreateInspectionCommand { get; set; }
-        public ICommand ResetCommand { get; set; }
-        public ICommand NewInspectionCommand { get; set; }
 
         private string _commandError;
 
-        public string CommandError
-        {
-            get { return _commandError; }
-            set
-            {
-                _commandError = value;
-                base.RaisePropertyChanged();
-            }
-        }
+        private IEnumerable<Inspection> _inspectionlist;
+
+        //used to update the datagrid in the managements tab.
+        private ObservableCollection<Inspection> _inspections;
+
+        private Inspection _newInspection;
+        private IEnumerable<Asignment> _opdrachtCollection;
+
+        private ObservableCollection<Asignment> _searchedAsignments;
+
+
+        private Asignment _selectedAsignment;
+
+        private Inspection _selectedInspection;
 
         public AssignmentViewModel(IRepository repository, PopupManager popup)
         {
@@ -258,17 +69,137 @@ namespace ParkInspect.ViewModel
             NewInspectionCommand = new RelayCommand(ShowPopup);
         }
 
+        public IEnumerable<Asignment> OpdrachtenCollection
+        {
+            get { return _opdrachtCollection; }
+            set
+            {
+                _opdrachtCollection = value;
+
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Asignment> SearchedAsignments
+        {
+            get { return _searchedAsignments; }
+            set
+            {
+                _searchedAsignments = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Inspection> AssignmentInspections
+        {
+            get { return _inspections; }
+            set
+            {
+                _inspections = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public IEnumerable<State> AssignmentStatusList
+        {
+            get { return _assignmentStateList; }
+            set
+            {
+                _assignmentStateList = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public IEnumerable<Client> ClientList
+        {
+            get { return _clientList; }
+            set
+            {
+                _clientList = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public IEnumerable<Inspection> InspectionList
+        {
+            get { return _inspectionlist; }
+            set
+            {
+                _inspectionlist = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public Asignment SelectedAsignment
+        {
+            get { return _selectedAsignment; }
+
+            set
+            {
+                _selectedAsignment = value;
+                AssignmentInspections = new ObservableCollection<Inspection>(value.Inspections);
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public Inspection SelectedInspection
+        {
+            get { return _selectedInspection; }
+            set
+            {
+                _selectedInspection = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+        public Inspection NewInspection
+        {
+            get { return _newInspection; }
+            set
+            {
+                _newInspection = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
+
+        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
+        public ObservableCollection<Form> Forms { get; set; }
+        public ObservableCollection<State> States { get; set; }
+        public ObservableCollection<Inspection> Inspections { get; set; }
+        public ObservableCollection<Asignment> Assignments { get; set; }
+        public ICommand CreateAsignmentCommand { get; set; }
+        public ICommand EditAsignmentCommand { get; set; }
+        public ICommand RemoveInspectionCommand { get; set; }
+        public ICommand CreateInspectionCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
+        public ICommand NewInspectionCommand { get; set; }
+
+        public string CommandError
+        {
+            get { return _commandError; }
+            set
+            {
+                _commandError = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
         private void ShowPopup()
         {
-            popup.ShowConfirmPopup<AssignmentViewModel>("Voeg een inspectie toe", new NewInspectionPopup(), MakeNewInspection);
+            popup.ShowConfirmPopup<AssignmentViewModel>("Voeg een inspectie toe", new NewInspectionPopup(),
+                MakeNewInspection);
         }
 
         private void MakeNewInspection(AssignmentViewModel t)
         {
-            if (NewInspection?.Parkinglot == null || NewInspection.State1 == null || NewInspection.deadline < DateTime.Today || NewInspection.deadline > NewInspection.Asignment.deadline) return;
-            if (NewInspection.date == null) { NewInspection.date = DateTime.Today; }
-            _service.Add<Inspection>(NewInspection);
+            if ((NewInspection?.Parkinglot == null) || (NewInspection.State1 == null) ||
+                (NewInspection.deadline < DateTime.Today) || (NewInspection.deadline > NewInspection.Asignment.deadline))
+                return;
+            if (NewInspection.date == null) NewInspection.date = DateTime.Today;
+            _service.Add(NewInspection);
             InspectionList = _service.GetAll<Inspection>();
+            NewInspection = new Inspection();
         }
 
         private void UpdateProperties()
@@ -287,7 +218,7 @@ namespace ParkInspect.ViewModel
             if (!CreateValidation()) return;
 
             if (_selectedAsignment.date == null) _selectedAsignment.date = DateTime.Today;
-            
+
             _service.CreateNewAssignemnt(_selectedAsignment);
             SetEmptySelectedAsignment();
 
@@ -375,19 +306,18 @@ namespace ParkInspect.ViewModel
             // user messages.
             if (_selectedAsignment.Client == null) CommandError = "No Client Selected.";
             if (_selectedAsignment.State1 == null) CommandError = "No Status selected.";
-            if (_selectedAsignment.deadline == DateTime.MinValue) CommandError = "Unless your client is jesus christ, your deadline is not set properly.";
+            if (_selectedAsignment.deadline == DateTime.MinValue)
+                CommandError = "Unless your client is jesus christ, your deadline is not set properly.";
             if (_selectedAsignment.deadline < _selectedAsignment.date) CommandError = "De deadline is al geweest";
-            if (OpdrachtenCollection.FirstOrDefault(a => a.id == _selectedAsignment.id) == null) CommandError = "Selected assignment could not be found. Maybe someone removed it.";
+            if (OpdrachtenCollection.FirstOrDefault(a => a.id == _selectedAsignment.id) == null)
+                CommandError = "Selected assignment could not be found. Maybe someone removed it.";
 
             foreach (var temp in _selectedAsignment.Inspections)
-            {
-                if (temp.date < _selectedAsignment.date || temp.deadline > _selectedAsignment.deadline)
+                if ((temp.date < _selectedAsignment.date) || (temp.deadline > _selectedAsignment.deadline))
                 {
                     CommandError = "Een van de inspecties valt buiten de opdracht.";
                     break;
                 }
-
-            }
             return CommandError.Equals("");
         }
 
@@ -398,9 +328,6 @@ namespace ParkInspect.ViewModel
         }
 
 
-
-
-       
         public void RemoveInspection()
         {
             if (_selectedInspection != null)
@@ -421,8 +348,6 @@ namespace ParkInspect.ViewModel
             SelectedAsignment.Inspections.Add(SelectedInspection);
             AssignmentInspections.Add(SelectedInspection);
         }
-
-
 
 
         public void ResetAsignement()
@@ -456,7 +381,75 @@ namespace ParkInspect.ViewModel
             };
 
             base.RaisePropertyChanged();
-
         }
+
+        #region All filters
+
+        private string _clientfilter;
+
+        public string ClientFilter
+        {
+            get { return _clientfilter; }
+            set
+            {
+                _clientfilter = value;
+                AlterVisableAsignments();
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private string _datefilter;
+
+        public string DateFilter
+        {
+            get { return _datefilter; }
+            set
+            {
+                _datefilter = value;
+                AlterVisableAsignments();
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private string _statefilter;
+
+        public string StateFilter
+        {
+            get { return _statefilter; }
+            set
+            {
+                _statefilter = value;
+                AlterVisableAsignments();
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private string _deadlineFilter;
+
+        public string DeadlineFilter
+        {
+            get { return _deadlineFilter; }
+            set
+            {
+                _deadlineFilter = value;
+                AlterVisableAsignments();
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private string _clarificationFilter;
+
+        public string ClarificationFilter
+        {
+            get { return _clarificationFilter; }
+            set
+            {
+                _clarificationFilter = value;
+                AlterVisableAsignments();
+                base.RaisePropertyChanged();
+            }
+        }
+
+        #endregion
     }
 }
