@@ -45,13 +45,9 @@ namespace ParkInspect.ViewModel
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _current_direction_item;
         private DialogManager _dialog;
+        private OfflineViewModel vm;
         public RelayCommand saveDirections { get; set; }
         public RelayCommand getDirections { get; set; }
-        public RelayCommand setDirections { get; set; }
-        public RelayCommand next_direction { get; set; }
-        public RelayCommand prev_direction { get; set; }
-
-
         public class Direction
         {
             private string _Name;
@@ -230,7 +226,6 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedDirection = value;
-                SetDirectionItems();
                 base.RaisePropertyChanged();
             }
         }
@@ -261,41 +256,18 @@ namespace ParkInspect.ViewModel
             }
         }
         #endregion
-        public PrepareViewModel(IRepository context, DialogManager dialog)
+        public PrepareViewModel(IRepository context, DialogManager dialog, OfflineViewModel offlineVM)
         {
+            vm = offlineVM;
             _dialog = dialog;
             service = new InspectionService(context);
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
             inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
             saveDirections = new RelayCommand(SaveDirections);
-            next_direction = new RelayCommand(NextDirection);
-            prev_direction = new RelayCommand(PrevDirection);
             getDirections = new RelayCommand(GetDirections);
-            LoadDirections();
+
         }
-
-
-        private void PrevDirection()
-        {
-            if (_selectedDirection.index > 0)
-            {
-                int index = _selectedDirection.index;
-                current_direction_item = _selectedDirection.direction_items[index - 1];
-                _selectedDirection.index--;
-            }
-        }
-
-        private void NextDirection()
-        {
-            if (_selectedDirection.index + 1 < _selectedDirection.direction_items.Count)
-            {
-                int index = _selectedDirection.index;
-                current_direction_item = _selectedDirection.direction_items[index + 1];
-                _selectedDirection.index++;
-            }
-        }
-
         private void SaveDirections()
         {
             if (directionItems.Count > 0)
@@ -318,14 +290,13 @@ namespace ParkInspect.ViewModel
                     _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
                 }
 
-                LoadDirections();
+                vm.LoadDirections();
             }
             else
             {
                 _dialog.ShowMessage("Fout!", "Laad eerst een navigatie in!");
             }
         }
-
         private void GetDirections()
         {
             if (String.IsNullOrWhiteSpace(home_adress))
@@ -360,34 +331,9 @@ namespace ParkInspect.ViewModel
                 }
             }
         }
-
-        private void SetDirectionItems()
-        {
-            String line;
-            System.IO.StreamReader file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
-            while ((line = file.ReadLine()) != null)
-            {
-                if (!line.Contains("ID:") && !line.Contains("HOME:"))
-                {
-                    _selectedDirection.direction_items.Add(line);
-                }
-            }
-            current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
-
-        }
         private string StripHTML(string html)
         {
             return Regex.Replace(html, @"<(.|\n)*?>", string.Empty);
-        }
-        public void LoadDirections()
-        {
-            directions.Clear();
-            foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
-            {
-                Direction direction = new Direction();
-                direction.Name = name;
-                directions.Add(direction);
-            }
         }
 
     }

@@ -13,8 +13,8 @@
         <TabItem Header="Overzicht">
             <Canvas Margin="10,-37,0,0" Height="614" VerticalAlignment="Top">
                 <Canvas>
-                    <ComboBox x:Name="comboInspections" ItemsSource="{Binding inspections}" SelectedItem="{Binding selectedInspection}" DisplayMemberPath="id" HorizontalAlignment="Left" Margin="71,21,0,0" VerticalAlignment="Top" Width="286" Grid.ColumnSpan="2"/>
-                    <Label x:Name="label" Content="Inspectie" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboInspections" ItemsSource="{Binding inspections}" SelectedItem="{Binding selectedInspection}" DisplayMemberPath="id" HorizontalAlignment="Left" VerticalAlignment="Top" Width="286" Grid.ColumnSpan="2" Canvas.Left="71" Canvas.Top="34"/>
+                    <Label x:Name="label" Content="Inspectie" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="34"/>
                     <GroupBox x:Name="groupBox" Header="Inspectie info" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="347" Height="303" Grid.ColumnSpan="2">
                         <Grid>
                             <StackPanel HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="124" Margin="0,0,0,-3">
@@ -77,42 +77,6 @@
                 </TextBox>
                 <Label x:Name="label4" Content =" Naam voor offline opslaan:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="399" Canvas.Top="579"/>
             </Canvas>
-        </TabItem>
-        <TabItem Header="Offline">
-            <Grid Margin="0,-1,0,242">
-                <GroupBox x:Name="groupBox3" Header="Opgeslagen Inspecties" HorizontalAlignment="Left" Margin="10,10,0,-119" VerticalAlignment="Top" Width="245" Height="246">
-                    <Grid Width="235">
-                        <ListBox x:Name="listBox1" ItemsSource="{Binding directions}" SelectedItem="{Binding selectedDirection}" DisplayMemberPath="Name" Height="204" VerticalAlignment="Top" Width="234" Margin="0,0,1,0"/>
-                    </Grid>
-                </GroupBox>
-                <GroupBox x:Name="groupBox4" Header="Aanwijzing" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="703" Height="246">
-                    <Grid>
-                        <Button x:Name="button3" Content="&#10097;" Command="{Binding next_direction}" Margin="604,0,0,0" VerticalAlignment="Top" Height="204" Width="85" FontSize="64"/>
-                        <TextBlock x:Name="label3" Text="{Binding current_direction_item}" Margin="85,66,0,0" FontSize="21.333" Height="133" TextWrapping="Wrap" Width="519" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"/>
-                        <Button x:Name="button4" Content="&#10096;" Command="{Binding prev_direction}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="204" FontSize="64"/>
-                    </Grid>
-                </GroupBox>
-                <GroupBox x:Name="groupBox5" Header="Inspectie Info" HorizontalAlignment="Left" Margin="10,261,0,-407" VerticalAlignment="Top" Width="245" Height="275">
-                    <Grid>
-                        <StackPanel HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="124">
-                            <Label x:Name="l_inspection_offline_id" Content="Inspectie nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_date_offline" Content="inspectie datum:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_deadline_offline" Content="inspectie deadline:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_client_offline" Content="Klant:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_parkinglot_offline" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_region_offline" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_zip_offline" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_number_offline" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label x:Name="l_clarification_offlone" Content="Opmerkingen:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
-                <GroupBox x:Name="groupBox6" Header="Kaart" HorizontalAlignment="Left" Margin="260,261,0,-200" VerticalAlignment="Top" Width="703" Height="275">
-                    <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="693"/>
-                </GroupBox>
-                <Button x:Name="button2" Content="Laad route" HorizontalAlignment="Left" Margin="260,541,0,-237" VerticalAlignment="Top" Width="703" Click="button2_Click"/>
-            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

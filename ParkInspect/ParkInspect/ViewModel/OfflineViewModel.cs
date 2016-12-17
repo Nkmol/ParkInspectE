@@ -26,7 +26,6 @@ namespace ParkInspect.ViewModel
     {
         public InspectionService service;
         public ObservableCollection<String> directionItems { get; set; }
-        public ObservableCollection<Inspection> inspections { get; set; }
         public ObservableCollection<Direction> directions { get; set; }
 
         public Inspection _selectedInspection;
@@ -47,6 +46,7 @@ namespace ParkInspect.ViewModel
         private DialogManager _dialog;
         public RelayCommand saveDirections { get; set; }
         public RelayCommand getDirections { get; set; }
+        public RelayCommand deleteInspection { get; set; }
         public RelayCommand setDirections { get; set; }
         public RelayCommand next_direction { get; set; }
         public RelayCommand prev_direction { get; set; }
@@ -267,15 +267,13 @@ namespace ParkInspect.ViewModel
             service = new InspectionService(context);
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
-            inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
             saveDirections = new RelayCommand(SaveDirections);
+            deleteInspection = new RelayCommand(DeleteInspection);
             next_direction = new RelayCommand(NextDirection);
             prev_direction = new RelayCommand(PrevDirection);
             getDirections = new RelayCommand(GetDirections);
             LoadDirections();
         }
-
-
         private void PrevDirection()
         {
             if (_selectedDirection.index > 0)
@@ -285,7 +283,6 @@ namespace ParkInspect.ViewModel
                 _selectedDirection.index--;
             }
         }
-
         private void NextDirection()
         {
             if (_selectedDirection.index + 1 < _selectedDirection.direction_items.Count)
@@ -295,7 +292,6 @@ namespace ParkInspect.ViewModel
                 _selectedDirection.index++;
             }
         }
-
         private void SaveDirections()
         {
             if (directionItems.Count > 0)
@@ -314,6 +310,7 @@ namespace ParkInspect.ViewModel
                     {
                         SaveFile.WriteLine(s);
                     }
+                    SaveFile.Dispose();
                     SaveFile.Close();
                     _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
                 }
@@ -325,7 +322,6 @@ namespace ParkInspect.ViewModel
                 _dialog.ShowMessage("Fout!", "Laad eerst een navigatie in!");
             }
         }
-
         private void GetDirections()
         {
             if (String.IsNullOrWhiteSpace(home_adress))
@@ -360,7 +356,6 @@ namespace ParkInspect.ViewModel
                 }
             }
         }
-
         private void SetDirectionItems()
         {
             String line;
@@ -372,6 +367,8 @@ namespace ParkInspect.ViewModel
                     _selectedDirection.direction_items.Add(line);
                 }
             }
+            file.Dispose();
+            file.Close();
             current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
 
         }
@@ -381,13 +378,18 @@ namespace ParkInspect.ViewModel
         }
         public void LoadDirections()
         {
-            directions.Clear();
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 Direction direction = new Direction();
                 direction.Name = name;
                 directions.Add(direction);
             }
+        }
+        private void DeleteInspection()
+        {
+            File.Delete(runpath + "/directions/" + selectedDirection.Name + ".txt");
+            // directions.Remove(selectedDirection); Fucking weird ass nullpointer to be fixted
+            _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
         }
 
     }

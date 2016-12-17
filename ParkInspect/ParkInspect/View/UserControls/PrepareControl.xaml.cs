@@ -59,14 +59,6 @@ namespace ParkInspect.View.UserControls
             gmap.Zoom = 8;
             gmap.ShowCenter = false;
 
-            gmap_offline.MapProvider = OpenStreetMapProvider.Instance;
-            gmap_offline.Manager.Mode = AccessMode.CacheOnly;
-            gmap_offline.Manager.UseGeocoderCache = true;
-            gmap_offline.SetPositionByKeywords("Amsterdam");
-            gmap_offline.MinZoom = 1;
-            gmap_offline.MaxZoom = 18;
-            gmap_offline.Zoom = 8;
-            gmap_offline.ShowCenter = false;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -118,31 +110,8 @@ namespace ParkInspect.View.UserControls
 
             }
         }
-        private void ReadInspectionInfoFromFile()
-        {
-            String line;
-            String name = (listBox1.SelectedItem as PrepareViewModel.Direction).Name;
-            String path = runpath + "/directions/" + name + ".txt";
-           System.IO.StreamReader file = new System.IO.StreamReader(path);
-            while ((line = file.ReadLine()) != null)
-            {
-                if (line.Contains("ID:"))
-                {
-                    inspection_id = Convert.ToInt32(line.Replace("ID:", ""));
-                }
-                if (line.Contains("HOME:"))
-                {
-                    home_adress = line.Replace("HOME:", "");
-                }
-            }
 
-        }
 
-        private void GetInspectionInfo()
-        {
-            inspection = service.GetInspectionByID(inspection_id);
-            vm.selectedInspection = inspection;
-        }
         private PointLatLng getPointFromKeyWord(String keyword)
         {
             GeoCoderStatusCode status;
@@ -152,60 +121,6 @@ namespace ParkInspect.View.UserControls
                 return new PointLatLng(point.Value.Lat, point.Value.Lng);
             }
             return new PointLatLng(0, 0);
-        }
-
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-
-               ReadInspectionInfoFromFile();
-               GetInspectionInfo();
-               zip = inspection.Parkinglot.zipcode;
-               region = inspection.Parkinglot.Region.name;
-               gmap_offline.Markers.Clear();
-               if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
-                   !String.IsNullOrWhiteSpace(txt_home_adres.Text))
-               {
-
-                   zip = zip.Trim();
-                   PointLatLng start = getPointFromKeyWord(home_adress);
-                   PointLatLng end = getPointFromKeyWord(zip + " " + region);
-
-                   RoutingProvider rp = gmap_offline.MapProvider as RoutingProvider;
-                   if (rp == null)
-                   {
-                       rp = GMapProviders.OpenStreetMap;
-                       ; // use OpenStreetMap if provider does not implement routing
-                   }
-
-                   MapRoute route = rp.GetRoute(start, end, false, false, (int)gmap_offline.Zoom);
-                   if (route != null)
-                   {
-                       GMapMarker m1 = new GMapMarker(start);
-                       m1.Shape = new CustomMarkerDemo(this, m1, "Start: " + route.Name);
-                       m1.Shape.IsEnabled = false;
-
-                       GMapMarker m2 = new GMapMarker(end);
-                       m2.Shape = new CustomMarkerDemo(this, m2, "End: " + start.ToString());
-                       m2.Shape.IsEnabled = false;
-
-                       GMapRoute mRoute = new GMapRoute(route.Points);
-                       {
-                           mRoute.ZIndex = -1;
-                       }
-
-                       gmap_offline.Markers.Add(m1);
-                       gmap_offline.Markers.Add(m2);
-                       gmap_offline.Markers.Add(mRoute);
-
-                       gmap_offline.ZoomAndCenterMarkers(null);
-                       l_distance.Content = "Afstand: " + Math.Round(route.Distance, 1) + "KM";
-                   }
-                   else
-                   {
-                       MessageBox.Show("Het navigeren vereist een internet verbinding!");
-                   }
-
-               }
         }
     }
 }

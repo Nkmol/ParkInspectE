@@ -12,8 +12,8 @@
     <TabControl Height="572" VerticalAlignment="Top">
         <Grid Margin="0,-1,0,242">
             <GroupBox x:Name="groupBox3" Header="Opgeslagen Inspecties" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="284" Height="246">
-                <Grid Width="235">
-                    <ListBox x:Name="listBox1" ItemsSource="{Binding directions}" SelectedItem="{Binding selectedDirection}" DisplayMemberPath="Name" Height="204" VerticalAlignment="Top" Width="234" Margin="0,0,1,0" SelectionChanged="listBox1_SelectionChanged"/>
+                <Grid Width="284">
+                    <ListBox x:Name="listBox1" ItemsSource="{Binding directions, Mode=TwoWay}" SelectedItem="{Binding selectedDirection}" DisplayMemberPath="Name" Height="204" VerticalAlignment="Top" Margin="0,0,10,0" SelectionChanged="listBox1_SelectionChanged"/>
                 </Grid>
             </GroupBox>
             <GroupBox x:Name="groupBox4" Header="Aanwijzing" HorizontalAlignment="Left" Margin="299,10,0,0" VerticalAlignment="Top" Width="695" Height="246">
@@ -52,7 +52,7 @@
             <GroupBox x:Name="groupBox6" Header="Kaart" HorizontalAlignment="Left" Margin="299,261,0,-232" VerticalAlignment="Top" Width="695" Height="275">
                 <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="681"/>
             </GroupBox>
-            <Button x:Name="button" Content="Verwijder" Height="Auto" Margin="10,541,6,-253"/>
+            <Button x:Name="button" Command="{Binding deleteInspection}" Content="Verwijder" Height="Auto" Margin="10,541,6,-253"/>
         </Grid>
     </TabControl>
 </UserControl>
