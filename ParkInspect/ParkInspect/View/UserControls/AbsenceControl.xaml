@@ -49,7 +49,7 @@
                         </DataGrid>
 
                         <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="125"/>
-
+                        
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

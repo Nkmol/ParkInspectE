@@ -205,6 +205,8 @@ namespace ParkInspect.ViewModel
 
             if (NewAbsence.start > NewAbsence.end)
             {
+                Message = (Service.Add<Absence>(SelectedAbsence) ? "Something went wrong." : "De einddatum  mag niet voor de begindatum liggen!");
+                _dialog.ShowMessage("Action", Message);
                 return;
             }
 
