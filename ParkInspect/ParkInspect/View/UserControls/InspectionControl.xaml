@@ -5,17 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    
+             d:DesignHeight="382" d:DesignWidth="782"
+             DataContext="{Binding Inspections, Source={StaticResource Locator}}" Width="982" Height="482">
+
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    
-             d:DesignHeight="382" d:DesignWidth="782"
-             DataContext="{Binding Inspections, Source={StaticResource Locator}}" Width="982" Height="482">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -90,7 +88,10 @@
                             </DockPanel>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel Width="263"/>
+                    <StackPanel Width="263">
+                        
+                    </StackPanel>
+
                     <StackPanel>
 
                         <GroupBox x:Name="Inspecteurs" Header="Inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">

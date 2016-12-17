@@ -5,20 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d" Height="482" Width="982"
-             DataContext="{Binding Assignment, Source={StaticResource Locator}}">
-
-
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             DataContext="{Binding Assignment, Source={StaticResource Locator}}"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
-             mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    
-    
+
     <Grid>
         <TabControl HorizontalAlignment="Left" VerticalAlignment="Top">
             <TabItem Header="Overzicht">
@@ -85,7 +79,9 @@
                             </DockPanel>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel Width="215"/>
+                    <StackPanel Width="215">
+                        <Button Content="Nieuwe inspectie" Margin="0,100,0.2,0" Width="150" Command="{Binding NewInspectionCommand}"/>
+                    </StackPanel>    
                     <StackPanel Height="435" Width="380">
 
                         <GroupBox x:Name="Inspecties" Header="Inspecties" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
@@ -115,7 +111,7 @@
 
 
                         </DockPanel>
-                        <ComboBox Margin="5,5,0,0"  ItemsSource="{Binding InspectionList}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection}" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
+                        <ComboBox Margin="5,5,0,0"  ItemsSource="{Binding InspectionList}" DisplayMemberPath="Parkinglot.name"  SelectedItem="{Binding SelectedInspection}" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
                         <Label Height="111" Foreground="Red" Content="{Binding CommandError}" FontSize="8" RenderTransformOrigin="0.5,0.5" Margin="-1,0,1,0">
                             <Label.RenderTransform>
                                 <TransformGroup>

@@ -294,9 +294,7 @@ namespace ParkInspect.ViewModel
         private bool CanCreateInspection()
         {
             return _selectedInspection.id == 0;
-        }
-
-       
+        }      
 
         public void ResetInspection()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -9,6 +10,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls;
 
 namespace ParkInspect.ViewModel
 {
@@ -120,7 +122,19 @@ namespace ParkInspect.ViewModel
             }
         }
 
-
+        private Inspection _newInspection;
+        public Inspection NewInspection
+        {
+            get
+            {
+                return _newInspection;
+            }
+            set
+            {
+                _newInspection = value;
+                base.RaisePropertyChanged();
+            }
+        }
 
 
 
@@ -194,13 +208,19 @@ namespace ParkInspect.ViewModel
         #endregion
 
 
-
+        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
+        public ObservableCollection<Form> Forms { get; set; }
+        public ObservableCollection<State> States { get; set; }
+        public ObservableCollection<Inspection> Inspections { get; set; }
+        public ObservableCollection<Asignment> Assignments { get; set; }
+        private readonly PopupManager popup;
         private readonly AssignmentService _service;
         public ICommand CreateAsignmentCommand { get; set; }
         public ICommand EditAsignmentCommand { get; set; }
         public ICommand RemoveInspectionCommand { get; set; }
         public ICommand CreateInspectionCommand { get; set; }
         public ICommand ResetCommand { get; set; }
+        public ICommand NewInspectionCommand { get; set; }
 
         private string _commandError;
 
@@ -214,12 +234,18 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public AssignmentViewModel(IRepository repository)
+        public AssignmentViewModel(IRepository repository, PopupManager popup)
         {
+            this.popup = popup;
             _service = new AssignmentService(repository);
             UpdateProperties();
             SetEmptySelectedAsignment();
-
+            Assignments = new ObservableCollection<Asignment>(_service.GetAll<Asignment>());
+            Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
+            Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
+            States = new ObservableCollection<State>(_service.GetAll<State>());
+            Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
+            NewInspection = new Inspection();
 
             CreateAsignmentCommand = new RelayCommand(CreateAsignment, CanCreateAsignment);
             EditAsignmentCommand = new RelayCommand(EditAsignment, CanEditAsignment);
@@ -228,15 +254,30 @@ namespace ParkInspect.ViewModel
             CreateInspectionCommand = new RelayCommand(CreateInspection);
 
             ResetCommand = new RelayCommand(ResetAsignement);
+
+            NewInspectionCommand = new RelayCommand(ShowPopup);
+        }
+
+        private void ShowPopup()
+        {
+            popup.ShowConfirmPopup<AssignmentViewModel>("Voeg een inspectie toe", new NewInspectionPopup(), MakeNewInspection);
+        }
+
+        private void MakeNewInspection(AssignmentViewModel t)
+        {
+            if (NewInspection?.Parkinglot == null || NewInspection.State1 == null || NewInspection.deadline < DateTime.Today || NewInspection.deadline > NewInspection.Asignment.deadline) return;
+            if (NewInspection.date == null) { NewInspection.date = DateTime.Today; }
+            _service.Add<Inspection>(NewInspection);
+            InspectionList = _service.GetAll<Inspection>();
         }
 
         private void UpdateProperties()
         {
-            OpdrachtenCollection = new ObservableCollection<Asignment>(_service.GetAllAsignments());
+            OpdrachtenCollection = new ObservableCollection<Asignment>(_service.GetAll<Asignment>());
             SearchedAsignments = new ObservableCollection<Asignment>(OpdrachtenCollection);
-            ClientList = _service.GetAllClients();
-            AssignmentStatusList = _service.GetAllStates();
-            InspectionList = _service.GetAllInspections();
+            ClientList = _service.GetAll<Client>();
+            AssignmentStatusList = _service.GetAll<State>();
+            InspectionList = _service.GetAll<Inspection>();
 
             _clientfilter = "";
         }
