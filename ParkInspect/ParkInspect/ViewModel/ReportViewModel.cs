@@ -1,21 +1,40 @@
 ﻿using GalaSoft.MvvmLight;
+using Microsoft.SqlServer.ReportingServices2005;
+using Syncfusion.Windows.Reports.Viewer;
 
 namespace ParkInspect.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+    
     public class ReportViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the RapportageViewModel class.
-        /// </summary>
+
+        private ReportViewer _report;
+
+        public ReportViewer Report
+        {
+            get { return _report; }
+            set
+            {
+                _report = value; 
+               
+            }
+        }
+
+        
         public ReportViewModel()
         {
+            
+        }
 
+        public void LoadReport(string path)
+        {
+            Report = new ReportViewer();
+            ReportParameter param = new ReportParameter();
+            
+            Report.ReportPath = path;
+           
+            Report.RefreshReport();
+            RaisePropertyChanged("Report");
         }
     }
 }
