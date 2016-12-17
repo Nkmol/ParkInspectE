@@ -20,7 +20,6 @@ namespace ParkInspect.Model.Factory
 
                 foreach (var property in properties)
                 {
-
                     //Should not happen, unless wrong key is given
                     if (obj.GetType().GetProperty(property) == null)
                         continue;
