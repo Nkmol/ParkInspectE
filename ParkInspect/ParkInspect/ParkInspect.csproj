@@ -223,14 +223,16 @@
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
+    <Compile Include="ViewModel\ParkinglotVM\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\Popup\IPopup.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
-    <Compile Include="ViewModel\ParkinglotViewModel.cs" />
+    <Compile Include="ViewModel\ParkinglotVM\ParkinglotOverviewViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupManager.cs" />
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
+    <Compile Include="ViewModel\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\UserControls\ContactpersoonControl.xaml.cs">
