@@ -120,6 +120,19 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private Inspection _selectedInspectionBox;
+        public Inspection SelectedInspectionBox
+        {
+            get
+            {
+                return _selectedInspectionBox;
+            }
+            set
+            {
+                _selectedInspectionBox = value;
+                base.RaisePropertyChanged();
+            }
+        }
 
 
 
@@ -224,10 +237,20 @@ namespace ParkInspect.ViewModel
             CreateAsignmentCommand = new RelayCommand(CreateAsignment, CanCreateAsignment);
             EditAsignmentCommand = new RelayCommand(EditAsignment, CanEditAsignment);
 
-            RemoveInspectionCommand = new RelayCommand(RemoveInspection);
-            CreateInspectionCommand = new RelayCommand(CreateInspection);
+            RemoveInspectionCommand = new RelayCommand(RemoveInspection, CanRemoveInspection);
+            CreateInspectionCommand = new RelayCommand(CreateInspection, CanAddInspection);
 
             ResetCommand = new RelayCommand(ResetAsignement);
+        }
+
+        private bool CanAddInspection()
+        {
+            return SelectedInspectionBox != null;
+        }
+
+        private bool CanRemoveInspection()
+        {
+            return SelectedInspection != null;
         }
 
         private void UpdateProperties()
@@ -362,23 +385,23 @@ namespace ParkInspect.ViewModel
        
         public void RemoveInspection()
         {
-            if (_selectedInspection != null)
-            {
-                _selectedAsignment.Inspections.Remove(_selectedInspection);
-                AssignmentInspections.Remove(SelectedInspection);
-            }
-            else
-            {
-                CommandError = "Inspection Remove Error.";
-            }
+            if (SelectedInspection == null) return;
+
+            SelectedAsignment.Inspections.Remove(SelectedInspection);
+            AssignmentInspections.Remove(SelectedInspection);
         }
 
         // funcion should be changed to creating a new inspection, will be implemented as adding an existing one for now.
         public void CreateInspection()
         {
-            if (SelectedInspection == null) return;
-            SelectedAsignment.Inspections.Add(SelectedInspection);
-            AssignmentInspections.Add(SelectedInspection);
+            if (SelectedInspectionBox == null) return;
+            if (AssignmentInspections.Contains(SelectedInspectionBox)) return;
+
+            SelectedAsignment.Inspections.Add(SelectedInspectionBox);
+            AssignmentInspections.Add(SelectedInspectionBox);
+
+            SelectedInspectionBox = null;
+
         }
 
 
@@ -413,6 +436,8 @@ namespace ParkInspect.ViewModel
                 deadline = DateTime.Today,
                 date = DateTime.Today
             };
+            SelectedInspection = null;
+            SelectedInspectionBox = null;
 
             base.RaisePropertyChanged();
 
