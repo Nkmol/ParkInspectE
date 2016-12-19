@@ -18,24 +18,19 @@
     <Grid>
         <TabControl>
             <TabItem Header="Overzicht">
-                <StackPanel>
-                    <Label Name="SearchLabel">Zoeken</Label>
-                    <Grid Name="FilterGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox materialDesign:HintAssist.Hint="Zoek in voornaam" Grid.Column="0" Name="NameFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding FirstNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Zoek in achternaam" Grid.Column="1" Name="ZipFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                    </Grid>
-                    <DataGrid ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible"
-                              ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                              SelectionMode="Single" AutoGenerateColumns="False" 
-                              IsReadOnly="True" Height="500" ItemsSource="{Binding Employees}" 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <!-- Datagrid row -->
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <UniformGrid Grid.Row="1" Name="FilterGrid">
+                        <TextBox materialDesign:HintAssist.Hint="Zoek in voornaam" Name="NameFilter" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding FirstNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox materialDesign:HintAssist.Hint="Zoek in achternaam" Name="ZipFilter" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </UniformGrid>
+                    <DataGrid Height="400" Name="DataGrid" Grid.Row="2" SelectionMode="Single" AutoGenerateColumns="False" 
+                              IsReadOnly="True" ItemsSource="{Binding Employees}" 
                               SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
@@ -49,7 +44,7 @@
                         <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                </StackPanel>
+                </Grid>
             </TabItem>
             <TabItem Header="Management" DataContext="{Binding SelectedEmployee}" Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <Grid>
