@@ -10,6 +10,7 @@ using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using System.Security.Cryptography;
+using ParkInspect;
 
 namespace ParkInspect.ViewModel
 {
@@ -163,7 +164,8 @@ namespace ParkInspect.ViewModel
 
                 if (SelectedEmployee.employee_status.Equals("On Non-Pay leave"))
                 {
-                    Notification = "Een medewerker kan niet 'Op betaald verlof' zijn als hij/zij geen lopend contract heeft.";
+                    Notification =
+                        "Een medewerker kan niet 'Op betaald verlof' zijn als hij/zij geen lopend contract heeft.";
                     error = true;
                 }
 
@@ -178,7 +180,15 @@ namespace ParkInspect.ViewModel
                     Notification = "Er moet een datum uit dienst ingevoerd worden";
                     error = true;
                 }
+            }
 
+            if (error)
+            {
+                _dialog.ShowMessage("Fout opgetreden", Notification);
+                return;
+            }
+
+            //HASHING THE PASSWORD
             SHA256 sha = SHA256.Create();
 
             byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
@@ -193,44 +203,11 @@ namespace ParkInspect.ViewModel
 
             Service.Add(SelectedEmployee);
 
-            Notification = "De medewerker is opgeslagen";
-            UpdateDataGrid();
-        }
+            SelectedEmployee.password = new string(chars);
 
 
-
-            if (error)
-        {
-            if (SelectedEmployee.active)
-                SelectedEmployee.out_service_date = null;
-            if (SelectedEmployee.password != oldPass)
-            {
-                SHA256 sha = SHA256.Create();
-
-                byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
-                System.Buffer.BlockCopy(SelectedEmployee.password.ToCharArray(), 0, bytes, 0, bytes.Length);
-
-                sha.ComputeHash(bytes);
-
-                char[] chars = new char[sha.Hash.Length / sizeof(char)];
-                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
-                _dialog.ShowMessage("Fout opgetreden", Notification);
-                return;
-            }
-
-            if(SelectedEmployee.id == 0)
-            { 
-                Service.InsertEntity(SelectedEmployee);
-                Notification = "De medewerker is opgeslagen.";
-            }
-            else
-            { 
-                Service.UpdateEntity(SelectedEmployee);
-                SelectedEmployee.password = new string(chars);
-            }
             Service.Update(SelectedEmployee);
             Notification = "De medewerker is aangepast";
-            }
             _dialog.ShowMessage("Gelukt!", Notification);
             UpdateDataGrid();
         }
