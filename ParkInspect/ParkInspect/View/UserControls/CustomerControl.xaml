@@ -5,12 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d"
+             xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
              Width="1000"
              Height="600"
              DataContext="{Binding Client, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <convertor1:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <TabControl>
-            <TabItem Header="Overview">
+            <TabItem Header="Overzicht"  Visibility="{Binding Dashboard.TabStatus[15], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" >
                 <StackPanel>
 
                     <Label Name="SearchLabel">
@@ -50,7 +56,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Management">
+            <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <DockPanel LastChildFill="False">
                     <Grid DockPanel.Dock="Top" Height="223" Margin="0,0,0.4,0">
                         <Label x:Name="NameLabel" Content="Naam:" Margin="89,48,255,148" />

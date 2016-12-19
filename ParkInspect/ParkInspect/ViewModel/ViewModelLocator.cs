@@ -46,6 +46,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<PopupCoordinator>();
 
             SimpleIoc.Default.Register<ClientViewModel>();
+            SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<EmployeeViewModel>();
@@ -92,6 +93,8 @@ namespace ParkInspect.ViewModel
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
+
+        public ContactpersonViewModel Contactperson => ServiceLocator.Current.GetInstance<ContactpersonViewModel>();
 
         public PopupViewModel Popup => new PopupViewModel(); // Always new link
         public PopupManager PopupManager => ServiceLocator.Current.GetInstance<PopupManager>();

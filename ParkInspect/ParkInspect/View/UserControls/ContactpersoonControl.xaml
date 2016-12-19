@@ -57,7 +57,7 @@
                         <TextBox.Text>
                             <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                    <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
@@ -68,7 +68,7 @@
                         <TextBox.Text>
                             <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                    <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>

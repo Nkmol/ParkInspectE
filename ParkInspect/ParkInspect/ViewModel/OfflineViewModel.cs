@@ -378,6 +378,7 @@ namespace ParkInspect.ViewModel
         }
         public void LoadDirections()
         {
+            directions.Clear();
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 Direction direction = new Direction();
@@ -388,6 +389,7 @@ namespace ParkInspect.ViewModel
         private void DeleteInspection()
         {
             File.Delete(runpath + "/directions/" + selectedDirection.Name + ".txt");
+          ///  LoadDirections();
             // directions.Remove(selectedDirection); Fucking weird ass nullpointer to be fixted
             _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
         }

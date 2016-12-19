@@ -1,0 +1,37 @@
+﻿This file contains the numeric value assigned to TabItems. These values can be used in DashboardViewModel to modify visibulity of tabs.
+========================================================================================================================================
+
+00 - MainTab:klanten
+01 - MainTab:Parkeerplaatsen
+02 - MainTab:Opdrachten
+03 - MainTab:Inspectie
+04 - MainTab:Vragenlijst
+05 - MainTab:Personeel
+06 - MainTab:Rapportage
+07 - MainTab:Afwezigheid
+08 - 
+09 - 
+10 - MainTab:Afwezigheid > SubTab:Overview
+11 - MainTab:Afwezigheid > SubTab:Afwezigheid invoeren
+12 -
+13 - MainTab:Opdrachten      > SubTab:Overview
+14 - MainTab:Opdrachten      > SubTab:Management
+15 - MainTab:klanten         > SubTab:Overview
+16 - MainTab:klanten         > SubTab:Management
+17 - MainTab:Personeel       > SubTab:Overview
+18 - MainTab:Personeel       > SubTab:Management
+19 - MainTab:Vragenlijst     > SubTab:Overview
+20 - MainTab:Vragenlijst     > SubTab:Management
+21 - MainTab:Inspectie       > SubTab:Overview 
+22 - MainTab:Inspectie       > SubTab:Management
+23 - MainTab:Parkeerplaatsen > SubTab:Overview 
+24 - MainTab:Parkeerplaatsen > SubTab:Management
+25 - MainTab:Rapportage      > SubTab:Overview 
+26 - MainTab:Rapportage      > SubTab:Management
+27 -
+28 -
+29 -
+30 -
+
+
+========================================================================================================================================

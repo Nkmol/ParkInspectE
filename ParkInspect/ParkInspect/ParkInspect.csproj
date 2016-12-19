@@ -127,6 +127,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -190,6 +191,7 @@
     <Compile Include="Model\ValidationRules\IsPositiveNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidDateTimeRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidEmailValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsValidNameValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidPhoneNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidZipCodeValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="ViewModel\PrepareViewModel.cs" />
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Compile Include="ViewModel\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
@@ -300,7 +303,7 @@
     <Compile Include="View\UserControls\FormControl.xaml.cs">
       <DependentUpon>FormControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="CustomMarkers\Circle.xaml">
+	 <Page Include="CustomMarkers\Circle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -324,6 +327,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Convertor\VisibilityConverter.cs" />
     <Page Include="View\DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -447,6 +451,7 @@
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
       <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="View\TabsStatusInfo.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
