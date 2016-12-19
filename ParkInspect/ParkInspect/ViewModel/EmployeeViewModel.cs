@@ -188,7 +188,7 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            //HASHING THE PASSWORD
+            /*
             SHA256 sha = SHA256.Create();
 
             byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
@@ -204,10 +204,17 @@ namespace ParkInspect.ViewModel
             Service.Add(SelectedEmployee);
 
             SelectedEmployee.password = new string(chars);
-
-
-            Service.Update(SelectedEmployee);
-            Notification = "De medewerker is aangepast";
+            */
+            if (SelectedEmployee.id == 0)
+            {
+                Service.Add(SelectedEmployee);
+            }
+            else
+            {
+                Service.Update(SelectedEmployee);
+                Notification = "De medewerker is aangepast";
+            }
+            
             _dialog.ShowMessage("Gelukt!", Notification);
             UpdateDataGrid();
         }
