@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
+using System.Windows.Forms;
 
 namespace ParkInspect.ViewModel
 {
@@ -40,6 +41,7 @@ namespace ParkInspect.ViewModel
 
         public ICommand SaveNewAbsenceCommand { get; set; }
         public ICommand DeleteAbsenceCommand { get; set; }
+        public ICommand ResetFieldsCommand { get; set; }
 
 
         private string _startDateFilter;
@@ -184,10 +186,18 @@ namespace ParkInspect.ViewModel
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
             DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod);
+            ResetFieldsCommand = new RelayCommand(ResetFieldsMethod);
+        }
+
+        private void ResetFieldsMethod()
+        {
+            Reset();
+
         }
 
         private void DeleteAbsenceMethod()
         {
+
             if (SelectedAbsence == null)
             {
                 Message = (Service.Delete<Absence>(SelectedAbsence) ? "Something went wrong." : "Selecteer een afwezigheid!");
@@ -195,9 +205,20 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            Absences.Remove(SelectedAbsence);
+            DialogResult dialogResult = MessageBox.Show("Weet u zeker dat  u deze afwezigheid wilt verwijderen?", "Verwijderen", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Message = (Service.Delete<Absence>(SelectedAbsence) ? "Afwezigheid verwijderd" : "Something went wrong.");
+                _dialog.ShowMessage("Action", Message);
+                Absences.Remove(SelectedAbsence);
 
-            base.RaisePropertyChanged();
+                base.RaisePropertyChanged();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                return;
+            }
+
         }
 
         private void SaveNewAbsenceMethod()
@@ -209,14 +230,15 @@ namespace ParkInspect.ViewModel
                 _dialog.ShowMessage("Action", Message);
                 return;
             }
-
+            
             Message = (Service.Add<Absence>(SelectedAbsence) ? "Something went wrong." : "Een nieuwe afwezigheid is opgeslagen!");
             _dialog.ShowMessage("Action", Message);
 
             Absences.Add(NewAbsence);
             Reset();
-            base.RaisePropertyChanged();
             SelectedEmployee = new Employee();
+            base.RaisePropertyChanged();
+            
 
         }
 

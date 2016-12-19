@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              Height="Auto" Width="Auto"
              DataContext="{Binding Absence, Source={StaticResource Locator}}">
@@ -38,7 +39,6 @@
                             <TextBox Grid.Column="1" Name="EnddateFilter" HorizontalAlignment="Stretch" Text="{Binding EndDateFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <TextBox Grid.Column="2" Name="SurnameFilter" HorizontalAlignment="Stretch" Text="{Binding SurnameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <TextBox Grid.Column="3" Name="LastnameFilter" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <TextBox Grid.Column="4" Name="IDFilter" HorizontalAlignment="Stretch" Text="{Binding IDFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </Grid>
                         <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <DataGrid.Columns>
@@ -46,7 +46,6 @@
                                 <DataGridTextColumn Header="Eind Datum" Width="1*" Binding="{Binding end}" />
                                 <DataGridTextColumn Header="Voornaam" Width="1*" Binding="{Binding Employee.firstname}"/>
                                 <DataGridTextColumn Header="Achternaam" Width="1*" Binding="{Binding Employee.lastname}"/>
-                                <DataGridTextColumn Header="ID" Width="1*" Binding="{Binding employee_id}"/>
 
                             </DataGrid.Columns>
                         </DataGrid>
@@ -62,7 +61,7 @@
                     <StackPanel>
 
                         <Label x:Name="label" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <DatePicker x:Name="beginDate">
+                    <!--    <DatePicker x:Name="beginDate" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
                             <DatePicker.SelectedDate>
                                 <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -70,10 +69,30 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </DatePicker.SelectedDate>
-                        </DatePicker>
+                        </DatePicker> -->
+
+                        <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left" Margin="42,26,0,0" VerticalAlignment="Top" Width="250">
+                            <controls:DateTimePicker.SelectedDate>
+                                <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </controls:DateTimePicker.SelectedDate>
+                        </controls:DateTimePicker>
+
                         <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left" Margin="42,26,0,0" VerticalAlignment="Top" Width="250">
+                            <controls:DateTimePicker.SelectedDate>
+                                <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </controls:DateTimePicker.SelectedDate>
+                        </controls:DateTimePicker>
                         <!--<DatePicker  SelectedDate="{Binding NewAbsence.end}">-->
-                        <DatePicker x:Name="endDate">
+                      <!--  <DatePicker x:Name="endDate" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
                             <DatePicker.SelectedDate>
                                 <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -81,9 +100,10 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </DatePicker.SelectedDate>
-                        </DatePicker>
+                        </DatePicker> -->
                         <DockPanel>
-                            <ComboBox Name="EmployeeBox" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" >
+                            
+                            <ComboBox Name="EmployeeBox" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
                                 <ComboBox.Text>
                                     <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -96,7 +116,11 @@
 
                             <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                         </DockPanel>
-                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button"  Content="Voeg toe" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="120"  >
+                        
+                        
+                        
+                        <Button Command="{Binding ResetFieldsCommand}" x:Name="Button"  Content="Deselecteren" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="120"  />
+                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button1"  Content="Voeg toe" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="120"  >
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
