@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,6 +15,8 @@ namespace ParkInspect.ViewModel
     {
         private string _clientFilter;
 
+        private readonly DialogManager _dialog;
+
         private string _firstnameFilter;
         private string _lastnameFilter;
         private Client _selectedClient;
@@ -24,8 +25,9 @@ namespace ParkInspect.ViewModel
 
         protected ContactpersonService Service;
 
-        public ContactpersonViewModel(IRepository context)
+        public ContactpersonViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
             Service = new ContactpersonService(context);
             Data = Service.GetAll<Contactperson>();
             Clients = new ObservableCollection<Client>(Service.GetAll<Client>());
@@ -33,11 +35,11 @@ namespace ParkInspect.ViewModel
             SaveCommand = new RelayCommand(SaveContactperson);
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
             SelectedClient = new Client();
-            SelectedContactperson = new Contactperson();
             UpdateContactpersons();
+            Reset();
         }
 
-        private IEnumerable<Contactperson> Data { get; }
+        private IEnumerable<Contactperson> Data { get; set; }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
         public ObservableCollection<Client> Clients { get; set; }
@@ -47,15 +49,14 @@ namespace ParkInspect.ViewModel
             get { return _selectedContactperson; }
             set
             {
-                Set(ref _selectedContactperson, value);
+                _selectedContactperson = value ?? new Contactperson();
 
                 if (_selectedContactperson?.Client != null)
                     SelectedClient = _selectedContactperson.Client;
 
                 RaisePropertyChanged("firstname");
                 RaisePropertyChanged("lastname");
-                RaisePropertyChanged("client");
-                SaveCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged("client_id");
                 DeleteContactpersonCommand.RaiseCanExecuteChanged();
             }
         }
@@ -128,10 +129,15 @@ namespace ParkInspect.ViewModel
         {
             SelectedContactperson = new Contactperson();
             RaisePropertyChanged("SelectedContactperson");
+            SelectedContactperson.id = -1;
+            SelectedContactperson.firstname = "";
+            SelectedContactperson.lastname = "";
         }
 
         private void UpdateContactpersons()
         {
+            Data = Service.GetAll<Contactperson>();
+
             var builder = new FilterBuilder();
             builder.Add("firstname", FirstnameFilter);
             builder.Add("lastname", LastnameFilter);
@@ -140,44 +146,40 @@ namespace ParkInspect.ViewModel
             var result = Data.Where(x => x.Like(builder.Get()));
 
             Contactpersons = new ObservableCollection<Contactperson>(result);
+            Reset();
             RaisePropertyChanged("Contactpersons");
         }
 
         private bool CanDelete()
         {
-            return (SelectedContactperson != null) && (SelectedContactperson.id != 0);
+            return (SelectedContactperson != null) && (SelectedContactperson.id != -1);
         }
 
         private void SaveContactperson()
         {
-            if (SelectedContactperson.id == 0)
+            if (SelectedContactperson.id < 0)
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Add(SelectedContactperson);
-                MessageBox.Show("Contactpersoon toegevoegd");
+                _dialog.ShowMessage("Actie", "Contactpersoon toegevoegd");
             }
             else
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Update(SelectedContactperson);
-                MessageBox.Show("Contactpersoon geupdate");
+                _dialog.ShowMessage("Actie", "Contactpersoon bijgewerkt");
             }
 
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
-            RaisePropertyChanged("Contactpersons");
             UpdateContactpersons();
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
         }
 
         private void DeleteContactperson()
         {
             Service.Delete(SelectedContactperson);
-            Contactpersons.Remove(SelectedContactperson);
-            Reset();
-            SaveCommand.RaiseCanExecuteChanged();
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
             UpdateContactpersons();
-
-            MessageBox.Show("Contactpersoon verwijderd");
+            DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            _dialog.ShowMessage("Action", "Contactpersoon verwijderd");
         }
     }
 }

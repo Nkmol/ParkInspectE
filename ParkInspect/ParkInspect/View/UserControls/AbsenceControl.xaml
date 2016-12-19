@@ -4,13 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
-             mc:Ignorable="d"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             mc:Ignorable="d" 
              Height="Auto"
              Width="Auto"
              DataContext="{Binding Absence, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+
+
     <Grid>
         <TabControl Margin="0,0,-0.2,0">
-            <TabItem Header="Overview">
+            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[10], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <ScrollViewer>
                     <StackPanel>
                         <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -39,11 +45,11 @@
                         </StackPanel>
                     </DockPanel>
                     <DockPanel Height="150" Width="255" Margin="0,0,100,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-                        <StackPanel>
+                    <StackPanel>
                             <Label x:Name="label2" Content="Eind Datum"/>
                             <DatePicker  SelectedDate="{Binding NewAbsence.end}" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10"/>
                         </StackPanel>
-                    </DockPanel>
+                        </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
                         <Label DataContext="{Binding Absence, Source={StaticResource Locator}}" Content="{Binding Notification, Mode=TwoWay}" Width="300" Height="50" VerticalAlignment="Top"/>
                         <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="button"  Content="Opslaan" HorizontalAlignment="Left" Margin="240,0,10,0" VerticalAlignment="Top" Width="120"/>

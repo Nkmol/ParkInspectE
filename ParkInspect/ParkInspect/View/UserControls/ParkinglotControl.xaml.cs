@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
+using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel;
 
 namespace ParkInspect.View.UserControls
@@ -45,6 +47,5 @@ namespace ParkInspect.View.UserControls
         {
             DataGrid.UnselectAll();
         }
-
     }
 }

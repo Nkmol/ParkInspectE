@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -17,6 +18,8 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls;
+using ParkInspect.View.UserControls.Popup;
 
 namespace ParkInspect.ViewModel
 {
@@ -173,7 +176,7 @@ namespace ParkInspect.ViewModel
             Data = Service.GetAll<Parkinglot>();
             UpdateParkinglots();
             Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
-            NewParkinglot();          
+            NewParkinglot();
         }
 
         public void UpdateParkinglots()

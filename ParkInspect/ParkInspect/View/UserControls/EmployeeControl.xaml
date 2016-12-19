@@ -11,6 +11,9 @@
              Width="1000"
              Height="600"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
         <TabControl>
             <TabItem Header="Overzicht">
@@ -28,26 +31,26 @@
                         <TextBox materialDesign:HintAssist.Hint="Zoek in achternaam" Grid.Column="1" Name="ZipFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     </Grid>
                     <DataGrid ScrollViewer.CanContentScroll="True" VerticalAlignment="Top"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                                  SelectionMode="Single" AutoGenerateColumns="False" 
-                                  IsReadOnly="True" Height="500" ItemsSource="{Binding Employees}" 
-                                  SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
-                            <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
-                            <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                              SelectionMode="Single" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Height="500" ItemsSource="{Binding Employees}" 
+                              SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
+                        <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
+                        <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
                             <DataGridTextColumn Header="In dienst datum" Binding="{Binding in_service_date, StringFormat={}{0:dd/MM/yyyy}}" />
                             <DataGridTextColumn Header="Uit dienst datum" Binding="{Binding out_service_date, StringFormat={}{0:dd/MM/yyyy}}"/>
-                            <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
+                        <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
                             <DataGridTextColumn Header="In dienst" Binding="{Binding active}" />
-                            <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                        <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}">
+            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}" Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <Grid>
                     <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <StackPanel>
@@ -80,7 +83,7 @@
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                                 <validationRules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
+                                            </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
