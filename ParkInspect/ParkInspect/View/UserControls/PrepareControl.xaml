@@ -10,73 +10,71 @@
                 DataContext="{Binding Prepare, Source={StaticResource Locator}}" Width="965" Height="630">
 
     <TabControl Margin="0,0,-52,0" Height="622" VerticalAlignment="Top">
-        <TabItem Header="Overzicht">
-            <Canvas Margin="10,-37,0,0" Height="614" VerticalAlignment="Top">
-                <Canvas>
-                    <ComboBox x:Name="comboInspections" ItemsSource="{Binding inspections}" SelectedItem="{Binding selectedInspection}" DisplayMemberPath="id" HorizontalAlignment="Left" VerticalAlignment="Top" Width="286" Grid.ColumnSpan="2" Canvas.Left="71" Canvas.Top="34"/>
-                    <Label x:Name="label" Content="Inspectie" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="34"/>
-                    <GroupBox x:Name="groupBox" Header="Inspectie info" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="347" Height="303" Grid.ColumnSpan="2">
-                        <Grid>
-                            <StackPanel HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="124" Margin="0,0,0,-3">
-                                <Label x:Name="l_inspection_id" Content="Inspectie nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_date" Content="inspectie datum:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_deadline" Content="inspectie deadline:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_client" Content="Klant:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_parkinglot" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_region" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_zip" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_number" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_clarification" Content="Opmerkingen:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            </StackPanel>
-                            <StackPanel  HorizontalAlignment="Left" Height="254" Margin="129,0,-2,0" VerticalAlignment="Top" Width="206">
-                                <Label x:Name="l_inspection_id_text" Content="{Binding inspection_id}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_date_text" Content="{Binding inspection_date}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_deadline_text" Content="{Binding inspection_deadline}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_client_text" Content="{Binding client_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_parkinglot_text" Content="{Binding parkinglot_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_region_text" Content="{Binding region_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_zip_text" Content="{Binding region_zip}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Label x:Name="l_number_text" Content="{Binding region_number}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <TextBlock x:Name="l_clarification_text" TextWrapping="Wrap" Text="{Binding clarification}" Height="54" Margin="0,5,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="585" Height="505" Grid.Column="1" Canvas.Left="362" Canvas.Top="67">
-                        <Grid Margin="0,0,0,-22" Width="574">
-                            <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="396" VerticalAlignment="Top" Width="564" Margin="0,26,0,0"/>
-                            <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Margin="117,409,0,31" TextWrapping="Wrap" Width="218">
-                                <TextBox.Text>
-                                    <Binding Path="home_adress" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="29,427,0,0" VerticalAlignment="Top" Height="26" RenderTransformOrigin="0.5,0.5">
+        <Canvas Margin="10,-37,0,0" Height="614" VerticalAlignment="Top">
+            <Canvas>
+                <ComboBox x:Name="comboInspections" ItemsSource="{Binding inspections}" SelectedItem="{Binding selectedInspection}" DisplayMemberPath="id" HorizontalAlignment="Left" VerticalAlignment="Top" Width="286" Grid.ColumnSpan="2" Canvas.Left="71" Canvas.Top="34"/>
+                <Label x:Name="label" Content="Inspectie" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="34"/>
+                <GroupBox x:Name="groupBox" Header="Inspectie info" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="347" Height="303" Grid.ColumnSpan="2">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="124" Margin="0,0,0,-3">
+                            <Label x:Name="l_inspection_id" Content="Inspectie nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_date" Content="inspectie datum:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_deadline" Content="inspectie deadline:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_client" Content="Klant:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_parkinglot" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_region" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_zip" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_number" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_clarification" Content="Opmerkingen:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </StackPanel>
+                        <StackPanel  HorizontalAlignment="Left" Height="254" Margin="129,0,-2,0" VerticalAlignment="Top" Width="206">
+                            <Label x:Name="l_inspection_id_text" Content="{Binding inspection_id}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_date_text" Content="{Binding inspection_date}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_deadline_text" Content="{Binding inspection_deadline}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_client_text" Content="{Binding client_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_parkinglot_text" Content="{Binding parkinglot_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_region_text" Content="{Binding region_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_zip_text" Content="{Binding region_zip}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_number_text" Content="{Binding region_number}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBlock x:Name="l_clarification_text" TextWrapping="Wrap" Text="{Binding clarification}" Height="54" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="585" Height="505" Grid.Column="1" Canvas.Left="362" Canvas.Top="67">
+                    <Grid Margin="0,0,0,-22" Width="574">
+                        <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="396" VerticalAlignment="Top" Width="564" Margin="0,26,0,0"/>
+                        <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Margin="117,409,0,31" TextWrapping="Wrap" Width="218">
+                            <TextBox.Text>
+                                <Binding Path="home_adress" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="29,427,0,0" VerticalAlignment="Top" Height="26" RenderTransformOrigin="0.5,0.5">
 
-                            </Label>
-                            <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
-                            <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
-                            <Label x:Name="l_distance" Content="Afstand:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox x:Name="groupBox2" Header="Route beschrijving" HorizontalAlignment="Left" VerticalAlignment="Top" Width="347" Height="230" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="375">
-                        <Grid>
-                            <ListBox x:Name="listBox" HorizontalAlignment="Left"  ItemsSource="{Binding directionItems}" Height="188" VerticalAlignment="Top" Width="335" Margin="0,0,-2,0"/>
-                        </Grid>
-                    </GroupBox>
-                </Canvas>
-                <Button x:Name="button1" Content="Opslaan" Command="{Binding saveDirections}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="26" Canvas.Left="806" Canvas.Top="578"/>
-                <TextBox x:Name="NameBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="218" Height="25" Canvas.Left="583" Canvas.Top="579">
-                    <Binding Path="directions_save_name" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
-                <Label x:Name="label4" Content =" Naam voor offline opslaan:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="399" Canvas.Top="579"/>
+                        </Label>
+                        <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
+                        <Label x:Name="l_distance" Content="Afstand:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox2" Header="Route beschrijving" HorizontalAlignment="Left" VerticalAlignment="Top" Width="347" Height="230" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="375">
+                    <Grid>
+                        <ListBox x:Name="listBox" HorizontalAlignment="Left"  ItemsSource="{Binding directionItems}" Height="188" VerticalAlignment="Top" Width="335" Margin="0,0,-2,0"/>
+                    </Grid>
+                </GroupBox>
             </Canvas>
-        </TabItem>
+            <Button x:Name="button1" Content="Opslaan" Command="{Binding saveDirections}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="26" Canvas.Left="806" Canvas.Top="578"/>
+            <TextBox x:Name="NameBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="218" Height="25" Canvas.Left="583" Canvas.Top="579">
+                <Binding Path="directions_save_name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
+            <Label x:Name="label4" Content =" Naam voor offline opslaan:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="399" Canvas.Top="579"/>
+        </Canvas>
     </TabControl>
 </UserControl>
