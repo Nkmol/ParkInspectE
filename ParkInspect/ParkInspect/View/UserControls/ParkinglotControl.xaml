@@ -10,7 +10,7 @@
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="1000"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}" 
