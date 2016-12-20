@@ -50,7 +50,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="125"/>
+                        <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125"/>
                         
                     </StackPanel>
                 </ScrollViewer>
@@ -71,7 +71,7 @@
                             </DatePicker.SelectedDate>
                         </DatePicker> -->
 
-                        <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left" Margin="42,26,0,0" VerticalAlignment="Top" Width="250">
+                        <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -82,7 +82,8 @@
                         </controls:DateTimePicker>
 
                         <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-                        <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left" Margin="42,26,0,0" VerticalAlignment="Top" Width="250">
+                        
+                        <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -119,17 +120,17 @@
                         
                         
                         
-                        <Button Command="{Binding ResetFieldsCommand}" x:Name="Button"  Content="Deselecteren" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="120"  />
-                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button1"  Content="Voeg toe" HorizontalAlignment="Left" Margin="330,219,0,0" VerticalAlignment="Top" Width="120"  >
+                        <Button Command="{Binding ResetFieldsCommand}" x:Name="Button"  Content="Deselecteren" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120"  />
+                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button1"  Content="Voeg toe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"  >
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding ElementName=EmployeeBox, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=beginDate, Path=(Validation.HasError)}" Value="false"/>
-                                                <Condition Binding="{Binding ElementName=endDate, Path=(Validation.HasError)}" Value="false"/>
+                                                <Condition Binding="{Binding (Validation.HasError), ElementName=EmployeeBox}" Value="false" />
+                                                <Condition Binding="{Binding (Validation.HasError), ElementName=beginDatenew}" Value="false"/>
+                                                <Condition Binding="{Binding (Validation.HasError), ElementName=endDatenew}" Value="false"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>

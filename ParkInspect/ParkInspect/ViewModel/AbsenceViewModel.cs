@@ -224,14 +224,14 @@ namespace ParkInspect.ViewModel
         private void SaveNewAbsenceMethod()
         {
 
-            if (NewAbsence.start > NewAbsence.end)
+            if (NewAbsence.start < NewAbsence.end)
             {
                 Message = (Service.Add<Absence>(SelectedAbsence) ? "Something went wrong." : "De einddatum  mag niet voor de begindatum liggen!");
                 _dialog.ShowMessage("Action", Message);
                 return;
             }
             
-            Message = (Service.Add<Absence>(SelectedAbsence) ? "Something went wrong." : "Een nieuwe afwezigheid is opgeslagen!");
+            Message = (Service.Add<Absence>(NewAbsence) ? "Een nieuwe afwezigheid is opgeslagen!" : "Something went wrong." );
             _dialog.ShowMessage("Action", Message);
 
             Absences.Add(NewAbsence);
