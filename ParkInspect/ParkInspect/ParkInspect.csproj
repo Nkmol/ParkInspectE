@@ -69,7 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="GoogleMapsApi">
-      <HintPath>..\..\..\GMAPWPF\packages\GoogleMapsApi.dll</HintPath>
+      <HintPath>..\..\..\..\..\Google Drive\GMAPWPF\packages\GoogleMapsApi.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMapsAPI.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GoogleMapsAPI.NET.1.0.0\lib\net40\GoogleMapsAPI.NET.dll</HintPath>
@@ -303,7 +303,7 @@
     <Compile Include="View\UserControls\FormControl.xaml.cs">
       <DependentUpon>FormControl.xaml</DependentUpon>
     </Compile>
-	 <Page Include="CustomMarkers\Circle.xaml">
+    <Page Include="CustomMarkers\Circle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

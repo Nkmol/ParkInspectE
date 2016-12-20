@@ -390,7 +390,7 @@ namespace ParkInspect.ViewModel
         {
             File.Delete(runpath + "/directions/" + selectedDirection.Name + ".txt");
           ///  LoadDirections();
-            // directions.Remove(selectedDirection); Fucking weird ass nullpointer to be fixted
+            // directions.Remove(selectedDirection); Fucking weird ass nullpointer to be fixed
             _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
         }
 

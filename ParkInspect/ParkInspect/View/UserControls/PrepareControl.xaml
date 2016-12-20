@@ -56,7 +56,22 @@
 
                         </Label>
                         <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
-                        <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>
+                       <!-- <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>-->
+                        <Button x:Name="button" Command="{Binding saveDirections, UpdateSourceTrigger=PropertyChanged}" Content="Navigeer" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=txt_home_adres, Path=(Validation.HasError)}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                         <Label x:Name="l_distance" Content="Afstand:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </Grid>
                 </GroupBox>
@@ -66,7 +81,21 @@
                     </Grid>
                 </GroupBox>
             </Canvas>
-            <Button x:Name="button1" Content="Opslaan" Command="{Binding saveDirections}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="26" Canvas.Left="806" Canvas.Top="578"/>
+            <Button x:Name="SaveButton2" Command="{Binding saveDirections, UpdateSourceTrigger=PropertyChanged}"  Content="Opslaan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="26" Canvas.Left="806" Canvas.Top="578">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="IsEnabled" Value="false" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="false" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="true" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <TextBox x:Name="NameBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="218" Height="25" Canvas.Left="583" Canvas.Top="579">
                 <Binding Path="directions_save_name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
