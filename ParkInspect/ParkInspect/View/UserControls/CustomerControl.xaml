@@ -103,7 +103,7 @@
 			                    Content="Sla klant op" Margin="540,0,10,0"
 			                    VerticalAlignment="Top" Width="120">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>

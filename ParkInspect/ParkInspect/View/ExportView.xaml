@@ -9,12 +9,15 @@
         xmlns:userControls="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
         Height="600"
+        BorderThickness="1"
         Width="1000"
         Title="ParkInspect"
         DataContext="{Binding Export, Source={StaticResource Locator}}">
-    <StackPanel>
+    <ScrollViewer Height="570">
+    <StackPanel MinHeight="570">
+        
 
-        <Label x:Name="ExportLabel">You will export the following table:</Label>
+        <Label x:Name="ExportLabel">Je wilt de volgende tabel exporteren:</Label>
         <DataGrid x:Name="HiddenGrid" ItemsSource="{Binding Data, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
         <DataGrid x:Name="ExportGrid" IsReadOnly="True" ItemsSource="{Binding Viewable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
 
@@ -31,23 +34,24 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" x:Name="AvailableLabel" Content="Available columns:" HorizontalAlignment="Stretch"/>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="AvailableLabel" Content="Beschikbare kolommen" HorizontalAlignment="Stretch"/>
             <ListBox Grid.Row="1" Grid.Column="0" BorderThickness="1" SelectedItem="{Binding Available}" ItemsSource="{Binding AvailableColumns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
-            <Button Grid.Row="2" Grid.Column="0" Content="Add selected column" HorizontalAlignment="Stretch" Command="{Binding AddCommand}"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="Add all columns" HorizontalAlignment="Stretch" Command="{Binding AddAllCommand}"/>
+            <Button Grid.Row="2" Grid.Column="0" Content="Voeg kolom toe" Margin="5" HorizontalAlignment="Stretch" Command="{Binding AddCommand}"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="Voeg alle kolommen toe" Margin="5" HorizontalAlignment="Stretch" Command="{Binding AddAllCommand}"/>
             
-            <Label Grid.Row="0" Grid.Column="1" x:Name="SelectedLabel" Content="Selected columns:"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="SelectedLabel" Content="Geselecteerde kolommen"/>
             <ListBox Grid.Row="1" Grid.Column="1" BorderThickness="1" SelectedItem="{Binding Selected}" ItemsSource="{Binding SelectedColumns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
-            <Button Grid.Row="2" Grid.Column="1" Content="Remove selected column" HorizontalAlignment="Stretch" Command="{Binding RemoveCommand}"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Remove all columns" HorizontalAlignment="Stretch" Command="{Binding RemoveAllCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Verwijder kolom" Margin="5" HorizontalAlignment="Stretch" Command="{Binding RemoveCommand}"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Verwijder alle kolommen" Margin="5" HorizontalAlignment="Stretch" Command="{Binding RemoveAllCommand}"/>
             
-            <Label Grid.Row="0" Grid.Column="2" x:Name="AliasLabel" Content="Alias columns:"/>
+            <Label Grid.Row="0" Grid.Column="2" x:Name="AliasLabel" Content="Alias van kolom:"/>
             <DataGrid Grid.Row="1" Grid.Column="2" AutoGenerateColumns="True"  BorderThickness="1"  HeadersVisibility="None" HorizontalAlignment="Stretch" IsReadOnly="False" ItemsSource="{Binding AliasColumns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </DataGrid>
-            <Button Grid.Row="2" Grid.Column="2" Content="Update" HorizontalAlignment="Stretch" Command="{Binding AliasChangedCommand}"/>
+            <Button Grid.Row="2" Grid.Column="2" Content="Ververs" HorizontalAlignment="Stretch" Command="{Binding AliasChangedCommand}"/>
 
         </Grid>
-        <Button x:Name="Export" Content="Export selected data" Command="{Binding ExportCommand}" Margin="0,10,0,0"/>
+        <Button Width="250" x:Name="Export" HorizontalAlignment="Left" Content="Exporteer geselecteerde data" Command="{Binding ExportCommand}" Margin="5,30,0,15"/>
 
     </StackPanel>
+    </ScrollViewer>
 </controls:MetroWindow>
