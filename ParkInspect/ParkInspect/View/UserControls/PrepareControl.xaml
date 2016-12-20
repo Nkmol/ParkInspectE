@@ -56,8 +56,7 @@
 
                         </Label>
                         <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
-                       <!-- <Button x:Name="button" Content="Navigeer"  Command="{Binding getDirections}" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click"/>-->
-                        <Button x:Name="button" Command="{Binding saveDirections, UpdateSourceTrigger=PropertyChanged}" Content="Navigeer" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click">
+                             <Button x:Name="button" Command="{Binding getDirections, UpdateSourceTrigger=PropertyChanged}" Content="Navigeer" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
