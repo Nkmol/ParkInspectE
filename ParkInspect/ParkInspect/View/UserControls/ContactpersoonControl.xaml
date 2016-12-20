@@ -8,6 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1000"
+             VerticalAlignment="Top"
              DataContext="{Binding Contactperson, Source={StaticResource Locator}}">
     <Grid>
         <TabControl>

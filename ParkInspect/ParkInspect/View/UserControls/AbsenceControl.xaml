@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              Height="Auto"
              Width="Auto"
+             VerticalAlignment="Top"
              DataContext="{Binding Absence, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>

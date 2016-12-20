@@ -11,6 +11,7 @@
              mc:Ignorable="d" 
              Width="1000"
              Height="600"
+             VerticalAlignment="Top"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
