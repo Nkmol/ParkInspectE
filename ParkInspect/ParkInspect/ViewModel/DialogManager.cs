@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace ParkInspect.ViewModel
 {
-    public class DialogManager
+    public class DialogManager : DialogCoordinator
     {
         // Virtual = Used for Moq
         public virtual IDialogCoordinator DialogCoordinator { get; set; }
@@ -96,6 +96,16 @@ namespace ParkInspect.ViewModel
         }
 
 
+        public bool ShowConfirmationDialog(string title, string message)
+        {
+            if (ShowModalMessageExternal(this, title, message, MessageDialogStyle.AffirmativeAndNegative) ==
+                MessageDialogResult.Affirmative)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
 
     }
