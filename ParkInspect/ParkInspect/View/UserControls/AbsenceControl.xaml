@@ -8,8 +8,8 @@
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             Height="Auto"
-             Width="Auto"
+             Height="600"
+             Width="1000"
              DataContext="{Binding Absence, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
@@ -59,17 +59,17 @@
                 <Grid>
                     <DockPanel Height="150" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <StackPanel>
-                            <Label x:Name="label" Content="Begin Datum"/>
-                            <DatePicker SelectedDate="{Binding NewAbsence.start}" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" />
+                            
+                            
 
-                            <Label x:Name="label3" Content="Medewerker"/>
-                            <ComboBox Margin="5,0,0,10" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Text="Selecteer Personeel"></ComboBox>
+                            
+                           
                         </StackPanel>
                     </DockPanel>
-                    <DockPanel Height="150" Width="255" Margin="0,0,100,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <StackPanel>
+                    <DockPanel Height="250" Width="480" VerticalAlignment="Top" HorizontalAlignment="left">
+                        <StackPanel Margin="0,0,0,-16.4">
 
-                        <Label x:Name="label" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="label1" Content="Begin Datum" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top"/>
                     <!--    <DatePicker x:Name="beginDate" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
                             <DatePicker.SelectedDate>
                                 <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
@@ -80,7 +80,7 @@
                             </DatePicker.SelectedDate>
                         </DatePicker> -->
 
-                        <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250">
+                            <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top" Width="250">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -90,9 +90,9 @@
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
 
-                        <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-                        
-                        <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250">
+                            <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left" Margin="5,0,0,10"  VerticalAlignment="Top"/>
+
+                            <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top" Width="250">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -112,8 +112,8 @@
                             </DatePicker.SelectedDate>
                         </DatePicker> -->
                         <DockPanel>
-                            
-                            <ComboBox Name="EmployeeBox" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
+                                <Label x:Name="label3" Content="Medewerker" Margin="5,0,0,10"/>
+                                <ComboBox Name="EmployeeBox" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
                                 <ComboBox.Text>
                                     <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -126,11 +126,11 @@
 
                             <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
                         </DockPanel>
-                        
-                        
-                        
-                        <Button Command="{Binding ResetFieldsCommand}" x:Name="Button"  Content="Deselecteren" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120"  />
-                        <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button1"  Content="Voeg toe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"  >
+
+
+
+                            <Button Command="{Binding ResetFieldsCommand}" x:Name="Button"  Content="Deselecteren" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" Margin="5,0,0,10"  />
+                            <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button1"  Content="Voeg toe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="5,0,0,10"  >
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -151,6 +151,7 @@
 
 
                     </StackPanel>
+                   </DockPanel>
                 </Grid>
             </TabItem>
 
