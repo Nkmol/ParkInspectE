@@ -8,7 +8,8 @@
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             Height="Auto" Width="Auto"
+             Height="Auto"
+             Width="Auto"
              DataContext="{Binding Absence, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
@@ -16,7 +17,6 @@
 
 
     <Grid>
-
         <TabControl Margin="0,0,-0.2,0">
             <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[10], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <ScrollViewer>
@@ -55,9 +55,18 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem  Header="Afwezigheid invoeren"  Visibility="{Binding Dashboard.TabStatus[11], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+            <TabItem  Header="Afwezigheid invoeren">
+                <Grid>
+                    <DockPanel Height="150" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <StackPanel>
+                            <Label x:Name="label" Content="Begin Datum"/>
+                            <DatePicker SelectedDate="{Binding NewAbsence.start}" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" />
 
-                <ScrollViewer>
+                            <Label x:Name="label3" Content="Medewerker"/>
+                            <ComboBox Margin="5,0,0,10" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Text="Selecteer Personeel"></ComboBox>
+                        </StackPanel>
+                    </DockPanel>
+                    <DockPanel Height="150" Width="255" Margin="0,0,100,0" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <StackPanel>
 
                         <Label x:Name="label" Content="Begin Datum" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -142,7 +151,7 @@
 
 
                     </StackPanel>
-                </ScrollViewer>
+                </Grid>
             </TabItem>
 
 
