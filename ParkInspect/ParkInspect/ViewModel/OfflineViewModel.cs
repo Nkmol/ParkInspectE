@@ -26,7 +26,7 @@ namespace ParkInspect.ViewModel
     {
         public InspectionService service;
         public ObservableCollection<String> directionItems { get; set; }
-        public ObservableCollection<Direction> directions { get; set; }
+        public ObservableCollection<Direction> _directions;
 
         public Inspection _selectedInspection;
         public Direction _selectedDirection;
@@ -261,6 +261,18 @@ namespace ParkInspect.ViewModel
             }
         }
         #endregion
+        public ObservableCollection<Direction> directions
+        {
+            get
+            {
+                return _directions;
+            }
+            set
+            {
+                _directions = value;
+                base.RaisePropertyChanged();
+            }
+        }
         public OfflineViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
@@ -378,7 +390,7 @@ namespace ParkInspect.ViewModel
         }
         public void LoadDirections()
         {
-            directions.Clear();
+            directions = new ObservableCollection<Direction>();
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 Direction direction = new Direction();
@@ -389,8 +401,7 @@ namespace ParkInspect.ViewModel
         private void DeleteInspection()
         {
             File.Delete(runpath + "/directions/" + selectedDirection.Name + ".txt");
-          ///  LoadDirections();
-            // directions.Remove(selectedDirection); Fucking weird ass nullpointer to be fixed
+            //LoadDirections(); gvd
             _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
         }
 
