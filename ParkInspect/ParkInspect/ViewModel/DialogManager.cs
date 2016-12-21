@@ -75,13 +75,13 @@ namespace ParkInspect.ViewModel
                             loginDialogSettings.InitialUsername = result.Username;
                         }
 
-                    await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
+                        await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
                             "Ongeldig email/wachtwoord");
-                }
-                else
-                {
-                    await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
-                    logged = true;
+                    }
+                    else
+                    {
+                        await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
+                        logged = true;
 
                         lv.LoginName = result.Username;
                         lv.LoginButtonEnabled = false;
@@ -98,15 +98,8 @@ namespace ParkInspect.ViewModel
 
         public bool ShowConfirmationDialog(string title, string message)
         {
-            if (ShowModalMessageExternal(this, title, message, MessageDialogStyle.AffirmativeAndNegative) ==
-                MessageDialogResult.Affirmative)
-            {
-                return true;
-            }
-
-            return false;
+            return (ShowModalMessageExternal(this, title, message, MessageDialogStyle.AffirmativeAndNegative) ==
+                    MessageDialogResult.Affirmative);
         }
-
-
     }
 }
