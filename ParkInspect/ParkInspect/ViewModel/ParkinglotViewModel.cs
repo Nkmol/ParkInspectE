@@ -94,9 +94,12 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public int Number
+        public string Number
         {
-            get { return (_parkinglot == null ? 0 :_parkinglot.number.GetValueOrDefault()); }
+            get {
+                return _parkinglot.number;
+                //return (_parkinglot == null ? 0 :_parkinglot.number.GetValueOrDefault());
+            }
             set
             {
                 _parkinglot.number = value;
