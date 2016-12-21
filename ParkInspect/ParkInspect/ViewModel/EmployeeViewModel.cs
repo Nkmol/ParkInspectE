@@ -26,6 +26,8 @@ namespace ParkInspect.ViewModel
         protected EmployeeService Service { get; set; }
         private string oldPass;
 
+        public ObservableCollection<Absence> Absences { get; set; }
+
         //Fields and Properties
         private string _notification;
 
@@ -101,8 +103,11 @@ namespace ParkInspect.ViewModel
                 if (_selectedEmployee != null)
                 {
                     oldPass = _selectedEmployee.password;
+                }
+
+                if(value != null)
+                    Absences = new ObservableCollection<Absence>(SelectedEmployee.Absences.ToList());
             }
-        }
         }
 
         //Commands
