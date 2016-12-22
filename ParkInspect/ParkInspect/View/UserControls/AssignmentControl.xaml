@@ -12,11 +12,6 @@
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-
-
-
-
-
     <Grid Margin="0,0,-677,-185">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24*"/>
@@ -58,32 +53,37 @@
                         <StackPanel Width="300" Height="454">
 
                             <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt"  />
-                            <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedAsignment.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
-
-
-                            <Label Height="25" Margin="10,5,151,0" Content="Deadline"  />
-                            <DatePicker Margin="10,0,57,0" SelectedDate="{Binding SelectedAsignment.deadline}" DisplayDate="{Binding SelectedAsignment.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" />
-
-
+                            <DatePicker Margin="10,0,57,0">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="SelectedAsignment.date">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
+                                            <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
+                            <Label Height="25" Margin="10,5,151,0" Content="Deadline"/>
+                            <DatePicker Margin="10,0,57,0">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="SelectedAsignment.deadline" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
+                                            <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
                             <Label Height="25" Margin="10,5,151,0" Content="Status"  />
                             <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedAsignment.state}" ItemsSource="{Binding AssignmentStatusList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedAsignment.State1}" />
-
-
                             <Label Height="25" Margin="10,5,151,0" Content="Klant" />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedAsignment.Client.name}" ItemsSource="{Binding ClientList}" DisplayMemberPath="name" SelectedItem="{Binding SelectedAsignment.Client}" />
-
-
-
                             <Label Height="25" Margin="10,5,151,0" Content="Toelichting" />
                             <TextBox Name="Clarificationbox"  Margin="10,0,57,0" Height="105" Text="{Binding SelectedAsignment.clarification}"/>
-
                             <Label Height="27" Foreground="Red" Content="{Binding CommandError}" FontSize="12"  Margin="10,0,24,0" Background="{x:Null}"/>
                             <DockPanel Width="243" HorizontalAlignment="Left">
-
                                 <Button  Margin="5,0" Content="Bewerken" Command="{Binding EditAsignmentCommand}" Width="102" HorizontalAlignment="Left"/>
                                 <Button  Margin="5,0" Content="Toevoegen" Command="{Binding CreateAsignmentCommand}" Width="113" HorizontalAlignment="Left"/>
-
-
                             </DockPanel>
                         </StackPanel>
                     </ScrollViewer>
