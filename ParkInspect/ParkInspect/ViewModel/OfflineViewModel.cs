@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
+using ParkInspect.Model;
 
 namespace ParkInspect.ViewModel
 {
@@ -30,14 +31,14 @@ namespace ParkInspect.ViewModel
 
         public Inspection _selectedInspection;
         public Direction _selectedDirection;
-        public int _inspection_id;
+        public string _inspection_id;
         public string _inspection_date;
         public string _inspection_deadline;
         public string _client_name;
         public string _region_name;
         public string _parkinglot_name;
         public string _region_zip;
-        public int _region_number;
+        public string _region_number;
         public string _clarification;
         public string _directions_save_name;
         private string _home_adress;
@@ -51,29 +52,8 @@ namespace ParkInspect.ViewModel
         public RelayCommand next_direction { get; set; }
         public RelayCommand prev_direction { get; set; }
 
-
-        public class Direction
-        {
-            private string _Name;
-            public List<String> direction_items = new List<string>();
-            public int index = 0;
-            public string Name
-            {
-                get
-                {
-                    return _Name;
-                }
-                set
-                {
-                    if (_Name != value)
-                    {
-                        _Name = value;
-                    }
-                }
-            }
-        }
         #region properties
-        public int inspection_id
+        public string inspection_id
         {
             get
             {
@@ -174,7 +154,7 @@ namespace ParkInspect.ViewModel
 
             }
         }
-        public int region_number
+        public string region_number
         {
             get
             {
@@ -209,14 +189,14 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedInspection = value;
-                inspection_id = selectedInspection.id;
+                inspection_id = selectedInspection.id.ToString();
                 inspection_date = selectedInspection.date.ToString();
                 inspection_deadline = selectedInspection.deadline.ToString();
                 client_name = selectedInspection.Asignment.Client.name;
                 region_name = selectedInspection.Parkinglot.Region.name;
                 parkinglot_name = selectedInspection.Parkinglot.name;
                 region_zip = selectedInspection.Parkinglot.zipcode;
-                region_number = (int)selectedInspection.Parkinglot.number;
+                region_number = selectedInspection.Parkinglot.number.ToString();
                 clarification = selectedInspection.clarification;
                 base.RaisePropertyChanged();
             }
@@ -270,7 +250,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _directions = value;
-                base.RaisePropertyChanged();
+                //base.RaisePropertyChanged();
             }
         }
         public OfflineViewModel(IRepository context, DialogManager dialog)
@@ -390,7 +370,7 @@ namespace ParkInspect.ViewModel
         }
         public void LoadDirections()
         {
-            directions = new ObservableCollection<Direction>();
+            Directory.CreateDirectory(runpath + " / directions");
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 Direction direction = new Direction();
@@ -401,7 +381,7 @@ namespace ParkInspect.ViewModel
         private void DeleteInspection()
         {
             File.Delete(runpath + "/directions/" + selectedDirection.Name + ".txt");
-            //LoadDirections(); gvd
+            LoadDirections();
             _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
         }
 

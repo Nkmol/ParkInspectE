@@ -49,7 +49,6 @@ namespace ParkInspect.View.UserControls
             service = vm.service;
             inspection = new Inspection();
             OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
-            GMaps.Instance.ImportFromGMDB("db.gmdb");
             gmap.MapProvider = OpenStreetMapProvider.Instance;
             gmap.Manager.Mode = AccessMode.ServerAndCache;
             gmap.Manager.UseGeocoderCache = true;

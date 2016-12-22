@@ -167,6 +167,7 @@
     <Compile Include="Employee_Status.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
     <Compile Include="Model\Factory\ExportFactory.cs" />
     <Compile Include="Field.cs">

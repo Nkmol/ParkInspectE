@@ -25,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParkInspect.Model;
 
 namespace ParkInspect.View.UserControls
 {
@@ -49,11 +50,8 @@ namespace ParkInspect.View.UserControls
             service = vm.service;
             inspection = new Inspection();
             OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
-            GMaps.Instance.ImportFromGMDB("db.gmdb");
-
-
             gmap_offline.MapProvider = OpenStreetMapProvider.Instance;
-            gmap_offline.Manager.Mode = AccessMode.CacheOnly;
+            gmap_offline.Manager.Mode = AccessMode.ServerAndCache;
             gmap_offline.Manager.UseGeocoderCache = true;
             gmap_offline.SetPositionByKeywords("Amsterdam");
             gmap_offline.MinZoom = 1;
@@ -64,7 +62,7 @@ namespace ParkInspect.View.UserControls
         private void ReadInspectionInfoFromFile()
         {
             String line;
-            String name = (listBox1.SelectedItem as OfflineViewModel.Direction).Name;
+            String name = (listBox1.SelectedItem as Direction).Name;
             String path = runpath + "/directions/" + name + ".txt";
            System.IO.StreamReader file = new System.IO.StreamReader(path);
             while ((line = file.ReadLine()) != null)
