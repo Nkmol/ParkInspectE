@@ -106,16 +106,23 @@
                                 <Binding Path="Number" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue"
-											                                      ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
                         <Label Content="Verduidelijking" />
-                            <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"
-							         Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="255"
-							         Margin="5,0,0,0" />
+                        <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"
+							         VerticalAlignment="Top" Width="255"
+							         Margin="5,0,0,0">
+                            <TextBox.Text>
+                                <Binding Path="Clarification" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>    
                         </StackPanel>
                     </DockPanel>
                     <StackPanel Margin="100,255,100,0" Orientation="Horizontal">
@@ -131,14 +138,15 @@
                                                 <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="false" />
                                                 <Condition Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}" Value="false" />
                                                 <Condition Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}" Value="false" />
-                                            </MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=ClarificationBox, Path=(Validation.HasError)}" Value="false" />
+                                        </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="DeselectButton" Command="{Binding DeselectCommand}" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="120"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
