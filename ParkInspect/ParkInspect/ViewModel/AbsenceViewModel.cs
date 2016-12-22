@@ -11,6 +11,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace ParkInspect.ViewModel
 {
@@ -107,9 +108,11 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private DialogManager _dialog;
 
-        public AbsenceViewModel(IRepository context)
+        public AbsenceViewModel(IRepository context, DialogManager dialog)
         {
+            _dialog = dialog;
             Service = new AbsenceService(context);
             // look at asignment feature for datetime examples.
             Reset(); // Create default absence
@@ -130,10 +133,15 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            Service.DeleteAbsence(SelectedAbsence);
-            Absences.Remove(SelectedAbsence);
+            if (_dialog.ShowConfirmationDialog("Waarschuwing", 
+                    "Weet je zeker dat je wilt verwijderen?"))
+            {
+                Service.DeleteAbsence(SelectedAbsence);
+                Absences.Remove(SelectedAbsence);
 
-            base.RaisePropertyChanged();
+                base.RaisePropertyChanged();
+            }
+
         }
 
         private void SaveNewAbsenceMethod()
