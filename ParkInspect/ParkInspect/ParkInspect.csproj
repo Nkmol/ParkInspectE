@@ -162,6 +162,7 @@
     <Compile Include="Model\Factory\FilterFactory.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ValidationRules\IsNotEmptyValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsNotIntegerValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsPositiveNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidDateTimeRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidEmailValidationRule.cs" />

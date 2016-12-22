@@ -70,6 +70,8 @@
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsNotIntegerValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
