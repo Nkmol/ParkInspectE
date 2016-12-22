@@ -249,6 +249,9 @@
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\ReportDesignView.xaml.cs">
+      <DependentUpon>ReportDesignView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
@@ -303,6 +306,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ReportDesignView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ReportView.xaml">
       <SubType>Designer</SubType>
