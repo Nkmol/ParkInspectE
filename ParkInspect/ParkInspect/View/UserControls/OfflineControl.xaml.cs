@@ -81,7 +81,7 @@ namespace ParkInspect.View.UserControls
 
         private void GetInspectionInfo()
         {
-            inspection = service.GetInspectionByID(inspection_id);
+            inspection = service.GetInspectionWithId(inspection_id).First();
             vm.selectedInspection = inspection;
         }
         private PointLatLng getPointFromKeyWord(String keyword)
