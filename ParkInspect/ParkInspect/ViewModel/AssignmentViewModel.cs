@@ -273,7 +273,6 @@ namespace ParkInspect.ViewModel
             _service.CreateNewAssignemnt(_selectedAsignment);
             SetEmptySelectedAsignment();
 
-            CommandError = "Created";
             UpdateProperties();
         }
 

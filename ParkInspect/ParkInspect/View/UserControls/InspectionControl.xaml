@@ -6,6 +6,7 @@
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"            
              DataContext="{Binding Inspections, Source={StaticResource Locator}}" Width="982" Height="482">
@@ -55,29 +56,71 @@
                         <StackPanel Width="300" Height="623" VerticalAlignment="Top">
 
                             <Label Height="25" Margin="10,5,151,0" Content="Opdracht"  />
-                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Asignment.Client.name}" DisplayMemberPath="Client.name" ItemsSource="{Binding Assignmentlist}" SelectedItem="{Binding SelectedInspection.Asignment}" />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Asignment.Client.name}" DisplayMemberPath="Client.name" ItemsSource="{Binding Assignmentlist}">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="SelectedInspection.Asignment">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
                             <Label Height="25" Margin="10,5,151,0" Content="Parkeerplaats"  />
-                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot.name}" DisplayMemberPath="name" SelectedItem="{Binding SelectedInspection.Parkinglot}" ItemsSource="{Binding ParkinglotList}"/>
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding ParkinglotList}">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="SelectedInspection.Parkinglot">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
                             <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst"  />
                             <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Form.Template.name}" ItemsSource="{Binding FormList}" DisplayMemberPath="Template.name" SelectedItem="{Binding SelectedInspection.Form}" />
 
                             <Label Height="25" Margin="10,5,151,0" Content="Status"  />
-                            <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedInspection.state}" ItemsSource="{Binding InspectionStateList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedInspection.State1}" />
+                            <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedInspection.state}" ItemsSource="{Binding InspectionStateList}" DisplayMemberPath="state1">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="SelectedInspection.State1">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
                             <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
-                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection.Inspection2}"/>
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection.Inspection2}" />
 
                             <Label Height="25" Margin="10,0,151,0" Content="Datum"  />
-                            <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedInspection.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
+                            <controls:DateTimePicker Margin="10,0,57,0">
+                                <controls:DateTimePicker.SelectedDate >
+                                    <Binding Path="SelectedInspection.date" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
+                                            <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </controls:DateTimePicker.SelectedDate >
+                            </controls:DateTimePicker>
 
                             <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
-                            <DatePicker Margin="10,0,57,0" SelectedDate="{Binding SelectedInspection.deadline}" DisplayDate="{Binding SelectedInspection.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" />
+                            <controls:DateTimePicker Margin="10,0,57,0">
+                                <controls:DateTimePicker.SelectedDate >
+                                    <Binding Path="SelectedInspection.deadline" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
+                                            <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </controls:DateTimePicker.SelectedDate >
+                            </controls:DateTimePicker>
 
 
                             <Label Height="25" Margin="10,5,151,0" Content="Toelichting"  />
-                            <TextBox Margin="10,0,57,0" Height="105" Text="{Binding SelectedInspection.clarification}"/>
+                            <TextBox Name="Clarificationbox" Height="105" Text="{Binding SelectedInspection.clarification}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
 
                             <Label Height="35" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
                             <DockPanel Width="363" HorizontalAlignment="Left">
@@ -92,7 +135,7 @@
                     <StackPanel Width="263"/>
                     <StackPanel>
 
-                        <GroupBox x:Name="Inspecteurs" Header="Inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
+                        <GroupBox x:Name="Inspecteurs" Header="Toegekende inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
                             <DataGrid IsReadOnly="True" ItemsSource="{Binding InspectionInspectors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInspecteur}" AutoGenerateColumns="False" Margin="0,0,-2,0"
                                        ScrollViewer.CanContentScroll="True" 
       ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -112,8 +155,8 @@
                         </StackPanel>
                         <DockPanel Width="363" HorizontalAlignment="Left">
 
-                            <Button  Margin="5,0" Content="Toevoegen" Command="{Binding AddInspecteurCommand}" Width="125" HorizontalAlignment="Left"/>
-                            <Button Margin="5,0" Content="Verwijderen" Width="125" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
+                            <Button  Margin="5,0" Content="Toekennen" Command="{Binding AddInspecteurCommand}" Width="125" HorizontalAlignment="Left"/>
+                            <Button Margin="5,0" Content="Onttrekken" Width="125" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
 
                         </DockPanel>
 
