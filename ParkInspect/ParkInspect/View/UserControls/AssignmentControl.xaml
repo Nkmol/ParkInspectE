@@ -6,20 +6,132 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
+             DataContext="{Binding Assignment, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    
-    
-    <Grid>
-        <TabControl>
-            <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Label Content="Overview goes here..." />
+
+
+
+
+
+    <Grid Margin="0,0,-677,-185">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="24*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" Height="486" Margin="0,0,-684,-186" Width="984" Grid.ColumnSpan="2">
+            <TabItem Header="Overzicht">
+                <StackPanel>
+                    <DockPanel>
+
+                        <TextBox Width="162" Margin="0,3" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="189" Margin="5,3,0,3" Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="180" Margin="5,3,0,3" Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="186" Margin="5,3,0,3" Text="{Binding DeadlineFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="229" Margin="5,3,0,3" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                    </DockPanel>
+
+                    <!-- na het wijzigen van een item, is het niet mogelijk het gewijzigde item met een klik te selecteren.-->
+                    <DataGrid Width="969" ItemsSource="{Binding SearchedAsignments}"  SelectedItem="{Binding SelectedAsignment, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="401" Margin="0,0,-2,0" 
+                              ScrollViewer.CanContentScroll="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Klant Naam" Width="*"  Binding="{Binding Client.name, Mode=OneWay}" />
+                            <DataGridTextColumn  Header="Status" Width="*" Binding="{Binding state, Mode=OneWay}"/>
+                            <DataGridTextColumn  Header="Aangemaakt" Width="*" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
+                            <DataGridTextColumn  Header="Deadline" Width="*" Binding="{Binding deadline, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}"/>
+                            <DataGridTextColumn  Header="Toelichting" Width="*" Binding="{Binding clarification}"/>
+
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+
             </TabItem>
-            <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[14], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Label Content="Management goes here..." />
+            <TabItem Header="Management" Margin="-1,0,1,0" Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+                <DockPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="381" VerticalAlignment="Top" Height="431">
+                        <StackPanel Width="300" Height="454">
+
+                            <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt"  />
+                            <DatePicker Margin="10,0,57,0"  Text="{Binding SelectedAsignment.date, StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False"/>
+
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Deadline"  />
+                            <DatePicker Margin="10,0,57,0" SelectedDate="{Binding SelectedAsignment.deadline}" DisplayDate="{Binding SelectedAsignment.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" />
+
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Status"  />
+                            <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedAsignment.state}" ItemsSource="{Binding AssignmentStatusList}" DisplayMemberPath="state1" SelectedItem="{Binding SelectedAsignment.State1}" />
+
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Klant" />
+                            <ComboBox Margin="10,0,57,0" Text="{Binding SelectedAsignment.Client.name}" ItemsSource="{Binding ClientList}" DisplayMemberPath="name" SelectedItem="{Binding SelectedAsignment.Client}" />
+
+
+
+                            <Label Height="25" Margin="10,5,151,0" Content="Toelichting" />
+                            <TextBox Name="Clarificationbox"  Margin="10,0,57,0" Height="105" Text="{Binding SelectedAsignment.clarification}"/>
+
+                            <Label Height="27" Foreground="Red" Content="{Binding CommandError}" FontSize="12"  Margin="10,0,24,0" Background="{x:Null}"/>
+                            <DockPanel Width="243" HorizontalAlignment="Left">
+
+                                <Button  Margin="5,0" Content="Bewerken" Command="{Binding EditAsignmentCommand}" Width="102" HorizontalAlignment="Left"/>
+                                <Button  Margin="5,0" Content="Toevoegen" Command="{Binding CreateAsignmentCommand}" Width="113" HorizontalAlignment="Left"/>
+
+
+                            </DockPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Width="215"/>
+                    <StackPanel Height="435" Width="380">
+
+                        <GroupBox x:Name="Inspecties" Header="Inspecties" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
+                            <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignmentInspections}" SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False" Margin="0,0,-2,0"
+                                       ScrollViewer.CanContentScroll="True" 
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                       ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+
+                                    <DataGridTextColumn Header="Parkeerplaats" Width="*" Binding="{Binding Parkinglot.name}" />
+                                    <DataGridTextColumn  Header="Datum" Width="*" Binding="{Binding date}"/>
+
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </GroupBox>
+
+                        <StackPanel Height="7">
+                        </StackPanel>
+                        <DockPanel Width="363" HorizontalAlignment="Left">
+                            <Button  Margin="5,0" Content="Toevoegen" Command="{Binding CreateInspectionCommand}" Width="126" HorizontalAlignment="Left"/>
+                            <Button  Margin="5,0" Content="Verwijderen" Command="{Binding RemoveInspectionCommand}" Width="126" HorizontalAlignment="Left"/>
+
+
+
+
+
+                        </DockPanel>
+                        <ComboBox Margin="5,5,0,0"  ItemsSource="{Binding InspectionList}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspectionBox}" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
+                        <Label Height="111" Foreground="Red" Content="{Binding CommandError}" FontSize="8" RenderTransformOrigin="0.5,0.5" Margin="-1,0,1,0">
+                            <Label.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleX="-1.447"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="-0.796"/>
+                                </TransformGroup>
+                            </Label.RenderTransform>
+                        </Label>
+                        <Button Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="135" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </DockPanel>
+
             </TabItem>
         </TabControl>
     </Grid>
