@@ -118,7 +118,9 @@ namespace ParkInspect.ViewModel
 
         private DialogManager _dialog;
 
-        public AbsenceViewModel(IRepository context, DialogManager dialog)
+        public EmployeeViewModel EmployeeviewModel { get; set; }
+
+        public AbsenceViewModel(IRepository context, DialogManager dialog, EmployeeViewModel employeevm)
         {
             _dialog = dialog;
             Service = new AbsenceService(context);
@@ -128,6 +130,7 @@ namespace ParkInspect.ViewModel
 
             Absences = new ObservableCollection<Absence>(Service.GetAllAbsences());
             Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
+            EmployeeviewModel = employeevm;
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
             DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod);

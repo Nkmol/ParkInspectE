@@ -115,11 +115,8 @@ namespace ParkInspect.ViewModel
         public ICommand SaveCommand { get; set; }
         public ICommand DeselectEmployeeCommand { get; set; }
 
-        public AbsenceViewModel EmployeeAbsences { get; set; }
-
-        public EmployeeViewModel(IRepository context, DialogManager dialog, AbsenceViewModel absences)
+        public EmployeeViewModel(IRepository context, DialogManager dialog)
         {
-            EmployeeAbsences = absences;
             _dialog = dialog;
             //Service and employees
             Service = new EmployeeService(context);
@@ -239,10 +236,6 @@ namespace ParkInspect.ViewModel
             var temp = Employees;
             Employees = null;
             Employees = temp;
-
-            EmployeeAbsences.Employees = new ObservableCollection<Employee>(Employees);
-            RaisePropertyChanged("EmployeeAbsences.Employees");
-
             SetNewEmployee();
         }
 

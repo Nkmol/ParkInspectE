@@ -22,9 +22,7 @@ namespace ParkInspect.ViewModel
         private IEnumerable<Client> Data;
         protected ClientService Service;
 
-        public ContactpersonViewModel ContactPersonViewModel { get; set; }
-
-        public ClientViewModel(IRepository context, DialogManager dialog, ContactpersonViewModel contactpersons)
+        public ClientViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
             Service = new ClientService(context);
@@ -35,7 +33,6 @@ namespace ParkInspect.ViewModel
             Reset();
             Assignments = new ObservableCollection<Asignment>(SelectedClient.Asignments);
             Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
-            ContactPersonViewModel = contactpersons;
         }
 
         public ObservableCollection<Client> Clients { get; set; }
@@ -138,9 +135,6 @@ namespace ParkInspect.ViewModel
             }
 
             UpdateClients();
-
-            ContactPersonViewModel.Clients = new ObservableCollection<Client>(Clients);
-            RaisePropertyChanged("ContactPersonViewModel.Clients");
         }
 
         private void UpdateClients()
