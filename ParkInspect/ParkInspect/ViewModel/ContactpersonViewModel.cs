@@ -42,7 +42,19 @@ namespace ParkInspect.ViewModel
         private IEnumerable<Contactperson> Data { get; set; }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
-        public ObservableCollection<Client> Clients { get; set; }
+
+        private ObservableCollection<Client> _clients;
+        public ObservableCollection<Client> Clients
+        {
+            get
+            {
+                return _clients;
+            } 
+            set
+            {
+                Set(ref _clients, value);
+            }
+        }
 
         public Contactperson SelectedContactperson
         {

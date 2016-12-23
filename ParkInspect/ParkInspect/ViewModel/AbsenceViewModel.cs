@@ -37,8 +37,7 @@ namespace ParkInspect.ViewModel
             get { return _employees; }
             set
             {
-                _employees = value;
-                RaisePropertyChanged();
+                Set(ref _employees, value);
             }
         }
 
