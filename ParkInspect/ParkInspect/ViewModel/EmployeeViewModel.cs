@@ -9,6 +9,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using System.Collections.Specialized;
 using System.Security.Cryptography;
 using ParkInspect;
 
@@ -114,8 +115,11 @@ namespace ParkInspect.ViewModel
         public ICommand SaveCommand { get; set; }
         public ICommand DeselectEmployeeCommand { get; set; }
 
-        public EmployeeViewModel(IRepository context, DialogManager dialog)
+        public AbsenceViewModel EmployeeAbsences { get; set; }
+
+        public EmployeeViewModel(IRepository context, DialogManager dialog, AbsenceViewModel absences)
         {
+            EmployeeAbsences = absences;
             _dialog = dialog;
             //Service and employees
             Service = new EmployeeService(context);
@@ -134,6 +138,15 @@ namespace ParkInspect.ViewModel
             //Initialize commands
             SaveCommand = new RelayCommand(SaveEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
+
+            // Initialize EventHandler
+            Employees.CollectionChanged += Employees_CollectionChanged;
+        }
+
+        private void Employees_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            EmployeeAbsences.Employees = new ObservableCollection<Employee>(Employees);
+            RaisePropertyChanged("EmployeeAbsences.Employees");
         }
 
         //CRU METHODS
@@ -234,6 +247,10 @@ namespace ParkInspect.ViewModel
             var temp = Employees;
             Employees = null;
             Employees = temp;
+
+            EmployeeAbsences.Employees = new ObservableCollection<Employee>(Employees);
+            RaisePropertyChanged("EmployeeAbsences.Employees");
+
             SetNewEmployee();
         }
 

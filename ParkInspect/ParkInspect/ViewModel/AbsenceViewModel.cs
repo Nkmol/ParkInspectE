@@ -31,7 +31,16 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public ObservableCollection<Employee> Employees { get; set; }
+        private ObservableCollection<Employee> _employees;
+        public ObservableCollection<Employee> Employees
+        {
+            get { return _employees; }
+            set
+            {
+                _employees = value;
+                RaisePropertyChanged();
+            }
+        }
 
         protected AbsenceService Service;
 
