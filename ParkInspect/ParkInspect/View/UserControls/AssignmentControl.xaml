@@ -8,6 +8,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              DataContext="{Binding Assignment, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter" />
@@ -66,43 +67,127 @@
                      Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <DockPanel>
                     <StackPanel Width="300" Height="454">
+
                         <Label Height="25" Margin="6,0,151,0" Content="Aangemaakt" />
                         <DatePicker Margin="10,0,57,0"
                                     Text="{Binding SelectedAsignment.date, StringFormat={}{0:dd/MM/yyyy}}"
                                     IsEnabled="False" />
 
-                        <Label Height="25" Margin="6,5,151,0" Content="Deadline" />
-                        <DatePicker Margin="10,0,57,0" SelectedDate="{Binding SelectedAsignment.deadline}"
-                                    DisplayDate="{Binding SelectedAsignment.deadline, StringFormat={}{0:dd/MM/yyyy} , Mode=OneWay}" />
-
-                        <Label Height="25" Margin="6,5,151,0" Content="Status" />
-                        <ComboBox Height="28" Margin="11,2,57,0" Text="{Binding SelectedAsignment.state}"
+                        <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt" />
+                        <DatePicker Margin="10,0,57,0" x:Name="DateStart">
+                            <DatePicker.SelectedDate>
+                                <Binding Path="SelectedAsignment.date">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule />
+                                        <validationRules:IsValidDateTimeRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </DatePicker.SelectedDate>
+                        </DatePicker>
+                        <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
+                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateEnd" IsClockVisible="False"
+                                                 Background="Transparent" Culture="en-US">
+                            <controls:DateTimePicker.SelectedDate>
+                                <Binding Path="SelectedAsignment.deadline" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule />
+                                        <validationRules:IsValidDateTimeRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </controls:DateTimePicker.SelectedDate>
+                        </controls:DateTimePicker>
+                        <Label Height="25" Margin="10,5,151,0" Content="Status" />
+                        <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedAsignment.state}"
                                   ItemsSource="{Binding AssignmentStatusList}" DisplayMemberPath="state1"
-                                  SelectedItem="{Binding SelectedAsignment.State1}" />
-
-                        <Label Height="25" Margin="6,8,151,0" Content="Klant" />
-                        <ComboBox Margin="11,0,57,0" Text="{Binding SelectedAsignment.Client.name}"
-                                  ItemsSource="{Binding ClientList}" DisplayMemberPath="name"
-                                  SelectedItem="{Binding SelectedAsignment.Client}" />
-
-                        <Label Height="25" Margin="6,5,151,0" Content="Toelichting" />
-                        <TextBox Name="Clarificationbox" Margin="11,0,57,0" Height="105"
-                                 Text="{Binding SelectedAsignment.clarification}" TextWrapping="Wrap"/>
-
+                                  x:Name="cbState">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="SelectedAsignment.State1">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                        <Label Height="25" Margin="10,5,151,0" Content="Klant" />
+                        <ComboBox Margin="10,0,57,0" Text="{Binding SelectedAsignment.Client.name}"
+                                  ItemsSource="{Binding ClientList}" DisplayMemberPath="name" x:Name="cbClient">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="SelectedAsignment.Client">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                        <Label Height="25" Margin="10,5,151,0" Content="Toelichting" />
+                        <TextBox Name="Clarificationbox" Margin="10,0,57,0" Height="83"
+                                 Text="{Binding SelectedAsignment.clarification}" AcceptsReturn="True"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                         <Label Height="27" Foreground="Red" Content="{Binding CommandError}" FontSize="12"
                                Margin="10,0,24,0" Background="{x:Null}" />
-                        
                         <DockPanel Width="243" HorizontalAlignment="Left">
                             <Button Margin="5,0" Content="Bewerken" Command="{Binding EditAsignmentCommand}"
-                                    Width="102" HorizontalAlignment="Left" />
+                                    Width="102" HorizontalAlignment="Left">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="IsEnabled" Value="false" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                        Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=DateEnd, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=cbState, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=cbClient, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="true" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button Margin="5,0" Content="Toevoegen" Command="{Binding CreateAsignmentCommand}"
-                                    Width="113" HorizontalAlignment="Left" />
+                                    Width="113" HorizontalAlignment="Left">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="IsEnabled" Value="false" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                        Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=DateEnd, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=cbState, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=cbClient, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="true" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </DockPanel>
                     </StackPanel>
 
-                    <StackPanel Height="435" Width="570" Margin="110,3,0,2.8">
-                        <GroupBox x:Name="Inspecties" Header="Inspecties" Margin="0,5,0,0" Height="204" Width="363"
-                                  HorizontalAlignment="Left">
+                    <StackPanel Width="215" />
+                    <StackPanel Height="435" Width="380">
+
+                        <GroupBox x:Name="Inspecties" Header="Toegekende inspecties" Margin="0,5,0,0" Height="204"
+                                  Width="363" HorizontalAlignment="Left">
                             <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignmentInspections}"
                                       SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False"
                                       Margin="0,0,-2,0"
@@ -119,14 +204,13 @@
 
                         <StackPanel Height="7" />
                         <DockPanel Width="363" HorizontalAlignment="Left">
-                            <Button Margin="5,0" Content="Toevoegen" Command="{Binding CreateInspectionCommand}"
+                            <Button Margin="5,0" Content="Toekennen" Command="{Binding CreateInspectionCommand}"
                                     Width="126" HorizontalAlignment="Left" />
-                            <Button Margin="5,0" Content="Verwijderen" Command="{Binding RemoveInspectionCommand}"
+                            <Button Margin="5,0" Content="Onttrekken" Command="{Binding RemoveInspectionCommand}"
                                     Width="126" HorizontalAlignment="Left" />
-
                         </DockPanel>
                         <ComboBox Margin="5,5,0,0" ItemsSource="{Binding InspectionList}"
-                                  DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection}"
+                                  DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspectionBox}"
                                   Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
                         <Label Height="111" Foreground="Red" Content="{Binding CommandError}" FontSize="8"
                                RenderTransformOrigin="0.5,0.5" Margin="-1,0,1,0">
@@ -141,7 +225,7 @@
                         </Label>
                         <Button Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="135"
                                 HorizontalAlignment="Left" />
-                        <Button Content="Nieuwe inspectie" Margin="0,-33,250,0" Width="150"
+                        <Button Content="Nieuwe inspectie" Margin="0,-33,20,0" Width="150"
                                 Command="{Binding NewInspectionCommand}" HorizontalAlignment="Right" Height="33" />
                     </StackPanel>
                 </DockPanel>

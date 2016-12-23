@@ -22,7 +22,7 @@ namespace ParkInspect.ViewModel
     public class AssignmentViewModel : ViewModelBase
     {
         private readonly AssignmentService _service;
-        private readonly PopupManager popup;
+        private readonly PopupManager _popup;
 
         private IEnumerable<State> _assignmentStateList;
 
@@ -47,7 +47,7 @@ namespace ParkInspect.ViewModel
 
         public AssignmentViewModel(IRepository repository, PopupManager popup)
         {
-            this.popup = popup;
+            _popup = popup;
             _service = new AssignmentService(repository);
             UpdateProperties();
             SetEmptySelectedAsignment();
@@ -56,7 +56,7 @@ namespace ParkInspect.ViewModel
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
             States = new ObservableCollection<State>(_service.GetAll<State>());
             Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
-            NewInspection = new Inspection();
+            _newInspection = new Inspection();
 
             CreateAsignmentCommand = new RelayCommand(CreateAsignment, CanCreateAsignment);
             EditAsignmentCommand = new RelayCommand(EditAsignment, CanEditAsignment);
@@ -152,16 +152,19 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public Inspection NewInspection
+        private Inspection _selectedInspectionBox;
+        public Inspection SelectedInspectionBox
         {
-            get { return _newInspection; }
+            get
+            {
+                return _selectedInspectionBox;
+            }
             set
             {
-                _newInspection = value;
+                _selectedInspectionBox = value;
                 base.RaisePropertyChanged();
             }
         }
-
 
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
         public ObservableCollection<Form> Forms { get; set; }
@@ -187,19 +190,19 @@ namespace ParkInspect.ViewModel
 
         private void ShowPopup()
         {
-            popup.ShowConfirmPopup<AssignmentViewModel>("Voeg een inspectie toe", new NewInspectionPopup(),
+            _popup.ShowConfirmPopup<AssignmentViewModel>("Voeg een inspectie toe", new NewInspectionPopup(),
                 MakeNewInspection);
         }
 
         private void MakeNewInspection(AssignmentViewModel t)
         {
-            if ((NewInspection?.Parkinglot == null) || (NewInspection.State1 == null) ||
-                (NewInspection.deadline < DateTime.Today) || (NewInspection.deadline > NewInspection.Asignment.deadline))
+            if ((_newInspection?.Parkinglot == null) || (_newInspection.State1 == null) ||
+                (_newInspection.deadline < DateTime.Today) || (_newInspection.deadline > _newInspection.Asignment.deadline))
                 return;
-            if (NewInspection.date == null) NewInspection.date = DateTime.Today;
-            _service.Add(NewInspection);
+            if (_newInspection.date == null) _newInspection.date = DateTime.Today;
+            _service.Add(_newInspection);
             InspectionList = _service.GetAll<Inspection>();
-            NewInspection = new Inspection();
+            _newInspection = new Inspection();
         }
 
         private void UpdateProperties()
@@ -222,7 +225,6 @@ namespace ParkInspect.ViewModel
             _service.CreateNewAssignemnt(_selectedAsignment);
             SetEmptySelectedAsignment();
 
-            CommandError = "Created";
             UpdateProperties();
         }
 
@@ -327,28 +329,25 @@ namespace ParkInspect.ViewModel
             return _selectedAsignment.id != 0;
         }
 
-
         public void RemoveInspection()
         {
-            if (_selectedInspection != null)
-            {
-                _selectedAsignment.Inspections.Remove(_selectedInspection);
-                AssignmentInspections.Remove(SelectedInspection);
-            }
-            else
-            {
-                CommandError = "Inspection Remove Error.";
-            }
+            if (SelectedInspection == null) return;
+
+            SelectedAsignment.Inspections.Remove(SelectedInspection);
+            AssignmentInspections.Remove(SelectedInspection);
         }
 
         // funcion should be changed to creating a new inspection, will be implemented as adding an existing one for now.
         public void CreateInspection()
         {
-            if (SelectedInspection == null) return;
-            SelectedAsignment.Inspections.Add(SelectedInspection);
-            AssignmentInspections.Add(SelectedInspection);
-        }
+            if (SelectedInspectionBox == null) return;
+            if (AssignmentInspections.Contains(SelectedInspectionBox)) return;
 
+            SelectedAsignment.Inspections.Add(SelectedInspectionBox);
+            AssignmentInspections.Add(SelectedInspectionBox);
+
+            SelectedInspectionBox = null;
+        }
 
         public void ResetAsignement()
         {
@@ -379,6 +378,8 @@ namespace ParkInspect.ViewModel
                 deadline = DateTime.Today,
                 date = DateTime.Today
             };
+            SelectedInspection = null;
+            SelectedInspectionBox = null;
 
             base.RaisePropertyChanged();
         }

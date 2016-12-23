@@ -1,8 +1,8 @@
 ﻿<UserControl x:Class="ParkInspect.View.UserControls.ParkeerplaatsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
@@ -10,7 +10,7 @@
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d"
+             mc:Ignorable="d" 
              d:DesignHeight="600"
              d:DesignWidth="1000"
              DataContext="{Binding Parkinglots, Source={StaticResource Locator}}" 
@@ -18,7 +18,7 @@
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    <TabControl Name="Tabs">
+        <TabControl Name="Tabs">
         <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
             <Grid Margin="0">
                 <Grid.RowDefinitions>
@@ -45,23 +45,23 @@
                 <DataGrid Grid.Row="2"  Name="DataGrid" AutoGenerateColumns="False"
 					          ItemsSource="{Binding Parkinglots, UpdateSourceTrigger=PropertyChanged}"
 					          SelectedItem="{Binding Parkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
-                    <DataGrid.Columns>
+                        <DataGrid.Columns>
                         <DataGridTextColumn Header="Naam" Width="1*" Binding="{Binding name}" />
-                        <DataGridTextColumn Header="Postcode" Width="1*" Binding="{Binding zipcode}" />
-                        <DataGridTextColumn Header="Nummber" Width="1*" Binding="{Binding number}" />
-                        <DataGridTextColumn Header="Regio" Width="1*" Binding="{Binding region_name}" />
-                        <DataGridTextColumn Header="Verduidelijking" Width="1*" Binding="{Binding clarification}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <DataGridTextColumn Header="Postcode" Width="1*" Binding="{Binding zipcode}" />
+                            <DataGridTextColumn Header="Nummber" Width="1*" Binding="{Binding number}" />
+                            <DataGridTextColumn Header="Regio" Width="1*" Binding="{Binding region_name}" />
+                            <DataGridTextColumn Header="Verduidelijking" Width="1*" Binding="{Binding clarification}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 <Button Grid.Row="3" x:Name="ExportButton" Content="Export Data" PreviewMouseDown="Unselect"
 					        Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
 					        Margin="0,10,0,0" VerticalAlignment="Top" />
             </Grid>
-        </TabItem>
+            </TabItem>
         <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[24], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-            <Grid>
-                <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="255" Height="250" Margin="100,0,0,0">
-                    <StackPanel>
+                <Grid>
+                    <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="255" Height="250" Margin="100,0,0,0">
+                        <StackPanel>
                         <Label Content="Naam" />
                         <TextBox x:Name="NameBox" Margin="5,0,0,10" Width="250">
                             <TextBox.Text>
@@ -96,56 +96,59 @@
                                 </Binding>
                             </ComboBox.Text>
                         </ComboBox>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="255" Height="250" Margin="5,0,100,0">
-                    <StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+                    <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="255" Height="250" Margin="5,0,100,0">
+                        <StackPanel>
                         <Label x:Name="NumberLabel" Content="Nummer" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <TextBox x:Name="NumberBox" Width="255" Margin="5,0,0,10">
+                            <TextBox x:Name="NumberBox" Width="255" Margin="5,0,0,10">
                             <TextBox.Text>
                                 <Binding Path="Number" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue"
-											                                      ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
                         <Label Content="Verduidelijking" />
-                            <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"
-							         Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="255"
-							         Margin="5,0,0,0" />
-                    </StackPanel>
-                </DockPanel>
-                <StackPanel Margin="100,255,100,0" Orientation="Horizontal">
-                    <Label x:Name="MessageLabel" Content="{Binding Message}" Width="300" Height="50" VerticalAlignment="Top" />
-                    <Button x:Name="SaveButton2" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-						        Content="Voeg toe" VerticalAlignment="Top" Margin="110,0,10,0" Width="120">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                <Setter Property="IsEnabled" Value="false" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ElementName=ZipBox, Path=(Validation.HasError)}" Value="false" />
-                                            <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="false" />
-                                            <Condition Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}" Value="false" />
-                                            <Condition Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}" Value="false" />
+                        <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"
+							         VerticalAlignment="Top" Width="255"
+							         Margin="5,0,0,0">
+                            <TextBox.Text>
+                                <Binding Path="Clarification" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>    
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Margin="100,255,100,0" Orientation="Horizontal">
+                        <Label x:Name="MessageLabel" Content="{Binding Message}" Width="300" Height="50" VerticalAlignment="Top"/>
+                        <Button x:Name="SaveButton2" Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Opslaan" VerticalAlignment="Top" Margin="240,0,10,0" Width="120">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=ZipBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=ClarificationBox, Path=(Validation.HasError)}" Value="false" />
                                         </MultiDataTrigger.Conditions>
-                                        <Setter Property="IsEnabled" Value="true" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="NewButton" Content="Bewerken"
-						        Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"
-						        Margin="0,0,10,0" />
-                    <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,0"
-						        VerticalAlignment="Top" Width="120" />
-                </StackPanel>
-            </Grid>
-        </TabItem>
-    </TabControl>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    <Button x:Name="DeselectButton" Command="{Binding DeselectCommand}" Content="Deselecteren" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="120"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
 </UserControl>

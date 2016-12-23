@@ -7,7 +7,7 @@ using ParkInspect.Services;
 
 namespace ParkInspect.ViewModel
 {
-    public class DialogManager
+    public class DialogManager : DialogCoordinator
     {
         protected EmployeeService _service;
 
@@ -90,6 +90,13 @@ namespace ParkInspect.ViewModel
                     }
                 }
             }
+        }
+
+
+        public bool ShowConfirmationDialog(string title, string message)
+        {
+            return (ShowModalMessageExternal(this, title, message, MessageDialogStyle.AffirmativeAndNegative) ==
+                    MessageDialogResult.Affirmative);
         }
     }
 }

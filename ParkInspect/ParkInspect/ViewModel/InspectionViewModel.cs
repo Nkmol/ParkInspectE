@@ -235,9 +235,20 @@ namespace ParkInspect.ViewModel
             CreateInspectionCommand = new RelayCommand(CreateInspection, CanCreateInspection);
             EditInspectionCommand = new RelayCommand(EditInspection, CanEditInspection);
 
-            RemoveInspecteurCommand = new RelayCommand(RemoveInspecteur);
-            AddInspecteurCommand = new RelayCommand(AddInspecteur);
 
+            RemoveInspecteurCommand = new RelayCommand(RemoveInspecteur, CanRemoveInspecteur);
+            AddInspecteurCommand = new RelayCommand(AddInspecteur, CanAddInspecteur);
+
+        }
+
+        private bool CanAddInspecteur()
+        {
+            return SelectedEmployee != null;
+        }
+
+        private bool CanRemoveInspecteur()
+        {
+            return SelectedInspecteur != null; 
         }
 
         private void UpdateOverview()
@@ -270,15 +281,19 @@ namespace ParkInspect.ViewModel
         {
           
             if (SelectedEmployee == null) return;
+            if (InspectionInspectors.Contains(SelectedEmployee)) return;
+
             SelectedInspection.Employees.Add(SelectedEmployee);
             InspectionInspectors.Add(SelectedEmployee);
 
+            SelectedEmployee = null;
             UpdateProperties();
         }
 
         private void RemoveInspecteur()
         {
             if (SelectedInspecteur == null) return;
+
             SelectedInspection.Employees.Remove(SelectedInspecteur);
             InspectionInspectors.Remove(SelectedInspecteur);
 
@@ -380,6 +395,10 @@ namespace ParkInspect.ViewModel
                 deadline = DateTime.Now,
                 date = DateTime.Today
             };
+
+            SelectedEmployee = null;
+            SelectedInspecteur = null;
+
             base.RaisePropertyChanged();
 
         }
