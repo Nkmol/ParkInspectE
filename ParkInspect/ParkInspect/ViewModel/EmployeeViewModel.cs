@@ -138,16 +138,8 @@ namespace ParkInspect.ViewModel
             //Initialize commands
             SaveCommand = new RelayCommand(SaveEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
-
-            // Initialize EventHandler
-            Employees.CollectionChanged += Employees_CollectionChanged;
         }
 
-        private void Employees_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            EmployeeAbsences.Employees = new ObservableCollection<Employee>(Employees);
-            RaisePropertyChanged("EmployeeAbsences.Employees");
-        }
 
         //CRU METHODS
         private void SaveEmployee()
