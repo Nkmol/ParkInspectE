@@ -236,6 +236,9 @@
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
+      <DependentUpon>AssignmentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\ContactpersoonControl.xaml.cs">
       <DependentUpon>ContactpersoonControl.xaml</DependentUpon>
     </Compile>
@@ -251,14 +254,17 @@
     <Compile Include="View\UserControls\CustomerControl.xaml.cs">
       <DependentUpon>CustomerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
-      <DependentUpon>AssignmentControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\Popup\NewInspectionPopup.xaml.cs">
+      <DependentUpon>NewInspectionPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ParkinglotControl.xaml.cs">
       <DependentUpon>ParkinglotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\Popup\ConfirmPopupWindow.xaml.cs">
+      <DependentUpon>ConfirmPopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Popup\SelectPopupWindow.xaml.cs">
       <DependentUpon>SelectPopupWindow.xaml</DependentUpon>
@@ -289,6 +295,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\UserControls\AssignmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\UserControls\ContactpersoonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -309,7 +319,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\AssignmentControl.xaml">
+    <Page Include="View\UserControls\Popup\NewInspectionPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -318,6 +328,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\EmployeeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Popup\ConfirmPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -132,7 +132,10 @@
                             </DockPanel>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel Width="263"/>
+                    <StackPanel Width="263">
+                        
+                    </StackPanel>
+
                     <StackPanel>
 
                         <GroupBox x:Name="Inspecteurs" Header="Toegekende inspecteurs" Margin="0,5,0,0" Height="204" Width="363" HorizontalAlignment="Left">
