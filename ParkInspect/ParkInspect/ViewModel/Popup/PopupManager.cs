@@ -1,21 +1,17 @@
-﻿using GalaSoft.MvvmLight;
-using ParkInspect.View.UserControls.Popup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ParkInspect.View.UserControls.Popup;
 
-namespace ParkInspect.ViewModel
+namespace ParkInspect.ViewModel.Popup
 {
     public class PopupManager
     {
-        private PopupCoordinator PopupCoordinator;
+        private readonly PopupCoordinator _popupCoordinator;
 
         public PopupManager(PopupCoordinator popupCoordinator)
         {
-            PopupCoordinator = popupCoordinator;
+            _popupCoordinator = popupCoordinator;
         }
 
         // <summary>ShowPopup shows a MahApps Popup Selection window</summary>
@@ -25,12 +21,12 @@ namespace ParkInspect.ViewModel
         // <typeparam name="T" ></ typeparam >
         public Task ShowPopup<T>(string title, UserControl content, Action<T> selectaction) where T : class
         {
-            return PopupCoordinator.ShowSelectPopupAsync<T>(this, title, content, selectaction);
+            return _popupCoordinator.ShowSelectPopupAsync<T>(this, title, content, selectaction);
         }
 
-        public Task ShowConfirmPopup<T>(string title, UserControl content, Action<T> action) where T : class
+        public Task ShowUpdateNewPopup<T>(string title, UserControl content, Action<T> action) where T : class
         {
-            return PopupCoordinator.ShowConfirmPopupAsync<T>(this, title, content, action);
+            return _popupCoordinator.ShowUpdateNewPopupAsync<T>(this, title, content, action);
         }
     }
 }

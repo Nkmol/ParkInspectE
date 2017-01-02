@@ -40,8 +40,8 @@
                     </DockPanel>
 
                     <!-- na het wijzigen van een item, is het niet mogelijk het gewijzigde item met een klik te selecteren.-->
-                    <DataGrid Width="969" ItemsSource="{Binding SearchedAsignments}"
-                              SelectedItem="{Binding SelectedAsignment, UpdateSourceTrigger=PropertyChanged}"
+                    <DataGrid Width="969" ItemsSource="{Binding Assignments}"
+                              SelectedItem="{Binding SelectedAssignment}"
                               AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="401"
                               Margin="0,0,-2,0"
                               ScrollViewer.CanContentScroll="True"
@@ -67,16 +67,10 @@
                      Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <DockPanel>
                     <StackPanel Width="300" Height="454">
-
-                        <Label Height="25" Margin="6,0,151,0" Content="Aangemaakt" />
-                        <DatePicker Margin="10,0,57,0"
-                                    Text="{Binding SelectedAsignment.date, StringFormat={}{0:dd/MM/yyyy}}"
-                                    IsEnabled="False" />
-
                         <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt" />
                         <DatePicker Margin="10,0,57,0" x:Name="DateStart">
                             <DatePicker.SelectedDate>
-                                <Binding Path="SelectedAsignment.date">
+                                <Binding Path="SelectedAssignment.date">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule />
                                         <validationRules:IsValidDateTimeRule />
@@ -88,7 +82,7 @@
                         <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateEnd" IsClockVisible="False"
                                                  Background="Transparent" Culture="en-US">
                             <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="SelectedAsignment.deadline" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="SelectedAssignment.deadline" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule />
                                         <validationRules:IsValidDateTimeRule />
@@ -97,11 +91,11 @@
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
                         <Label Height="25" Margin="10,5,151,0" Content="Status" />
-                        <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedAsignment.state}"
-                                  ItemsSource="{Binding AssignmentStatusList}" DisplayMemberPath="state1"
+                        <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding SelectedAssignment.state}"
+                                  ItemsSource="{Binding States}" DisplayMemberPath="state1"
                                   x:Name="cbState">
                             <ComboBox.SelectedItem>
-                                <Binding Path="SelectedAsignment.State1">
+                                <Binding Path="SelectedAssignment.State1">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -109,10 +103,10 @@
                             </ComboBox.SelectedItem>
                         </ComboBox>
                         <Label Height="25" Margin="10,5,151,0" Content="Klant" />
-                        <ComboBox Margin="10,0,57,0" Text="{Binding SelectedAsignment.Client.name}"
-                                  ItemsSource="{Binding ClientList}" DisplayMemberPath="name" x:Name="cbClient">
+                        <ComboBox Margin="10,0,57,0" Text="{Binding SelectedAssignment.Client.name}"
+                                  ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient">
                             <ComboBox.SelectedItem>
-                                <Binding Path="SelectedAsignment.Client">
+                                <Binding Path="SelectedAssignment.Client">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -121,7 +115,7 @@
                         </ComboBox>
                         <Label Height="25" Margin="10,5,151,0" Content="Toelichting" />
                         <TextBox Name="Clarificationbox" Margin="10,0,57,0" Height="83"
-                                 Text="{Binding SelectedAsignment.clarification}" AcceptsReturn="True"
+                                 Text="{Binding SelectedAssignment.clarification}" AcceptsReturn="True"
                                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                         <Label Height="27" Foreground="Red" Content="{Binding CommandError}" FontSize="12"
                                Margin="10,0,24,0" Background="{x:Null}" />
@@ -188,7 +182,7 @@
 
                         <GroupBox x:Name="Inspecties" Header="Toegekende inspecties" Margin="0,5,0,0" Height="204"
                                   Width="363" HorizontalAlignment="Left">
-                            <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignmentInspections}"
+                            <DataGrid IsReadOnly="True" ItemsSource="{Binding SelectedAssignment.Inspections}"
                                       SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False"
                                       Margin="0,0,-2,0"
                                       ScrollViewer.CanContentScroll="True"
@@ -202,17 +196,7 @@
                             </DataGrid>
                         </GroupBox>
 
-                        <StackPanel Height="7" />
-                        <DockPanel Width="363" HorizontalAlignment="Left">
-                            <Button Margin="5,0" Content="Toekennen" Command="{Binding CreateInspectionCommand}"
-                                    Width="126" HorizontalAlignment="Left" />
-                            <Button Margin="5,0" Content="Onttrekken" Command="{Binding RemoveInspectionCommand}"
-                                    Width="126" HorizontalAlignment="Left" />
-                        </DockPanel>
-                        <ComboBox Margin="5,5,0,0" ItemsSource="{Binding InspectionList}"
-                                  DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspectionBox}"
-                                  Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
-                        <Label Height="111" Foreground="Red" Content="{Binding CommandError}" FontSize="8"
+                       <Label Height="111" Foreground="Red" Content="{Binding CommandError}" FontSize="8"
                                RenderTransformOrigin="0.5,0.5" Margin="-1,0,1,0">
                             <Label.RenderTransform>
                                 <TransformGroup>

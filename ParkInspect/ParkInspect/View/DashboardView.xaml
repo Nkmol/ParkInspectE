@@ -49,9 +49,6 @@
             <TabItem Visibility="{Binding TabStatus[2], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Opdrachten">
                 <userControls1:AssignmentControl />
             </TabItem>
-            <TabItem Visibility="{Binding TabStatus[3], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Inspectie">
-                <userControls1:InspectionControl />
-            </TabItem>
             <TabItem Visibility="{Binding TabStatus[4], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Vragenlijst">
                 <userControls1:FormControl />
             </TabItem>

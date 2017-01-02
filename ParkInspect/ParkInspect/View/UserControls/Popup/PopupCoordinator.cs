@@ -10,6 +10,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using ParkInspect.ViewModel;
+using ParkInspect.ViewModel.Popup;
 
 namespace ParkInspect.View.UserControls.Popup
 {
@@ -45,17 +46,17 @@ namespace ParkInspect.View.UserControls.Popup
             return window.Invoke(() => window.ShowChildWindowAsync(popupWindow));
         }
 
-        public Task ShowConfirmPopupAsync<T>(object context, string title, UserControl content, Action<T> action)
+        public Task ShowUpdateNewPopupAsync<T>(object context, string title, UserControl content, Action<T> action)
         {
             var window = GetMetroWindow(context);
 
             // Create BaseChildWindow
-            var popupWindow = new ConfirmPopupWindow() { IsModal = true, AllowMove = true, AdditionalContent = content};
+            var popupWindow = new UpdateNewPopupWindow() { IsModal = true, AllowMove = true, AdditionalContent = content};
 
             // Fill Context with values so ViewModels are linked  // TODO Improve, let Injection handle more
-            var Context = (PopupViewModel)popupWindow.DataContext;
+            var Context = (PopupCreateUpdateViewModel)popupWindow.DataContext;
             Context.OwnerTask = x =>action((T)x); // Simple way of Converting T to specific type (object in this case)
-            Context.ContentContext = content.DataContext as IPopup;
+            Context.ContentContextNewUpdate = content.DataContext as ICreateUpdatePopup;
             Context.CloseWindow = () => popupWindow.Close();
             Context.Title = title;
             Context.Ready();

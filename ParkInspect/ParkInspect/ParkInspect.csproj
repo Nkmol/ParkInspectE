@@ -226,12 +226,14 @@
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
+    <Compile Include="ViewModel\Popup\ICreateUpdatePopup.cs" />
     <Compile Include="ViewModel\Popup\IPopup.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\Popup\PopupCreateUpdateViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupManager.cs" />
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
@@ -248,14 +250,14 @@
     <Compile Include="View\UserControls\AbsenceControl.xaml.cs">
       <DependentUpon>AbsenceControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\InspectionControl.xaml.cs">
+    <Compile Include="View\UserControls\Inspection\InspectionControl.xaml.cs">
       <DependentUpon>InspectionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\CustomerControl.xaml.cs">
       <DependentUpon>CustomerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Popup\NewInspectionPopup.xaml.cs">
-      <DependentUpon>NewInspectionPopup.xaml</DependentUpon>
+    <Compile Include="View\UserControls\Inspection\InspectionManageControl.xaml.cs">
+      <DependentUpon>InspectionManageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ParkinglotControl.xaml.cs">
       <DependentUpon>ParkinglotControl.xaml</DependentUpon>
@@ -263,8 +265,8 @@
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Popup\ConfirmPopupWindow.xaml.cs">
-      <DependentUpon>ConfirmPopupWindow.xaml</DependentUpon>
+    <Compile Include="View\UserControls\Popup\UpdateNewPopupWindow.xaml.cs">
+      <DependentUpon>UpdateNewPopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Popup\SelectPopupWindow.xaml.cs">
       <DependentUpon>SelectPopupWindow.xaml</DependentUpon>
@@ -303,7 +305,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\InspectionControl.xaml">
+    <Page Include="View\UserControls\Inspection\InspectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -319,7 +321,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Popup\NewInspectionPopup.xaml">
+    <Page Include="View\UserControls\Inspection\InspectionManageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,7 +333,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Popup\ConfirmPopupWindow.xaml">
+    <Page Include="View\UserControls\Popup\UpdateNewPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

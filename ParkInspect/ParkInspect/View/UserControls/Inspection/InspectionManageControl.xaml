@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="ParkInspect.View.UserControls.Inspection.InspectionManageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParkInspect.View.UserControls.Inspection"
+             xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             DataContext="{Binding Inspections, Source={StaticResource Locator}}">
+    <Grid>
+        <DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Width="327" VerticalAlignment="Top">
+                <StackPanel Width="300" VerticalAlignment="Top">
+                    <Label Height="25" Margin="10,5,151,0" Content="Parkeerplaats"  />
+                    <ComboBox Name="CbParkinglot" Margin="10,0,57,0" Text="{Binding SelectedInspection.Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding ParkinglotList}">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="SelectedInspection.Parkinglot">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst"  />
+                    <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Form.Template.name}" ItemsSource="{Binding FormList}" DisplayMemberPath="Template.name" SelectedItem="{Binding SelectedInspection.Form}" />
+
+                    <Label Height="25" Margin="10,5,151,0" Content="Status"  />
+                    <ComboBox Name="CbStatus" Height="25" Margin="10,0,57,0" Text="{Binding SelectedInspection.state}" ItemsSource="{Binding InspectionStateList}" DisplayMemberPath="state1">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="SelectedInspection.State1">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
+                    <ComboBox Margin="10,0,57,0" Text="{Binding SelectedInspection.Inspection2.Parkinglot.name}" ItemsSource="{Binding InspectieCollection}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding SelectedInspection.Inspection2}" />
+
+                    <Label Height="25" Margin="10,0,151,0" Content="Datum"  />
+                    <controls:DateTimePicker Name="DateStart" Margin="10,0,57,0">
+                        <controls:DateTimePicker.SelectedDate >
+                            <Binding Path="SelectedInspection.date" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
+                                    <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:DateTimePicker.SelectedDate >
+                    </controls:DateTimePicker>
+
+                    <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
+                    <controls:DateTimePicker Name="DateDeadline" Margin="10,0,57,0">
+                        <controls:DateTimePicker.SelectedDate >
+                            <Binding Path="SelectedInspection.deadline" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
+                                    <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:DateTimePicker.SelectedDate >
+                    </controls:DateTimePicker>
+
+
+                    <Label Height="25" Margin="10,5,151,0" Content="Toelichting"  />
+                    <TextBox Name="Clarificationbox" Height="105" Text="{Binding SelectedInspection.clarification}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+
+                    <Label Height="35" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
+                    <DockPanel HorizontalAlignment="Center">
+                        <Button Width="100" Content="Toevoegen" Margin="5,0" Command="{Binding CreateInspectionCommand}">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=CbParkinglot, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=CbStatus, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=DateDeadline, Path=(Validation.HasError)}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Width="100" Content="Bijwerken" Margin="5,0" Command="{Binding EditInspectionCommand}">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=CbParkinglot, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=CbStatus, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}" Value="false" />
+                                                <Condition Binding="{Binding ElementName=DateDeadline, Path=(Validation.HasError)}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </DockPanel >
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel>
+                <GroupBox x:Name="Inspecteurs" Header="Toegekende inspecteurs" Margin="0,5,0,0" MinHeight="204" Width="363" HorizontalAlignment="Left">
+                    <DataGrid IsReadOnly="True" ItemsSource="{Binding InspectionInspectors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInspecteur}" AutoGenerateColumns="False" Margin="0,0,-2,0"
+                                       ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="voornaam" Width="*" Binding="{Binding firstname}" />
+                            <DataGridTextColumn  Header="achternaam" Width="*" Binding="{Binding lastname}"/>
+                            <DataGridTextColumn  Header="email" Width="*" Binding="{Binding email}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </GroupBox>
+
+                <StackPanel Height="7">
+                </StackPanel>
+                <DockPanel Width="363" HorizontalAlignment="Left">
+
+                    <Button  Margin="5,0" Content="Toekennen" Command="{Binding AddInspecteurCommand}" Width="125" HorizontalAlignment="Left"/>
+                    <Button Margin="5,0" Content="Onttrekken" Width="125" Command="{Binding RemoveInspecteurCommand}" HorizontalAlignment="Left"/>
+
+                </DockPanel>
+
+                <ComboBox Margin="5,5,57,0"  ItemsSource="{Binding EmployeesList}" DisplayMemberPath="firstname" Text="{Binding SelectedEmployee.firstname}" SelectedItem="{Binding SelectedEmployee}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="318" />
+                <Label Height="98" Foreground="Red" Content="{Binding CommandError}" FontSize="8"/>
+                <Button  Margin="0,0,5,0" Content="Leeg Scherm" Command="{Binding ResetCommand}" Width="122" HorizontalAlignment="Left"/>
+
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>

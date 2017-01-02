@@ -8,6 +8,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.ViewModel.Popup;
 
 namespace ParkInspect.ViewModel
 {
@@ -17,7 +18,7 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InspectionViewModel : ViewModelBase
+    public class InspectionViewModel : ViewModelBase, ICreateUpdatePopup
     {
         // collections
         private ObservableCollection<Inspection> _allInspections;
@@ -215,11 +216,15 @@ namespace ParkInspect.ViewModel
         }
 
         // commands
-        public ICommand ResetCommand { get; set; }
-        public ICommand CreateInspectionCommand { get; set; }
-        public ICommand EditInspectionCommand { get; set; }
-        public ICommand AddInspecteurCommand { get; set; }
-        public ICommand RemoveInspecteurCommand { get; set; }
+        public RelayCommand ResetCommand { get; set; }
+        public RelayCommand CreateInspectionCommand { get; set; }
+        public RelayCommand EditInspectionCommand { get; set; }
+        public RelayCommand AddInspecteurCommand { get; set; }
+        public RelayCommand RemoveInspecteurCommand { get; set; }
+
+        public Action PopupDone { get; set; }
+
+        public object SelectedItemPopup => _selectedInspection;
 
         private readonly InspectionService _service;
        
@@ -317,38 +322,39 @@ namespace ParkInspect.ViewModel
             CommandError = "";
         }
 
+
         public void CreateInspection()
         {
             if (!CreateInspectionValidation()) return;
             if (_selectedInspection.date == null) { _selectedInspection.date = DateTime.Today; }
 
-
-            _service.CreateNewAssignemnt(_selectedInspection);
-            SetNewInspection();
+            //_service.CreateNewAssignemnt(_selectedInspection);
             CommandError = "Created";
             UpdateProperties();
+            SetNewInspection();
+            PopupBeforeFinish();
         }
 
         private bool CreateInspectionValidation()
         {
             CommandError = "";
-            if (_selectedInspection == null)
-            {
-                CommandError =
-                    "_selectedAsignment is null, please contact your ICT department, something went horrably wrong";
-                return false;
-            }
+            //if (_selectedInspection == null)
+            //{
+            //    CommandError =
+            //        "_selectedAsignment is null, please contact your ICT department, something went horrably wrong";
+            //    return false;
+            //}
 
-            if (_selectedInspection.Asignment == null)
-            {
-                CommandError = "Geen opdracht geselecteerd";
-                return false;
-            }
+            //if (_selectedInspection.Asignment == null)
+            //{
+            //    CommandError = "Geen opdracht geselecteerd";
+            //    return false;
+            //}
 
             if (_selectedInspection.Parkinglot == null) CommandError = "Geen Parkeerplaats geselecteerd";
             if (_selectedInspection.State1 == null) CommandError = "Geen status geselecteerd";
             if (_selectedInspection.deadline < DateTime.Today) CommandError = "Deadline te vroeg.";
-            if (_selectedInspection.deadline > _selectedInspection.Asignment.deadline)
+            if (_selectedInspection.deadline > _selectedInspection.Asignment?.deadline)
                 CommandError = "Inspectie deadline valt buiten de opdracht.";
 
             return CommandError.Equals("");
@@ -364,6 +370,8 @@ namespace ParkInspect.ViewModel
 
                 CommandError = "Updated";
                 UpdateProperties();
+
+                PopupBeforeFinish();
             }
         }
 
@@ -402,5 +410,11 @@ namespace ParkInspect.ViewModel
             base.RaisePropertyChanged();
 
         }
+
+        private void PopupBeforeFinish()
+        {
+            PopupDone();
+        }
+
     }
 }

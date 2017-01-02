@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ParkInspect.View.UserControls
+namespace ParkInspect.View.UserControls.Inspection
 {
     /// <summary>
-    /// Interaction logic for NewInspectionPopup.xaml
+    /// Interaction logic for InspectionManageControl.xaml
     /// </summary>
-    public partial class NewInspectionPopup
+    public partial class InspectionManageControl : UserControl
     {
-        public NewInspectionPopup()
+        public InspectionManageControl()
         {
             InitializeComponent();
         }
