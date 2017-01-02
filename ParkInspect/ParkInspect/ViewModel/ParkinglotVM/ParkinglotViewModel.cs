@@ -48,7 +48,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             }
         }
 
-        public int? Number
+        public string Number
         {
             get { return _parkinglot.number; }
             set
@@ -74,7 +74,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public string FormName { get; set; }
         public string FormZipcode { get; set; }
         public string FormRegion { get; set; }
-        public int? FormNumber { get; set; }
+        public string FormNumber { get; set; }
         public string FormClarification { get; set; }
         #endregion
 
