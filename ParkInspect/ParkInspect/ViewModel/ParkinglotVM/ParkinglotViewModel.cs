@@ -68,6 +68,15 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         }
         #endregion
 
+        #region Property Form
+
+        public string FormName { get; set; }
+        public string FormZipcode { get; set; }
+        public string FormRegion { get; set; }
+        public int? FormNumber { get; set; }
+        public string FormClarification { get; set; }
+        #endregion
+
         protected ParkinglotService Service { get; set; }
 
         public ObservableCollection<RegionViewModel> Regions { get; set; }
@@ -83,20 +92,43 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Service = new ParkinglotService(context);
 
             Regions = new ObservableCollection<RegionViewModel>(Service.GetAll<Region>().Select(x => new RegionViewModel(x))); // TODO: Load this once
-            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Save);
+            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, _ => _parkinglot.id <= 0);
             EditCommand = new RelayCommand(Edit, () => _parkinglot.id > 0);
+
+            FillForm();
         }
 
-        public void Save(ParkinglotOverviewViewModel overview)
+        // TODO: Improve the way to make a 'property shadow object'. There is need for double property decleration at the moment.
+        private void FillForm()
         {
+            FormName = Name;
+            FormZipcode = Zipcode;
+            FormRegion = Region;
+            FormNumber = Number;
+            FormClarification = Clarification;
+        }
+
+        private void SaveForm()
+        {
+            Name = FormName;
+            Zipcode = FormZipcode;
+            Region = FormRegion;
+            Number = FormNumber;
+            Clarification = FormClarification;
+        }
+
+        public void Add(ParkinglotOverviewViewModel overview)
+        {
+            SaveForm();
             Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
+
             overview.Parkinglots.Add(this);
         }
 
         public void Edit()
         {
+            SaveForm();
             Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is angepast!" : "Er is iets misgegaan tijdens het aanpassen.";
-            //overview.Parkinglots.Add(this);
         }
     }
 }

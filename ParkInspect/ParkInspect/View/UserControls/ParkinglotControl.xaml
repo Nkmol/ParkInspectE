@@ -31,11 +31,11 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Name="SearchLabel">Zoeken</Label>
                 <UniformGrid Grid.Row="1" Name="FilterGrid" Rows="1">
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in naam" Name="NameFilter" Margin="0,0,5,10" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode" Name="ZipFilter" Margin="0,0,5,10" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer" Name="NumberFilter" Margin="0,0,5,10" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in regio" Name="RegionFilter" Margin="0,0,5,10" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" Name="ClarificationFilter" Margin="0,0,5,10" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op naam" Name="NameFilter" Margin="0,0,5,10" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op postcode" Name="ZipFilter" Margin="0,0,5,10" Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op nummer" Name="NumberFilter" Margin="0,0,5,10" Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op regio" Name="RegionFilter" Margin="0,0,5,10" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op verduidelijking" Name="ClarificationFilter" Margin="0,0,5,10" Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
                 <DataGrid Grid.Row="2"  Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding SelectedParkinglot}" IsReadOnly="True" MouseDoubleClick="Update">
                     <DataGrid.Columns>
@@ -62,7 +62,7 @@
                         <Label Content="Naam" />
                         <TextBox x:Name="NameBox" Margin="5,0,0,10" Width="250">
                             <TextBox.Text>
-                                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -72,7 +72,7 @@
                         <Label Content="Postcode" />
                         <TextBox x:Name="ZipBox" Margin="5,0,0,10" Width="250">
                             <TextBox.Text>
-                                <Binding Path="Zipcode" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormZipcode" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                         <validationrules:IsValidZipCodeValidationRule ValidationStep="ConvertedProposedValue"
@@ -86,7 +86,7 @@
                         <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="Name" SelectedValuePath="Name"
 							          Width="255" Margin="5,0,0,10">
                             <ComboBox.Text>
-                                <Binding Path="Region" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -100,7 +100,7 @@
                         <Label x:Name="NumberLabel" Content="Nummer" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <TextBox x:Name="NumberBox" Width="255" Margin="5,0,0,10">
                             <TextBox.Text>
-                                <Binding Path="Number" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormNumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                         <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue"
@@ -111,7 +111,7 @@
                         </TextBox>
                         <Label Content="Verduidelijking" />
                         <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="121" TextWrapping="Wrap" AcceptsReturn="True"
-							         Text="{Binding Clarification, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="255"
+							         Text="{Binding FormClarification}" VerticalAlignment="Top" Width="255"
 							         Margin="5,0,0,0" />
                     </StackPanel>
                 </DockPanel>

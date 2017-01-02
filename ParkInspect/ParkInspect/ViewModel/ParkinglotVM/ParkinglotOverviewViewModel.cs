@@ -16,6 +16,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
     {
         private readonly DialogManager _dialog;
         private IEnumerable<ParkinglotViewModel> Data { get; set; }
+        private ParkinglotViewModel _selectedParkinglot;
         public ObservableCollection<ParkinglotViewModel> Parkinglots { get; set; }
 
         public ParkinglotViewModel SelectedParkinglot // Backing value needed, because needs to "raise" change for child bind properties for update
@@ -26,12 +27,6 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 
         protected ParkinglotService Service { get; set; }
 
-        public string Message { get; set; }
-        //        public ObservableCollection<Region> Regions { get; set; }
-        //        public ObservableCollection<Inspection> Inspections { get; set; }
-        //        protected ParkinglotService Service { get; set; }
-        //        private Parkinglot _parkinglot;
-        //        public RelayCommand SaveCommand { get; set; }
         public RelayCommand NewCommand { get; set; }
 
         public RelayCommand ExportCommand { get; set; }
@@ -43,7 +38,6 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         private string _numberFilter;
         private string _regionFilter;
         private string _clarificationFilter;
-        private ParkinglotViewModel _selectedParkinglot;
 
         public string NameFilter
         {
@@ -126,7 +120,6 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         private void NewParkinglot(IRepository context)
         {
             SelectedParkinglot = new ParkinglotViewModel(context, new Parkinglot());
-            Message = "Nieuwe parkeerplaats toevoegen";
         }
 
         private void Export()
