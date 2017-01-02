@@ -85,7 +85,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public RelayCommand<ParkinglotOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
 
-        public string Message { get; set; } // Transform to error popup
+        public string Message { get; set; }
 
         public ParkinglotViewModel(IRepository context, Parkinglot parkinglot, DialogManager dialogManager)
         {
@@ -94,7 +94,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Service = new ParkinglotService(context);
 
             Regions = new ObservableCollection<RegionViewModel>(Service.GetAll<Region>().Select(x => new RegionViewModel(x))); // TODO: Load this once
-            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, _ => _parkinglot.id <= 0);
+            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, (_) => _parkinglot.id <= 0);
             EditCommand = new RelayCommand(Edit, () => _parkinglot.id > 0);
 
             FillForm();

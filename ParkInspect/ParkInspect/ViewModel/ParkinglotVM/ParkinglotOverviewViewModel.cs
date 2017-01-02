@@ -11,7 +11,6 @@ using ParkInspect.Services;
 
 namespace ParkInspect.ViewModel.ParkinglotVM
 {
-
     public class ParkinglotOverviewViewModel : ViewModelBase
     {
         private readonly DialogManager _dialog;

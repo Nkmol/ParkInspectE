@@ -16,6 +16,7 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
 
@@ -61,6 +62,7 @@ namespace ParkInspect.ViewModel
             
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
+            SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<AssignmentViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
@@ -76,7 +78,7 @@ namespace ParkInspect.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public DashboardViewModel Dashboard => ServiceLocator.Current.GetInstance<DashboardViewModel>();
 
-	public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
+	    public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
@@ -101,7 +103,7 @@ namespace ParkInspect.ViewModel
         public PopupManager PopupManager => ServiceLocator.Current.GetInstance<PopupManager>();
         public DialogManager Dialog => ServiceLocator.Current.GetInstance<DialogManager>();
 
-        public AssignmentViewModel Assignment => ServiceLocator.Current.GetInstance<AssignmentViewModel>();
+        public AssignmentOverviewViewModel Assignments => ServiceLocator.Current.GetInstance<AssignmentOverviewViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.
