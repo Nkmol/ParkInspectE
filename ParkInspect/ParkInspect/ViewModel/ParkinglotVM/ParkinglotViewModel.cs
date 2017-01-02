@@ -14,8 +14,9 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 {
     public class ParkinglotViewModel : ViewModelBase
     {
-        private readonly Parkinglot _parkinglot;        
-        
+        private readonly Parkinglot _parkinglot;
+        private DialogManager _dialogManager;
+
         #region ViewModel POCO properties
         public string Name
         {
@@ -86,8 +87,9 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 
         public string Message { get; set; } // Transform to error popup
 
-        public ParkinglotViewModel(IRepository context, Parkinglot parkinglot)
+        public ParkinglotViewModel(IRepository context, Parkinglot parkinglot, DialogManager dialogManager)
         {
+            _dialogManager = dialogManager;
             _parkinglot = parkinglot;
             Service = new ParkinglotService(context);
 
@@ -122,13 +124,17 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             SaveForm();
             Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
 
+            _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
+
             overview.Parkinglots.Add(this);
         }
 
         public void Edit()
         {
             SaveForm();
-            Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is angepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+            Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+
+            _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
         }
     }
 }

@@ -93,13 +93,13 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         {
             _dialog = dialog;
 
-            NewCommand = new RelayCommand(() => NewParkinglot(context));
+            NewCommand = new RelayCommand(() => NewParkinglot(context, dialog));
             ExportCommand = new RelayCommand(Export);
 
             Service = new ParkinglotService(context);
-            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(context, x));
+            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(context, x, dialog));
             Parkinglots = new ObservableCollection<ParkinglotViewModel>(Data);
-            NewParkinglot(context);
+            NewParkinglot(context, dialog);
         }
 
         public void UpdateParkinglots()
@@ -117,9 +117,9 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             RaisePropertyChanged("Parkinglots");
         }
 
-        private void NewParkinglot(IRepository context)
+        private void NewParkinglot(IRepository context, DialogManager dialog)
         {
-            SelectedParkinglot = new ParkinglotViewModel(context, new Parkinglot());
+            SelectedParkinglot = new ParkinglotViewModel(context, new Parkinglot(), dialog);
         }
 
         private void Export()
