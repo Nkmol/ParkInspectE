@@ -22,9 +22,9 @@ namespace ParkInspect.ViewModel.AssignmentVM
     {
         private readonly AssignmentService _service;
         private readonly PopupManager _popupManager;
-        private readonly Asignment _assignment;
         private DialogManager _dialogManager;
 
+        public readonly Asignment Data;
         public Inspection SelectedInspection { get; set; }
 
         // TODO global data
@@ -40,62 +40,54 @@ namespace ParkInspect.ViewModel.AssignmentVM
         #region ViewModel Poco properties
         public Client Client
         {
-            get { return _assignment.Client; }
+            get { return Data.Client; }
             set
             {
-                _assignment.Client = value;
+                Data.Client = value;
                 RaisePropertyChanged();
             }
         }
 
         public DateTime? Date
         {
-            get { return _assignment.date; }
+            get { return Data.date; }
             set
             {
-                _assignment.date = value;
+                Data.date = value;
                 RaisePropertyChanged();
             }
         }
         public State State
         {
-            get { return _assignment.State1; }
+            get { return Data.State1; }
             set
             {
-                _assignment.State1 = value;
+                Data.State1 = value;
                 RaisePropertyChanged();
             }
         }
 
         public string Clarification
         {
-            get { return _assignment.clarification; }
+            get { return Data.clarification; }
             set
             {
-                _assignment.clarification = value;
+                Data.clarification = value;
                 RaisePropertyChanged();
             }
         }
 
         public DateTime Deadline
         {
-            get { return _assignment.deadline; }
+            get { return Data.deadline; }
             set
             {
-                _assignment.deadline = value;
+                Data.deadline = value;
                 RaisePropertyChanged();
             }
         }
 
-        public ObservableCollection<Inspection> Inspections
-        {
-            get { return new ObservableCollection <Inspection>(_assignment.Inspections); }
-            set
-            {
-                _assignment.Inspections = value;
-                RaisePropertyChanged();
-            }
-        }
+        public ObservableCollection<InspectionViewModel> Inspections { get; set; }
         #endregion
 
         #region Property Form
@@ -104,25 +96,31 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public string FormClarification { get; set; }
         public System.DateTime FormDeadline { get; set; }
         public virtual Client FormClient { get; set; }
-        public virtual ObservableCollection<Inspection> FormInspections { get; set; }
+        public virtual ObservableCollection<InspectionViewModel> FormInspections { get; set; }
         #endregion
 
         public string Message { get; set; }
 
-        public AssignmentViewModel(IRepository repository, Asignment assignment, PopupManager popupManager, DialogManager dialogManager)
+        public AssignmentViewModel(IRepository repository, Asignment data, PopupManager popupManager, DialogManager dialogManager)
         {
             _dialogManager = dialogManager;
-            _assignment = assignment;
+            Data = data;
             _popupManager = popupManager;
             _service = new AssignmentService(repository);
+
+            // Default values
+            Date = DateTime.Now;
+            Deadline = DateTime.Now.AddDays(1);
+
+            Inspections = new ObservableCollection<InspectionViewModel>(Data.Inspections.Select(x => new InspectionViewModel(repository, x)));
 
             // TODO global data
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
             States = new ObservableCollection<State>(_service.GetAll<State>());
             Clients = new ObservableCollection<Client>(_service.GetAll<Client>());
 
-            SaveCommand = new RelayCommand<AssignmentOverviewViewModel>(Add, (_) => _assignment.id <= 0);
-            EditCommand = new RelayCommand(Edit, () => _assignment.id > 0);
+            SaveCommand = new RelayCommand<AssignmentOverviewViewModel>(Add, (_) => Data.id <= 0);
+            EditCommand = new RelayCommand(Edit, () => Data.id > 0);
             AddInspectionCommand = new RelayCommand(ShowPopup);
 
             FillForm();
@@ -151,10 +149,10 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
         private void ShowPopup()
         {
-            _popupManager.ShowUpdateNewPopup<Inspection>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
+            _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
                 x =>
                 {
-                    x.assignment_id = _assignment.id;
+                    x.Id = Data.id;
                     FormInspections.Add(x);
                     RaisePropertyChanged();
                 });
@@ -165,7 +163,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             if (FormDate == null) FormDate = DateTime.Today;
 
             SaveForm();
-            Message = _service.InsertOrUpdate(_assignment) ? "De opdracht is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
+            Message = _service.InsertOrUpdate(this) ? "De opdracht is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
             _dialogManager.ShowMessage("Opdracht toevoegen", Message);
 
             overview.Assignments.Add(this);
@@ -174,7 +172,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public void Edit()
         {
            SaveForm();
-            Message = _service.InsertOrUpdate(_assignment) ? "De opdracht is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+            Message = _service.InsertOrUpdate(this) ? "De opdracht is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
 
             _dialogManager.ShowMessage("Opdracht bewerken", Message);
         }

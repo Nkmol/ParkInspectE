@@ -6,6 +6,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
 			 xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+			 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+			 xmlns:parkInspect="clr-namespace:ParkInspect"
+			 xmlns:system="clr-namespace:System;assembly=mscorlib"
 			 StartupUri="View/DashboardView.xaml"
              mc:Ignorable="d ignore">
 
@@ -35,6 +38,7 @@
                 <!-- Material Design: MahApps Compatibility -->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/DateTimePicker.xaml" />
                 
             </ResourceDictionary.MergedDictionaries>
             <!-- MahApps Brushes -->
@@ -54,9 +58,12 @@
             <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="{DynamicResource Primary500Foreground}"/>
             <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="{DynamicResource Primary500}" Opacity="0.4"/>
             
-
             <!-- tell Dragablz tab control to use the Material Design theme -->
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
+            <!-- Default datetimepick culture -->
+            <Style TargetType="{x:Type controls:DateTimePicker}" BasedOn="{StaticResource {x:Type controls:DateTimePicker}}">
+                <Setter Property="Culture" Value="{Binding Source={x:Static parkInspect:Global.Culture}}" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

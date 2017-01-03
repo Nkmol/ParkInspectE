@@ -104,6 +104,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
         private void NewAssignment(IRepository context, PopupManager popup, DialogManager dialog)
         {
             SelectedAssignment = new AssignmentViewModel(context, new Asignment(), popup, dialog);
+            RaisePropertyChanged();
         }
 
         private void UpdateFilter()

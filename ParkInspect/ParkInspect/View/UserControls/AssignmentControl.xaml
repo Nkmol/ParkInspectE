@@ -11,6 +11,7 @@
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:parkInspect="clr-namespace:ParkInspect"
              DataContext="{Binding Assignments, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter" />
@@ -64,19 +65,18 @@
                 <DockPanel>
                     <StackPanel Width="300" Height="454">
                         <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt" />
-                        <DatePicker Margin="10,0,57,0" x:Name="DateStart">
-                            <DatePicker.SelectedDate>
+                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateStart" Background="Transparent" Culture="{Binding Source={x:Static parkInspect:Global.Culture}}">
+                            <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="FormDate">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule />
                                         <validationRules:IsValidDateTimeRule />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </DatePicker.SelectedDate>
-                        </DatePicker>
+                            </controls:DateTimePicker.SelectedDate>
+                        </controls:DateTimePicker>
                         <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
-                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateEnd" IsClockVisible="False"
-                                                 Background="Transparent" Culture="en-US">
+                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateEnd" Background="Transparent" Culture="nl-BE">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="FormDeadline" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -89,6 +89,7 @@
                         <Label Height="25" Margin="10,5,151,0" Content="Status" />
                         <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding State.state1}"
                                   ItemsSource="{Binding States}" DisplayMemberPath="state1"
+                                  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                   x:Name="cbState">
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormState">
@@ -185,7 +186,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Parkeerplaats" Width="*"
                                                         Binding="{Binding Parkinglot.name}" />
-                                    <DataGridTextColumn Header="Datum" Width="*" Binding="{Binding date}" />
+                                    <DataGridTextColumn Header="Start datum" Width="*" Binding="{Binding Date}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </GroupBox>

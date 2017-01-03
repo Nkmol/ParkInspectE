@@ -63,7 +63,6 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
-            SimpleIoc.Default.Register<AssignmentViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupCreateUpdateViewModel>();
@@ -82,7 +81,7 @@ namespace ParkInspect.ViewModel
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
-        public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
+        public InspectionViewModel Inspection => new InspectionViewModel(SimpleIoc.Default.GetInstance<IRepository>());
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 
