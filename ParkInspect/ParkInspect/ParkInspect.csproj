@@ -292,6 +292,9 @@
     <Compile Include="View\UserControls\OfflineControl.xaml.cs">
       <DependentUpon>OfflineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\Popup\SelectPopupWindowNoButton.xaml.cs">
+      <DependentUpon>SelectPopupWindowNoButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\PrepareControl.xaml.cs">
       <DependentUpon>PrepareControl.xaml</DependentUpon>
     </Compile>
@@ -381,6 +384,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\OfflineControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UserControls\Popup\SelectPopupWindowNoButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

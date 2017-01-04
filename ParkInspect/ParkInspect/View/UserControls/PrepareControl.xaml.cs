@@ -41,6 +41,23 @@ namespace ParkInspect.View.UserControls
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private PrepareViewModel vm;
+        public PrepareControl(Inspection inspection)
+        {
+            InitializeComponent();
+            vm = (PrepareViewModel)this.DataContext;
+            vm.selectedInspection = inspection;
+            service = vm.service;
+            inspection = new Inspection();
+            OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
+            gmap.MapProvider = OpenStreetMapProvider.Instance;
+            gmap.Manager.Mode = AccessMode.ServerAndCache;
+            gmap.Manager.UseGeocoderCache = true;
+            gmap.SetPositionByKeywords("Amsterdam");
+            gmap.MinZoom = 1;
+            gmap.MaxZoom = 18;
+            gmap.Zoom = 8;
+            gmap.ShowCenter = false;
+        }
         public PrepareControl()
         {
             InitializeComponent();

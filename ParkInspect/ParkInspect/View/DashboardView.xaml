@@ -64,9 +64,6 @@
             <TabItem Visibility="{Binding TabStatus[8], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Offline">
                 <userControls1:OfflineControl />
             </TabItem>
-            <TabItem Visibility="{Binding TabStatus[9], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Voorbereiden">
-                <userControls1:PrepareControl />
-            </TabItem>
             <TabItem Visibility="{Binding TabStatus[7], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
                 <userControls1:AbsenceControl />
             </TabItem>

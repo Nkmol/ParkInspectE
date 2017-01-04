@@ -27,5 +27,9 @@ namespace ParkInspect.ViewModel
         {
             return PopupCoordinator.ShowSelectPopupAsync<T>(this, title, content, selectaction);
         }
+        public Task ShowPopupNoButton<T>(string title, UserControl content, Action<T> selectaction) where T : class
+        {
+            return PopupCoordinator.ShowSelectPopupNoButtonAsync<T>(this, title, content, selectaction);
+        }
     }
 }

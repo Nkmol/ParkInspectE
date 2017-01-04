@@ -42,6 +42,7 @@ namespace ParkInspect.ViewModel
         public string _region_number;
         public string _clarification;
         public string _directions_save_name;
+        public int _selectedInspectionID;
         private string _home_adress;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _current_direction_item;

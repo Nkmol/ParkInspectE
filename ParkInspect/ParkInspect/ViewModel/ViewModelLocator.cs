@@ -76,17 +76,17 @@ namespace ParkInspect.ViewModel
 	public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
-
+        public OfflineViewModel Offline => ServiceLocator.Current.GetInstance<OfflineViewModel>();
+        public PrepareViewModel Prepare => ServiceLocator.Current.GetInstance<PrepareViewModel>();
         public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
-        public PrepareViewModel Prepare => ServiceLocator.Current.GetInstance<PrepareViewModel>();
+
 
         public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
-        public OfflineViewModel Offline => ServiceLocator.Current.GetInstance<OfflineViewModel>();
 
 
         public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();

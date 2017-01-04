@@ -8,6 +8,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls;
 
 namespace ParkInspect.ViewModel
 {
@@ -17,7 +18,7 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InspectionViewModel : ViewModelBase
+    public class InspectionViewModel : ViewModelBase, IPopup
     {
         // collections
         private ObservableCollection<Inspection> _allInspections;
@@ -25,8 +26,12 @@ namespace ParkInspect.ViewModel
         public ObservableCollection<Parkinglot> ParkinglotList { get; set; }
         public ObservableCollection<Asignment> Assignmentlist { get; set; }
         public ObservableCollection<Form> FormList { get; set; }
+        public RelayCommand PrepareCommand { get; set; }
+        public PopupManager PopupManager { get; set; }
+
 
         private ObservableCollection<Inspection> _inspections;
+        #region properties
         public ObservableCollection<Inspection> InspectieCollection
         {
             get
@@ -116,6 +121,7 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
+        #endregion
 
         #region List of filters
         private string _parkinglotFilter;
@@ -221,24 +227,37 @@ namespace ParkInspect.ViewModel
         public ICommand AddInspecteurCommand { get; set; }
         public ICommand RemoveInspecteurCommand { get; set; }
 
+        public object SelectedItemPopup
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private readonly InspectionService _service;
        
-        public InspectionViewModel(IRepository context)
+        public InspectionViewModel(IRepository context, PopupManager popupManager)
         {
             // set services and Lists
             _service = new InspectionService(context);
             UpdateProperties();
             SetNewInspection();
-
+            PopupManager = popupManager;
             // set commands
             ResetCommand = new RelayCommand(ResetInspection);
             CreateInspectionCommand = new RelayCommand(CreateInspection, CanCreateInspection);
             EditInspectionCommand = new RelayCommand(EditInspection, CanEditInspection);
-
+            PrepareCommand = new RelayCommand(ShowPreparePopup);
 
             RemoveInspecteurCommand = new RelayCommand(RemoveInspecteur, CanRemoveInspecteur);
             AddInspecteurCommand = new RelayCommand(AddInspecteur, CanAddInspecteur);
 
+        }
+
+        private void ShowPreparePopup()
+        {
+            PopupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection),null);
         }
 
         private bool CanAddInspecteur()
