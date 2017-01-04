@@ -65,7 +65,7 @@
                 <DockPanel>
                     <StackPanel Width="300" Height="454">
                         <Label Height="25" Margin="10,0,151,0" Content="Aangemaakt" />
-                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateStart" Background="Transparent" Culture="{Binding Source={x:Static parkInspect:Global.Culture}}">
+                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateStart">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="FormDate">
                                     <Binding.ValidationRules>
@@ -76,7 +76,7 @@
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
                         <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
-                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateEnd" Background="Transparent" Culture="nl-BE">
+                        <controls:DateTimePicker Margin="10,0,57,0" x:Name="DateEnd">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="FormDeadline" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>

@@ -63,6 +63,7 @@
             <!-- Default datetimepick culture -->
             <Style TargetType="{x:Type controls:DateTimePicker}" BasedOn="{StaticResource {x:Type controls:DateTimePicker}}">
                 <Setter Property="Culture" Value="{Binding Source={x:Static parkInspect:Global.Culture}}" />
+                <Setter Property="Background" Value="Transparent" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

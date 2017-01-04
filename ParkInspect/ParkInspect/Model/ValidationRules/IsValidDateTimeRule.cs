@@ -12,10 +12,8 @@ namespace ParkInspect.Model.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            DateTime temp;
-            var formatInfo = CultureInfo.GetCultureInfo(Global.Culture).DateTimeFormat;
-            string format = formatInfo.ShortDatePattern + ' ' + formatInfo.LongTimePattern;
-            if (DateTime.TryParseExact(Convert.ToString(value), format, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out temp))
+            // WPF transforms value to general format, checking on format should not be necessary
+            if (DateTime.TryParse(Convert.ToString(value), DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out DateTime temp))
                 return new ValidationResult(true, null);
 
             return new ValidationResult(false, "Voer een geldige datum in!");
