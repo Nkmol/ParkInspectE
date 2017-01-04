@@ -370,7 +370,7 @@ namespace ParkInspect.ViewModel
         }
         public void LoadDirections()
         {
-            Directory.CreateDirectory(runpath + " / directions");
+           Directory.CreateDirectory(runpath + "/directions");
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 Direction direction = new Direction();
