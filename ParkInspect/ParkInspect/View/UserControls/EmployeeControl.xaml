@@ -9,8 +9,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" 
-             Width="1000"
-             Height="600"
+             d:DesignHeight="600"
+             d:DesignWidth="1000"
              VerticalAlignment="Top"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
     <UserControl.Resources>

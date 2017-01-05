@@ -89,7 +89,6 @@ namespace ParkInspect.ViewModel
 
         private IEnumerable<Employee> Data { get; set; }
 
-
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
         {
@@ -101,8 +100,8 @@ namespace ParkInspect.ViewModel
                 if (_selectedEmployee != null)
                 {
                     oldPass = _selectedEmployee.password;
+                }
             }
-        }
         }
 
         //Commands
