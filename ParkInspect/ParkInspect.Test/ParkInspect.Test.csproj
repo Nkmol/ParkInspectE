@@ -98,10 +98,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="EmployeeTests.cs" />
     <Compile Include="MockRepositoryWrapper.cs" />
     <Compile Include="ParkinglotTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LoginTests.cs" />
+    <Compile Include="AbsenceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
