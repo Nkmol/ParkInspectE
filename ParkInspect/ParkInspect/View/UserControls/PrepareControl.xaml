@@ -21,6 +21,7 @@
                             <Label x:Name="l_client" Content="Klant:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_parkinglot" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_region" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_street" Content="Straat:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_zip" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_number" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_clarification" Content="Opmerkingen:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -32,6 +33,7 @@
                             <Label x:Name="l_client_text" Content="{Binding client_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_parkinglot_text" Content="{Binding parkinglot_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_region_text" Content="{Binding region_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="l_street_text" Content="{Binding street}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_zip_text" Content="{Binding region_zip}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_number_text" Content="{Binding region_number}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBlock x:Name="l_clarification_text" TextWrapping="Wrap" Text="{Binding clarification}" Height="54" Margin="0,5,0,0"/>

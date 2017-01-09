@@ -34,6 +34,8 @@ namespace ParkInspect.View.UserControls
     public partial class PrepareControl : UserControl
     {
         String zip;
+        String street;
+        String number;
         String region;
         int inspection_id;
         String home_adress;
@@ -83,11 +85,14 @@ namespace ParkInspect.View.UserControls
             if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
                 !String.IsNullOrWhiteSpace(txt_home_adres.Text))
             {
+                street = l_street_text.Content.ToString();
                 zip = l_zip_text.Content.ToString();
+                number = l_number_text.Content.ToString();
                 region = l_region_text.Content.ToString();
+                zip = zip.Replace(" ", "");
                 zip = zip.Trim();
                 PointLatLng start = getPointFromKeyWord(txt_home_adres.Text);
-                PointLatLng end = getPointFromKeyWord(zip + " " + region);
+                PointLatLng end = getPointFromKeyWord( street + " "  + zip + " " + region);
 
                 RoutingProvider rp = gmap.MapProvider as RoutingProvider;
                 if (rp == null)

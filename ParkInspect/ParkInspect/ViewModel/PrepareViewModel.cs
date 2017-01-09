@@ -48,6 +48,8 @@ namespace ParkInspect.ViewModel
         private string _current_direction_item;
         private DialogManager _dialog;
         private OfflineViewModel vm;
+        private string _street;
+
         public RelayCommand saveDirections { get; set; }
         public RelayCommand getDirections { get; set; }
 
@@ -113,6 +115,18 @@ namespace ParkInspect.ViewModel
             set
             {
                 _parkinglot_name = value;
+                base.RaisePropertyChanged();
+            }
+        }
+        public String street
+        {
+            get
+            {
+                return _street;
+            }
+            set
+            {
+                _street = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -194,6 +208,7 @@ namespace ParkInspect.ViewModel
                 client_name = selectedInspection.Asignment.Client.name;
                 region_name = selectedInspection.Parkinglot.Region.name;
                 parkinglot_name = selectedInspection.Parkinglot.name;
+                street = selectedInspection.Parkinglot.streetname;
                 region_zip = selectedInspection.Parkinglot.zipcode;
                 region_number = selectedInspection.Parkinglot.number.ToString();
                 clarification = selectedInspection.clarification;
@@ -290,7 +305,7 @@ namespace ParkInspect.ViewModel
                     var drivingDirectionRequest = new DirectionsRequest
                     {
                         Origin = home_adress,
-                        Destination = region_zip + " " + region_name
+                        Destination = street + " " + region_zip + " " + region_name
                     };
                     drivingDirectionRequest.Language = "nl";
                     DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
