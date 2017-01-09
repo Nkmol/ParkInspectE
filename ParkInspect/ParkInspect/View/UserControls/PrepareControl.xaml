@@ -9,8 +9,8 @@
              mc:Ignorable="d"
                 DataContext="{Binding Prepare, Source={StaticResource Locator}}" Width="965" Height="565">
 
-    <TabControl Margin="0,0,-52,0" Height="507" VerticalAlignment="Top">
-        <Canvas Margin="10,-37,0,-62" Height="595" VerticalAlignment="Top">
+    <TabControl Height="565" VerticalAlignment="Top">
+        <Canvas Margin="0,-37,0,-4" Height="595" VerticalAlignment="Top" HorizontalAlignment="Left" Width="955">
             <Canvas>
                 <GroupBox x:Name="groupBox" Header="Inspectie info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="347" Height="345" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="34">
                     <Grid>
