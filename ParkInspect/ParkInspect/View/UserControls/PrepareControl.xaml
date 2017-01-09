@@ -38,10 +38,10 @@
                         </StackPanel>
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="585" Height="505" Grid.Column="1" Canvas.Left="362" Canvas.Top="67">
+                <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="585" Height="345" Grid.Column="1" Canvas.Left="362" Canvas.Top="34">
                     <Grid Margin="0,0,0,-22" Width="574">
-                        <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="396" VerticalAlignment="Top" Width="564" Margin="0,26,0,0"/>
-                        <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Margin="117,409,0,31" TextWrapping="Wrap" Width="218">
+                        <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="236" VerticalAlignment="Top" Width="564" Margin="0,26,0,0"/>
+                        <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Margin="116,261,0,22" TextWrapping="Wrap" Width="218">
                             <TextBox.Text>
                                 <Binding Path="home_adress" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -50,11 +50,11 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="29,427,0,0" VerticalAlignment="Top" Height="26" RenderTransformOrigin="0.5,0.5">
+                        <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="28,277,0,0" VerticalAlignment="Top" Height="26" RenderTransformOrigin="0.5,0.5">
 
                         </Label>
                         <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="160,629,0,0" VerticalAlignment="Top"/>
-                             <Button x:Name="button" Command="{Binding getDirections, UpdateSourceTrigger=PropertyChanged}" Content="Navigeer" HorizontalAlignment="Left" Margin="361,427,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click">
+                        <Button x:Name="button" Command="{Binding getDirections, UpdateSourceTrigger=PropertyChanged}" Content="Navigeer" HorizontalAlignment="Left" Margin="339,277,0,0" VerticalAlignment="Top" Width="203" Height="27" Click="button_Click">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -72,13 +72,13 @@
                         <Label x:Name="l_distance" Content="Afstand:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox2" Header="Route beschrijving" HorizontalAlignment="Left" VerticalAlignment="Top" Width="347" Height="230" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="375">
+                <GroupBox x:Name="groupBox2" Header="Route beschrijving" HorizontalAlignment="Left" VerticalAlignment="Top" Width="937" Height="147" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="384">
                     <Grid>
-                        <ListBox x:Name="listBox" HorizontalAlignment="Left"  ItemsSource="{Binding directionItems}" Height="188" VerticalAlignment="Top" Width="335" Margin="0,0,-2,0"/>
+                        <ListBox x:Name="listBox" HorizontalAlignment="Left"  ItemsSource="{Binding directionItems}" Height="105" VerticalAlignment="Top" Width="923"/>
                     </Grid>
                 </GroupBox>
             </Canvas>
-            <Button x:Name="SaveButton2" Command="{Binding saveDirections, UpdateSourceTrigger=PropertyChanged}"  Content="Opslaan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="26" Canvas.Left="806" Canvas.Top="578">
+            <Button x:Name="SaveButton2" Command="{Binding saveDirections, UpdateSourceTrigger=PropertyChanged}"  Content="Opslaan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="26" Canvas.Left="808" Canvas.Top="551">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="IsEnabled" Value="false" />
@@ -93,14 +93,14 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBox x:Name="NameBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="218" Height="25" Canvas.Left="583" Canvas.Top="579">
+            <TextBox x:Name="NameBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="218" Height="25" Canvas.Left="561" Canvas.Top="545">
                 <Binding Path="directions_save_name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <Label x:Name="label4" Content =" Naam voor offline opslaan:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="399" Canvas.Top="579"/>
+            <Label x:Name="label4" Content =" Naam voor offline opslaan:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="400" Canvas.Top="545"/>
         </Canvas>
     </TabControl>
 </UserControl>
