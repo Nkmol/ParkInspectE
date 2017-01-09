@@ -197,6 +197,7 @@ namespace ParkInspect.ViewModel
                 region_zip = selectedInspection.Parkinglot.zipcode;
                 region_number = selectedInspection.Parkinglot.number.ToString();
                 clarification = selectedInspection.clarification;
+                directionItems.Clear();
                 base.RaisePropertyChanged();
             }
         }
