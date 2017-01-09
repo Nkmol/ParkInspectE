@@ -7,14 +7,12 @@
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="ParkInspect.View.UserControls.PrepareControl"
              mc:Ignorable="d"
-                DataContext="{Binding Prepare, Source={StaticResource Locator}}" Width="965" Height="630">
+                DataContext="{Binding Prepare, Source={StaticResource Locator}}" Width="965" Height="565">
 
-    <TabControl Margin="0,0,-52,0" Height="622" VerticalAlignment="Top">
-        <Canvas Margin="10,-37,0,0" Height="614" VerticalAlignment="Top">
+    <TabControl Margin="0,0,-52,0" Height="507" VerticalAlignment="Top">
+        <Canvas Margin="10,-37,0,-62" Height="595" VerticalAlignment="Top">
             <Canvas>
-                <ComboBox x:Name="comboInspections" ItemsSource="{Binding inspections}" SelectedItem="{Binding selectedInspection}" DisplayMemberPath="id" HorizontalAlignment="Left" VerticalAlignment="Top" Width="286" Grid.ColumnSpan="2" Canvas.Left="71" Canvas.Top="34"/>
-                <Label x:Name="label" Content="Inspectie" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="34"/>
-                <GroupBox x:Name="groupBox" Header="Inspectie info" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="347" Height="303" Grid.ColumnSpan="2">
+                <GroupBox x:Name="groupBox" Header="Inspectie info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="347" Height="345" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="34">
                     <Grid>
                         <StackPanel HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="124" Margin="0,0,0,-3">
                             <Label x:Name="l_inspection_id" Content="Inspectie nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>

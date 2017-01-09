@@ -28,7 +28,7 @@ namespace ParkInspect.ViewModel
         public ObservableCollection<Form> FormList { get; set; }
         public RelayCommand PrepareCommand { get; set; }
         public PopupManager PopupManager { get; set; }
-
+        private DialogManager _dialog;
 
         private ObservableCollection<Inspection> _inspections;
         #region properties
@@ -237,13 +237,14 @@ namespace ParkInspect.ViewModel
 
         private readonly InspectionService _service;
        
-        public InspectionViewModel(IRepository context, PopupManager popupManager)
+        public InspectionViewModel(IRepository context, PopupManager popupManager, DialogManager dialog)
         {
             // set services and Lists
             _service = new InspectionService(context);
             UpdateProperties();
             SetNewInspection();
             PopupManager = popupManager;
+            _dialog = dialog;
             // set commands
             ResetCommand = new RelayCommand(ResetInspection);
             CreateInspectionCommand = new RelayCommand(CreateInspection, CanCreateInspection);
@@ -257,7 +258,13 @@ namespace ParkInspect.ViewModel
 
         private void ShowPreparePopup()
         {
-            PopupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection),null);
+            if (SelectedInspection.id != 0)
+            {
+                PopupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection), null);
+            } else
+            {
+                _dialog.ShowMessage("Whoops", "Selecteer eerst een inspectie!");
+            }
         }
 
         private bool CanAddInspecteur()
