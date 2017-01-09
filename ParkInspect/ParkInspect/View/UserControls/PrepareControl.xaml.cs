@@ -116,13 +116,16 @@ namespace ParkInspect.View.UserControls
                     {
                         mRoute.ZIndex = -1;
                     }
+                    if (route.Distance > 0)
+                    {
+                        gmap.Markers.Add(m1);
+                        gmap.Markers.Add(m2);
+                        gmap.Markers.Add(mRoute);
 
-                    gmap.Markers.Add(m1);
-                    gmap.Markers.Add(m2);
-                    gmap.Markers.Add(mRoute);
 
-                    gmap.ZoomAndCenterMarkers(null);
-                    l_distance.Content = "Afstand: " + Math.Round(route.Distance, 1) + "KM";
+                        gmap.ZoomAndCenterMarkers(null);
+                        l_distance.Content = "Afstand: " + Math.Round(route.Distance, 1) + "KM";
+                    }
                 }
                 else
                 {

@@ -323,7 +323,7 @@ namespace ParkInspect.ViewModel
                 catch (Exception e)
                 {
                     directionItems.Clear();
-                    _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving!");
+                    _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?)");
                 }
             }
         }
