@@ -82,10 +82,9 @@ namespace ParkInspect.ViewModel
         {
             _dialog = dialog;
             Service = new RegionService(context);
-            Data = Service.GetAllRegions();
+            Data = Service.GetAll<Region>();
 
-
-            Regions = new ObservableCollection<Region>(Service.GetAllRegions());
+            Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
 
             SaveNewRegionCommand = new RelayCommand(SaveNewRegionMethod);
 
@@ -98,7 +97,7 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            Service.InsertRegion(NewRegion);
+            Service.Add<Region>(NewRegion);
             Regions.Add(NewRegion);
             base.RaisePropertyChanged();
         }

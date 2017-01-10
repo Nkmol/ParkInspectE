@@ -7,24 +7,11 @@ using ParkInspect.Repository;
 
 namespace ParkInspect.Services
 {
-   public class RegionService
+   public class RegionService : DataService
     {
-        private readonly IRepository _context;
-
-        public RegionService(IRepository context)
+        public RegionService(IRepository context) : base(context)
         {
-            _context = context;
-        }
-
-        public IEnumerable<Region> GetAllRegions()
-        {
-            return _context.GetAll<Region>();
-        }
-
-        public void InsertRegion(Region r)
-        {
-            _context.Create(r);
-            _context.Save();
+            
         }
     }
 }
