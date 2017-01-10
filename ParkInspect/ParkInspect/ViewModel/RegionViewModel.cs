@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -15,6 +17,8 @@ namespace ParkInspect.ViewModel
    public class RegionViewModel : ViewModelBase
     {
         protected RegionService Service;
+        private IEnumerable<Region> Data { get; set; }
+
         public ICommand SaveNewRegionCommand { get; set; }
 
         private ObservableCollection<Region> _regions;
@@ -56,6 +60,21 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private string _regionFilter;
+
+        public string RegionFilter
+        {
+            get
+            {
+                return _regionFilter;
+            }
+            set
+            {
+                _regionFilter = value;
+                Filter();
+            }
+        }
+
 
         private DialogManager _dialog;
 
@@ -63,15 +82,18 @@ namespace ParkInspect.ViewModel
         {
             _dialog = dialog;
             Service = new RegionService(context);
+            Data = Service.GetAllRegions();
+
+
+            Regions = new ObservableCollection<Region>(Service.GetAllRegions());
 
             SaveNewRegionCommand = new RelayCommand(SaveNewRegionMethod);
 
-            Regions = new ObservableCollection<Region>(Service.GetAllRegions());
         }
 
         private void SaveNewRegionMethod()
         {
-            if (SelectedRegion == null)
+            if (NewRegion.name == null)
             {
                 return;
             }
@@ -79,6 +101,18 @@ namespace ParkInspect.ViewModel
             Service.InsertRegion(NewRegion);
             Regions.Add(NewRegion);
             base.RaisePropertyChanged();
+        }
+
+        private void Filter()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("name", RegionFilter);
+
+            var filters = builder.Get();
+            var result = Data.Where(a => a.Like(filters));
+
+            Regions = new ObservableCollection<Region>(result);
+            RaisePropertyChanged("Regions");
         }
     }
 }

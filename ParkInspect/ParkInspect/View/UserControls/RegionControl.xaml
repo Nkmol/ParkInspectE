@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Height="Auto"
              Width="Auto"
@@ -18,6 +20,14 @@
             <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[11], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
                 <ScrollViewer>
                     <StackPanel>
+                        <Label Name="SearchLabel">Zoeken</Label>
+                        <Grid Name="FilterGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox materialDesign:HintAssist.Hint="Zoek in regio's" Grid.Column="0" Name="RegionFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+                        </Grid>
                         <DataGrid SelectedItem="{Binding SelectedRegion}" ItemsSource="{Binding Regions}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Regio" Binding="{Binding name}"  />
@@ -30,7 +40,31 @@
                 <Grid>
                     <StackPanel>
                         <Label x:Name="label" Content="Regio"/>
-                        <TextBox HorizontalAlignment="Stretch"/>
+                        <TextBox Width="250" HorizontalAlignment="Left">
+                            <TextBox.Text>
+                                <Binding Path="NewRegion.name" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                        <Button Command="{Binding SaveNewRegionCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Width="120" Content="Opslaan">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding (Validation.HasError), ElementName=Regionname}" Value="false" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </TabItem>
