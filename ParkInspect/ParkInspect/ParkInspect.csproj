@@ -213,6 +213,7 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\InspectionService.cs" />
     <Compile Include="Services\ParkinglotService.cs" />
+    <Compile Include="Services\RegionService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -220,6 +221,7 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
+    <Compile Include="ViewModel\RegionViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
@@ -266,11 +268,17 @@
     <Compile Include="View\UserControls\Popup\ConfirmPopupWindow.xaml.cs">
       <DependentUpon>ConfirmPopupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\Popup\RegionPopupWindow.xaml.cs">
+      <DependentUpon>RegionPopupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\Popup\SelectPopupWindow.xaml.cs">
       <DependentUpon>SelectPopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Popup\PopupParticipation.cs" />
     <Compile Include="View\UserControls\Popup\PopupCoordinator.cs" />
+    <Compile Include="View\UserControls\RegionControl.xaml.cs">
+      <DependentUpon>RegionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\ReportControl.xaml.cs">
       <DependentUpon>ReportControl.xaml</DependentUpon>
     </Compile>
@@ -335,7 +343,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\Popup\RegionPopupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\Popup\SelectPopupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\RegionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,6 +9,7 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System.Xml.Serialization.Advanced;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
@@ -56,6 +57,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
+            SimpleIoc.Default.Register<RegionViewModel>();
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
@@ -84,6 +86,8 @@ namespace ParkInspect.ViewModel
         public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
 
         public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
+
+        public RegionViewModel Region => ServiceLocator.Current.GetInstance<RegionViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
