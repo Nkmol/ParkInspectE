@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ParkInspect;
-using ParkInspect.Services;
 using ParkInspect.Routing;
 using System.Collections.Generic;
+using GMap.NET;
 
 namespace UnitTestProject
 {
@@ -46,5 +45,53 @@ namespace UnitTestProject
             List<string> list = routingService.GetDirections(home_adress, street, region_zip, region_name, out errorMsg);
             Assert.AreEqual(errorMsg, "directionsFailed","The error message was not the expected one");
         }
+        [TestMethod]
+        [TestCategory("Routing service")]
+        public void GetGoodRoute()
+        {
+            string home_adress = "Waaloord 102";
+            string street = "Arena";
+            string region_zip = "5211XT";
+            string region_name = "Noord-Brabant";
+
+            PointLatLng start = routingService.getPointFromKeyWord(home_adress);
+            PointLatLng end = routingService.getPointFromKeyWord(street + " " + region_zip + " " + region_name);
+            RouteObject route = routingService.GetRoute(start, end);
+            Assert.IsTrue(route.m1.Position.Lat != 0, "The lat of marker m1 is 0!");
+            Assert.IsTrue(route.m1.Position.Lng != 0, "The lng of marker m1 is 0!");
+            Assert.IsTrue(route.m2.Position.Lat != 0, "The lat of marker m2 is 0!");
+            Assert.IsTrue(route.m2.Position.Lng != 0, "The lng of marker m2 is 0!");
+
+
+        }
+        [TestMethod]
+        [TestCategory("Routing service")]
+        public void GetRouteInvalidStartAdress()
+        {
+            string home_adress = "asdasd";
+            string street = "Arena";
+            string region_zip = "5211XT";
+            string region_name = "Noord-Brabant";
+
+            PointLatLng start = routingService.getPointFromKeyWord(home_adress);
+            PointLatLng end = routingService.getPointFromKeyWord(street + " " + region_zip + " " + region_name);
+            RouteObject route = routingService.GetRoute(start, end);
+            Assert.IsTrue(route == null);
+        }
+        [TestMethod]
+        [TestCategory("Routing service")]
+        public void GetRouteInvalidEndAdress()
+        {
+            string home_adress = "Waaloord 102";
+            string street = "Arenaasdads";
+            string region_zip = "5211XT";
+            string region_name = "Noord-Brabant";
+
+            PointLatLng start = routingService.getPointFromKeyWord(home_adress);
+            PointLatLng end = routingService.getPointFromKeyWord(street + " " + region_zip + " " + region_name);
+            RouteObject route = routingService.GetRoute(start, end);
+            Assert.IsTrue(route == null);
+        }
+
     }
 }

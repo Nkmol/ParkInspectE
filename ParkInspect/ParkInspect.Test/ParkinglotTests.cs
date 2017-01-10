@@ -7,8 +7,8 @@ using ParkInspect.ViewModel;
 
 namespace ParkInspect.Test
 {
-    [TestClass]
-    public class ParkinglotTests
+  //  [TestClass]
+ /*   public class ParkinglotTests
     {
         private EntityFrameworkRepository<ParkInspectEntities> _repo;
         private ParkinglotViewModel vm;
@@ -256,5 +256,5 @@ namespace ParkInspect.Test
 
             Assert.AreEqual(false, nameIsNotEmpty);
         }
-    }
+    }*/
 }
