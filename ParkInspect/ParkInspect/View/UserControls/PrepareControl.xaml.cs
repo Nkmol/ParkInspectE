@@ -7,6 +7,7 @@ using GoogleMapsApi;
 using GoogleMapsApi.Entities.Directions.Request;
 using GoogleMapsApi.Entities.Directions.Response;
 using ParkInspect.Repository;
+using ParkInspect.Routing;
 using ParkInspect.Services;
 using ParkInspect.ViewModel;
 using System;
@@ -37,9 +38,7 @@ namespace ParkInspect.View.UserControls
         String street;
         String number;
         String region;
-        int inspection_id;
-        String home_adress;
-        Inspection inspection;
+        RoutingService routingService;
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private PrepareViewModel vm;
@@ -47,26 +46,21 @@ namespace ParkInspect.View.UserControls
         {
             InitializeComponent();
             vm = (PrepareViewModel)this.DataContext;
-            vm.selectedInspection = inspection;
             service = vm.service;
-            inspection = new Inspection();
-            OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
-            gmap.MapProvider = OpenStreetMapProvider.Instance;
-            gmap.Manager.Mode = AccessMode.ServerAndCache;
-            gmap.Manager.UseGeocoderCache = true;
-            gmap.SetPositionByKeywords("Amsterdam");
-            gmap.MinZoom = 1;
-            gmap.MaxZoom = 18;
-            gmap.Zoom = 8;
-            gmap.ShowCenter = false;
+            vm.selectedInspection = inspection;
+            init();
         }
         public PrepareControl()
         {
             InitializeComponent();
             vm = (PrepareViewModel)this.DataContext;
+            routingService = new RoutingService();
+            init();
 
-            service = vm.service;
-            inspection = new Inspection();
+        }
+        private void init()
+        {
+            routingService = new RoutingService();
             OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
             gmap.MapProvider = OpenStreetMapProvider.Instance;
             gmap.Manager.Mode = AccessMode.ServerAndCache;
@@ -76,7 +70,6 @@ namespace ParkInspect.View.UserControls
             gmap.MaxZoom = 18;
             gmap.Zoom = 8;
             gmap.ShowCenter = false;
-
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -91,60 +84,19 @@ namespace ParkInspect.View.UserControls
                 region = l_region_text.Content.ToString();
                 zip = zip.Replace(" ", "");
                 zip = zip.Trim();
-                PointLatLng start = getPointFromKeyWord(txt_home_adres.Text);
-                PointLatLng end = getPointFromKeyWord( street + " "  + zip + " " + region);
-
-                RoutingProvider rp = gmap.MapProvider as RoutingProvider;
-                if (rp == null)
+                PointLatLng start = routingService.getPointFromKeyWord(txt_home_adres.Text);
+                PointLatLng end = routingService.getPointFromKeyWord(street + " " + zip + " " + region);
+                RouteObject route = routingService.GetRoute(start, end);
+                if(route != null)
                 {
-                    rp = GMapProviders.OpenStreetMap;
-                    ; // use OpenStreetMap if provider does not implement routing
+                    gmap.Markers.Add(route.m1);
+                    gmap.Markers.Add(route.m2);
+                    gmap.Markers.Add(route.route);
+                    gmap.ZoomAndCenterMarkers(null);
                 }
 
-                MapRoute route = rp.GetRoute(start, end, false, false, (int)gmap.Zoom);
-                if (route != null)
-                {
-                    GMapMarker m1 = new GMapMarker(start);
-                    m1.Shape = new CustomMarkerDemo(this, m1, "Start: " + route.Name);
-                    m1.Shape.IsEnabled = false;
-
-                    GMapMarker m2 = new GMapMarker(end);
-                    m2.Shape = new CustomMarkerDemo(this, m2, "End: " + start.ToString());
-                    m2.Shape.IsEnabled = false;
-
-                    GMapRoute mRoute = new GMapRoute(route.Points);
-                    {
-                        mRoute.ZIndex = -1;
-                    }
-                    if (route.Distance > 0)
-                    {
-                        gmap.Markers.Add(m1);
-                        gmap.Markers.Add(m2);
-                        gmap.Markers.Add(mRoute);
-
-
-                        gmap.ZoomAndCenterMarkers(null);
-                        l_distance.Content = "Afstand: " + Math.Round(route.Distance, 1) + "KM";
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Het navigeren vereist een internet verbinding!");
-                }
 
             }
-        }
-
-
-        private PointLatLng getPointFromKeyWord(String keyword)
-        {
-            GeoCoderStatusCode status;
-            PointLatLng? point = GMapProviders.OpenStreetMap.GetPoint(keyword, out status);
-            if (status == GeoCoderStatusCode.G_GEO_SUCCESS && point != null)
-            {
-                return new PointLatLng(point.Value.Lat, point.Value.Lng);
-            }
-            return new PointLatLng(0, 0);
         }
     }
 }

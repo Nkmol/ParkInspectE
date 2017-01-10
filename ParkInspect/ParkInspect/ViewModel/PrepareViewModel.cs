@@ -20,6 +20,7 @@ using System.Reflection;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Model;
+using ParkInspect.Routing;
 
 namespace ParkInspect.ViewModel
 {
@@ -49,6 +50,7 @@ namespace ParkInspect.ViewModel
         private DialogManager _dialog;
         private OfflineViewModel vm;
         private string _street;
+        private RoutingService routingService;
 
         public RelayCommand saveDirections { get; set; }
         public RelayCommand getDirections { get; set; }
@@ -260,6 +262,7 @@ namespace ParkInspect.ViewModel
             vm = offlineVM;
             _dialog = dialog;
             service = new InspectionService(context);
+            routingService = new RoutingService();
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
             inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
@@ -291,45 +294,26 @@ namespace ParkInspect.ViewModel
                 _dialog.ShowMessage("Fout!", "Laad eerst een navigatie in!");
             }
         }
-        private void GetDirections()
+        public void GetDirections()
         {
-            if (String.IsNullOrWhiteSpace(home_adress))
+            string errorMsg;
+            List<String> list = routingService.GetDirections(home_adress, street, region_zip, region_name, out errorMsg);
+            if (list != null)
             {
-                _dialog.ShowMessage("Fout!", "Voer een geldig vertrek adres in!");
+                list.ForEach(s => directionItems.Add(s));
             }
             else
             {
-                //route on gmaps
-                try
+                switch (errorMsg)
                 {
-                    var drivingDirectionRequest = new DirectionsRequest
-                    {
-                        Origin = home_adress,
-                        Destination = street + " " + region_zip + " " + region_name
-                    };
-                    drivingDirectionRequest.Language = "nl";
-                    DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
-                    Route nRoute = drivingDirections.Routes.First();
-                    Leg leg = nRoute.Legs.First();
-                    int counter = 1;
-                    //direction items
-                    directionItems.Clear();
-                    foreach (Step step in leg.Steps)
-                    {
-                        directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
-                        counter++;
-                    }
-                }
-                catch (Exception e)
-                {
-                    directionItems.Clear();
-                    _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?)");
+                    case "invalidAdress":
+                        _dialog.ShowMessage("Fout!", "Voer een geldig vertrek adres in!");
+                        break;
+                    case "directionsFailed":
+                        _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?)");
+                        break;
                 }
             }
-        }
-        private string StripHTML(string html)
-        {
-            return Regex.Replace(html, @"<(.|\n)*?>", string.Empty);
         }
     }
 }

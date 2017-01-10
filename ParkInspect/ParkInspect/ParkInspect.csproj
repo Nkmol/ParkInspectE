@@ -150,17 +150,19 @@
     <Compile Include="Contactperson.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomMarkers\Circle.xaml.cs" />
-    <Compile Include="CustomMarkers\CircleVisual.cs" />
-    <Compile Include="CustomMarkers\Controls\TrolleyTooltip.xaml.cs" />
-    <Compile Include="CustomMarkers\Cross.xaml.cs" />
-    <Compile Include="CustomMarkers\CustomMarkerDemo.xaml.cs" />
-    <Compile Include="CustomMarkers\CustomMarkerRed.xaml.cs" />
-    <Compile Include="CustomMarkers\Test.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\Circle.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\CircleVisual.cs" />
+    <Compile Include="Routing\CustomMarkers\Controls\TrolleyTooltip.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\Cross.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\CustomMarkerDemo.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\CustomMarkerRed.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\Test.xaml.cs" />
     <Compile Include="Datatype.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Routing\RouteObject.cs" />
+    <Compile Include="Routing\RoutingService.cs" />
     <Compile Include="Employee.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -309,27 +311,27 @@
     <Compile Include="View\UserControls\FormControl.xaml.cs">
       <DependentUpon>FormControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="CustomMarkers\Circle.xaml">
+    <Page Include="Routing\CustomMarkers\Circle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomMarkers\Controls\TrolleyTooltip.xaml">
+    <Page Include="Routing\CustomMarkers\Controls\TrolleyTooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomMarkers\Cross.xaml">
+    <Page Include="Routing\CustomMarkers\Cross.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomMarkers\CustomMarkerDemo.xaml">
+    <Page Include="Routing\CustomMarkers\CustomMarkerDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomMarkers\CustomMarkerRed.xaml">
+    <Page Include="Routing\CustomMarkers\CustomMarkerRed.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomMarkers\Test.xaml">
+    <Page Include="Routing\CustomMarkers\Test.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -449,8 +451,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="CustomMarkers\bigMarkerGreen.png" />
-    <Resource Include="CustomMarkers\red-dot.png" />
+    <Resource Include="Routing\CustomMarkers\bigMarkerGreen.png" />
+    <Resource Include="Routing\CustomMarkers\red-dot.png" />
     <Content Include="ParkInspectModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>

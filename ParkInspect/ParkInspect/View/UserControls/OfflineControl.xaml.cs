@@ -26,6 +26,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ParkInspect.Model;
+using ParkInspect.Routing;
 
 namespace ParkInspect.View.UserControls
 {
@@ -36,16 +37,19 @@ namespace ParkInspect.View.UserControls
     {
         String zip;
         String region;
+        String street;
         int inspection_id;
         String home_adress;
         Inspection inspection;
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private OfflineViewModel vm;
+        private RoutingService routingService;
         public OfflineControl()
         {
             InitializeComponent();
             vm = (OfflineViewModel)this.DataContext;
+            routingService = new RoutingService();
 
             service = vm.service;
             inspection = new Inspection();
@@ -84,66 +88,29 @@ namespace ParkInspect.View.UserControls
             inspection = service.GetInspectionWithId(inspection_id).First();
             vm.selectedInspection = inspection;
         }
-        private PointLatLng getPointFromKeyWord(String keyword)
-        {
-            GeoCoderStatusCode status;
-            PointLatLng? point = GMapProviders.OpenStreetMap.GetPoint(keyword, out status);
-            if (status == GeoCoderStatusCode.G_GEO_SUCCESS && point != null)
-            {
-                return new PointLatLng(point.Value.Lat, point.Value.Lng);
-            }
-            return new PointLatLng(0, 0);
-        }
         private void loadRoute()
         {
             ReadInspectionInfoFromFile();
             GetInspectionInfo();
             zip = inspection.Parkinglot.zipcode;
             region = inspection.Parkinglot.Region.name;
+            street = inspection.Parkinglot.streetname;
             gmap_offline.Markers.Clear();
             if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
                 !String.IsNullOrWhiteSpace(home_adress))
             {
-
+                zip = zip.Replace(" ", "");
                 zip = zip.Trim();
-                PointLatLng start = getPointFromKeyWord(home_adress);
-                PointLatLng end = getPointFromKeyWord(zip + " " + region);
-
-                RoutingProvider rp = gmap_offline.MapProvider as RoutingProvider;
-                if (rp == null)
-                {
-                    rp = GMapProviders.OpenStreetMap;
-                    ; // use OpenStreetMap if provider does not implement routing
-                }
-
-                MapRoute route = rp.GetRoute(start, end, false, false, (int)gmap_offline.Zoom);
+                PointLatLng start = routingService.getPointFromKeyWord(home_adress);
+                PointLatLng end = routingService.getPointFromKeyWord(street + " " + zip + " " + region);
+                RouteObject route = routingService.GetRoute(start, end);
                 if (route != null)
                 {
-                    GMapMarker m1 = new GMapMarker(start);
-                    m1.Shape = new CustomMarkerDemo(this, m1, "Start: " + route.Name);
-                    m1.Shape.IsEnabled = false;
-
-                    GMapMarker m2 = new GMapMarker(end);
-                    m2.Shape = new CustomMarkerDemo(this, m2, "End: " + start.ToString());
-                    m2.Shape.IsEnabled = false;
-
-                    GMapRoute mRoute = new GMapRoute(route.Points);
-                    {
-                        mRoute.ZIndex = -1;
-                    }
-
-                    gmap_offline.Markers.Add(m1);
-                    gmap_offline.Markers.Add(m2);
-                    gmap_offline.Markers.Add(mRoute);
-
+                    gmap_offline.Markers.Add(route.m1);
+                    gmap_offline.Markers.Add(route.m2);
+                    gmap_offline.Markers.Add(route.route);
                     gmap_offline.ZoomAndCenterMarkers(null);
-                    // l_distance.Content = "Afstand: " + Math.Round(route.Distance, 1) + "KM";
                 }
-                else
-                {
-                    MessageBox.Show("Het navigeren vereist een internet verbinding!");
-                }
-
             }
         }
 
