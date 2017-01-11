@@ -115,7 +115,10 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            Service.Add<Region>(NewRegion);
+            Message = (Service.Add<Region>(NewRegion) ? "Een nieuwe regio is opgeslagen!" : "Something went wrong.");
+            _dialog.ShowMessage("Action", Message);
+
+           // Service.Add<Region>(NewRegion);
             Regions.Add(NewRegion);
             base.RaisePropertyChanged();
 
@@ -130,9 +133,15 @@ namespace ParkInspect.ViewModel
                 _dialog.ShowMessage("Action", Message);
                 return;
             }
-            Service.Delete<Region>(SelectedRegion);
-            Regions.Remove(SelectedRegion);
-            base.RaisePropertyChanged();
+
+            DialogResult dialogResult = MessageBox.Show("Weet u zeker dat  u deze regio wilt verwijderen?", "Verwijderen", MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                Service.Delete<Region>(SelectedRegion);
+                Regions.Remove(SelectedRegion);
+                base.RaisePropertyChanged();
+            } 
         }
 
         private void Filter()
