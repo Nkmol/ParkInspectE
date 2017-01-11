@@ -127,6 +127,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -180,9 +181,11 @@
     <Compile Include="Model\Factory\FilterFactory.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ValidationRules\IsNotEmptyValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsNotIntegerValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsPositiveNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidDateTimeRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidEmailValidationRule.cs" />
+    <Compile Include="Model\ValidationRules\IsValidNameValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidPhoneNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidZipCodeValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
@@ -222,10 +225,12 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\AbsenceService.cs" />
+    <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\ContactpersonService.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\InspectionService.cs" />
     <Compile Include="Services\ParkinglotService.cs" />
     <Compile Include="State.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
@@ -235,18 +240,21 @@
     </Compile>
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Compile Include="ViewModel\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
+    <Compile Include="ViewModel\ParkinglotVM\ParkinglotViewModel.cs" />
     <Compile Include="ViewModel\Popup\IPopup.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
-    <Compile Include="ViewModel\ParkinglotViewModel.cs" />
+    <Compile Include="ViewModel\ParkinglotVM\ParkinglotOverviewViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupManager.cs" />
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
+    <Compile Include="ViewModel\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\ReportDesignView.xaml.cs">
@@ -254,6 +262,9 @@
     </Compile>
     <Compile Include="View\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
+      <DependentUpon>AssignmentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ContactpersoonControl.xaml.cs">
       <DependentUpon>ContactpersoonControl.xaml</DependentUpon>
@@ -270,14 +281,17 @@
     <Compile Include="View\UserControls\CustomerControl.xaml.cs">
       <DependentUpon>CustomerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
-      <DependentUpon>AssignmentControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\Popup\NewInspectionPopup.xaml.cs">
+      <DependentUpon>NewInspectionPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ParkinglotControl.xaml.cs">
       <DependentUpon>ParkinglotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\Popup\ConfirmPopupWindow.xaml.cs">
+      <DependentUpon>ConfirmPopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Popup\SelectPopupWindow.xaml.cs">
       <DependentUpon>SelectPopupWindow.xaml</DependentUpon>
@@ -290,6 +304,7 @@
     <Compile Include="View\UserControls\FormControl.xaml.cs">
       <DependentUpon>FormControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Convertor\VisibilityConverter.cs" />
     <Page Include="View\DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -315,6 +330,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\AssignmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\UserControls\ContactpersoonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -335,7 +354,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\AssignmentControl.xaml">
+    <Page Include="View\UserControls\Popup\NewInspectionPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -344,6 +363,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\EmployeeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Popup\ConfirmPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -391,6 +414,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Reports\Untitled.rdl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -411,6 +437,7 @@
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
       <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="View\TabsStatusInfo.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

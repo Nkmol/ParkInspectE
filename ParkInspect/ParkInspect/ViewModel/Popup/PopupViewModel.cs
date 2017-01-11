@@ -15,16 +15,24 @@ namespace ParkInspect.ViewModel
         public IPopup ContentContext { get; set; } 
         public Action<object> OwnerTask { get; set; }
         public RelayCommand SelectCommand { get; set; }
+        public RelayCommand ConfirmCommand { get; set; }
         public Action CloseWindow { get; set; }
         public PopupViewModel()
         {
             SelectCommand = new RelayCommand(SelectEntity, () => OwnerTask != null); // TODO If SelectedItem != null
+            ConfirmCommand = new RelayCommand(Confirm);
         }
 
         private void SelectEntity()
         {
             OwnerTask(ContentContext.SelectedItemPopup);
             CloseWindow(); // Close popup after something has been selected
+        }
+
+        private void Confirm()
+        {
+            OwnerTask(ContentContext);
+            CloseWindow();
         }
 
         public void Ready()

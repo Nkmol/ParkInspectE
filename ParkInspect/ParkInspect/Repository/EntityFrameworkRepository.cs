@@ -55,6 +55,21 @@ namespace ParkInspect.Repository
             }
         }
 
+        // Insert or update pattern
+        // https://msdn.microsoft.com/en-us/data/jj592676.aspx
+        public bool InsertOrUpdate<TEntity>(TEntity entity) where TEntity : class
+        {
+            var entry = Context.Entry(entity);
+            if (entry.State == EntityState.Modified)
+                Update(entity);
+            else if (entry.State == EntityState.Detached)
+                Create(entity);
+            else
+                return false;
+
+            return true;
+        }
+
         protected virtual void ThrowEnhancedValidationException(DbEntityValidationException e)
         {
             var errorMesssage = e.EntityValidationErrors

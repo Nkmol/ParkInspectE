@@ -41,6 +41,7 @@ namespace ParkInspect.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand NewCommand { get; set; }
         public RelayCommand ExportCommand { get; set; }
+        public RelayCommand DeselectCommand { get; set; }
 
         public Parkinglot Parkinglot
         {
@@ -94,9 +95,12 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public int Number
+        public string Number
         {
-            get { return (_parkinglot == null ? 0 :_parkinglot.number.GetValueOrDefault()); }
+            get {
+                return _parkinglot.number;
+                //return (_parkinglot == null ? 0 :_parkinglot.number.GetValueOrDefault());
+            }
             set
             {
                 _parkinglot.number = value;
@@ -169,6 +173,7 @@ namespace ParkInspect.ViewModel
         public ParkinglotViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
+            DeselectCommand = new RelayCommand(NewParkinglot);
             SaveCommand = new RelayCommand(Save);
             NewCommand = new RelayCommand(NewParkinglot);
             ExportCommand = new RelayCommand(Export);
@@ -193,6 +198,8 @@ namespace ParkInspect.ViewModel
 
             Parkinglots = new ObservableCollection<Parkinglot>(result);
             RaisePropertyChanged("Parkinglots");
+
+            NewParkinglot();
         }
 
         private void NewParkinglot()

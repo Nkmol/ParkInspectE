@@ -23,9 +23,10 @@ namespace ParkInspect
         public int id { get; set; }
         public string region_name { get; set; }
         public string zipcode { get; set; }
-        public Nullable<int> number { get; set; }
+        public string number { get; set; }
         public string name { get; set; }
         public string clarification { get; set; }
+        public string streetname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inspection> Inspections { get; set; }
