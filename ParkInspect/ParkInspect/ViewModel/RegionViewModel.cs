@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -20,6 +21,7 @@ namespace ParkInspect.ViewModel
         private IEnumerable<Region> Data { get; set; }
 
         public ICommand SaveNewRegionCommand { get; set; }
+        public ICommand DeleteRegionCommand { get; set; }
 
         private ObservableCollection<Region> _regions;
 
@@ -44,7 +46,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _newRegion = value;
-                base.RaisePropertyChanged();
+                RaisePropertyChanged();
             }
         }
         private Region _selectedRegion;
@@ -75,6 +77,18 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private string _message;
+
+        public string Message
+        {
+            get { return _message; }
+            set
+            {
+                _message = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
 
         private DialogManager _dialog;
 
@@ -85,20 +99,38 @@ namespace ParkInspect.ViewModel
             Data = Service.GetAll<Region>();
 
             Regions = new ObservableCollection<Region>(Service.GetAll<Region>());
-
+            NewRegion = new Region();
+            
             SaveNewRegionCommand = new RelayCommand(SaveNewRegionMethod);
+            DeleteRegionCommand = new RelayCommand(DeleteRegionMethod);
 
         }
 
         private void SaveNewRegionMethod()
         {
-            if (NewRegion.name == null)
+
+            if (NewRegion == null || NewRegion.name == null)
             {
                 return;
             }
 
             Service.Add<Region>(NewRegion);
             Regions.Add(NewRegion);
+            base.RaisePropertyChanged();
+
+            NewRegion = new Region();
+        }
+
+        private void DeleteRegionMethod()
+        {
+            if (SelectedRegion == null)
+            {
+                Message = (Service.Delete<Region>(SelectedRegion) ? "Something went wrong." : "Selecteer een regio!");
+                _dialog.ShowMessage("Action", Message);
+                return;
+            }
+            Service.Delete<Region>(SelectedRegion);
+            Regions.Remove(SelectedRegion);
             base.RaisePropertyChanged();
         }
 

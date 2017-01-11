@@ -28,11 +28,13 @@
                             <TextBox materialDesign:HintAssist.Hint="Zoek in regio's" Grid.Column="0" Name="RegionFilter" Margin="0,0,5,10" HorizontalAlignment="Stretch" Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
                         </Grid>
-                        <DataGrid SelectedItem="{Binding SelectedRegion}" ItemsSource="{Binding Regions}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <DataGrid SelectedItem="{Binding SelectedRegion}" ItemsSource="{Binding Regions}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Regio" Binding="{Binding name}"  />
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Button Command="{Binding DeleteRegionCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0" Width="120" Content="Verwijderen"/>
+
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -40,7 +42,7 @@
                 <Grid>
                     <StackPanel>
                         <Label x:Name="label" Content="Regio"/>
-                        <TextBox Width="250" HorizontalAlignment="Left">
+                        <TextBox Width="250" HorizontalAlignment="Left" Name="Regionname">
                             <TextBox.Text>
                                 <Binding Path="NewRegion.name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -53,7 +55,7 @@
                         <Button Command="{Binding SaveNewRegionCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Width="120" Content="Opslaan">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="IsEnabled" Value="False" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
