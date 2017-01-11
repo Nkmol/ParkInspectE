@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls.Inspection"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              DataContext="{Binding Inspection, Source={StaticResource Locator}}">
     <Grid>
@@ -13,7 +14,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Width="327" VerticalAlignment="Top">
                 <StackPanel Width="300" VerticalAlignment="Top">
                     <Label Height="25" Margin="10,5,151,0" Content="Parkeerplaats"  />
-                    <ComboBox Name="CbParkinglot" Margin="10,0,57,0" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Parkinglots}">
+                    <ComboBox Name="CbParkinglot" Margin="10,0,57,0" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Parkinglots}" materialDesign:HintAssist.Hint="Selecteer een parkeerplaats">
                         <ComboBox.SelectedItem>
                             <Binding Path="Parkinglot">
                                 <Binding.ValidationRules>
@@ -24,10 +25,10 @@
                     </ComboBox>
 
                     <Label Height="30" Margin="10,5,151,0" Content="Vragenlijst"  />
-                    <ComboBox Margin="10,0,57,0" Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" />
+                    <ComboBox Margin="10,0,57,0" Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" />
 
                     <Label Height="25" Margin="10,5,151,0" Content="Status"  />
-                    <ComboBox Name="CbStatus" Height="25" Margin="10,0,57,0" Text="{Binding State.state1}" ItemsSource="{Binding States}" DisplayMemberPath="state1">
+                    <ComboBox Name="CbStatus" Height="25" Margin="10,0,57,0" Text="{Binding State.state1}" ItemsSource="{Binding States}" DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status">
                         <ComboBox.SelectedItem>
                             <Binding Path="State">
                                 <Binding.ValidationRules>
@@ -38,11 +39,12 @@
                     </ComboBox>
 
                     <Label Height="27" Margin="10,5,151,0" Content="Vervolg op"  />
-                    <ComboBox Margin="10,0,57,0" Text="{Binding FollowUpInspection.Parkinglot.name}" ItemsSource="{Binding Inspections}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}" />
+                    <ComboBox Margin="10,0,57,0" Text="{Binding FollowUpInspection.Parkinglot.name}" ItemsSource="{Binding Inspections}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}" 
+                              materialDesign:HintAssist.Hint="Vervolg op een onafgemaakte inspectie"/>
 
                     <Label Height="25" Margin="10,0,151,0" Content="Datum"  />
-                    <controls:DateTimePicker Name="DateStart" Margin="10,0,57,0">
-                        <controls:DateTimePicker.SelectedDate>
+                    <controls:DateTimePicker Name="DateStart" Margin="10,0,57,0" DisplayDateEnd="{Binding BoundryEndDate}" DisplayDateStart="{Binding BoundryStartDate}" >
+                        <controls:DateTimePicker.SelectedDate >
                             <Binding Path="Date" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
@@ -51,9 +53,10 @@
                             </Binding>
                         </controls:DateTimePicker.SelectedDate>
                     </controls:DateTimePicker>
+                    
 
                     <Label Height="25" Margin="10,5,151,0" Content="Deadline" />
-                    <controls:DateTimePicker Name="DateDeadline" Margin="10,0,57,0">
+                    <controls:DateTimePicker Name="DateDeadline" Margin="10,0,57,0" DisplayDateEnd="{Binding BoundryEndDate}" DisplayDateStart="{Binding BoundryStartDate}">
                         <controls:DateTimePicker.SelectedDate >
                             <Binding Path="Deadline" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>

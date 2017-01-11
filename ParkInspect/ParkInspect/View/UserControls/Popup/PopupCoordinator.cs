@@ -46,7 +46,7 @@ namespace ParkInspect.View.UserControls.Popup
             return window.Invoke(() => window.ShowChildWindowAsync(popupWindow));
         }
 
-        public Task ShowUpdateNewPopupAsync<T>(object context, string title, UserControl content, Action<T> action)
+        public Task ShowUpdateNewPopupAsync<T>(object context, string title, UserControl content, Action<T> action, Action<T> initAction = null)
         {
             var window = GetMetroWindow(context);
 
@@ -59,6 +59,7 @@ namespace ParkInspect.View.UserControls.Popup
             Context.ContentContextNewUpdate = content.DataContext as ICreateUpdatePopup;
             Context.CloseWindow = () => popupWindow.Close();
             Context.Title = title;
+            initAction?.Invoke((T)content.DataContext);
             Context.Ready();
 
             return window.Invoke(() => window.ShowChildWindowAsync(popupWindow));

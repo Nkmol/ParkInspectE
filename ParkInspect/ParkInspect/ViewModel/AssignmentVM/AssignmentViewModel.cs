@@ -152,9 +152,14 @@ namespace ParkInspect.ViewModel.AssignmentVM
             _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
                 x =>
                 {
-                    x.Id = Data.id;
+                    x.AssignmentId = Data.id;
                     FormInspections.Add(x);
                     RaisePropertyChanged();
+                },
+                x => 
+                {
+                    x.BoundryStartDate = FormDate;
+                    x.BoundryEndDate = FormDeadline;
                 });
         }
 

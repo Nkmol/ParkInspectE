@@ -89,8 +89,7 @@
                         <Label Height="25" Margin="10,5,151,0" Content="Status" />
                         <ComboBox Height="25" Margin="10,0,57,0" Text="{Binding State.state1}"
                                   ItemsSource="{Binding States}" DisplayMemberPath="state1"
-                                  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
-                                  x:Name="cbState">
+                                  x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status">
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormState">
                                     <Binding.ValidationRules>
@@ -101,7 +100,7 @@
                         </ComboBox>
                         <Label Height="25" Margin="10,5,151,0" Content="Klant" />
                         <ComboBox Margin="10,0,57,0" Text="{Binding Client.name}"
-                                  ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient">
+                                  ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient" materialDesign:HintAssist.Hint="Selecteer een Klant">
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormClient">
                                     <Binding.ValidationRules>
@@ -113,7 +112,7 @@
                         <Label Height="25" Margin="10,5,151,0" Content="Toelichting" />
                         <TextBox Name="Clarificationbox" Margin="10,0,57,0" Height="83"
                                  Text="{Binding FormClarification}" AcceptsReturn="True"
-                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Vul informatie over de opdracht in." />
                         <DockPanel Width="243" HorizontalAlignment="Left">
                             <Button Margin="5,0" Content="Bewerken" Command="{Binding EditCommand}"
                                     Width="102" HorizontalAlignment="Left">
@@ -142,7 +141,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button Margin="5,0" Content="Toevoegen" Command="{Binding AddInspectionCommand}"
+                            <Button Margin="5,0" Content="Toevoegen" Command="{Binding SaveCommand}" CommandParameter="{Binding DataContext, ElementName=Window}"
                                     Width="113" HorizontalAlignment="Left">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

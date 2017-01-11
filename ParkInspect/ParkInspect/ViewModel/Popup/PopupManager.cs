@@ -24,9 +24,9 @@ namespace ParkInspect.ViewModel.Popup
             return _popupCoordinator.ShowSelectPopupAsync<T>(this, title, content, selectaction);
         }
 
-        public Task ShowUpdateNewPopup<T>(string title, UserControl content, Action<T> action) where T : class
+        public Task ShowUpdateNewPopup<T>(string title, UserControl content, Action<T> action, Action<T> initAction = null) where T : class
         {
-            return _popupCoordinator.ShowUpdateNewPopupAsync<T>(this, title, content, action);
+            return _popupCoordinator.ShowUpdateNewPopupAsync<T>(this, title, content, action, initAction);
         }
     }
 }

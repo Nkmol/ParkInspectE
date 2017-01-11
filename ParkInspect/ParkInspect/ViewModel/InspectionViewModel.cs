@@ -48,13 +48,16 @@ namespace ParkInspect.ViewModel
 
         private readonly InspectionService _service;
 
+        public DateTime? BoundryStartDate { get; set; } = DateTime.Now;
+        public DateTime? BoundryEndDate { get; set; }
+
         #region ViewModel POCO Properties
 
         // Is not used in the form
-        public int Id
+        public int AssignmentId
         {
-            get { return Data.id; }
-            set { Data.id = value; }
+            get { return Data.assignment_id; }
+            set { Data.assignment_id = value; }
         }
 
         public Asignment Assigment
@@ -156,10 +159,6 @@ namespace ParkInspect.ViewModel
         public InspectionViewModel(IRepository context, Inspection data = null)
         {
             Data = data ?? new Inspection();
-
-            // Default values
-            Deadline = DateTime.Now.AddDays(1);
-            Date = DateTime.Now;
 
             // set services and Lists
             _service = new InspectionService(context);
