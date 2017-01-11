@@ -49,12 +49,14 @@ namespace ParkInspect.ViewModel
         }
 
         public RelayCommand CreateCommand { get; set; }
+        public RelayCommand OpenCommand { get; set; }
 
         
         public ReportViewModel(IRepository context)
         {
 
             CreateCommand = new RelayCommand(OpenDesignView);
+            OpenCommand = new RelayCommand(OpenExternalReport);
 
             SetData();
             UpdateReports();
@@ -92,6 +94,23 @@ namespace ParkInspect.ViewModel
             view.LoadReport(r.Path);
             view.Show();
 
+        }
+
+        public void OpenExternalReport()
+        {
+
+            Stream stream;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "rdl files (*.rdl)|*.rdl|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ReportView view = new ReportView();
+                view.LoadReport(openFileDialog.FileName);
+                view.Show();
+            }
         }
 
         public void UpdateReports()
