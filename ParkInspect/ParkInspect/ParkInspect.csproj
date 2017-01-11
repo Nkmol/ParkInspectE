@@ -221,7 +221,6 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
-    <Compile Include="ViewModel\RegionViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\CRUDViewModel.cs" />
