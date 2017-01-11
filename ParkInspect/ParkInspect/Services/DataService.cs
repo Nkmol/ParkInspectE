@@ -34,7 +34,7 @@ namespace ParkInspect.Services
                 Context.Save();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
@@ -68,6 +68,15 @@ namespace ParkInspect.Services
             {
                 return false;
             }
+        }
+
+        // Insert or update pattern
+        // https://msdn.microsoft.com/en-us/data/jj592676.aspx
+        public bool InsertOrUpdate<T>(T p) where T : class
+        {
+            var result = Context.InsertOrUpdate(p);
+            Context.Save();
+            return result;
         }
 
         /*
