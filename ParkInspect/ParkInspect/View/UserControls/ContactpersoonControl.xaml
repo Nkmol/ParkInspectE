@@ -49,43 +49,43 @@
                         <StackPanel>
                             <Label x:Name="NameLabel" Content="Voornaam"/>
                             <TextBox x:Name="Firstname" Margin="5,0,0,10" Width="250">
-                                <TextBox.Text>
-                                    <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
-														  ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                        <TextBox.Text>
+                            <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                             <Label x:Name="TelnrLabel" Content="Achternaam"/>
                             <TextBox x:Name="Lastname" Margin="5,0,0,10" Width="250">
-                                <TextBox.Text>
-                                    <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
-														  ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                        <TextBox.Text>
+                            <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                         </StackPanel>     
                    </DockPanel>
                     <DockPanel Height="200" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <StackPanel>
                             <Label Content="Klant:"/>
                             <ComboBox Name="Customer" HorizontalAlignment="Left"  Margin="5,0,0,10" Width="250" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-		                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
-		                              SelectedItem="{Binding SelectedClient}">
-                                <ComboBox.Text>
-                                    <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-														  ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.Text>
-                            </ComboBox>
+                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                              SelectedItem="{Binding SelectedClient}" Grid.RowSpan="2">
+                        <ComboBox.Text>
+                            <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                              ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.Text>
+                    </ComboBox>
                         </StackPanel>
                    </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,200,100,0">
@@ -100,14 +100,14 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-								Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
-								Value="false" />
+                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Value="false" />
                                                 <Condition
-								Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
-								Value="false" />
+                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Value="false" />
                                                 <Condition
-								Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
-								Value="False" />
+                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>
@@ -128,13 +128,13 @@
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
                         							Binding="{Binding (Validation.HasError), ElementName=Firstname}"
-                        							Value="false" />
+                                                    Value="false" />
                                                 <Condition
                         							Binding="{Binding (Validation.HasError), ElementName=Lastname}"
-                        							Value="false" />
+                                                    Value="false" />
                                                 <Condition
                         							Binding="{Binding (Validation.HasError), ElementName=Customer}"
-                        							Value="False" />
+                                                    Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>

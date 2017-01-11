@@ -315,7 +315,6 @@ namespace ParkInspect.ViewModel
             TabStatus[5] = false;
             TabStatus[6] = false;
             TabStatus[7] = false;
-
         }
 
 

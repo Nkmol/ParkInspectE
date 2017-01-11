@@ -16,6 +16,7 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.ParkinglotVM;
 
 namespace ParkInspect.ViewModel
 {
@@ -53,13 +54,14 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<InspectionViewModel>();
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
-            SimpleIoc.Default.Register<ParkinglotViewModel>();
+            SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
-
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
+            SimpleIoc.Default.Register<AssignmentViewModel>();
+
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace ParkInspect.ViewModel
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
-        public ParkinglotViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotViewModel>();
+        public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
 
         public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
 
@@ -93,6 +95,8 @@ namespace ParkInspect.ViewModel
         public PopupViewModel Popup => new PopupViewModel(); // Always new link
         public PopupManager PopupManager => ServiceLocator.Current.GetInstance<PopupManager>();
         public DialogManager Dialog => ServiceLocator.Current.GetInstance<DialogManager>();
+
+        public AssignmentViewModel Assignment => ServiceLocator.Current.GetInstance<AssignmentViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

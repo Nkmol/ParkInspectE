@@ -45,6 +45,24 @@ namespace ParkInspect.View.UserControls.Popup
             return window.Invoke(() => window.ShowChildWindowAsync(popupWindow));
         }
 
+        public Task ShowConfirmPopupAsync<T>(object context, string title, UserControl content, Action<T> action)
+        {
+            var window = GetMetroWindow(context);
+
+            // Create BaseChildWindow
+            var popupWindow = new ConfirmPopupWindow() { IsModal = true, AllowMove = true, AdditionalContent = content};
+
+            // Fill Context with values so ViewModels are linked  // TODO Improve, let Injection handle more
+            var Context = (PopupViewModel)popupWindow.DataContext;
+            Context.OwnerTask = x =>action((T)x); // Simple way of Converting T to specific type (object in this case)
+            Context.ContentContext = content.DataContext as IPopup;
+            Context.CloseWindow = () => popupWindow.Close();
+            Context.Title = title;
+            Context.Ready();
+
+            return window.Invoke(() => window.ShowChildWindowAsync(popupWindow));
+        }
+
         private static MetroWindow GetMetroWindow(object context)
         {
             if (context == null)

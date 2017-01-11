@@ -41,42 +41,57 @@ namespace UnitTestProject
         // http://softwareengineering.stackexchange.com/questions/7823/is-it-ok-to-have-multiple-asserts-in-a-single-unit-test
 
         [TestMethod]
+        [TestCategory("Service")]
         public void CanLogin()
         {
             // Assert
             var result = _service.Login("henk@henk.nl", "ab123");
-            Assert.AreEqual(result, true);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
+        [TestCategory("Service")]
         public void WrongPassword()
         {
             // Assert
             var result = _service.Login("henk@henk.nl", "ab12333");
-            Assert.AreEqual(result, false);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
+        [TestCategory("Service")]
         public void WrongUsername()
         {
             // Assert
             var result = _service.Login("henk@henkie.nl", "ab123");
-            Assert.AreEqual(result, false);
+            Assert.IsFalse(result);
         }
 
-        // Not of this class, just as example
         [TestMethod]
-        public void EmployeeUpdate()
+        [TestCategory("Service")]
+        public void NullUsername()
         {
-            // Arrange
-            _newEmpolyee.firstname = "Jan";
-
-            // Act
-            _service.Update(_newEmpolyee);
-
             // Assert
-            var employee = _service.Get(_newEmpolyee.id);
-            Assert.AreEqual(employee.firstname, "Jan");
+            var result = _service.Login(null, "ab123");
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        [TestCategory("Service")]
+        public void NullPassword()
+        {
+            // Assert
+            var result = _service.Login("henk@henkie.nl", null);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        [TestCategory("Service")]
+        public void NullValues()
+        {
+            // Assert
+            var result = _service.Login(null, null);
+            Assert.IsFalse(result);
         }
     }
 }

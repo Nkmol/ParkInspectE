@@ -109,6 +109,24 @@
                             </TextBox>
                         </StackPanel>
                     </DockPanel>
+
+                    <DockPanel>
+                        <StackPanel VerticalAlignment="Bottom">
+                            <DataGrid ScrollViewer.CanContentScroll="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                              SelectionMode="Single" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Height="175" ItemsSource="{Binding Absences}" 
+                              Margin="100,0,494,27">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Afwezig Begin" Binding="{Binding start}"  />
+                                    <DataGridTextColumn Header="Afwezig Einde" Binding="{Binding end}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </DockPanel>
+
+
                     <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <StackPanel>
                             <Label Content="Datum in dienst" />
