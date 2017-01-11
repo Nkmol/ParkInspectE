@@ -3,22 +3,28 @@
     ViewBag.Title = "Home Page";
 }
 
-<div><table style="width:100%">
-  @{
-      foreach (var pdf in ViewBag.pdf)
-      {
-          <tr>
-              <td>
-                  
-                  <iframe id="fred" style="border:1px solid #666CCC" title="PDF in an i-Frame" src="@Url.Action("GetPdf", "Home" , new {path = pdf})" frameborder="1" scrolling="auto" height="1100" width="850"></iframe>
-                  
+<h2>Overzicht pdf's</h2>
+
+<div><table style="width: 100%">
+         <th>Pdf naam:</th>
+    @{
+        foreach (var pdf in ViewBag.pdf)
+        {
 
 
-              </td> 
+            <tr>
+                
+                <td>
+                    @{ string x = Path.GetFileName(pdf);}
+                    @Html.ActionLink(x, "Details", "Home", new {path = pdf}, null)
 
-          </tr>
-      }
-  }
+                </td>
+
+                
+
+            </tr>
+        }
+    }
 </table></div>
 
 

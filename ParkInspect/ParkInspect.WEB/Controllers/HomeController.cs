@@ -25,6 +25,14 @@ namespace ParkInspect.WEB.Controllers
             return View();
         }
 
+        public ActionResult Details(string path)
+        {
+
+            ViewBag.pdf = path;
+
+            return View();
+        }
+
         public FileStreamResult GetPdf(string path)
         {
             FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
