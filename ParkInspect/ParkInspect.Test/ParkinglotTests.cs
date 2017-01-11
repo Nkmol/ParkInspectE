@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkInspect.Repository;
 using ParkInspect.ViewModel;
+using ParkInspect.ViewModel.ParkinglotVM;
 
 namespace ParkInspect.Test
 {
@@ -11,14 +12,14 @@ namespace ParkInspect.Test
     public class ParkinglotTests
     {
         private EntityFrameworkRepository<ParkInspectEntities> _repo;
-        private ParkinglotViewModel vm;
+        private ParkinglotOverviewViewModel vm;
         private DialogManager dm;
 
         [TestInitialize]
         public void init()
         {
             _repo = new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities());
-            vm = new ParkinglotViewModel(_repo, dm);
+            vm = new ParkinglotOverviewViewModel(_repo, dm);
         }
         
         [TestMethod]
