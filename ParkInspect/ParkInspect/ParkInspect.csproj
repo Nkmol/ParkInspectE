@@ -414,6 +414,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Reports\Saiyan.rdl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Reports\Untitled.rdl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -55,7 +55,6 @@ namespace ParkInspect.ViewModel
         {
 
             CreateCommand = new RelayCommand(OpenDesignView);
-           
 
             SetData();
             UpdateReports();
