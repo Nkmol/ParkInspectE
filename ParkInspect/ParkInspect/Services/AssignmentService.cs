@@ -27,8 +27,17 @@ namespace ParkInspect.Services
         public bool InsertOrUpdate(AssignmentViewModel viewModel)
         {
             // Combine ModelViews with POCO objects
+
             foreach (var inspection in viewModel.Inspections)
+            {
+                // Add inspectors to POCO inspection
+                foreach (var inspector in inspection.AssignedInspectors)
+                {
+                    inspection.Data.Employees.Add(inspector);
+                }
+                // Add Inspections to POCO assignment
                 viewModel.Data.Inspections.Add(inspection.Data);
+            }
 
             return InsertOrUpdate(viewModel.Data);
         }
