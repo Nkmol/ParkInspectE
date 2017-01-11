@@ -25,7 +25,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
         private DialogManager _dialogManager;
 
         public readonly Asignment Data;
-        public Inspection SelectedInspection { get; set; }
+        public InspectionViewModel SelectedInspection { get; set; }
 
         // TODO global data
         public ObservableCollection<Form> Forms { get; set; }
@@ -36,6 +36,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public RelayCommand<AssignmentOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
+        public RelayCommand EditInspectionCommand { get; set; }
 
         #region ViewModel Poco properties
         public Client Client
@@ -109,8 +110,9 @@ namespace ParkInspect.ViewModel.AssignmentVM
             _service = new AssignmentService(repository);
 
             // Default values
-            Date = DateTime.Now;
-            Deadline = DateTime.Now.AddDays(1);
+            Date = Date ?? DateTime.Now;
+            if (Deadline == DateTime.MinValue)
+                Deadline = DateTime.Now.AddDays(1);
 
             Inspections = new ObservableCollection<InspectionViewModel>(Data.Inspections.Select(x => new InspectionViewModel(repository, x)));
 
@@ -121,7 +123,8 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
             SaveCommand = new RelayCommand<AssignmentOverviewViewModel>(Add, (_) => Data.id <= 0);
             EditCommand = new RelayCommand(Edit, () => Data.id > 0);
-            AddInspectionCommand = new RelayCommand(ShowPopup);
+            AddInspectionCommand = new RelayCommand(ShowAddPopup);
+            EditInspectionCommand = new RelayCommand(ShowEditPopup, () => SelectedInspection != null);
 
             FillForm();
         }
@@ -147,7 +150,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             Inspections = FormInspections;
         }
 
-        private void ShowPopup()
+        private void ShowAddPopup()
         {
             _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
                 x =>
@@ -161,6 +164,17 @@ namespace ParkInspect.ViewModel.AssignmentVM
                     x.BoundryStartDate = FormDate;
                     x.BoundryEndDate = FormDeadline;
                 });
+        }
+
+        private void ShowEditPopup()
+        {
+            _popupManager.ShowUpdateNewPopup("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
+                x =>
+                {
+                    RaisePropertyChanged();
+                },
+                null,
+                SelectedInspection);
         }
 
         public void Add(AssignmentOverviewViewModel overview)

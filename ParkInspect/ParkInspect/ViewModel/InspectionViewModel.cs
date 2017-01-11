@@ -160,8 +160,8 @@ namespace ParkInspect.ViewModel
 
             // set commands
             ResetCommand = new RelayCommand(EmptyForm);
-            AddCommand = new RelayCommand(Add, CanCreateInspection);
-            EditCommand = new RelayCommand(Edit, CanEditInspection);
+            AddCommand = new RelayCommand(Add, () => Data.id == 0);
+            EditCommand = new RelayCommand(Edit, () => Data.id != 0);
 
             AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
 
@@ -187,72 +187,25 @@ namespace ParkInspect.ViewModel
 
         private void AssignInspector()
         {
-
-            //if (SelectedEmployee == null) return;
-            //if (InspectionInspectors.Contains(SelectedEmployee)) return;
-
-            //SelectedInspection.Employees.Add(SelectedEmployee);
-            //InspectionInspectors.Add(SelectedEmployee);
-
-            //SelectedEmployee = null;
-            //UpdateProperties();
-
             AssignedInspectors.Add(SelectedInspector);
             Inspectors.Remove(SelectedInspector);
         }
 
         private void UnassignInspecteur()
         {
-            //if (SelectedInspecteur == null) return;
-
-            //SelectedInspection.Employees.Remove(SelectedInspecteur);
-            //InspectionInspectors.Remove(SelectedInspecteur);
-
-            //SelectedInspecteur = null;
-            //UpdateProperties();
 
             AssignedInspectors.Remove(SelectedAssignedInspector);
             Inspectors.Add(SelectedAssignedInspector);
-        }
-
-        private bool CanEditInspection()
-        {
-            //return _selectedInspection.id != 0;
-            return false;
-        }
-
-        private bool CanCreateInspection()
-        {
-            //return _selectedInspection.id == 0;
-            return true;
-        }      
+        }  
 
         public void Add()
         {
             PopupBeforeFinish();
-            //if (!CreateInspectionValidation()) return;
-            //if (_selectedInspection.date == null) { _selectedInspection.date = DateTime.Today; }
-
-            ////_service.CreateNewAssignemnt(_selectedInspection);
-            //CommandError = "Created";
-            //UpdateProperties();
-            //SetNewInspection();
-            //PopupBeforeFinish();
         }
 
         public void Edit()
         {
             PopupBeforeFinish();
-            //if (EditInspectionValidation())
-            //{
-            //    _service.UpdateInspection(_selectedInspection);
-            //    SetNewInspection();
-
-            //    CommandError = "Updated";
-            //    UpdateProperties();
-
-            //    PopupBeforeFinish();
-            //}
         }
 
 
