@@ -13,7 +13,7 @@ namespace ParkInspect.Model.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             DateTime temp;
-            string format = "d-M-yyyy";
+            string format = "d/M/yyyy hh:mm:ss";
             if (DateTime.TryParseExact(Convert.ToString(value), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out temp))
                 return new ValidationResult(true, null);
 

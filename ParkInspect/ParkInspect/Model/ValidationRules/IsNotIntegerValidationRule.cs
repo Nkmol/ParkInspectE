@@ -8,16 +8,15 @@ using System.Windows.Controls;
 
 namespace ParkInspect.Model.ValidationRules
 {
-    public class IsPositiveNumberRule : ValidationRule
+    public class IsNotIntegerValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             int i;
-            if(int.TryParse(value.ToString(), out i))
-             if (i > 0)
-                return new ValidationResult(true, null);
+                if(value != null && !int.TryParse((string)value, out i))
+                    return new ValidationResult(true, null);
 
-            return new ValidationResult(false, "Het moet een getal hoger dan 0 zijn!");
+            return new ValidationResult(false, "Numerieke karakters zijn niet toegestaan!");
         }
     }
 }

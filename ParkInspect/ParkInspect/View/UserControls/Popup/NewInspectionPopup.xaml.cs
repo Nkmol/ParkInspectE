@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ParkInspect.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for InspectionControl.xaml
+    /// Interaction logic for NewInspectionPopup.xaml
     /// </summary>
-    public partial class InspectionControl : UserControl
+    public partial class NewInspectionPopup
     {
-        public InspectionControl()
+        public NewInspectionPopup()
         {
             InitializeComponent();
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
