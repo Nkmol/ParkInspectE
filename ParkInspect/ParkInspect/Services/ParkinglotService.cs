@@ -12,10 +12,16 @@ namespace ParkInspect.Services
 {
     public class ParkinglotService : DataService
     {
+        private IRepository _context;
 
         public ParkinglotService(IRepository context) : base(context)
         {
+            _context = context;
         }
 
+        public Parkinglot Get(Parkinglot pl)
+        {
+            return _context.Get<Parkinglot>().FirstOrDefault(x => x == pl);
+        }
     }
 }
