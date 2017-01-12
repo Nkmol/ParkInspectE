@@ -17,6 +17,9 @@ namespace ParkInspect.Repository
          where TEntity : class;
 
         void Delete<TEntity>(TEntity entity)
+         where TEntity : class;
+
+        bool InsertOrUpdate<TEntity>(TEntity entity)
             where TEntity : class;
 
         void Save();

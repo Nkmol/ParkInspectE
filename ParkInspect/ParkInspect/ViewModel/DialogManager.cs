@@ -1,52 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Services;
-using System.Security.Cryptography;
 
 namespace ParkInspect.ViewModel
 {
-    public class DialogManager
+    public class DialogManager : DialogCoordinator
     {
-        public IDialogCoordinator DialogCoordinator;
-
         protected EmployeeService _service;
-
-        public EmployeeService Service
-        {
-            set { _service = value; }
-        }
 
         public DialogManager(IDialogCoordinator dialogCoordinator)
         {
             DialogCoordinator = dialogCoordinator;
         }
 
+        // Virtual = Used for Moq
+        public virtual IDialogCoordinator DialogCoordinator { get; set; }
+
+        public EmployeeService Service
+        {
+            set { _service = value; }
+        }
+
         public void ShowMessage(string title, string message)
         {
-           DialogCoordinator.ShowMessageAsync(this, title, message);
+            DialogCoordinator.ShowMessageAsync(this, title, message);
         }
 
-        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings )
+        public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings)
         {
-          LoginDialogData result = await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
-
-          return result;
+            return await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
         }
 
-        public async void ShowLoginDialog(LoginViewModel lv)
+        public async void ShowLoginDialog(LoginViewModel lv, LoginDialogSettings LogindialogSetting = null)
         {
-            var loginDialogSettings = new LoginDialogSettings
-            {
-                UsernameWatermark = "Emailadres...",
-                PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Visible,
-                RememberCheckBoxVisibility = Visibility.Visible
-            };
+            var loginDialogSettings = LogindialogSetting ?? new LoginDialogSettings
+                                      {
+                                          UsernameWatermark = "Emailadres...",
+                                          PasswordWatermark = "Wachtwoord...",
+                                          NegativeButtonVisibility = Visibility.Hidden,
+                                          RememberCheckBoxVisibility = Visibility.Visible
+                                      };
 
             var logged = false;
 
@@ -57,45 +53,50 @@ namespace ParkInspect.ViewModel
                         ShowLogin("Authenticatie", "Voer uw inloggegevens in",
                             loginDialogSettings);
 
-                if (result == null)
-                    return;
-
-                SHA256 sha = SHA256.Create();
-
-                byte[] bytes = new byte[result.Password.Length * sizeof(char)];
-                System.Buffer.BlockCopy(result.Password.ToCharArray(), 0, bytes, 0, bytes.Length);
-
-                sha.ComputeHash(bytes);
-
-                char[] chars = new char[sha.Hash.Length / sizeof(char)];
-                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
-
-                var rs = _service.GetEmployee(result.Username, new string(chars)).Count() != 0;
-
-                if (!rs)
+                if (result != null)
                 {
-                    if (result.ShouldRemember)
+                    var sha = SHA256.Create();
+
+                    var bytes = new byte[result.Password.Length*sizeof(char)];
+                    Buffer.BlockCopy(result.Password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+                    sha.ComputeHash(bytes);
+
+                    var chars = new char[sha.Hash.Length/sizeof(char)];
+                    Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+                    var rs = _service.Login(result.Username, result.Password);
+
+                    if (!rs)
                     {
-                        loginDialogSettings.InitialUsername = result.Username;
-                    }
+                        if (result.ShouldRemember)
+                            loginDialogSettings.InitialUsername = result.Username;
 
-
-                    await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
+                        await DialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
                             "Ongeldig email/wachtwoord");
+                    }
+                    else
+                    {
+                        await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
+                        logged = true;
 
-                }
-                else
-                {
-                    await DialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
-                    logged = true;
+                        lv.LoginName = result.Username;
+                        lv.LoginButtonEnabled = false;
+                        lv.LogoutButtonEnabled = true;
 
-                    lv.LoginName = result.Username;
-                    lv.LoginButtonEnabled = false;
-                    lv.LogoutButtonEnabled = true;
+                        // goes wrong on multiple users with the same username and password with different roles.
+                        lv.CurrentUser = lv.Service.GetEmployee(result.Username, result.Password);
+                        lv.Dashboard.ChangeAuthorization(lv.CurrentUser.Role1);
+                    }
                 }
             }
         }
 
 
+        public bool ShowConfirmationDialog(string title, string message)
+        {
+            return (ShowModalMessageExternal(this, title, message, MessageDialogStyle.AffirmativeAndNegative) ==
+                    MessageDialogResult.Affirmative);
+        }
     }
 }

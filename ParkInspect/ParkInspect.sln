@@ -9,6 +9,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Databa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkInspect.Test", "ParkInspect.Test\ParkInspect.Test.csproj", "{79B55ABA-4FD9-4B46-9B95-F4DEA9E3B39B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkInspect.WEB", "ParkInspect.WEB\ParkInspect.WEB.csproj", "{B9ADBDC1-3BBA-4697-ABB2-0425233716DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{79B55ABA-4FD9-4B46-9B95-F4DEA9E3B39B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79B55ABA-4FD9-4B46-9B95-F4DEA9E3B39B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79B55ABA-4FD9-4B46-9B95-F4DEA9E3B39B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9ADBDC1-3BBA-4697-ABB2-0425233716DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9ADBDC1-3BBA-4697-ABB2-0425233716DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9ADBDC1-3BBA-4697-ABB2-0425233716DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9ADBDC1-3BBA-4697-ABB2-0425233716DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

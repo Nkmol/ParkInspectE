@@ -12,11 +12,10 @@ namespace ParkInspect.Model.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value != null && value is int)
-            {
-                if((int) value > 0)
-                    return new ValidationResult(true, null);
-            }
+            int i;
+            if(int.TryParse(value.ToString(), out i))
+             if (i > 0)
+                return new ValidationResult(true, null);
 
             return new ValidationResult(false, "Het moet een getal hoger dan 0 zijn!");
         }
