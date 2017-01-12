@@ -48,6 +48,7 @@ namespace ParkInspect.Test
             _service.InsertAbsence(_newAbsence);
         }
 
+        [TestCategory("Absence service")]
         [TestMethod]
         public void Create()
         {
@@ -67,6 +68,7 @@ namespace ParkInspect.Test
             Assert.IsNotNull(test);
         }
 
+        [TestCategory("Absence service")]
         [TestMethod]
         public void Update()
         {

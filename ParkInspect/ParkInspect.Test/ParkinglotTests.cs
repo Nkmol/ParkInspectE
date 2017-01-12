@@ -32,6 +32,7 @@ namespace ParkInspect.Test
             _service.Add(_newParkinglot);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void Create()
         {
@@ -56,6 +57,7 @@ namespace ParkInspect.Test
             Assert.AreEqual("TestCreate parkeerplaats", parkinglot.name);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void Update()
         {
@@ -70,6 +72,7 @@ namespace ParkInspect.Test
             Assert.AreEqual("Update parkeerplaats", pl.name);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void Read()
         {
@@ -78,6 +81,7 @@ namespace ParkInspect.Test
             Assert.IsNotNull(parkinglot);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void WrongZipcode()
         {
@@ -96,6 +100,7 @@ namespace ParkInspect.Test
             Assert.AreEqual(false, isZipCode);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void WrongNumber()
         {
@@ -114,6 +119,7 @@ namespace ParkInspect.Test
             Assert.AreEqual(false, isPosNumber);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void NameIsEmpty()
         {
@@ -134,6 +140,7 @@ namespace ParkInspect.Test
             Assert.AreEqual(false, nameIsNotEmpty);
         }
 
+        [TestCategory("Parkinglot service")]
         [TestMethod]
         public void RegionIsEmpty()
         {
