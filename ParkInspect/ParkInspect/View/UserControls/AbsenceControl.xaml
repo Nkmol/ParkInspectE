@@ -41,7 +41,7 @@
                             <DatePicker SelectedDate="{Binding NewAbsence.start}" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" />
 
                             <Label x:Name="label3" Content="Medewerker"/>
-                            <ComboBox Margin="5,0,0,10" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Text="Selecteer Personeel"></ComboBox>
+                            <ComboBox Margin="5,0,0,10" ItemsSource="{Binding EmployeeviewModel.Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" Text="Selecteer Personeel"></ComboBox>
                         </StackPanel>
                     </DockPanel>
                     <DockPanel Height="150" Width="255" Margin="0,0,100,0" VerticalAlignment="Top" HorizontalAlignment="Right">
