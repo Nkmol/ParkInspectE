@@ -36,6 +36,8 @@ namespace UnitTestProject
                 phonenumber = "0612345678"
             };
 
+            _clientService.Add(_testClient);
+
             _testContactPerson = new Contactperson();
 
             _testContactPerson.id = -1;
@@ -44,7 +46,7 @@ namespace UnitTestProject
             _testContactPerson.firstname = "Test";
             _testContactPerson.lastname = "contacperson";
 
-            _clientService.Add(_testClient);
+
             _contactPersonService.Add(_testClient);
         }
 
@@ -60,7 +62,7 @@ namespace UnitTestProject
                 name = "Sjaak Testhaak",
                 phonenumber = "0612345678"
             };
-            
+
             Contactperson cp = new Contactperson();
             cp.id = -1;
             cp.Client = c;
@@ -132,6 +134,57 @@ namespace UnitTestProject
 
             var res = _contactPersonService.Get(cp);
             Assert.IsNotNull(res);
+        }
+
+        [TestMethod]
+        [TestCategory("ContactPerson")]
+        public void ContactPersonFirstNameIsNull()
+        {
+            _testContactPerson.firstname = null;
+
+            try
+            {
+                _contactPersonService.Add(_testContactPerson);
+            }
+            catch (Exception)
+            {
+                Assert.IsNull(true, _testContactPerson.firstname);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("ContactPerson")]
+        public void ContactPersonLastNameIsNull()
+        {
+            _testContactPerson.lastname = null;
+
+            try
+            {
+                _contactPersonService.Add(_testContactPerson);
+            }
+            catch (Exception)
+            {
+                Assert.IsNull(true, _testContactPerson.lastname);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("ContactPerson")]
+        public void ContactPersonWithoutClient()
+        {
+            _testContactPerson.Client = null;
+
+            try
+            {
+                _contactPersonService.Add(_testContactPerson);
+            }
+            catch (Exception)
+            {
+                Assert.IsNull(true, ""+_testContactPerson.client_id);
+                throw;
+            }
         }
     }
 }
