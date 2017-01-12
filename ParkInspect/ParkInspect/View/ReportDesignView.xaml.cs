@@ -18,7 +18,7 @@ namespace ParkInspect
     /// <summary>
     /// Interaction logic for ReportDesignView.xaml
     /// </summary>
-    public partial class ReportDesignView : MetroWindow
+    public partial class ReportDesignView : Window
     {
         public ReportDesignView()
         {
