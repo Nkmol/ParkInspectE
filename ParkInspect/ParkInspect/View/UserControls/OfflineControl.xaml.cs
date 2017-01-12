@@ -68,16 +68,19 @@ namespace ParkInspect.View.UserControls
             String line;
             String name = (listBox1.SelectedItem as Direction).Name;
             String path = runpath + "/directions/" + name + ".txt";
-           System.IO.StreamReader file = new System.IO.StreamReader(path);
-            while ((line = file.ReadLine()) != null)
+            if (System.IO.File.Exists(path))
             {
-                if (line.Contains("ID:"))
+                System.IO.StreamReader file = new System.IO.StreamReader(path);
+                while ((line = file.ReadLine()) != null)
                 {
-                    inspection_id = Convert.ToInt32(line.Replace("ID:", ""));
-                }
-                if (line.Contains("HOME:"))
-                {
-                    home_adress = line.Replace("HOME:", "");
+                    if (line.Contains("ID:"))
+                    {
+                        inspection_id = Convert.ToInt32(line.Replace("ID:", ""));
+                    }
+                    if (line.Contains("HOME:"))
+                    {
+                        home_adress = line.Replace("HOME:", "");
+                    }
                 }
             }
 
