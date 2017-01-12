@@ -45,8 +45,6 @@ namespace ParkInspect.ViewModel
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _current_direction_item;
         private DialogManager _dialog;
-        public RelayCommand saveDirections { get; set; }
-        public RelayCommand getDirections { get; set; }
         public RelayCommand deleteInspection { get; set; }
         public RelayCommand setDirections { get; set; }
         public RelayCommand next_direction { get; set; }
@@ -259,11 +257,9 @@ namespace ParkInspect.ViewModel
             service = new InspectionService(context);
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
-            saveDirections = new RelayCommand(SaveDirections);
             deleteInspection = new RelayCommand(DeleteInspection);
             next_direction = new RelayCommand(NextDirection);
             prev_direction = new RelayCommand(PrevDirection);
-            getDirections = new RelayCommand(GetDirections);
             LoadDirections();
         }
         private void PrevDirection()
@@ -284,70 +280,6 @@ namespace ParkInspect.ViewModel
                 _selectedDirection.index++;
             }
         }
-        private void SaveDirections()
-        {
-            if (directionItems.Count > 0)
-            {
-                String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                if (String.IsNullOrWhiteSpace(_directions_save_name))
-                {
-                    _dialog.ShowMessage("Fout!", "Vul een geldige naam in!");
-                }
-                else
-                {
-                    System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
-                    SaveFile.WriteLine("ID:" + selectedInspection.id);
-                    SaveFile.WriteLine("HOME:" + _home_adress);
-                    foreach (String s in directionItems)
-                    {
-                        SaveFile.WriteLine(s);
-                    }
-                    SaveFile.Dispose();
-                    SaveFile.Close();
-                    _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
-                }
-
-                LoadDirections();
-            }
-            else
-            {
-                _dialog.ShowMessage("Fout!", "Laad eerst een navigatie in!");
-            }
-        }
-        private void GetDirections()
-        {
-            if (String.IsNullOrWhiteSpace(home_adress))
-            {
-                _dialog.ShowMessage("Fout!", "Voer een geldig vertrek adres in!");
-            }
-            else
-            {
-                //route on gmaps
-                try
-                {
-                    var drivingDirectionRequest = new DirectionsRequest
-                    {
-                        Origin = home_adress,
-                        Destination = region_zip + " " + region_name
-                    };
-                    drivingDirectionRequest.Language = "nl";
-                    DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
-                    Route nRoute = drivingDirections.Routes.First();
-                    Leg leg = nRoute.Legs.First();
-                    int counter = 1;
-                    //direction items
-                    foreach (Step step in leg.Steps)
-                    {
-                        directionItems.Add(counter + ". " + StripHTML(step.HtmlInstructions));
-                        counter++;
-                    }
-                }
-                catch (Exception e)
-                {
-                    _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving!");
-                }
-            }
-        }
         private void SetDirectionItems()
         {
             String line;
@@ -363,10 +295,6 @@ namespace ParkInspect.ViewModel
             file.Close();
             current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
 
-        }
-        private string StripHTML(string html)
-        {
-            return Regex.Replace(html, @"<(.|\n)*?>", string.Empty);
         }
         public void LoadDirections()
         {
