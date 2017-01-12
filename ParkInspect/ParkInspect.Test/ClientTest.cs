@@ -2,40 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkInspect;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.ViewModel;
+using UnitTestProject;
 
 namespace ParkInspect.Test
 {
     [TestClass]
     public class ClientTest
     {
-        //Repo's
-        private EntityFrameworkRepository<ParkInspectEntities> _repo;
-        
-        //ViewModels
-        private ClientViewModel _clientViewModel;
-        private ContactpersonViewModel _contactpersonViewModel;
-
-        private DialogManager dm;
-
-        //Client
+        private MockRepositoryWrapper<Client, ParkInspectEntities> _mockRepo;
         private Client _testClient;
-
-        //Contact person
-        private Contactperson _testContactPerson;
+        private ClientService _service;
 
         [TestInitialize]
         public void Init()
         {
-            _repo = new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities());
+            _mockRepo = new MockRepositoryWrapper<Client, ParkInspectEntities>();
+            _service = new ClientService(_mockRepo.Repo);
 
-            _clientViewModel = new ClientViewModel(_repo, dm);
-            _contactpersonViewModel = new ContactpersonViewModel(_repo, dm);
+            //Arrange
+            _testClient = new Client
+            {
+                id = -1,
+                email = "testClient@test.nl",
+                name = "Sjaak Testhaak",
+                phonenumber = "0612345678"
+            };
+
+            _service.Add(_testClient);
         }
 
         /*
@@ -46,17 +46,47 @@ namespace ParkInspect.Test
         [TestCategory("Client")]
         public void CreateClient()
         {
-            
+            //Arrange
+            var tc = new Client()
+            {
+                id = -1,
+                email = "TestCreate@test.nl",
+                name = "Sjaak CreateHaak",
+                phonenumber = "0612345678"
+            };
+
+            //Act
+            _service.Add(tc);
+
+            //Assert
+            var client = _service.Get(tc);
+            Assert.AreEqual("Sjaak CreateHaak", tc.name);
         }
-        /*
+
         [TestMethod]
         [TestCategory("Client")]
         public void UpdateClient()
         {
-            _clientService.Add(_testClient);
-            Assert.AreNotEqual(true, _testClient);
-            _clientService.Delete(_testClient);
+            //Arrange
+            _testClient.name = "Update Client";
+
+            //Act
+            _service.Update(_testClient);
+
+            //Assert
+            var client = _service.Get(_testClient);
+            Assert.AreEqual("Update Client", client.name);
         }
+
+        [TestMethod]
+        [TestCategory("Client")]
+        public void ReadClient()
+        {
+            var client = _service.Get(_testClient);
+
+            Assert.IsNotNull(client);
+        }
+
 
         [TestMethod]
         [TestCategory("Client")]
@@ -64,85 +94,88 @@ namespace ParkInspect.Test
         {
             _testClient.name = null;
 
-            var rs = _clientService.Add(_testClient);
-            Assert.AreEqual(false, rs);
-            _clientService.Delete(_testClient);
+            try
+            {
+                _service.Add(_testClient);
+            }
+            catch (Exception)
+            {
+                Assert.IsNull(true, _testClient.name);
+                throw;
+            }
         }
-
+        
         [TestMethod]
         [TestCategory("Client")]
         public void ClientEmailIsNull()
         {
             _testClient.email = null;
 
-            var rs = _clientService.Add(_testClient);
-            Assert.AreEqual(false, rs);
-            _clientService.Delete(_testClient);
+            try
+            {
+                _service.Add(_testClient);
+            }
+            catch (Exception)
+            {
+                Assert.IsNull(true, _testClient.email);
+                throw;
+            }
         }
-
+        
         [TestMethod]
         [TestCategory("Client")]
         public void ClientPhoneNumberIsNull()
         {
             _testClient.phonenumber = null;
 
-            var rs = _clientService.Add(_testClient);
-            Assert.AreEqual(false, rs);
-            _clientService.Delete(_testClient);
-        }
-
-        /*
-            Contact person Tests
-        */
-        /*
-        [TestMethod]
-        [TestCategory("ContactPerson")]
-        public void CreateContactPerson()
-        {
-            _contactPersonService.Add(_testContactPerson);
-            Assert.IsNotNull(_testContactPerson);
-            _contactPersonService.Delete(_testContactPerson);
+            try
+            {
+                _service.Add(_testClient);
+            }
+            catch (Exception)
+            {
+                Assert.IsNull(true, _testClient.phonenumber);
+                throw;
+            }
         }
 
         [TestMethod]
-        [TestCategory("ContactPerson")]
-        public void UpdateContactPerson()
+        [TestCategory("Client")]
+        public void ClientWrongPhoneNumber()
         {
-            
+            //Arrange
+            string[] wrongNumbers = new string[3];
+
+            wrongNumbers[0] = "112";
+            wrongNumbers[1] = "061234567";
+            wrongNumbers[2] = "06-123456";
+
+            for (int i = 0; i < wrongNumbers.Length; i++)
+            {
+                var check = Regex.IsMatch(Convert.ToString(wrongNumbers[i]).Trim(),
+                @"(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)");
+
+                Assert.AreEqual(false, check);
+            }
         }
 
         [TestMethod]
-        [TestCategory("ContactPerson")]
-        public void ContactPersonFirstNameIsNull()
+        [TestCategory("Client")]
+        public void ClientWrongEmailAdress()
         {
-            _testContactPerson.firstname = null;
+            string[] wrongEmails = new string[3];
 
-            var rs = _contactPersonService.Add(_testContactPerson);
-            Assert.AreEqual(false, rs);
-            _contactPersonService.Delete(_testContactPerson);
+            wrongEmails[0] = "Sjaak@sjaak";
+            wrongEmails[1] = "Sjaak.nl";
+            wrongEmails[2] = "sjaak@.nl";
+
+            for (int i = 0; i < wrongEmails.Length; i++)
+            {
+                var check = Regex.IsMatch(Convert.ToString(wrongEmails[i]).Trim(),
+                @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+
+                Assert.AreEqual(false, check);
+            }
         }
-
-        [TestMethod]
-        [TestCategory("ContactPerson")]
-        public void ContactPersonLastNameIsNull()
-        {
-            _testContactPerson.lastname = null;
-
-            var rs = _contactPersonService.Add(_testContactPerson);
-            Assert.AreEqual(false, rs);
-            _contactPersonService.Delete(_testContactPerson);
-        }
-
-        [TestMethod]
-        [TestCategory("ContactPerson")]
-        public void ContactPersonWithoutClient()
-        {
-            _testContactPerson.Client = null;
-
-            var rs = _contactPersonService.Add(_testContactPerson);
-            Assert.AreEqual(false, rs);
-            _contactPersonService.Delete(_testContactPerson);
-        }
-        */
     }
 }
