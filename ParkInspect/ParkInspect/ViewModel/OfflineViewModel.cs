@@ -42,6 +42,7 @@ namespace ParkInspect.ViewModel
         public string _clarification;
         public string _directions_save_name;
         private string _home_adress;
+        private List<string> deleted_list;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _current_direction_item;
         private DialogManager _dialog;
@@ -207,9 +208,12 @@ namespace ParkInspect.ViewModel
             }
             set
             {
-                _selectedDirection = value;
-                SetDirectionItems();
-                base.RaisePropertyChanged();
+                if (value != null)
+                {
+                    _selectedDirection = value;
+                    SetDirectionItems();
+                    base.RaisePropertyChanged();
+                }
             }
         }
         public String current_direction_item
@@ -248,12 +252,13 @@ namespace ParkInspect.ViewModel
             set
             {
                 _directions = value;
-                //base.RaisePropertyChanged();
+                base.RaisePropertyChanged();
             }
         }
         public OfflineViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
+            deleted_list = new List<string>();
             service = new InspectionService(context);
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
@@ -282,35 +287,53 @@ namespace ParkInspect.ViewModel
         }
         private void SetDirectionItems()
         {
-            String line;
-            System.IO.StreamReader file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
-            while ((line = file.ReadLine()) != null)
+            if (_selectedDirection != null)
             {
-                if (!line.Contains("ID:") && !line.Contains("HOME:"))
                 {
-                    _selectedDirection.direction_items.Add(line);
+                    String line;
+                    System.IO.StreamReader file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        if (!line.Contains("ID:") && !line.Contains("HOME:"))
+                        {
+                            _selectedDirection.direction_items.Add(line);
+                        }
+                    }
+                    file.Dispose();
+                    file.Close();
+                    current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
                 }
+
             }
-            file.Dispose();
-            file.Close();
-            current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
+            CleanFiles();
 
         }
         public void LoadDirections()
         {
-           Directory.CreateDirectory(runpath + "/directions");
+
+            Directory.CreateDirectory(runpath + "/directions");
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 Direction direction = new Direction();
                 direction.Name = name;
-                directions.Add(direction);
+                if (!directions.Contains(direction))
+                {
+                    directions.Add(direction);
+                }
             }
         }
         private void DeleteInspection()
         {
-            File.Delete(runpath + "/directions/" + selectedDirection.Name + ".txt");
-            LoadDirections();
+            directions.Remove(selectedDirection);
+            deleted_list.Add(selectedDirection.Name);
             _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
+        }
+        private void CleanFiles()
+        {
+            foreach (String n in deleted_list)
+            {
+                File.Delete(runpath + "/directions/" + n + ".txt");
+            }
         }
 
     }
