@@ -12,7 +12,7 @@ using ParkInspect.ViewModel;
 namespace ParkInspect.Test
 {
     [TestClass]
-    public class ClientAndContactPersonTest
+    public class ClientTest
     {
         //Repo's
         private EntityFrameworkRepository<ParkInspectEntities> _repo;
