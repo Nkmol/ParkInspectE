@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -8,7 +9,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using ParkInspect.Repository;
 using ParkInspect.WEB.Models;
+using ParkInspect.Services;
 
 namespace ParkInspect.WEB.Controllers
 {
@@ -61,20 +64,70 @@ namespace ParkInspect.WEB.Controllers
             return View();
         }
 
-        //
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model, string returnUrl)
+        {
+            if (new UserManager().IsValid(model.Email, model.Password))
+            {
+                var ident = new ClaimsIdentity(
+                  new[] { 
+              // adding following 2 claim just for supporting default antiforgery provider
+              new Claim(ClaimTypes.NameIdentifier, model.Email),
+              new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "ASP.NET Identity", "http://www.w3.org/2001/XMLSchema#string"),
+
+              new Claim(ClaimTypes.Name,model.Email),
+
+              // optionally you could add roles if any
+              //new Claim(ClaimTypes.Role, "Test"),
+              //new Claim(ClaimTypes.Role, "AnotherRole"),
+
+                  },
+                  DefaultAuthenticationTypes.ApplicationCookie);
+
+                HttpContext.GetOwinContext().Authentication.SignIn(
+                   new AuthenticationProperties { IsPersistent = false }, ident);
+                return RedirectToLocal(returnUrl); // auth succeed 
+            }
+            // invalid username or password
+            ModelState.AddModelError("", "invalid username or password");
+            return View();
+        }
+
+        /*
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login2(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
+            List<Client> clients;
+
+            using (var context = new ParkInspectEntities())
+            {
+                clients = context.Clients.ToList();
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var rs = clients.Find(c => c.email == model.Email && c.password == model.Password) != null;
+
+            if (rs)
+            {
+                remember = model.RememberMe;
+
+                if (!remember) return RedirectToLocal(returnUrl);
+                email = model.Email;
+                password = model.Password;
+                return RedirectToLocal(returnUrl);
+            }
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -84,12 +137,13 @@ namespace ParkInspect.WEB.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
         }
+
+        */
 
         //
         // GET: /Account/VerifyCode
