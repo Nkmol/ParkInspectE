@@ -11,6 +11,7 @@
         xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:viewModel="clr-namespace:ParkInspect.ViewModel"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1010"
@@ -20,8 +21,8 @@
         DataContext="{Binding Reports, Source={StaticResource Locator}}"
         dialog:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}"
         popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}">
-
     <Grid>
-        <syncfusion:ReportViewer x:Name="Viewer"  ReportPath="{Binding Report.ReportPath, Mode=TwoWay}"/>
+        <!-- <syncfusion:ReportViewer x:Name="Viewer" ReportPath="{Binding Report.ReportPath}"/> -->
+        <syncfusion:ReportViewer x:Name="Viewer" ReportPath="{Binding Report.ReportPath}"/>
     </Grid>
 </controls:MetroWindow>
