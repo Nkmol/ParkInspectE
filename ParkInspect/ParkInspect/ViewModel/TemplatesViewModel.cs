@@ -165,7 +165,7 @@ namespace ParkInspect.ViewModel
                 string highest = "0.0";
                 foreach (Template t in templates)
                 {
-                    if (Version.Parse(highest) < Version.Parse(t.version_number))
+                    if (highest.CompareTo(t.version_number) == -1)
                     {
                         highest = t.version_number;
                     }

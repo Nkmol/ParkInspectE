@@ -20,7 +20,7 @@ namespace ParkInspect.Services
 
         public Template createTemplate()
         {
-            Template template = new Template() { version_number = "1.0" };
+            Template template = new Template() { version_number = "1" };
             return template;
         }
 
@@ -38,16 +38,32 @@ namespace ParkInspect.Services
 
         public string getNextVersion(Template source)
         {
-            string nextVersion = (int.Parse(source.version_number.Replace(".0", "")) + 1).ToString() + ".0";
-            if (templateExists(source.name, nextVersion)) // if next version exists start sub numbering
+            string ogVersion = source.version_number;
+            string[] digits = ogVersion.Split('.');
+            int smallest = int.Parse(digits[digits.Length - 1]);
+            digits[digits.Length - 1] = null;
+            string nextVersion = "";
+            foreach(string digit in digits)
             {
-                int subVersion = 1;
-                while (templateExists(source.name,int.Parse(source.version_number.Replace(".0", "")).ToString() + "." +  subVersion.ToString())){
-                    subVersion++;
+                if (digit == null)
+                {
+                    break;
                 }
-                nextVersion = int.Parse(source.version_number.Replace(".0", "")).ToString() + "." + subVersion.ToString();
+                nextVersion += digit + ".";
             }
-            return nextVersion;
+            if (templateExists(source.name,nextVersion + (smallest + 1)))
+            {
+                string nextBase = nextVersion + (smallest);
+                int counter = 1;
+                string version = nextBase + "." + counter;
+                while (templateExists(source.name, version))
+                {
+                    counter++;
+                    version = nextBase + "." + counter;
+                }
+                return version;
+            }
+            return nextVersion + (smallest + 1);
         }
 
         public bool templateExists(string name, string version)

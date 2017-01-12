@@ -14,6 +14,7 @@
                 <ScrollViewer >
                     <Grid Name="FormGrid">
                         <Button x:Name="saveButton" Command = "{Binding SaveCommand}"  Content="Opslaan" Margin="692,10,0,411" Height="32" RenderTransformOrigin="0.5,0.5" Width="138" />
+                        <Button x:Name="saveButton_Copy" Command = "{Binding AddAttachmentCommand}"  Content="Bijlage toevoegen" Margin="535,10,199,411" Height="32" RenderTransformOrigin="0.5,0.5" />
                     </Grid>
                 </ScrollViewer>
             </Custom:MetroTabItem>

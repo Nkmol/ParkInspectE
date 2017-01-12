@@ -8,7 +8,19 @@ using ParkInspect.View.UserControls;
 using ParkInspect.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.IO;
+using Microsoft.Practices.ServiceLocation;
+using ParkInspect.View.UserControls.Popup;
 
+/*
+using Microsoft.Practices.ServiceLocation;
+
+    ServiceLocator.Current.GetInstance<PopupManager>().ShowPopup<SelectTemplatePopup>("Template", new SelectTemplatePopup(), // line below here //);
+    ServiceLocator.Current.GetInstance<FormViewModel>().createForm(SelectedInspection);
+   
+    ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(SelectedInspection);
+*/
 
 namespace ParkInspect.ViewModel
 {
@@ -35,7 +47,7 @@ namespace ParkInspect.ViewModel
 
                 //loadForm(inspections.ToArray()[0]);
 
-                createForm(inspections.ToArray()[0], templates.ToArray()[0]);
+                //createForm(inspections.ToArray()[0], templates.ToArray()[0]);
             }
         }
 
@@ -68,6 +80,8 @@ namespace ParkInspect.ViewModel
         }
 
         public RelayCommand SaveCommand { get; set; }
+        public RelayCommand AddAttachmentCommand { get; set; }
+        
         private CachedForm _cachedForm;
         public CachedForm cachedForm
         {
@@ -90,7 +104,9 @@ namespace ParkInspect.ViewModel
             EditorVisibility = Visibility.Hidden;
             TemplatesViewModel = new TemplatesViewModel(this);
             SaveCommand = new RelayCommand(saveForm);
+            AddAttachmentCommand = new RelayCommand(addAttachment);
             _dialog = dialog;
+            selectedTab = 1;
         }
 
         public void enableEditor()
@@ -131,6 +147,7 @@ namespace ParkInspect.ViewModel
                 View.addFormField(cachedField, i, true);
                 i++;
             }
+            selectedTab = 0;
         }
 
         public void createForm(Inspection inspection,Template template)
@@ -140,6 +157,18 @@ namespace ParkInspect.ViewModel
             form.Template = template;
             CachedForm cachedForm = service.createFormFromTemplate(template);
             loadForm(cachedForm);
+        }
+
+        public void createForm(Inspection inspection)
+        {
+
+            TemplateCollection collection = TemplatesViewModel.SelectedTemplateCollection;
+            Template template = collection.getTemplateFromVersion(TemplatesViewModel.SelectedVersion);
+            if (template == null)
+            {
+                return;
+            }
+            createForm(inspection, template);
         }
 
         public void loadForm(CachedForm form)
@@ -152,6 +181,7 @@ namespace ParkInspect.ViewModel
                 View.addFormField(field, i, false);
                 i++;
             }
+            selectedTab = 0;
         }
 
         public void saveForm()
@@ -164,17 +194,34 @@ namespace ParkInspect.ViewModel
             service.SaveForm(inspection,cachedForm);
             _dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
         }
+
+        public void addAttachment()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.DefaultExt = ".*"; // Required file extension 
+            fileDialog.Filter = "Any file (.*)|*.*"; // Optional file extensions
+
+            fileDialog.ShowDialog();
+
+            string path = fileDialog.FileName;
+            string content = File.ReadAllText(path);
+            _cachedForm.attachments.Add(content);
+            _dialog.ShowMessage("Vragenlijst", "Je bijlage is toegevoegd.");
+
+        }
     }
 
     public class CachedForm
     {
         public Form form;
         public List<CachedFormField> fields { get; set; }
+        public List<string> attachments { get; set; }
         public int template_id;
 
         public CachedForm()
         {
             fields = new List<CachedFormField>();
+            attachments = new List<string>();
         }
     }
 

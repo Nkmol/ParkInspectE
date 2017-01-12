@@ -45,6 +45,14 @@ namespace ParkInspect.Services
             Form form = new Form();
             inspection.Form = form;
             form.template_id = cachedForm.template_id;
+            foreach(string attachment in cachedForm.attachments)
+            {
+                Image image = new Image()
+                {
+                    image1 = attachment
+                };
+                //form.images.add(image);
+            }
             foreach(CachedFormField field in cachedForm.fields)
             {
                 Formfield formField = new Formfield()
