@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Org.BouncyCastle.Crypto.Digests;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
@@ -27,7 +28,12 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public AssignmentViewModel SelectedAssignment
         {
             get { return _selectedAssignment; }
-            set { Set(ref _selectedAssignment, value); }
+            set
+            {
+                Set(ref _selectedAssignment, value);
+                if (SelectedAssignment != null)
+                    SelectedAssignment.Reset();
+            }
         }
 
         #region Filter Properties
@@ -90,20 +96,26 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
         public RelayCommand NewCommand { get; set; }
 
+        private readonly IRepository _context;
+        private readonly PopupManager _popup;
+        private readonly DialogManager _dialog;
         public AssignmentOverviewViewModel(IRepository context, PopupManager popup, DialogManager dialog)
         {
+            _context = context;
+            _popup = popup;
+            _dialog = dialog;
             _service = new AssignmentService(context);
 
             Data = new ObservableCollection<AssignmentViewModel>(_service.GetAll<Asignment>().Select(x => new AssignmentViewModel(context, x, popup, dialog)));
             Assignments = Data;
-
-            NewCommand = new RelayCommand(() => NewAssignment(context, popup, dialog));
-            NewAssignment(context, popup, dialog);
+            
+            NewCommand = new RelayCommand(NewAssignment);
+            NewAssignment();
         }
 
-        private void NewAssignment(IRepository context, PopupManager popup, DialogManager dialog)
+        private void NewAssignment()
         {
-            SelectedAssignment = new AssignmentViewModel(context, new Asignment(), popup, dialog);
+            SelectedAssignment = new AssignmentViewModel(_context, new Asignment(), _popup, _dialog);
             RaisePropertyChanged();
         }
 

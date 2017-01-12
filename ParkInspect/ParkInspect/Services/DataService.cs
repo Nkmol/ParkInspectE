@@ -72,12 +72,12 @@ namespace ParkInspect.Services
 
         // Insert or update pattern
         // https://msdn.microsoft.com/en-us/data/jj592676.aspx
-        public bool InsertOrUpdate<T>(T p) where T : class
-        {
-            var result = Context.InsertOrUpdate(p);
-            Context.Save();
-            return result;
-        }
+        //public bool InsertOrUpdate<T>(T p) where T : class
+        //{
+        //    var result = Context.InsertOrUpdate(p);
+        //    Context.Save();
+        //    return result;
+        //}
 
         /*
          * Get all data, corresponding to the columns and aliases, using ExpandoObjects.

@@ -50,8 +50,34 @@ namespace ParkInspect.ViewModel
 
         private readonly InspectionService _service;
 
-        public DateTime? BoundryStartDate { get; set; }
-        public DateTime? BoundryEndDate { get; set; }
+        private DateTime? _boundryStartDate;
+        private DateTime? _boundryEndDate;
+
+        public DateTime? BoundryStartDate
+        {
+            get { return _boundryStartDate; }
+            set
+            {
+                if (_boundryStartDate != value)
+                {
+                    _boundryStartDate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public DateTime? BoundryEndDate
+        {
+            get { return _boundryEndDate; }
+            set
+            {
+                if (_boundryEndDate != value)
+                {
+                    _boundryEndDate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         #region ViewModel POCO Properties
 
@@ -165,24 +191,14 @@ namespace ParkInspect.ViewModel
 
             AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
 
-            UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, CanUnassignInspecteur);
-            AssignInspectorCommand = new RelayCommand(AssignInspector, CanAssignInspecteur);
+            UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
+            AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
 
             States = new ObservableCollection<State>(_service.GetAll<State>());
             Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
             Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
-            Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>());
-        }
-
-        private bool CanAssignInspecteur()
-        {
-            return SelectedInspector != null;
-        }
-
-        private bool CanUnassignInspecteur()
-        {
-            return SelectedAssignedInspector != null; 
+            Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
         }
 
         private void AssignInspector()
@@ -193,9 +209,11 @@ namespace ParkInspect.ViewModel
 
         private void UnassignInspecteur()
         {
-
-            AssignedInspectors.Remove(SelectedAssignedInspector);
             Inspectors.Add(SelectedAssignedInspector);
+            AssignedInspectors.Remove(SelectedAssignedInspector);
+
+            Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
+            RaisePropertyChanged(() => Inspectors);
         }  
 
         public void Add()
@@ -207,7 +225,6 @@ namespace ParkInspect.ViewModel
         {
             PopupBeforeFinish();
         }
-
 
         private void EmptyForm()
         {

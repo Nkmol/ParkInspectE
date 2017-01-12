@@ -122,7 +122,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public void Add(ParkinglotOverviewViewModel overview)
         {
             SaveForm();
-            Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
+            Message = Service.Add(_parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
 
             _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
 
@@ -132,7 +132,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public void Edit()
         {
             SaveForm();
-            Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+            Message = Service.Update(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
 
             _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
         }

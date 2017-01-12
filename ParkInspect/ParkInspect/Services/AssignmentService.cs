@@ -18,16 +18,8 @@ namespace ParkInspect.Services
             _context = context;
         }
 
-        public IEnumerable<Asignment> GetAsignmentWithClient(string name)
+        private AssignmentViewModel Combine(AssignmentViewModel viewModel)
         {
-            return _context.GetAll<Asignment>(null, c => c.Inspections)
-                .Where(k => k.Client.name == name);
-        }
-
-        public bool InsertOrUpdate(AssignmentViewModel viewModel)
-        {
-            // Combine ModelViews with POCO objects
-
             foreach (var inspection in viewModel.Inspections)
             {
                 // Add inspectors to POCO inspection
@@ -39,7 +31,32 @@ namespace ParkInspect.Services
                 viewModel.Data.Inspections.Add(inspection.Data);
             }
 
-            return InsertOrUpdate(viewModel.Data);
+            return viewModel;
+        }
+
+        public IEnumerable<Asignment> GetAsignmentWithClient(string name)
+        {
+            return _context.GetAll<Asignment>(null, c => c.Inspections)
+                .Where(k => k.Client.name == name);
+        }
+
+        public bool Add(AssignmentViewModel viewModel)
+        {
+            viewModel = Combine(viewModel);
+            return Add(viewModel.Data);
+        }
+
+        public bool Update(AssignmentViewModel viewModel)
+        {
+            viewModel = Combine(viewModel);
+
+            // Remove unassigned/removed inspections
+            foreach (var inspection in viewModel.UnassignedInspections)
+            {
+                Delete(inspection);
+            }
+
+            return Update(viewModel.Data);
         }
     }
 }

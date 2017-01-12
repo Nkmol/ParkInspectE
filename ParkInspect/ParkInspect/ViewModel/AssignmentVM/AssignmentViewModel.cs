@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
@@ -37,70 +38,100 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public RelayCommand EditCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
         public RelayCommand EditInspectionCommand { get; set; }
+        public RelayCommand RemoveInspectionCommand { get; set; }
+        public RelayCommand RestoreCommand { get; set; }
 
         #region ViewModel Poco properties
+
         public Client Client
         {
             get { return Data.Client; }
-            set
-            {
-                Data.Client = value;
-                RaisePropertyChanged();
-            }
+            set { Data.Client = value; }
         }
 
         public DateTime? Date
         {
             get { return Data.date; }
-            set
-            {
-                Data.date = value;
-                RaisePropertyChanged();
-            }
+            set { Data.date = value; }
         }
+
         public State State
         {
             get { return Data.State1; }
-            set
-            {
-                Data.State1 = value;
-                RaisePropertyChanged();
-            }
+            set { Data.State1 = value; }
         }
 
         public string Clarification
         {
             get { return Data.clarification; }
-            set
-            {
-                Data.clarification = value;
-                RaisePropertyChanged();
-            }
+            set { Data.clarification = value; }
         }
 
         public DateTime Deadline
         {
             get { return Data.deadline; }
-            set
-            {
-                Data.deadline = value;
-                RaisePropertyChanged();
-            }
+            set { Data.deadline = value; }
         }
 
         public ObservableCollection<InspectionViewModel> Inspections { get; set; }
         #endregion
 
         #region Property Form
-        public DateTime? FormDate { get; set; }
-        public State FormState { get; set; }
-        public string FormClarification { get; set; }
-        public System.DateTime FormDeadline { get; set; }
-        public virtual Client FormClient { get; set; }
-        public virtual ObservableCollection<InspectionViewModel> FormInspections { get; set; }
+
+        private DateTime? _formDate;
+
+        public DateTime? FormDate
+        {
+            get { return _formDate; }
+            set { Set(ref _formDate, value); }
+        }
+
+        private State _formState;
+
+        public State FormState
+        {
+            get { return _formState; }
+            set { Set(ref _formState, value); }
+        }
+
+        private string _formClarification;
+
+        public string FormClarification
+        {
+            get { return _formClarification; }
+            set { Set(ref _formClarification, value); }
+        }
+
+        private DateTime _formDeadline;
+
+        public System.DateTime FormDeadline
+        {
+            get { return _formDeadline; }
+            set { Set(ref _formDeadline, value); }
+        }
+
+        private Client _formClient;
+
+        public virtual Client FormClient
+        {
+            get { return _formClient; }
+            set { Set(ref _formClient, value); }
+        }
+
+        private ObservableCollection<InspectionViewModel> _formInspections;
+
+        public virtual ObservableCollection<InspectionViewModel> FormInspections
+        {
+            get { return _formInspections; }
+            set { Set(ref _formInspections, value); }
+        }
+
         #endregion
 
         public string Message { get; set; }
+
+        // Keeps track of inspections that are unassigned, which will be removed on confirmation
+        public ObservableCollection<InspectionViewModel> UnassignedInspections;
 
         public AssignmentViewModel(IRepository repository, Asignment data, PopupManager popupManager, DialogManager dialogManager)
         {
@@ -115,6 +146,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
                 Deadline = DateTime.Now.AddDays(1);
 
             Inspections = new ObservableCollection<InspectionViewModel>(Data.Inspections.Select(x => new InspectionViewModel(repository, x)));
+            UnassignedInspections = new ObservableCollection<InspectionViewModel>();
 
             // TODO global data
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
@@ -125,6 +157,8 @@ namespace ParkInspect.ViewModel.AssignmentVM
             EditCommand = new RelayCommand(Edit, () => Data.id > 0);
             AddInspectionCommand = new RelayCommand(ShowAddPopup);
             EditInspectionCommand = new RelayCommand(ShowEditPopup, () => SelectedInspection != null);
+            RemoveInspectionCommand = new RelayCommand(UnassignInspection, () => SelectedInspection != null);
+            RestoreCommand = new RelayCommand(Reset);
 
             FillForm();
         }
@@ -137,7 +171,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             FormClarification = Clarification;
             FormDeadline = Deadline;
             FormClient = Client;
-            FormInspections = Inspections;
+            FormInspections = new ObservableCollection<InspectionViewModel>(Inspections); // Unlink
         }
 
         private void SaveForm()
@@ -147,7 +181,14 @@ namespace ParkInspect.ViewModel.AssignmentVM
             Clarification = FormClarification;
             Deadline = FormDeadline;
             Client = FormClient;
-            Inspections = FormInspections;
+            Inspections = new ObservableCollection<InspectionViewModel>(FormInspections);
+        }
+
+        public void Reset()
+        {
+            FillForm();
+            UnassignedInspections.Clear();
+           // RaisePropertyChanged(() => Inspections);
         }
 
         private void ShowAddPopup()
@@ -173,8 +214,18 @@ namespace ParkInspect.ViewModel.AssignmentVM
                 {
                     RaisePropertyChanged();
                 },
-                null,
+                x =>
+                {
+                    x.BoundryStartDate = FormDate;
+                    x.BoundryEndDate = FormDeadline;
+                },
                 SelectedInspection);
+        }
+
+        private void UnassignInspection()
+        {
+            UnassignedInspections.Add(SelectedInspection);
+            FormInspections.Remove(SelectedInspection);
         }
 
         public void Add(AssignmentOverviewViewModel overview)
@@ -182,7 +233,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             if (FormDate == null) FormDate = DateTime.Today;
 
             SaveForm();
-            Message = _service.InsertOrUpdate(this) ? "De opdracht is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
+            Message = _service.Add(this) ? "De opdracht is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
             _dialogManager.ShowMessage("Opdracht toevoegen", Message);
 
             overview.Assignments.Add(this);
@@ -191,7 +242,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public void Edit()
         {
            SaveForm();
-            Message = _service.InsertOrUpdate(this) ? "De opdracht is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+            Message = _service.Update(this) ? "De opdracht is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
 
             _dialogManager.ShowMessage("Opdracht bewerken", Message);
         }
