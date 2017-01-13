@@ -83,21 +83,19 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        </StackPanel>
-                    </DockPanel>
-                    <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <StackPanel>
+                    
                             <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
-                            <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
-                            <TextBox.Text>
-                                    <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                            <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
+                    <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                        <TextBox.Text>
+                            <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
                                             ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
                         </StackPanel>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
