@@ -6,6 +6,7 @@
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d"
              xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Width="1000"
              Height="600"
              DataContext="{Binding Client, Source={StaticResource Locator}}">
@@ -19,10 +20,6 @@
             <TabItem Header="Overzicht"  Visibility="{Binding Dashboard.TabStatus[15], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" >
                 <StackPanel>
 
-                    <Label Name="SearchLabel">
-                        Zoeken:
-                    </Label>
-
                     <Grid Name="FilterGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -32,12 +29,12 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBox Grid.Column="0" Name="NameFilter" HorizontalAlignment="Stretch"
-                                 Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Grid.Column="1" Name="PhoneFilter" HorizontalAlignment="Stretch"
-                                 Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Grid.Column="2" Name="EmailFilter" HorizontalAlignment="Stretch"
-                                 Text="{Binding EmailFilter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Zoek in naam" Name="NameFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"  Margin="0,0,5,10"/>
+                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Zoek in telefoonnummer" Name="PhoneFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,10" />
+                        <TextBox Grid.Column="2" materialDesign:HintAssist.Hint="Zoek in emailadres" Name="EmailFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding EmailFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,10"/>
                     </Grid>
 
                     <DataGrid
@@ -57,14 +54,11 @@
             </TabItem>
 
             <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <DockPanel LastChildFill="False">
-                    <Grid DockPanel.Dock="Top" Height="223" Margin="0,0,0.4,0">
-                        <Label x:Name="NameLabel" Content="Naam:" Margin="89,48,255,148" />
-                        <Label x:Name="TelnrLabel" Content="Telefoonnummer:" Margin="89,88,186,109" />
-                        <Label x:Name="EmailLabel" Content="Emailadres:" HorizontalAlignment="Left" Height="25"
-                               Margin="89,128,0,0" VerticalAlignment="Top" Width="99" />
-                        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="204,48,0,0"
-                                 VerticalAlignment="Top" Width="150">
+                <Grid>
+                    <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <StackPanel>
+                            <Label x:Name="NameLabel" Content="Naam" />
+                            <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
                                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -76,40 +70,40 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Height="23" Margin="204,88,0,0"
-                                 VerticalAlignment="Top" Width="150">
+                            
+                            <Label x:Name="EmailLabel" Content="Emailadres" />
+                            <TextBox x:Name="Email" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
-                                <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
+                                            <validationrules:IsValidEmailValidationRule
+						ValidationStep="ConvertedProposedValue"
                                                                                 ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox x:Name="Email" HorizontalAlignment="Left" Height="23" Margin="204,128,0,0"
-                                 VerticalAlignment="Top" Width="150">
-                            <TextBox.Text>
-                                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsValidEmailValidationRule
-                                            ValidationStep="ConvertedProposedValue"
+                    
+                            <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
+                    <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                        <TextBox.Text>
+                            <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
                                             ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom"
-                                DataContext="{Binding Client, Source={StaticResource Locator}}" Height="148"
-                                Margin="0,0,0.4,0">
-                        <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="70,0,0,0"
-                                HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="120" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
                         <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Sla klant op" Margin="80,0,0,0"
-                                HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="120">
+			                    Content="Sla klant op" Margin="540,0,10,0"
+			                    VerticalAlignment="Top" Width="120">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
@@ -130,8 +124,10 @@
                                 </Style>
                             </Button.Style>
                         </Button>
+                        <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="0,0,0,0"
+			            VerticalAlignment="Top" Width="120" />
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
