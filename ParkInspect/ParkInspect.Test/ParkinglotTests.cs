@@ -5,8 +5,8 @@ using ParkInspect.Services;
 
 namespace ParkInspect.Test
 {
-  //  [TestClass]
- /*   public class ParkinglotTests
+    [TestClass]
+    public class ParkinglotTests
     {
         private MockRepositoryWrapper<Parkinglot, ParkInspectEntities> _mockRepo;
         private Parkinglot _newParkinglot;
@@ -160,5 +160,5 @@ namespace ParkInspect.Test
 
             Assert.AreEqual(false, nameIsNotEmpty);
         }
-    }*/
+    }
 }
