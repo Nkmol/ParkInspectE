@@ -15,5 +15,10 @@ namespace ParkInspect.Services
             return Context.GetAll<Client>(null, c => c.Contactpersons, c => c.Asignments)
                 .Where(k => k.name == name);
         }
+
+        public Client Get(Client c)
+        {
+            return Context.Get<Client>().FirstOrDefault(x => x == c);
+        }
     }
 }

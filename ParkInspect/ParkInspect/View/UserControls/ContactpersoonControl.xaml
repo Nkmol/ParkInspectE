@@ -60,15 +60,15 @@
                     </TextBox>
                             <Label x:Name="TelnrLabel" Content="Achternaam"/>
                             <TextBox x:Name="Lastname" Margin="5,0,0,10" Width="250">
-                        <TextBox.Text>
-                            <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
+                                <TextBox.Text>
+                                    <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>     
                    </DockPanel>
                     <DockPanel Height="200" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
@@ -77,7 +77,7 @@
                             <ComboBox Name="Customer" HorizontalAlignment="Left"  Margin="5,0,0,10" Width="250" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
                               ItemsSource="{Binding Clients}" DisplayMemberPath="name"
                               SelectedItem="{Binding SelectedClient}" Grid.RowSpan="2">
-                        <ComboBox.Text>
+                                <ComboBox.Text>
                             <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
