@@ -66,7 +66,6 @@ namespace ParkInspect.Services
             }
             catch (Exception e)
             {
-                var x = e.Message;
                 return false;
             }
         }

@@ -158,6 +158,19 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private DateTime _selectedEndTime;
+        public DateTime SelectedEndTime
+        {
+            get { return _selectedEndTime; }
+
+            set
+            {
+                Set(ref _selectedEndTime, value);
+
+                base.RaisePropertyChanged("SelectedEndTime");
+            }
+        }
+
         private Absence _newAbsence;
 
         public Absence NewAbsence
@@ -224,10 +237,9 @@ namespace ParkInspect.ViewModel
         private void SaveNewAbsenceMethod()
         {
 
-            if (NewAbsence.start < NewAbsence.end)
+            if (NewAbsence.start >= NewAbsence.end)
             {
-                Message = (Service.Add<Absence>(SelectedAbsence) ? "Something went wrong." : "De einddatum  mag niet voor de begindatum liggen!");
-                _dialog.ShowMessage("Action", Message);
+                _dialog.ShowMessage("Action", "De einddatum  mag niet voor de begindatum liggen!");
                 return;
             }
             

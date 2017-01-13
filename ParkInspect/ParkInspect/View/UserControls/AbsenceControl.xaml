@@ -82,7 +82,7 @@
 
                             <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top" Width="250">
                             <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -94,7 +94,7 @@
 
                             <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top" Width="250">
                             <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
