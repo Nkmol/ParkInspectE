@@ -47,7 +47,7 @@ namespace ParkInspect.ViewModel
 
                 //loadForm(inspections.ToArray()[0]);
 
-                //createForm(inspections.ToArray()[0], templates.ToArray()[0]);
+                createForm(inspections.ToArray()[0], templates.ToArray()[0]);
             }
         }
 
@@ -201,7 +201,12 @@ namespace ParkInspect.ViewModel
             fileDialog.DefaultExt = ".*"; // Required file extension 
             fileDialog.Filter = "Any file (.*)|*.*"; // Optional file extensions
 
-            fileDialog.ShowDialog();
+            var result = fileDialog.ShowDialog();
+            if (result == false)
+            {
+                return;
+            }
+            
 
             string path = fileDialog.FileName;
             string content = File.ReadAllText(path);
