@@ -11,13 +11,20 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+
+using ParkInspect.Model.Factory;
+using ParkInspect.Model.Factory.Builder;
+using System.Windows.Forms;
+
 using MahApps.Metro.Controls.Dialogs;
+
 
 namespace ParkInspect.ViewModel
 {
     public class AbsenceViewModel : ViewModelBase
     {
-  
+
+        private IEnumerable<Absence> Data { get; set; }
         private ObservableCollection<Absence> _absences;
         public ObservableCollection<Absence> Absences
         {
@@ -32,30 +39,79 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        private ObservableCollection<Employee> _employees;
-        public ObservableCollection<Employee> Employees
-        {
-            get { return _employees; }
-            set
-            {
-                Set(ref _employees, value);
-            }
-        }
+        public ObservableCollection<Employee> Employees { get; set; }
 
         protected AbsenceService Service;
 
         public ICommand SaveNewAbsenceCommand { get; set; }
         public ICommand DeleteAbsenceCommand { get; set; }
+        public ICommand ResetFieldsCommand { get; set; }
 
-        private string _notification;
 
-
-        public string Notification
+        private string _startDateFilter;
+        public string StartDateFilter
         {
-            get { return _notification; }
+            get { return _startDateFilter; }
             set
             {
-                _notification = value;
+                _startDateFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _endDateFilter;
+        public string EndDateFilter
+        {
+            get { return _endDateFilter; }
+            set
+            {
+                _endDateFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _surnameFilter;
+        public string SurnameFilter
+        {
+            get { return _surnameFilter; }
+            set
+            {
+                _surnameFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _lastNameFilter;
+        public string LastNameFilter
+        {
+            get { return _lastNameFilter; }
+            set
+            {
+                _lastNameFilter = value;
+                UpdateAbsence();
+            }
+        }
+
+        private string _idFilter;
+        public string IDFilter
+        {
+            get { return _idFilter; }
+            set
+            {
+                _idFilter = value;
+                UpdateAbsence();
+            }
+        }
+        
+        private string _message;
+
+
+        public string Message
+        {
+            get { return _message; }
+            set
+            {
+                _message = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -102,6 +158,19 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private DateTime _selectedEndTime;
+        public DateTime SelectedEndTime
+        {
+            get { return _selectedEndTime; }
+
+            set
+            {
+                Set(ref _selectedEndTime, value);
+
+                base.RaisePropertyChanged("SelectedEndTime");
+            }
+        }
+
         private Absence _newAbsence;
 
         public Absence NewAbsence
@@ -119,36 +188,45 @@ namespace ParkInspect.ViewModel
 
         private DialogManager _dialog;
 
-        public EmployeeViewModel EmployeeviewModel { get; set; }
-
-        public AbsenceViewModel(IRepository context, DialogManager dialog, EmployeeViewModel employeevm)
+        public AbsenceViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
             Service = new AbsenceService(context);
+            Data = Service.GetAll<Absence>();
             // look at asignment feature for datetime examples.
             Reset(); // Create default absence
             NewAbsence.start = DateTime.Now;
 
-            Absences = new ObservableCollection<Absence>(Service.GetAllAbsences());
-            Employees = new ObservableCollection<Employee>(Service.GetAllEmployees());
-            EmployeeviewModel = employeevm;
+            Absences = new ObservableCollection<Absence>(Service.GetAll<Absence>());
+            Employees = new ObservableCollection<Employee>(Service.GetAll<Employee>());
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
             DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod);
+            ResetFieldsCommand = new RelayCommand(ResetFieldsMethod);
+        }
+
+        private void ResetFieldsMethod()
+        {
+            Reset();
+
         }
 
         private void DeleteAbsenceMethod()
         {
+
             if (SelectedAbsence == null)
             {
-                Notification = "Selecteer een afwezigheid";
+                _dialog.ShowMessage("Action", "Selecteer een afwezigheid");
                 return;
             }
 
-            if (_dialog.ShowConfirmationDialog("Waarschuwing", 
-                    "Weet je zeker dat je wilt verwijderen?"))
+
+            DialogResult dialogResult = MessageBox.Show("Weet u zeker dat  u deze afwezigheid wilt verwijderen?", "Verwijderen", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                Service.DeleteAbsence(SelectedAbsence);
+                Message = (Service.Delete<Absence>(SelectedAbsence) ? "Afwezigheid verwijderd" : "Something went wrong.");
+                _dialog.ShowMessage("Action", Message);
+
                 Absences.Remove(SelectedAbsence);
 
                 base.RaisePropertyChanged();
@@ -158,22 +236,22 @@ namespace ParkInspect.ViewModel
 
         private void SaveNewAbsenceMethod()
         {
-            if (SelectedEmployee == null)
-            {
-                Notification = "Selecteer een werknemer.";
-                return;
-            }
 
-            if (NewAbsence.start == null || NewAbsence.end == null)
+            if (NewAbsence.start >= NewAbsence.end)
             {
-                Notification = "Onjuiste gegevens.";
+                _dialog.ShowMessage("Action", "De einddatum  mag niet voor de begindatum liggen!");
                 return;
             }
-            Service.InsertAbsence(NewAbsence);
-            Notification = "Nieuwe afwezigheid is opgeslagen!";
-            Absences.Add(NewAbsence);
+            
+            Message = (Service.Add<Absence>(NewAbsence) ? "Een nieuwe afwezigheid is opgeslagen!" : "Something went wrong." );
+            _dialog.ShowMessage("Action", Message);
+
+            Absences = new ObservableCollection<Absence>(Service.GetAll<Absence>());
             Reset();
+            SelectedEmployee = new Employee();
             base.RaisePropertyChanged();
+            
+
         }
 
         public void Reset()
@@ -184,6 +262,23 @@ namespace ParkInspect.ViewModel
                 end = DateTime.Now
             };
         }
+
+        public void UpdateAbsence()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("Employee.firstname", SurnameFilter);
+            builder.Add("Employee.lastname", LastNameFilter);
+            builder.Add("employee_id", IDFilter);
+            builder.Add("start", StartDateFilter);
+            builder.Add("end", EndDateFilter);
+
+            var filters = builder.Get();
+            var result = Data.Where(a => a.Like(filters));
+            Absences = new ObservableCollection<Absence>(result);
+            RaisePropertyChanged("Absences");
+        }
+
+
 
     }
 }

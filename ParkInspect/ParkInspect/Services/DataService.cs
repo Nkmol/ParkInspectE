@@ -64,7 +64,7 @@ namespace ParkInspect.Services
                 Context.Save();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
