@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ParkInspect;
 using ParkInspect.Services;
 
-namespace UnitTestProject
+namespace ParkInspect.Test
 {
     [TestClass]
     public class LoginTests
