@@ -52,7 +52,7 @@
                             </TextBox.Text>
                         </TextBox>
 
-                        <Button Command="{Binding SaveNewRegionCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Width="120" Content="Opslaan">
+                        <Button Command="{Binding SaveNewRegionCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="120" Content="Opslaan">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="False" />
