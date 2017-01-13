@@ -14,5 +14,10 @@ namespace ParkInspect.Services
         {
             return Context.Get<Contactperson>().Where(cp => cp == c);
         }
+
+        public Contactperson Get(Contactperson c)
+        {
+            return Context.Get<Contactperson>().FirstOrDefault(x => x == c);
+        }
     }
 }
