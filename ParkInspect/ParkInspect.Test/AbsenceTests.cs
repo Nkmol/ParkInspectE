@@ -45,7 +45,7 @@ namespace ParkInspect.Test
                 start = DateTime.Now.Subtract(new TimeSpan(10))
             };
 
-            _service.InsertAbsence(_newAbsence);
+            _service.Add(_newAbsence);
         }
 
         [TestCategory("Absence service")]
@@ -59,11 +59,11 @@ namespace ParkInspect.Test
                 start = DateTime.Now.Subtract(new TimeSpan(20))
             };
 
-            _service.InsertAbsence(absence);
+            _service.Add(absence);
 
             var test =
-                _service
-                    .GetAllAbsences().First(a => a.employee_id == absence.employee_id && a.end == absence.end && absence.start == a.start);
+                _service.GetAll<Absence>()
+                    .First(a => a.employee_id == absence.employee_id && a.end == absence.end && absence.start == a.start);
 
             Assert.IsNotNull(test);
         }
@@ -79,12 +79,12 @@ namespace ParkInspect.Test
                 start = DateTime.Now.Subtract(new TimeSpan(20))
             };
 
-            _service.InsertAbsence(absence);
+            _service.Add(absence);
 
             absence.start = DateTime.Now.Subtract(new TimeSpan(30));
 
             var test =
-                _service.GetAllAbsences()
+                _service.GetAll<Absence>()
                     .First(a => a.employee_id == absence.employee_id && a.end == absence.end && absence.start == DateTime.Now.Subtract(new TimeSpan(30)));
 
             Assert.IsNotNull(test);
