@@ -34,6 +34,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        public Report SelectedReport { get; set; }
+
         private ReportViewer _report;
         public ObservableCollection<Report> Names { get; set; }
         public IEnumerable<Report> Data { get; set; }
@@ -50,13 +52,14 @@ namespace ParkInspect.ViewModel
 
         public RelayCommand CreateCommand { get; set; }
         public RelayCommand OpenCommand { get; set; }
-
+        public RelayCommand OpenReportCommand { get; set; }
         
         public ReportViewModel(IRepository context)
         {
 
             CreateCommand = new RelayCommand(OpenDesignView);
             OpenCommand = new RelayCommand(OpenExternalReport);
+            OpenReportCommand = new RelayCommand(OpenReport);
 
             SetData();
             UpdateReports();
@@ -93,13 +96,13 @@ namespace ParkInspect.ViewModel
             ReportView view = new ReportView();
             view.LoadReport(r.Path);
             view.Show();
+            
 
         }
 
         public void OpenExternalReport()
         {
 
-            Stream stream;
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "rdl files (*.rdl)|*.rdl|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
@@ -111,6 +114,30 @@ namespace ParkInspect.ViewModel
                 view.LoadReport(openFileDialog.FileName);
                 view.Show();
             }
+        }
+
+        public void OpenReport()
+        {
+
+            List<Report> list = new List<Report>();
+            foreach (string s in Directory.GetFiles("reports", "*.rdl"))
+            {
+                list.Add(new Report(s));
+            }
+
+            Data = list.AsEnumerable();
+            UpdateReports();
+
+            if (SelectedReport == null)
+            {
+                return;
+            }
+
+            //ReportView view = new ReportView();
+            //view.LoadReport(SelectedReport.Path);
+            //view.Show();
+            
+
         }
 
         public void UpdateReports()
