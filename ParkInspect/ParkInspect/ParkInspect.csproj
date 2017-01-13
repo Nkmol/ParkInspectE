@@ -262,6 +262,8 @@
     <Compile Include="Services\AbsenceService.cs" />
     <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\FormService.cs" />
+    <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\ContactpersonService.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
@@ -287,6 +289,7 @@
     <Compile Include="ViewModel\Popup\IPopup.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\NewTemplateViewModel.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\ParkinglotVM\ParkinglotOverviewViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
@@ -294,6 +297,7 @@
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
     <Compile Include="ViewModel\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\TemplatesViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
       <DependentUpon>AssignmentControl.xaml</DependentUpon>
@@ -328,6 +332,7 @@
 
     <Compile Include="View\UserControls\Popup\RegionPopupWindow.xaml.cs">
       <DependentUpon>RegionPopupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\OfflineControl.xaml.cs">
       <DependentUpon>OfflineControl.xaml</DependentUpon>
     </Compile>
@@ -342,6 +347,9 @@
     </Compile>
     <Compile Include="View\UserControls\Popup\PopupParticipation.cs" />
     <Compile Include="View\UserControls\Popup\PopupCoordinator.cs" />
+    <Compile Include="View\UserControls\Popup\SelectTemplatePopup.xaml.cs">
+      <DependentUpon>SelectTemplatePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\RegionControl.xaml.cs">
       <DependentUpon>RegionControl.xaml</DependentUpon>
     </Compile>
@@ -450,6 +458,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\Popup\SelectPopupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Popup\SelectTemplatePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

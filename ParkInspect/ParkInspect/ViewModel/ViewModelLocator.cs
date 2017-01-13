@@ -44,6 +44,7 @@ namespace ParkInspect.ViewModel
             }
 
             SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
             SimpleIoc.Default.Register<PopupCoordinator>();
 
@@ -55,6 +56,9 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<InspectionViewModel>();
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<FormViewModel>();
+            //ServiceLocator.Current.GetInstance<FormViewModel>().Context = ServiceLocator.Current.GetInstance<EntityFrameworkRepository<ParkInspectEntities>>();
+            SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
@@ -86,6 +90,8 @@ namespace ParkInspect.ViewModel
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
+        
+        public FormViewModel Forms => ServiceLocator.Current.GetInstance<FormViewModel>();
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
 
