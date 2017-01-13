@@ -24,8 +24,9 @@ namespace ParkInspect.ViewModel
         private Contactperson _selectedContactperson;
 
         protected ContactpersonService Service;
+        public ClientViewModel ClientviewModel { get; set; }
 
-        public ContactpersonViewModel(IRepository context, DialogManager dialog)
+        public ContactpersonViewModel(IRepository context, DialogManager dialog, ClientViewModel clientvm)
         {
             _dialog = dialog;
             Service = new ContactpersonService(context);
@@ -36,13 +37,26 @@ namespace ParkInspect.ViewModel
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
             SelectedClient = new Client();
             UpdateContactpersons();
+            ClientviewModel = clientvm;
             Reset();
         }
 
         private IEnumerable<Contactperson> Data { get; set; }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
-        public ObservableCollection<Client> Clients { get; set; }
+
+        private ObservableCollection<Client> _clients;
+        public ObservableCollection<Client> Clients
+        {
+            get
+            {
+                return _clients;
+            } 
+            set
+            {
+                Set(ref _clients, value);
+            }
+        }
 
         public Contactperson SelectedContactperson
         {

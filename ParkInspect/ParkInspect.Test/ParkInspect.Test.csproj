@@ -6,8 +6,8 @@
     <ProjectGuid>{79B55ABA-4FD9-4B46-9B95-F4DEA9E3B39B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTestProject</RootNamespace>
-    <AssemblyName>UnitTestProject</AssemblyName>
+    <RootNamespace>ParkInspect.Test</RootNamespace>
+    <AssemblyName>ParkInspect.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -104,11 +104,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ContactPersonTest.cs" />
     <Compile Include="RoutingTests.cs" />
     <Compile Include="MockRepositoryWrapper.cs" />
     <Compile Include="ParkinglotTests.cs" />
+    <Compile Include="ClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LoginTests.cs" />
+    <Compile Include="AbsenceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

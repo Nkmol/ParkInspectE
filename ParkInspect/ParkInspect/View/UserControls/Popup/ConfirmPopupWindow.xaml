@@ -1,4 +1,4 @@
-﻿<simpleChildWindow:ChildWindow x:Class="ParkInspect.View.UserControls.Popup.SelectPopupWindow"
+﻿<simpleChildWindow:ChildWindow x:Class="ParkInspect.View.UserControls.Popup.ConfirmPopupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,11 +21,7 @@
             <ContentPresenter Content="{Binding AdditionalContent, ElementName=ChildWindow}"></ContentPresenter>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom">
-            <Button Content="Select" Width="120" Command="{Binding SelectCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}"></Style>
-                </Button.Style>
-            </Button>
-        </StackPanel>        
+            <Button Content="Bevestig" Command="{Binding ConfirmCommand}"></Button>
+        </StackPanel>
     </DockPanel>
 </simpleChildWindow:ChildWindow>

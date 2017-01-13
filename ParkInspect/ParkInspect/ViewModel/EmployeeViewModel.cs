@@ -9,6 +9,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using System.Collections.Specialized;
 using System.Security.Cryptography;
 using ParkInspect;
 
@@ -25,6 +26,8 @@ namespace ParkInspect.ViewModel
         //Service
         protected EmployeeService Service { get; set; }
         private string oldPass;
+
+        public ObservableCollection<Absence> Absences { get; set; }
 
         //Fields and Properties
         private string _notification;
@@ -89,7 +92,6 @@ namespace ParkInspect.ViewModel
 
         private IEnumerable<Employee> Data { get; set; }
 
-
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
         {
@@ -102,6 +104,9 @@ namespace ParkInspect.ViewModel
                 {
                     oldPass = _selectedEmployee.password;
             }
+
+                if(value != null)
+                    Absences = new ObservableCollection<Absence>(SelectedEmployee.Absences.ToList());
         }
         }
 
@@ -130,6 +135,7 @@ namespace ParkInspect.ViewModel
             SaveCommand = new RelayCommand(SaveEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
         }
+
 
         //CRU METHODS
         private void SaveEmployee()

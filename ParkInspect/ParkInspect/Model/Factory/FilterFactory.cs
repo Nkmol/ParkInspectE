@@ -55,7 +55,7 @@ namespace ParkInspect.Model.Factory
         {
 
             if (obj is DateTime)
-                return ((DateTime)obj).ToString("MM/dd/yyyy H:mm:ss tt");
+                return ((DateTime)obj).ToString("dd/MM/yyyy H:mm:ss tt").Replace('-', '/');
 
             return Convert.ToString(obj);
 
