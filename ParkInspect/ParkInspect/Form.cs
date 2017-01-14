@@ -19,6 +19,7 @@ namespace ParkInspect
         {
             this.Inspections = new HashSet<Inspection>();
             this.Formfields = new HashSet<Formfield>();
+            this.Images = new HashSet<Image>();
         }
     
         public int id { get; set; }
@@ -29,5 +30,7 @@ namespace ParkInspect
         public virtual ICollection<Inspection> Inspections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Formfield> Formfields { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
     }
 }
