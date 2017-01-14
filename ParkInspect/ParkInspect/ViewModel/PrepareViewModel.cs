@@ -310,7 +310,7 @@ namespace ParkInspect.ViewModel
                         _dialog.ShowMessage("Fout!", "Voer een geldig vertrek adres in!");
                         break;
                     case "directionsFailed":
-                        _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?)");
+                        _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?/Ben je verbonden met internet?)");
                         break;
                 }
             }
