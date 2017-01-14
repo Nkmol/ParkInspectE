@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.SqlServer.ReportingServices2005;
+// using Microsoft.SqlServer.ReportingServices2005;
 using ParkInspect.Repository;
 using Syncfusion.Windows.Reports.Viewer;
 using System.IO;
@@ -172,10 +172,10 @@ namespace ParkInspect.ViewModel
         public void LoadReport(string path)
         {
             Report = new ReportViewer();
-            ReportParameter param = new ReportParameter();
+            // ReportParameter param = new ReportParameter();
             
             Report.ReportPath = path;
-           
+            
             Report.RefreshReport();
             RaisePropertyChanged("Report");
         }
