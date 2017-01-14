@@ -324,9 +324,17 @@ namespace ParkInspect.ViewModel
         }
         private void DeleteInspection()
         {
-            directions.Remove(selectedDirection);
-            deleted_list.Add(selectedDirection.Name);
-            _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
+            if (selectedDirection != null)
+            {
+                directions.Remove(selectedDirection);
+                deleted_list.Add(selectedDirection.Name);
+                _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
+            }
+            else
+            {
+                _dialog.ShowMessage("Er ging iets fout!", "Je moet wel een opgeslagen routebeschrijving selecteren!");
+            }
+
         }
         private void CleanFiles()
         {
