@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
@@ -14,10 +8,74 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 {
     public class ParkinglotViewModel : ViewModelBase
     {
+        private readonly DialogManager _dialogManager;
         private readonly Parkinglot _parkinglot;
-        private DialogManager _dialogManager;
+
+        public ParkinglotViewModel(IRepository context, Parkinglot parkinglot, DialogManager dialogManager)
+        {
+            _dialogManager = dialogManager;
+            _parkinglot = parkinglot;
+            Service = new ParkinglotService(context);
+
+            Regions = new ObservableCollection<Region>(Service.GetAll<Region>()); // TODO: Load this once
+            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, _ => _parkinglot.id <= 0);
+            EditCommand = new RelayCommand(Edit, () => _parkinglot.id > 0);
+
+            FillForm();
+        }
+
+        protected ParkinglotService Service { get; set; }
+
+        public ObservableCollection<Region> Regions { get; set; }
+
+        public RelayCommand<ParkinglotOverviewViewModel> SaveCommand { get; set; }
+        public RelayCommand EditCommand { get; set; }
+
+        public string Message { get; set; } // Transform to error popup
+
+        // TODO: Improve the way to make a 'property shadow object'. There is need for double property decleration at the moment.
+        private void FillForm()
+        {
+            FormName = Name;
+            FormZipcode = Zipcode;
+            FormRegion = Region;
+            FormNumber = Number;
+            FormClarification = Clarification;
+        }
+
+        private void SaveForm()
+        {
+            Name = FormName;
+            Zipcode = FormZipcode;
+            Region = FormRegion;
+            Number = FormNumber;
+            Clarification = FormClarification;
+        }
+
+        public void Add(ParkinglotOverviewViewModel overview)
+        {
+            SaveForm();
+            Message = Service.InsertOrUpdate(_parkinglot)
+                ? "De parkeerplaats is toegevoegd!"
+                : "Er is iets misgegaan tijdens het toevoegen.";
+
+            _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
+
+            overview.Parkinglots.Add(this);
+        }
+
+        public void Edit()
+        {
+            SaveForm();
+            Message = Service.InsertOrUpdate(_parkinglot)
+                ? "De parkeerplaats is aangepast!"
+                : "Er is iets misgegaan tijdens het aanpassen.";
+
+            _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
+        }
 
         #region ViewModel POCO properties
+
         public string Name
         {
             get { return _parkinglot.name; }
@@ -67,6 +125,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
                 RaisePropertyChanged();
             }
         }
+
         #endregion
 
         #region Property Form
@@ -76,65 +135,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public string FormRegion { get; set; }
         public string FormNumber { get; set; }
         public string FormClarification { get; set; }
+
         #endregion
-
-        protected ParkinglotService Service { get; set; }
-
-        public ObservableCollection<Region> Regions { get; set; }
-
-        public RelayCommand<ParkinglotOverviewViewModel> SaveCommand { get; set; }
-        public RelayCommand EditCommand { get; set; }
-
-        public string Message { get; set; } // Transform to error popup
-
-        public ParkinglotViewModel(IRepository context, Parkinglot parkinglot, DialogManager dialogManager)
-        {
-            _dialogManager = dialogManager;
-            _parkinglot = parkinglot;
-            Service = new ParkinglotService(context);
-
-            Regions = new ObservableCollection<Region>(Service.GetAll<Region>()); // TODO: Load this once
-            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, _ => _parkinglot.id <= 0);
-            EditCommand = new RelayCommand(Edit, () => _parkinglot.id > 0);
-
-            FillForm();
-        }
-
-        // TODO: Improve the way to make a 'property shadow object'. There is need for double property decleration at the moment.
-        private void FillForm()
-        {
-            FormName = Name;
-            FormZipcode = Zipcode;
-            FormRegion = Region;
-            FormNumber = Number;
-            FormClarification = Clarification;
-        }
-
-        private void SaveForm()
-        {
-            Name = FormName;
-            Zipcode = FormZipcode;
-            Region = FormRegion;
-            Number = FormNumber;
-            Clarification = FormClarification;
-        }
-
-        public void Add(ParkinglotOverviewViewModel overview)
-        {
-            SaveForm();
-            Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
-
-            _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
-
-            overview.Parkinglots.Add(this);
-        }
-
-        public void Edit()
-        {
-            SaveForm();
-            Message = Service.InsertOrUpdate(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
-
-            _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
-        }
     }
 }
