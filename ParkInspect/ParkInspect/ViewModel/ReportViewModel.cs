@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -12,8 +13,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Model.Factory.Builder;
 
 
@@ -105,14 +109,22 @@ namespace ParkInspect.ViewModel
         public void ImportReport()
         {
 
+            var dialog = _dialog;
+            var msg = "Er is iets fout gegaan!";
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "rdl files (*.rdl)|*.rdl|All files (*.*)|*.*";
+            openFileDialog.Filter = "rdl files (*.rdl)|*.rdl";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
+            openFileDialog.Disposed += (sender, args) =>
+            {
+                dialog.ShowMessage("Actie", msg);
+                UpdateReports();
+            };
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ReportView view = new ReportView();
 
                 int count = 1;
                 string name = openFileDialog.SafeFileName;
@@ -123,20 +135,24 @@ namespace ParkInspect.ViewModel
                         count++;
 
                     name = count + "_" + openFileDialog.SafeFileName;
-                    File.Copy(openFileDialog.FileName, @"reports/" + name);
-
-                    _dialog.ShowMessage("Action", "Er bestaat al een bestand met de naam " + openFileDialog.SafeFileName + ". Het bestand is geïmporteerd als: " + name);
+                    msg = "Er bestaat al een bestand met de naam " + openFileDialog.SafeFileName + ". Het bestand is geïmporteerd als: " + name;
 
                 }
                 else
                 {
-                    _dialog.ShowMessage("Action", openFileDialog.SafeFileName + " is succesvol geïmporteerd!");
-                }
+                    msg = openFileDialog.SafeFileName + " is succesvol geïmporteerd!";
                     
+                }
 
-                UpdateReports();
+                File.Copy(openFileDialog.FileName, @"reports/" + name);
+
+                //Just for the event..
+                openFileDialog.Dispose();
 
             }
+
+
+
         }
 
         public void OpenReport()
@@ -171,11 +187,9 @@ namespace ParkInspect.ViewModel
 
         public void LoadReport(string path)
         {
-            Report = new ReportViewer();
-            // ReportParameter param = new ReportParameter();
-            
+
+            Report = new ReportViewer();            
             Report.ReportPath = path;
-            
             Report.RefreshReport();
             RaisePropertyChanged("Report");
         }
@@ -206,4 +220,5 @@ namespace ParkInspect.ViewModel
             this.Name = path.Split('\\')[1];
         }
     }
+
 }
