@@ -193,6 +193,8 @@
     <Compile Include="Contactperson.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
+    <Compile Include="Model\Factory\ExportFactory.cs" />
     <Compile Include="Routing\CustomMarkers\Circle.xaml.cs" />
     <Compile Include="Routing\CustomMarkers\CircleVisual.cs" />
     <Compile Include="Routing\CustomMarkers\Controls\TrolleyTooltip.xaml.cs" />
@@ -213,8 +215,6 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Direction.cs" />
-    <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
-    <Compile Include="Model\Factory\ExportFactory.cs" />
     <Compile Include="Field.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -243,25 +243,25 @@
     <Compile Include="Model\ValidationRules\IsValidPhoneNumberRule.cs" />
     <Compile Include="Model\ValidationRules\IsValidZipCodeValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
+    <Compile Include="Model\Factory\Builder\PdfBuilder.cs" />
     <Compile Include="Parkinglot.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ParkInspectModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ParkInspectModel.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="ParkInspectModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="ParkInspectModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Model\Factory\Builder\PdfBuilder.cs" />
     <Compile Include="Region.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -354,7 +354,6 @@
     <Compile Include="View\UserControls\Popup\ConfirmPopupWindow.xaml.cs">
       <DependentUpon>ConfirmPopupWindow.xaml</DependentUpon>
     </Compile>
-
     <Compile Include="View\UserControls\Popup\RegionPopupWindow.xaml.cs">
       <DependentUpon>RegionPopupWindow.xaml</DependentUpon>
     </Compile>
@@ -530,10 +529,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <EntityDeploy Include="ParkInspectModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ParkInspectModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="ParkInspectModel.edmx.diagram">
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
     </None>
@@ -560,19 +555,26 @@
   <ItemGroup>
     <Resource Include="Routing\CustomMarkers\bigMarkerGreen.png" />
     <Resource Include="Routing\CustomMarkers\red-dot.png" />
+    <Resource Include="View\TabsStatusInfo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="ParkInspectModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ParkInspectModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="ParkInspectModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ParkInspectModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="ParkInspectModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ParkInspectModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="View\TabsStatusInfo.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->

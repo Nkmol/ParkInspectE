@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Input;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using DataGrid = System.Windows.Controls.DataGrid;
 
-namespace ParkInspect
+namespace ParkInspect.Model.Factory
 {
     class ExportFactory
     {
-
         private static Stream _stream;
 
         /*
@@ -28,7 +21,6 @@ namespace ParkInspect
          */
         public static void ExportCsv<T>(IEnumerable<T> data, string[] columns, string[] headers = null)
         {
-
             if (columns.Length == 0 || data == null)
                 return;
 
@@ -41,7 +33,6 @@ namespace ParkInspect
 
                 foreach (var item in data)
                 {
-
                     foreach (var column in columns)
                     {
                         PropertyInfo p = t.GetProperty(column);
@@ -53,7 +44,6 @@ namespace ParkInspect
                 StreamWriter sw = new StreamWriter(_stream);
                 sw.WriteLine(csv);
                 sw.Close();
-
             }
         }
 
@@ -65,7 +55,6 @@ namespace ParkInspect
          */
         public static void ExportPdf<T>(IEnumerable<T> data, Type type = null, string[] columns = null, string[] headers = null)
         {
-
             if (!PromptSave("PDF Files | *.pdf"))
                 return;
 
@@ -76,12 +65,10 @@ namespace ParkInspect
             builder.AddImage(rootPath + "/ParkInspect.png", 447, 204, PdfAlignment.CENTER);
             builder.AddTable(data, type, columns, headers, PdfAlignment.CENTER);
             builder.Build();
-
         }
 
         private static string WriteHeaders(string[] columns)
         {
-
             string headers = "";
 
             foreach (var column in columns)
@@ -94,12 +81,10 @@ namespace ParkInspect
             headers += "\n";
 
             return headers;
-
         }
 
         private static bool PromptSave(string filter)
         {
-
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.Filter = filter;
@@ -109,13 +94,11 @@ namespace ParkInspect
             if (saveFileDialog.ShowDialog() != DialogResult.OK)
             {
                 return false;
-                
+
             }
 
             _stream = saveFileDialog.OpenFile();
             return true;
         }
-
-
     }
 }
