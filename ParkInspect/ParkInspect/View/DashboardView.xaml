@@ -11,7 +11,7 @@
         xmlns:convertor="clr-namespace:ParkInspect.Convertor"
         xmlns:userControls1="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
-        Height="600"
+        Height="700"
         Width="1010"
         Title="ParkInspect"
         GlowBrush="{DynamicResource AccentColorBrush}"
@@ -61,11 +61,18 @@
             <TabItem Visibility="{Binding TabStatus[6], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Rapportage">
                 <userControls1:ReportControl />
             </TabItem>
+            <TabItem Visibility="{Binding TabStatus[8], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Offline">
+                <userControls1:OfflineControl />
+            </TabItem>
             <TabItem Visibility="{Binding TabStatus[7], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}" Header="Afwezigheid">
                 <userControls1:AbsenceControl />
             </TabItem>
             <TabItem Header="Contactpersonen">
                 <userControls1:ContactpersoonControl />
+
+            </TabItem>
+            <TabItem Header="Regio's">
+                <userControls1:RegionControl/>
             </TabItem>
         </dragablz:TabablzControl>
     </Grid>

@@ -21,7 +21,11 @@
             <ContentPresenter Content="{Binding AdditionalContent, ElementName=ChildWindow}"></ContentPresenter>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom">
-            <Button Content="Select" Command="{Binding SelectCommand}"></Button>
+            <Button Content="Select" Width="120" Command="{Binding SelectCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}"></Style>
+                </Button.Style>
+            </Button>
         </StackPanel>        
     </DockPanel>
 </simpleChildWindow:ChildWindow>

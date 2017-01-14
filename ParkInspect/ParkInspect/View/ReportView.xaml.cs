@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
 using ParkInspect.ViewModel;
+using Syncfusion.RDL.DOM;
 
 
 namespace ParkInspect
@@ -19,6 +20,7 @@ namespace ParkInspect
         {
 
             ((ReportViewModel)DataContext).LoadReport(path);
+            
             Viewer.RefreshReport();
 
         }

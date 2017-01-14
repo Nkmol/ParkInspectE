@@ -7,37 +7,15 @@ using System.Threading.Tasks;
 
 namespace ParkInspect.Services
 {
-    public class AbsenceService
+    public class AbsenceService : DataService
     {
 
-        private readonly IRepository _context;
-        public AbsenceService(IRepository context)
+        public AbsenceService(IRepository context) : base(context)
         {
-            _context = context;
+            
         }
 
-        public IEnumerable<Absence> GetAllAbsences()
-        {
-            return _context.GetAll<Absence>();
-
-        }
-
-        public IEnumerable<Employee> GetAllEmployees()
-        {
-            return _context.GetAll<Employee>();
-        }
-
-        public void InsertAbsence(Absence a)
-        {
-            _context.Create(a);
-            _context.Save();
-        }
-
-        public void DeleteAbsence(Absence a)
-        {
-            _context.Delete(a);
-            _context.Save();
-        }
+       
 
     }
 }

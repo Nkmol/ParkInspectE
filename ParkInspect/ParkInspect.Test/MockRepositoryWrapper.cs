@@ -4,7 +4,7 @@ using System.Linq;
 using Moq;
 using ParkInspect.Repository;
 
-namespace UnitTestProject
+namespace ParkInspect.Test
 {
     public class MockRepositoryWrapper<TEntity, TContext>
         where TEntity : class
