@@ -6,21 +6,11 @@ using System.Threading.Tasks;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Messaging;
-using System.Windows;
-using GoogleMapsApi.Entities.Directions.Request;
-using GoogleMapsApi.Entities.Directions.Response;
-using GoogleMapsApi;
-using System.Text.RegularExpressions;
 using System.Reflection;
 using System.IO;
-using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Model;
-using System.Threading;
 
 namespace ParkInspect.ViewModel
 {
@@ -282,25 +272,32 @@ namespace ParkInspect.ViewModel
             deleteInspection = new RelayCommand(DeleteInspection);
             next_direction = new RelayCommand(NextDirection);
             prev_direction = new RelayCommand(PrevDirection);
+            Reset();
             CleanFiles();
             LoadDirections();
         }
         private void PrevDirection()
         {
-            if (_selectedDirection.index > 0)
+            if (selectedDirection != null)
             {
-                int index = _selectedDirection.index;
-                current_direction_item = _selectedDirection.direction_items[index - 1];
-                _selectedDirection.index--;
+                if (_selectedDirection.index > 0)
+                {
+                    int index = _selectedDirection.index;
+                    current_direction_item = _selectedDirection.direction_items[index - 1];
+                    _selectedDirection.index--;
+                }
             }
         }
         private void NextDirection()
         {
-            if (_selectedDirection.index + 1 < _selectedDirection.direction_items.Count)
+            if (selectedDirection != null)
             {
-                int index = _selectedDirection.index;
-                current_direction_item = _selectedDirection.direction_items[index + 1];
-                _selectedDirection.index++;
+                if (_selectedDirection.index + 1 < _selectedDirection.direction_items.Count)
+                {
+                    int index = _selectedDirection.index;
+                    current_direction_item = _selectedDirection.direction_items[index + 1];
+                    _selectedDirection.index++;
+                }
             }
         }
         private void SetDirectionItems()
@@ -417,7 +414,11 @@ namespace ParkInspect.ViewModel
             region_number = "";
             clarification = "";
             current_direction_item = "";
-            directionItems.Clear();
+            if (_selectedDirection != null)
+            {
+                _selectedDirection.direction_items.Clear();
+                _selectedDirection.index = 0;
+            }
         }
         protected virtual bool IsFileLocked(FileInfo file)
         {
