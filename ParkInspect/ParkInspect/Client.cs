@@ -25,6 +25,7 @@ namespace ParkInspect
         public string name { get; set; }
         public string phonenumber { get; set; }
         public string email { get; set; }
+        public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asignment> Asignments { get; set; }
