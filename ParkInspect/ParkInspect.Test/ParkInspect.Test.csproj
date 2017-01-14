@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="ContactPersonTest.cs" />
     <Compile Include="RoutingTests.cs" />
+    <Compile Include="EmployeeTests.cs" />
     <Compile Include="MockRepositoryWrapper.cs" />
     <Compile Include="ParkinglotTests.cs" />
     <Compile Include="ClientTest.cs" />

@@ -1,5 +1,4 @@
-﻿@using ParkInspect.WEB.Controllers
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
@@ -10,22 +9,12 @@
     @{
         foreach (var pdf in ViewBag.pdf)
         {
-
-
-            <tr>
-                
+            <tr>                
                 <td>
                     @{ string x = Path.GetFileName(pdf);}
                     @Html.ActionLink(x, "Details", "Home", new {path = pdf}, null)
-
                 </td>
-
-                
-
             </tr>
         }
     }
 </table></div>
-
-
-

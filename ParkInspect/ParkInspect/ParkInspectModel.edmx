@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absence">
           <Key>
             <PropertyRef Name="start" />
@@ -33,6 +33,7 @@
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="phonenumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Contactperson">
           <Key>
@@ -634,6 +635,7 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Asignments" Relationship="Self.FK_Asignment_Client" FromRole="Client" ToRole="Asignment" />
           <NavigationProperty Name="Contactpersons" Relationship="ParkInspectModel.FK_Client_Contactperson" FromRole="Client" ToRole="Contactperson" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Datatype">
           <Key>
@@ -745,7 +747,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="region_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="number" Type="String" />
+          <Property Name="number" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Inspections" Relationship="Self.FK_Inspectie_Parkeerplaats" FromRole="Parkinglot" ToRole="Inspection" />
@@ -1200,6 +1202,7 @@
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="ParkInspectModel.Client">
               <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
@@ -1389,7 +1392,7 @@
         <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
         <edmx:DesignerProperty Name="EnablePluralization" Value="true" />
         <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <edmx:DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="False" />
         <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </edmx:DesignerInfoPropertySet>
     </edmx:Options>
