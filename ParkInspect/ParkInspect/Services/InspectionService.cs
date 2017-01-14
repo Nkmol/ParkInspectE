@@ -7,7 +7,7 @@ using ParkInspect.Repository;
 
 namespace ParkInspect.Services
 {
-    class InspectionService
+    public class InspectionService
     {
         private readonly IRepository _context;
 

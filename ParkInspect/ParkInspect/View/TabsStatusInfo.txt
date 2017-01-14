@@ -9,7 +9,7 @@
 05 - MainTab:Personeel
 06 - MainTab:Rapportage
 07 - MainTab:Afwezigheid
-08 - 
+08 - MainTab:Offline
 09 - 
 10 - MainTab:Afwezigheid > SubTab:Overview
 11 - MainTab:Afwezigheid > SubTab:Afwezigheid invoeren

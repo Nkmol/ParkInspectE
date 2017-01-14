@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="ParkInspect.View.UserControls.OfflineControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParkInspect.View.UserControls"
+             xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
+             xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             mc:Ignorable="d"
+                DataContext="{Binding Offline, Source={StaticResource Locator}}" Width="1005.5" Height="582.298">
+
+    <TabControl Height="572" VerticalAlignment="Top">
+        <Grid Margin="0,-1,0,242">
+            <GroupBox x:Name="groupBox3" Header="Opgeslagen Inspecties" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="284" Height="246">
+                <Grid Width="284">
+                    <ListBox x:Name="listBox1" ItemsSource="{Binding directions, Mode=TwoWay}" SelectedItem="{Binding selectedDirection}" DisplayMemberPath="Name" Height="204" VerticalAlignment="Top" Margin="0,0,10,0" SelectionChanged="listBox1_SelectionChanged"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="groupBox4" Header="Aanwijzing" HorizontalAlignment="Left" Margin="299,10,0,0" VerticalAlignment="Top" Width="695" Height="246">
+                <Grid>
+                    <Button x:Name="button3" Content="&#10097;" Command="{Binding next_direction}" Margin="596,0,0,0" VerticalAlignment="Top" Height="204" Width="85" FontSize="64"/>
+                    <TextBlock x:Name="label3" Text="{Binding current_direction_item}" Margin="85,66,0,0" FontSize="21.333" Height="133" TextWrapping="Wrap" Width="519" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"/>
+                    <Button x:Name="button4" Content="&#10096;" Command="{Binding prev_direction}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="204" FontSize="64"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="groupBox5" Header="Inspectie Info" HorizontalAlignment="Left" Margin="10,261,0,-232" VerticalAlignment="Top" Width="284" Height="275">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="109" Margin="0,0,0,-31">
+                        <Label x:Name="l_inspection_id" Content="Inspectie nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_date" Content="inspectie datum:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_deadline" Content="inspectie deadline:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_client" Content="Klant:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_parkinglot" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_region" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_zip" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_number" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_clarification" Content="Opmerkingen:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                    <StackPanel  HorizontalAlignment="Left" Height="233" Margin="109,0,0,0" VerticalAlignment="Top" Width="161">
+                        <Label x:Name="l_inspection_id_text" Content="{Binding inspection_id}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_date_text" Content="{Binding inspection_date}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_deadline_text" Content="{Binding inspection_deadline}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_client_text" Content="{Binding client_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_parkinglot_text" Content="{Binding parkinglot_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_region_text" Content="{Binding region_name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_zip_text" Content="{Binding region_zip}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_number_text" Content="{Binding region_number}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="l_clarification_text" TextWrapping="Wrap" Text="{Binding clarification}" Height="54" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="groupBox6" Header="Kaart" HorizontalAlignment="Left" Margin="299,261,0,-232" VerticalAlignment="Top" Width="695" Height="275">
+                <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="681"/>
+            </GroupBox>
+            <Button x:Name="button" Command="{Binding deleteInspection}" Content="Verwijder" Height="Auto" Margin="10,541,6,-253"/>
+        </Grid>
+    </TabControl>
+</UserControl>

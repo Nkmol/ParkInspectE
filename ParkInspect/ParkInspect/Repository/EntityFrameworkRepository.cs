@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -19,12 +21,12 @@ namespace ParkInspect.Repository
             where TEntity : class
         {
             Context.Set<TEntity>().Add(entity);
+            
         }
 
         public void Update<TEntity>(TEntity entity, string modifiedBy = null) where TEntity : class
         {
             Context.Set<TEntity>().Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete<TEntity>(object id) where TEntity : class
