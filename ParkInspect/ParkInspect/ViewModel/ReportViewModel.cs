@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Windows;
 using System.Windows.Forms;
 using ParkInspect.Model.Factory.Builder;
 
@@ -51,30 +52,25 @@ namespace ParkInspect.ViewModel
         }
 
         public RelayCommand CreateCommand { get; set; }
-        public RelayCommand OpenCommand { get; set; }
+        public RelayCommand ImportCommand { get; set; }
         public RelayCommand OpenReportCommand { get; set; }
+
+        private DialogManager _dialog { get; set; }
         
-        public ReportViewModel(IRepository context)
+        public ReportViewModel(IRepository context, DialogManager dialog)
         {
+
+            _dialog = dialog;
+
+            if (!Directory.Exists("reports"))
+                Directory.CreateDirectory("reports");
 
             CreateCommand = new RelayCommand(OpenDesignView);
-            OpenCommand = new RelayCommand(OpenExternalReport);
+            ImportCommand = new RelayCommand(ImportReport);
             OpenReportCommand = new RelayCommand(OpenReport);
 
-            SetData();
             UpdateReports();
 
-        }
-
-        public void SetData()
-        {
-            List<Report> list = new List<Report>();
-            foreach (string s in Directory.GetFiles("reports", "*.rdl"))
-            {
-                list.Add(new Report(s));
-            }
-
-            Data = list.AsEnumerable();
         }
 
         public void OpenDesignView()
@@ -82,7 +78,13 @@ namespace ParkInspect.ViewModel
 
             ReportDesignView view = new ReportDesignView();
             view.Show();
-            
+
+            //Refresh on close
+            view.Closed += (sender, args) =>
+            {
+                UpdateReports();
+            };
+
         }
 
         public void OpenReportView(int index)
@@ -100,7 +102,7 @@ namespace ParkInspect.ViewModel
 
         }
 
-        public void OpenExternalReport()
+        public void ImportReport()
         {
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -111,12 +113,48 @@ namespace ParkInspect.ViewModel
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ReportView view = new ReportView();
-                view.LoadReport(openFileDialog.FileName);
-                view.Show();
+
+                int count = 1;
+                string name = openFileDialog.SafeFileName;
+
+                if (File.Exists(@"reports/" + name))
+                {
+                    while (File.Exists(@"reports/" + count + "_" + openFileDialog.SafeFileName))
+                        count++;
+
+                    name = count + "_" + openFileDialog.SafeFileName;
+                    File.Copy(openFileDialog.FileName, @"reports/" + name);
+
+                    _dialog.ShowMessage("Action", "Er bestaat al een bestand met de naam " + openFileDialog.SafeFileName + ". Het bestand is geïmporteerd als: " + name);
+
+                }
+                else
+                {
+                    _dialog.ShowMessage("Action", openFileDialog.SafeFileName + " is succesvol geïmporteerd!");
+                }
+                    
+
+                UpdateReports();
+
             }
         }
 
         public void OpenReport()
+        {
+
+            if (SelectedReport == null)
+            {
+                return;
+            }
+
+            ReportView view = new ReportView();
+            view.LoadReport(SelectedReport.Path);
+            view.Show();
+            
+
+        }
+
+        public void UpdateReports()
         {
 
             List<Report> list = new List<Report>();
@@ -126,22 +164,6 @@ namespace ParkInspect.ViewModel
             }
 
             Data = list.AsEnumerable();
-            UpdateReports();
-
-            if (SelectedReport == null)
-            {
-                return;
-            }
-
-            //ReportView view = new ReportView();
-            //view.LoadReport(SelectedReport.Path);
-            //view.Show();
-            
-
-        }
-
-        public void UpdateReports()
-        {
 
             Names = new ObservableCollection<Report>(Data.Where(x => x.Name.ToLower().Contains(NameFilter.ToLower())));
             RaisePropertyChanged("Names");
@@ -157,6 +179,7 @@ namespace ParkInspect.ViewModel
             Report.RefreshReport();
             RaisePropertyChanged("Report");
         }
+
     }
 
     public class Report
