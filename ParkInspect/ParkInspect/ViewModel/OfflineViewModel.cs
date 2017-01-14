@@ -20,6 +20,7 @@ using System.Reflection;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Model;
+using System.Threading;
 
 namespace ParkInspect.ViewModel
 {
@@ -46,6 +47,8 @@ namespace ParkInspect.ViewModel
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _current_direction_item;
         private DialogManager _dialog;
+        private string _street;
+
         public RelayCommand deleteInspection { get; set; }
         public RelayCommand setDirections { get; set; }
         public RelayCommand next_direction { get; set; }
@@ -179,6 +182,19 @@ namespace ParkInspect.ViewModel
 
             }
         }
+        public String street
+        {
+            get
+            {
+                return _street;
+            }
+            set
+            {
+                _street = value;
+                base.RaisePropertyChanged();
+
+            }
+        }
         public Inspection selectedInspection
         {
             get
@@ -195,6 +211,7 @@ namespace ParkInspect.ViewModel
                 region_name = selectedInspection.Parkinglot.Region.name;
                 parkinglot_name = selectedInspection.Parkinglot.name;
                 region_zip = selectedInspection.Parkinglot.zipcode;
+                street = selectedInspection.Parkinglot.streetname;
                 region_number = selectedInspection.Parkinglot.number.ToString();
                 clarification = selectedInspection.clarification;
                 base.RaisePropertyChanged();
@@ -265,6 +282,7 @@ namespace ParkInspect.ViewModel
             deleteInspection = new RelayCommand(DeleteInspection);
             next_direction = new RelayCommand(NextDirection);
             prev_direction = new RelayCommand(PrevDirection);
+            CleanFiles();
             LoadDirections();
         }
         private void PrevDirection()
@@ -287,11 +305,13 @@ namespace ParkInspect.ViewModel
         }
         private void SetDirectionItems()
         {
+            String line;
+            System.IO.StreamReader file;
             if (_selectedDirection != null)
             {
                 {
-                    String line;
-                    System.IO.StreamReader file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
+
+                    file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
                     while ((line = file.ReadLine()) != null)
                     {
                         if (!line.Contains("ID:") && !line.Contains("HOME:"))
@@ -303,32 +323,43 @@ namespace ParkInspect.ViewModel
                     file.Close();
                     current_direction_item = _selectedDirection.direction_items[_selectedDirection.index];
                 }
-
+                file.Dispose();
+                file.Close();
             }
-            CleanFiles();
-
         }
         public void LoadDirections()
         {
-
+            if (selectedDirection == null)
+            {
+                directions.Clear();
+            }
             Directory.CreateDirectory(runpath + "/directions");
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
-                Direction direction = new Direction();
-                direction.Name = name;
-                if (!directions.Contains(direction))
+                if (!name.Equals("deletelist"))
                 {
-                    directions.Add(direction);
+                    Direction direction = new Direction();
+                    direction.Name = name;
+                    if (!directions.Contains(direction))
+                    {
+                        directions.Add(direction);
+                    }
                 }
             }
         }
         private void DeleteInspection()
         {
+            String temp_name;
             if (selectedDirection != null)
             {
+                temp_name = selectedDirection.Name;
                 directions.Remove(selectedDirection);
                 deleted_list.Add(selectedDirection.Name);
+                selectedDirection = null;
+                AddtoDeleteList(temp_name);
+                Reset();
                 _dialog.ShowMessage("Succes!", "De opgeslagen inspectie is verwijderd!");
+
             }
             else
             {
@@ -336,12 +367,82 @@ namespace ParkInspect.ViewModel
             }
 
         }
-        private void CleanFiles()
+        public void CleanFiles()
         {
-            foreach (String n in deleted_list)
+            String line;
+            System.IO.StreamReader fileReader = new System.IO.StreamReader(runpath + "/directions/deletelist.txt");
+            while ((line = fileReader.ReadLine()) != null)
             {
-                File.Delete(runpath + "/directions/" + n + ".txt");
+                DeleteFile(line);
             }
+            fileReader.Close();
+            File.WriteAllText(runpath + "/directions/deletelist.txt", string.Empty);
+
+        }
+        private void DeleteFile(string name)
+        {
+            FileInfo file = new FileInfo(runpath + "/directions/" + name + ".txt");
+            if (!IsFileLocked(file))
+            {
+                file.Delete();
+                deleted_list.Remove(name);
+            }
+
+        }
+        private void AddtoDeleteList(String name)
+        {
+            String path = runpath + "/directions/deletelist.txt";
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+            TextWriter tw = new StreamWriter(path, true);
+            tw.WriteLine(name);
+            tw.Dispose();
+            tw.Close();
+
+
+        }
+
+        private void Reset()
+        {
+            inspection_id = "";
+            inspection_date = "";
+            inspection_deadline = "";
+            client_name = "";
+            region_name = "";
+            parkinglot_name = "";
+            region_zip = "";
+            street = "";
+            region_number = "";
+            clarification = "";
+            current_direction_item = "";
+            directionItems.Clear();
+        }
+        protected virtual bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
         }
 
     }

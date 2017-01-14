@@ -52,7 +52,7 @@
             <GroupBox x:Name="groupBox6" Header="Kaart" HorizontalAlignment="Left" Margin="299,261,0,-232" VerticalAlignment="Top" Width="695" Height="275">
                 <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="233" VerticalAlignment="Top" Width="681"/>
             </GroupBox>
-            <Button x:Name="button" Command="{Binding deleteInspection}" Content="Verwijder" Height="Auto" Margin="10,541,6,-253"/>
+            <Button x:Name="button" Command="{Binding deleteInspection}" Content="Verwijder" Height="Auto" Margin="10,541,6,-253" Click="button_Click"/>
         </Grid>
     </TabControl>
 </UserControl>

@@ -45,6 +45,8 @@ namespace ParkInspect.View.UserControls
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private OfflineViewModel vm;
         private RoutingService routingService;
+        private bool clear = false;
+
         public OfflineControl()
         {
             InitializeComponent();
@@ -93,34 +95,43 @@ namespace ParkInspect.View.UserControls
         }
         private void loadRoute()
         {
-            ReadInspectionInfoFromFile();
-            GetInspectionInfo();
-            zip = inspection.Parkinglot.zipcode;
-            region = inspection.Parkinglot.Region.name;
-            street = inspection.Parkinglot.streetname;
-            gmap_offline.Markers.Clear();
-            if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
-                !String.IsNullOrWhiteSpace(home_adress))
+            if (!clear)
             {
-                zip = zip.Replace(" ", "");
-                zip = zip.Trim();
-                PointLatLng start = routingService.getPointFromKeyWord(home_adress);
-                PointLatLng end = routingService.getPointFromKeyWord(street + " " + zip + " " + region);
-                RouteObject route = routingService.GetRoute(start, end);
-                if (route != null)
+                ReadInspectionInfoFromFile();
+                GetInspectionInfo();
+                zip = inspection.Parkinglot.zipcode;
+                region = inspection.Parkinglot.Region.name;
+                street = inspection.Parkinglot.streetname;
+                gmap_offline.Markers.Clear();
+                if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
+                    !String.IsNullOrWhiteSpace(home_adress))
                 {
-                    gmap_offline.Markers.Add(route.m1);
-                    gmap_offline.Markers.Add(route.m2);
-                    gmap_offline.Markers.Add(route.route);
-                    gmap_offline.ZoomAndCenterMarkers(null);
+                    zip = zip.Replace(" ", "");
+                    zip = zip.Trim();
+                    PointLatLng start = routingService.getPointFromKeyWord(home_adress);
+                    PointLatLng end = routingService.getPointFromKeyWord(street + " " + zip + " " + region);
+                    RouteObject route = routingService.GetRoute(start, end);
+                    if (route != null)
+                    {
+                        gmap_offline.Markers.Add(route.m1);
+                        gmap_offline.Markers.Add(route.m2);
+                        gmap_offline.Markers.Add(route.route);
+                        gmap_offline.ZoomAndCenterMarkers(null);
+                    }
                 }
             }
+            clear = false;
         }
 
         private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             loadRoute();   
         }
-    
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            clear = true;
+            gmap_offline.Markers.Clear();
+        }
     }
 }
