@@ -9,6 +9,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using System.Collections.Specialized;
 using System.Security.Cryptography;
 using ParkInspect;
 
@@ -134,6 +135,7 @@ namespace ParkInspect.ViewModel
             SaveCommand = new RelayCommand(SaveEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
         }
+
 
         //CRU METHODS
         private void SaveEmployee()

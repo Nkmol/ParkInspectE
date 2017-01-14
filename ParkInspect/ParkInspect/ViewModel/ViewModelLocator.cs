@@ -9,6 +9,7 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System.Xml.Serialization.Advanced;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
@@ -55,8 +56,11 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
+            SimpleIoc.Default.Register<OfflineViewModel>();
+            SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
+            SimpleIoc.Default.Register<RegionViewModel>();
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
@@ -75,7 +79,8 @@ namespace ParkInspect.ViewModel
 	public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
-
+        public OfflineViewModel Offline => ServiceLocator.Current.GetInstance<OfflineViewModel>();
+        public PrepareViewModel Prepare => ServiceLocator.Current.GetInstance<PrepareViewModel>();
         public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
@@ -84,7 +89,10 @@ namespace ParkInspect.ViewModel
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
 
+
         public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
+
+        public RegionViewModel Region => ServiceLocator.Current.GetInstance<RegionViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 

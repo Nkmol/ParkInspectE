@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ParkInspect;
 using ParkInspect.Services;
 
-namespace UnitTestProject
+namespace ParkInspect.Test
 {
     [TestClass]
     public class AbsenceTests
@@ -41,50 +40,54 @@ namespace UnitTestProject
 
             _newAbsence = new Absence
             {
-                employee_id =  _newEmployee.id,
+                employee_id = _newEmployee.id,
                 end = DateTime.Now,
                 start = DateTime.Now.Subtract(new TimeSpan(10))
             };
 
-            _service.InsertAbsence(_newAbsence);
+            _service.Add(_newAbsence);
         }
 
+        [TestCategory("Absence service")]
         [TestMethod]
         public void Create()
         {
-            var Absence = new Absence
+            var absence = new Absence
             {
                 employee_id = _newEmployee.id,
                 end = DateTime.Now,
                 start = DateTime.Now.Subtract(new TimeSpan(20))
             };
 
-            _service.InsertAbsence(Absence);
+            _service.Add(absence);
+
             var test =
-                _service.GetAllAbsences()
-                    .Where(a => a.employee_id == Absence.employee_id && a.end == Absence.end && Absence.start == a.start);
-            var t = test.GetEnumerator().Current;
-            Assert.IsNotNull(t);
+                _service.GetAll<Absence>()
+                    .First(a => a.employee_id == absence.employee_id && a.end == absence.end && absence.start == a.start);
+
+            Assert.IsNotNull(test);
         }
 
+        [TestCategory("Absence service")]
         [TestMethod]
         public void Update()
         {
-            var Absence = new Absence
+            var absence = new Absence
             {
                 employee_id = _newEmployee.id,
                 end = DateTime.Now,
                 start = DateTime.Now.Subtract(new TimeSpan(20))
             };
 
-            _service.InsertAbsence(Absence);
+            _service.Add(absence);
 
-            Absence.start = DateTime.Now.Subtract(new TimeSpan(30));
+            absence.start = DateTime.Now.Subtract(new TimeSpan(30));
+
             var test =
-                _service.GetAllAbsences()
-                    .Where(a => a.employee_id == Absence.employee_id && a.end == Absence.end && Absence.start == DateTime.Now.Subtract(new TimeSpan(30)));
-            var t = test.GetEnumerator().Current;
-            Assert.IsNotNull(t);
+                _service.GetAll<Absence>()
+                    .First(a => a.employee_id == absence.employee_id && a.end == absence.end && absence.start == DateTime.Now.Subtract(new TimeSpan(30)));
+
+            Assert.IsNotNull(test);
         }
     }
 }
