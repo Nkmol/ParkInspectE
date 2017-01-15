@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Model.Factory;
@@ -11,15 +10,30 @@ using ParkInspect.Services;
 
 namespace ParkInspect.ViewModel.ParkinglotVM
 {
-
     public class ParkinglotOverviewViewModel : ViewModelBase
     {
         private readonly DialogManager _dialog;
-        private IEnumerable<ParkinglotViewModel> Data { get; set; }
+        private readonly IRepository _context;
         private ParkinglotViewModel _selectedParkinglot;
+
+        public ParkinglotOverviewViewModel(IRepository context, DialogManager dialog)
+        {
+            _dialog = dialog;
+            _context = context;
+            NewCommand = new RelayCommand(() => NewParkinglot(context, dialog));
+            ExportCommand = new RelayCommand(Export);
+
+            Service = new ParkinglotService(context);
+            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(context, x, dialog));
+            Parkinglots = new ObservableCollection<ParkinglotViewModel>(Data);
+            NewParkinglot(context, dialog);
+        }
+
+        private IEnumerable<ParkinglotViewModel> Data { get; set; }
         public ObservableCollection<ParkinglotViewModel> Parkinglots { get; set; }
 
-        public ParkinglotViewModel SelectedParkinglot // Backing value needed, because needs to "raise" change for child bind properties for update
+        public ParkinglotViewModel SelectedParkinglot
+            // Backing value needed, because needs to "raise" change for child bind properties for update
         {
             get { return _selectedParkinglot; }
             set { Set(ref _selectedParkinglot, value); }
@@ -30,6 +44,45 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public RelayCommand NewCommand { get; set; }
 
         public RelayCommand ExportCommand { get; set; }
+
+        public void UpdateParkinglots()
+        {
+            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(_context, x, _dialog));
+
+            var builder = new FilterBuilder();
+            builder.Add("Name", NameFilter);
+            builder.Add("Region", RegionFilter);
+            builder.Add("Number", NumberFilter);
+            builder.Add("Zipcode", ZipFilter);
+            builder.Add("Clarification", ClarificationFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Parkinglots = new ObservableCollection<ParkinglotViewModel>(result);
+            RaisePropertyChanged("Parkinglots");
+        }
+
+        private void NewParkinglot(IRepository context, DialogManager dialog)
+        {
+            SelectedParkinglot = new ParkinglotViewModel(context, new Parkinglot(), dialog);
+        }
+
+        private void Export()
+        {
+            var export = new ExportView();
+            export.Show();
+
+            var builder = new FilterBuilder();
+            builder.Add("Name", NameFilter);
+            builder.Add("Region", RegionFilter);
+            builder.Add("Number", NumberFilter);
+            builder.Add("Zipcode", ZipFilter);
+            builder.Add("Clarification", ClarificationFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            export.FillGrid(result);
+        }
 
         #region filter Properties
 
@@ -42,7 +95,8 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public string NameFilter
         {
             get { return _nameFilter; }
-            set {
+            set
+            {
                 _nameFilter = value;
                 UpdateParkinglots();
             }
@@ -87,57 +141,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
                 UpdateParkinglots();
             }
         }
+
         #endregion
-
-        public ParkinglotOverviewViewModel(IRepository context, DialogManager dialog)
-        {
-            _dialog = dialog;
-
-            NewCommand = new RelayCommand(() => NewParkinglot(context, dialog));
-            ExportCommand = new RelayCommand(Export);
-
-            Service = new ParkinglotService(context);
-            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(context, x, dialog));
-            Parkinglots = new ObservableCollection<ParkinglotViewModel>(Data);
-            NewParkinglot(context, dialog);
-        }
-
-        public void UpdateParkinglots()
-        {
-            var builder = new FilterBuilder();
-            builder.Add("Name", NameFilter);
-            builder.Add("Region", RegionFilter);
-            builder.Add("Number", NumberFilter);
-            builder.Add("Zipcode", ZipFilter);
-            builder.Add("Clarification", ClarificationFilter);
-
-            var result = Data.Where(x => x.Like(builder.Get()));
-
-            Parkinglots = new ObservableCollection<ParkinglotViewModel>(result);
-            RaisePropertyChanged("Parkinglots");
-        }
-
-        private void NewParkinglot(IRepository context, DialogManager dialog)
-        {
-            SelectedParkinglot = new ParkinglotViewModel(context, new Parkinglot(), dialog);
-        }
-
-        private void Export()
-        {
-
-            ExportView export = new ExportView();
-            export.Show();
-
-            FilterBuilder builder = new FilterBuilder();
-            builder.Add("Name", NameFilter);
-            builder.Add("Region", RegionFilter);
-            builder.Add("Number", NumberFilter);
-            builder.Add("Zipcode", ZipFilter);
-            builder.Add("Clarification", ClarificationFilter);
-
-            var result = Data.Where(x => x.Like(builder.Get()));
-
-            export.FillGrid(result);
-        }
     }
 }

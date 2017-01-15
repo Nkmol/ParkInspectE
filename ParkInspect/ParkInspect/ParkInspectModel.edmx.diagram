@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="ParkInspectModel.Field" Width="1.5" PointX="5.125" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Form" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Formfield" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ParkInspectModel.Image" Width="1.5" PointX="9" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ParkInspectModel.Image" Width="1.5" PointX="10.375" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Inspection" Width="1.5" PointX="6.5" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Parkinglot" Width="1.5" PointX="4.875" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkInspectModel.Region" Width="1.5" PointX="3.75" PointY="11.625" IsExpanded="true" />
@@ -41,7 +41,6 @@
         <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Vragenlijst" ManuallyRouted="false" >
         </AssociationConnector>
         <AssociationConnector Association="ParkInspectModel.FK_Vragenlijstveld_Veld_vregenlijst_id" ManuallyRouted="false" />
-        <AssociationConnector Association="ParkInspectModel.FK_Image_Raport" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Inspectie" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Parkeerplaats" ManuallyRouted="false" />
         <AssociationConnector Association="ParkInspectModel.FK_Inspectie_Status" ManuallyRouted="false" />
@@ -51,6 +50,7 @@
         <AssociationConnector Association="ParkInspectModel.Inspector_has_Inspection" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ParkInspectModel.Contactperson" Width="1.5" PointX="8.75" PointY="12.25" />
         <AssociationConnector Association="ParkInspectModel.FK_Client_Contactperson" />
+        <AssociationConnector Association="ParkInspectModel.FK_Image_Raport1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
