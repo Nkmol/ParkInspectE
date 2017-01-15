@@ -39,8 +39,7 @@ namespace ParkInspect.ViewModel
 
         // commands
         public RelayCommand ResetCommand { get; set; }
-        public RelayCommand AddCommand { get; set; }
-        public RelayCommand EditCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
         public RelayCommand AssignInspectorCommand { get; set; }
         public RelayCommand UnassignInspecteurCommand { get; set; }
 
@@ -186,8 +185,7 @@ namespace ParkInspect.ViewModel
 
             // set commands
             ResetCommand = new RelayCommand(EmptyForm);
-            AddCommand = new RelayCommand(Add, () => Data.id == 0);
-            EditCommand = new RelayCommand(Edit, () => Data.id != 0);
+            SaveCommand = new RelayCommand(Save);
 
             AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
 
@@ -214,14 +212,9 @@ namespace ParkInspect.ViewModel
 
             Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
             RaisePropertyChanged(() => Inspectors);
-        }  
-
-        public void Add()
-        {
-            PopupBeforeFinish();
         }
 
-        public void Edit()
+        private void Save()
         {
             PopupBeforeFinish();
         }

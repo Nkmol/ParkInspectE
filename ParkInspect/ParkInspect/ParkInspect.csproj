@@ -362,7 +362,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="NuGet.config" />
     <None Include="packages.config" />
     <EntityDeploy Include="ParkInspectModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
