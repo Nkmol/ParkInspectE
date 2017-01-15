@@ -288,7 +288,7 @@ namespace ParkInspect.ViewModel
                             SaveFile.WriteLine(s);
                         }
                         SaveFile.Close();
-                        _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
+                        _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgeslagen!");
                     }
                     else
                     {
