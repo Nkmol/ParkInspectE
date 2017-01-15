@@ -17,6 +17,6 @@ namespace ParkInspect.Model.LocalModel
         public string image1 { get; set; }
         public int form_id { get; set; }
     
-        public virtual Form Form { get; set; }
+        public virtual LocalForm Form { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace ParkInspect.Model.LocalModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocalEmployee()
         {
-            this.Absence = new HashSet<Absence>();
-            this.Inspection = new HashSet<Inspection>();
+            this.Absence = new HashSet<LocalAbsence>();
+            this.Inspection = new HashSet<LocalInspection>();
         }
     
         public int id { get; set; }
@@ -34,11 +34,11 @@ namespace ParkInspect.Model.LocalModel
         public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Absence> Absence { get; set; }
-        public virtual Employee_Status Employee_Status1 { get; set; }
-        public virtual Role Role1 { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual ICollection<LocalAbsence> Absence { get; set; }
+        public virtual LocalEmployee_Status Employee_Status1 { get; set; }
+        public virtual LocalRole Role1 { get; set; }
+        public virtual LocalRegion Region { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<LocalInspection> Inspection { get; set; }
     }
 }

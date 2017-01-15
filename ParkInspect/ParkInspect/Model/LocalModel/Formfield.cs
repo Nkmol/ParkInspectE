@@ -19,7 +19,7 @@ namespace ParkInspect.Model.LocalModel
         public int field_template_id { get; set; }
         public string value { get; set; }
     
-        public virtual Field Field { get; set; }
-        public virtual Form Form { get; set; }
+        public virtual LocalField Field { get; set; }
+        public virtual LocalForm Form { get; set; }
     }
 }

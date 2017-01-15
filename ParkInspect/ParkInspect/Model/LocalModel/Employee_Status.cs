@@ -17,12 +17,12 @@ namespace ParkInspect.Model.LocalModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocalEmployee_Status()
         {
-            this.Employee = new HashSet<Employee>();
+            this.Employee = new HashSet<LocalEmployee>();
         }
     
         public string employee_status1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<LocalEmployee> Employee { get; set; }
     }
 }

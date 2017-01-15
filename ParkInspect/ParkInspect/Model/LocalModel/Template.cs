@@ -17,8 +17,8 @@ namespace ParkInspect.Model.LocalModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocalTemplate()
         {
-            this.Field = new HashSet<Field>();
-            this.Form = new HashSet<Form>();
+            this.Field = new HashSet<LocalField>();
+            this.Form = new HashSet<LocalForm>();
         }
     
         public int id { get; set; }
@@ -26,8 +26,8 @@ namespace ParkInspect.Model.LocalModel
         public string version_number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual ICollection<LocalField> Field { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Form> Form { get; set; }
+        public virtual ICollection<LocalForm> Form { get; set; }
     }
 }

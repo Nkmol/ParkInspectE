@@ -17,8 +17,8 @@ namespace ParkInspect.Model.LocalModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocalInspection()
         {
-            this.Inspection1 = new HashSet<Inspection>();
-            this.Employee = new HashSet<Employee>();
+            this.Inspection1 = new HashSet<LocalInspection>();
+            this.Employee = new HashSet<LocalEmployee>();
         }
     
         public int id { get; set; }
@@ -31,14 +31,14 @@ namespace ParkInspect.Model.LocalModel
         public string clarification { get; set; }
         public int assignment_id { get; set; }
     
-        public virtual Asignment Asignment { get; set; }
-        public virtual Form Form { get; set; }
+        public virtual LocalAsignment Asignment { get; set; }
+        public virtual LocalForm Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection1 { get; set; }
-        public virtual Inspection Inspection2 { get; set; }
-        public virtual Parkinglot Parkinglot { get; set; }
-        public virtual State State1 { get; set; }
-        public virtual Report Report { get; set; }
+        public virtual ICollection<LocalInspection> Inspection1 { get; set; }
+        public virtual LocalInspection Inspection2 { get; set; }
+        public virtual LocalParkinglot Parkinglot { get; set; }
+        public virtual LocalState State1 { get; set; }
+        public virtual LocalReport Report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employee { get; set; }
     }
