@@ -1,6 +1,6 @@
 ﻿MERGE INTO dbo.Parkinglot AS Target  
 USING (values 
-	('Utrecht', '3510 VK', 83, 'Parkeergarage Springweg','Strogsteeg', 'Vaak geen ruimte'),
+	('Utrecht', '3510 VK', 83, 'Parkeergarage Springweg','Strosteeg', 'Vaak geen ruimte'),
 	('Utrecht', '3511 EN', 22, 'Parkeergarage Moreelsepark','Spoorstraat', 'Vaak wel ruimte'),
 	('Utrecht', '3511 BR', 1, 'Parkeergarage La Vie','Sint-Jacobsstraat', 'Vaak geen ruimte'),
 

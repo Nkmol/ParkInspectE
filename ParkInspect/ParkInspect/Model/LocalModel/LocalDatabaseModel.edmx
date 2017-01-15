@@ -1,0 +1,1406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LocalDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Absence">
+          <Key>
+            <PropertyRef Name="start" />
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="start" Type="datetime" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="end" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Asignment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="deadline" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="clarification" Type="text" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Contactperson">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Datatype">
+          <Key>
+            <PropertyRef Name="datatype" />
+          </Key>
+          <Property Name="datatype" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employee_status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="20" />
+          <Property Name="in_service_date" Type="datetime" Nullable="false" />
+          <Property Name="out_service_date" Type="datetime" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Employee_Status">
+          <Key>
+            <PropertyRef Name="employee_status" />
+          </Key>
+          <Property Name="employee_status" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Field">
+          <Key>
+            <PropertyRef Name="title" />
+            <PropertyRef Name="template_id" />
+          </Key>
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="template_id" Type="int" Nullable="false" />
+          <Property Name="datatype" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="reportFieldType_title" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Form">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="template_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Formfield">
+          <Key>
+            <PropertyRef Name="form_id" />
+            <PropertyRef Name="field_title" />
+            <PropertyRef Name="field_template_id" />
+          </Key>
+          <Property Name="form_id" Type="int" Nullable="false" />
+          <Property Name="field_title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="field_template_id" Type="int" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="image" />
+            <PropertyRef Name="form_id" />
+          </Key>
+          <Property Name="image" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="form_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inspection">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="parking_id" Type="int" Nullable="false" />
+          <Property Name="form_id" Type="int" />
+          <Property Name="follow_up_id" Type="int" />
+          <Property Name="state" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="deadline" Type="datetime" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="clarification" Type="text" />
+          <Property Name="assignment_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inspector">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="region_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inspector_has_Inspection">
+          <Key>
+            <PropertyRef Name="employee_id" />
+            <PropertyRef Name="inspection_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="inspection_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parkinglot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="region_name" Type="varchar" MaxLength="50" />
+          <Property Name="zipcode" Type="varchar" MaxLength="10" />
+          <Property Name="number" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="streetname" Type="varchar" MaxLength="50" />
+          <Property Name="clarification" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="inspection_id" />
+          </Key>
+          <Property Name="inspection_id" Type="int" Nullable="false" />
+          <Property Name="clarifaction" Type="text" />
+          <Property Name="pdf" Type="ntext" />
+        </EntityType>
+        <EntityType Name="ReportFieldType">
+          <Key>
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="role" />
+          </Key>
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="state" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="version_number" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Absence_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Absence" Type="Self.Absence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Absence">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asignment_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Asignment" Type="Self.Asignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Asignment">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asignment_Status">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Asignment" Type="Self.Asignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="state" />
+            </Principal>
+            <Dependent Role="Asignment">
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Contactperson">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Contactperson" Type="Self.Contactperson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Contactperson">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Employee_status">
+          <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Status">
+              <PropertyRef Name="employee_status" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="employee_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_Datatype">
+          <End Role="Datatype" Type="Self.Datatype" Multiplicity="1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Datatype">
+              <PropertyRef Name="datatype" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="datatype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_RapportFieldType">
+          <End Role="ReportFieldType" Type="Self.ReportFieldType" Multiplicity="0..1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportFieldType">
+              <PropertyRef Name="title" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="reportFieldType_title" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="template_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Form_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Form" Type="Self.Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Form">
+              <PropertyRef Name="template_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Raport">
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspecteur_has_Inspectie_Inspection">
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="1" />
+          <End Role="Inspector_has_Inspection" Type="Self.Inspector_has_Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspection">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector_has_Inspection">
+              <PropertyRef Name="inspection_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspecteur_has_Inspectie_Inspector">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Inspector_has_Inspection" Type="Self.Inspector_has_Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector_has_Inspection">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Inspectie">
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="0..1" />
+          <End Role="Inspection1" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspection">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection1">
+              <PropertyRef Name="follow_up_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Opdracht">
+          <End Role="Asignment" Type="Self.Asignment" Multiplicity="1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Parkeerplaats">
+          <End Role="Parkinglot" Type="Self.Parkinglot" Multiplicity="1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parkinglot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="parking_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Status">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="state" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Vragenlijst">
+          <End Role="Form" Type="Self.Form" Multiplicity="0..1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspector_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Inspector" Type="Self.Inspector" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspector_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Inspector" Type="Self.Inspector" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="Inspector">
+              <PropertyRef Name="region_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parkinglot_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Parkinglot" Type="Self.Parkinglot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="Parkinglot">
+              <PropertyRef Name="region_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questionair_Questionair">
+          <End Role="Field" Type="Self.Field" Multiplicity="1" />
+          <End Role="Formfield" Type="Self.Formfield" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Field">
+              <PropertyRef Name="title" />
+              <PropertyRef Name="template_id" />
+            </Principal>
+            <Dependent Role="Formfield">
+              <PropertyRef Name="field_title" />
+              <PropertyRef Name="field_template_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Raport_Inspection">
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Inspection">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="inspection_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vragenlijstveld_Veld_vregenlijst_id">
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
+          <End Role="Formfield" Type="Self.Formfield" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Formfield">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LocalDatabaseModelStoreContainer">
+          <EntitySet Name="Absence" EntityType="Self.Absence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asignment" EntityType="Self.Asignment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contactperson" EntityType="Self.Contactperson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Datatype" EntityType="Self.Datatype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Field" EntityType="Self.Field" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Form" EntityType="Self.Form" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formfield" EntityType="Self.Formfield" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspection" EntityType="Self.Inspection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspector" EntityType="Self.Inspector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspector_has_Inspection" EntityType="Self.Inspector_has_Inspection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parkinglot" EntityType="Self.Parkinglot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportFieldType" EntityType="Self.ReportFieldType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Absence_Employee" Association="Self.FK_Absence_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Absence" EntitySet="Absence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asignment_Client" Association="Self.FK_Asignment_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Asignment" EntitySet="Asignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asignment_Status" Association="Self.FK_Asignment_Status">
+            <End Role="State" EntitySet="State" />
+            <End Role="Asignment" EntitySet="Asignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Contactperson" Association="Self.FK_Client_Contactperson">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Contactperson" EntitySet="Contactperson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee_status" Association="Self.FK_Employee_Employee_status">
+            <End Role="Employee_Status" EntitySet="Employee_Status" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_Datatype" Association="Self.FK_Field_Datatype">
+            <End Role="Datatype" EntitySet="Datatype" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_RapportFieldType" Association="Self.FK_Field_RapportFieldType">
+            <End Role="ReportFieldType" EntitySet="ReportFieldType" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_Template" Association="Self.FK_Field_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Form_Template" Association="Self.FK_Form_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Form" EntitySet="Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_Raport" Association="Self.FK_Image_Raport">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspecteur_has_Inspectie_Inspection" Association="Self.FK_Inspecteur_has_Inspectie_Inspection">
+            <End Role="Inspection" EntitySet="Inspection" />
+            <End Role="Inspector_has_Inspection" EntitySet="Inspector_has_Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspecteur_has_Inspectie_Inspector" Association="Self.FK_Inspecteur_has_Inspectie_Inspector">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Inspector_has_Inspection" EntitySet="Inspector_has_Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Inspectie" Association="Self.FK_Inspectie_Inspectie">
+            <End Role="Inspection" EntitySet="Inspection" />
+            <End Role="Inspection1" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Opdracht" Association="Self.FK_Inspectie_Opdracht">
+            <End Role="Asignment" EntitySet="Asignment" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Parkeerplaats" Association="Self.FK_Inspectie_Parkeerplaats">
+            <End Role="Parkinglot" EntitySet="Parkinglot" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Status" Association="Self.FK_Inspectie_Status">
+            <End Role="State" EntitySet="State" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Vragenlijst" Association="Self.FK_Inspectie_Vragenlijst">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspector_Employee" Association="Self.FK_Inspector_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Inspector" EntitySet="Inspector" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspector_Region" Association="Self.FK_Inspector_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Inspector" EntitySet="Inspector" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parkinglot_Region" Association="Self.FK_Parkinglot_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Parkinglot" EntitySet="Parkinglot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questionair_Questionair" Association="Self.FK_Questionair_Questionair">
+            <End Role="Field" EntitySet="Field" />
+            <End Role="Formfield" EntitySet="Formfield" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Raport_Inspection" Association="Self.FK_Raport_Inspection">
+            <End Role="Inspection" EntitySet="Inspection" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vragenlijstveld_Veld_vregenlijst_id" Association="Self.FK_Vragenlijstveld_Veld_vregenlijst_id">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Formfield" EntitySet="Formfield" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LocalDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Absence">
+          <Key>
+            <PropertyRef Name="start" />
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="end" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Absence_Employee" FromRole="Absence" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Asignment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Asignment_Client" FromRole="Asignment" ToRole="Client" />
+          <NavigationProperty Name="State1" Relationship="Self.FK_Asignment_Status" FromRole="Asignment" ToRole="State" />
+          <NavigationProperty Name="Inspection" Relationship="Self.FK_Inspectie_Opdracht" FromRole="Asignment" ToRole="Inspection" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Asignment" Relationship="Self.FK_Asignment_Client" FromRole="Client" ToRole="Asignment" />
+          <NavigationProperty Name="Contactperson" Relationship="Self.FK_Client_Contactperson" FromRole="Client" ToRole="Contactperson" />
+        </EntityType>
+        <EntityType Name="Contactperson">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Contactperson" FromRole="Contactperson" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Datatype">
+          <Key>
+            <PropertyRef Name="datatype1" />
+          </Key>
+          <Property Name="datatype1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Field" Relationship="Self.FK_Field_Datatype" FromRole="Datatype" ToRole="Field" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employee_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="in_service_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="out_service_date" Type="DateTime" Precision="3" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Absence" Relationship="Self.FK_Absence_Employee" FromRole="Employee" ToRole="Absence" />
+          <NavigationProperty Name="Employee_Status1" Relationship="Self.FK_Employee_Employee_status" FromRole="Employee" ToRole="Employee_Status" />
+          <NavigationProperty Name="Role1" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="Region" Relationship="Self.Inspector" FromRole="Employee" ToRole="Region" />
+          <NavigationProperty Name="Inspection" Relationship="Self.Inspector_has_Inspection" FromRole="Employee" ToRole="Inspection" />
+        </EntityType>
+        <EntityType Name="Employee_Status">
+          <Key>
+            <PropertyRef Name="employee_status1" />
+          </Key>
+          <Property Name="employee_status1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Employee_status" FromRole="Employee_Status" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Field">
+          <Key>
+            <PropertyRef Name="title" />
+            <PropertyRef Name="template_id" />
+          </Key>
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="template_id" Type="Int32" Nullable="false" />
+          <Property Name="datatype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="reportFieldType_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Datatype1" Relationship="Self.FK_Field_Datatype" FromRole="Field" ToRole="Datatype" />
+          <NavigationProperty Name="ReportFieldType" Relationship="Self.FK_Field_RapportFieldType" FromRole="Field" ToRole="ReportFieldType" />
+          <NavigationProperty Name="Template" Relationship="Self.FK_Field_Template" FromRole="Field" ToRole="Template" />
+          <NavigationProperty Name="Formfield" Relationship="Self.FK_Questionair_Questionair" FromRole="Field" ToRole="Formfield" />
+        </EntityType>
+        <EntityType Name="Form">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="template_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Template" Relationship="Self.FK_Form_Template" FromRole="Form" ToRole="Template" />
+          <NavigationProperty Name="Image" Relationship="Self.FK_Image_Raport" FromRole="Form" ToRole="Image" />
+          <NavigationProperty Name="Inspection" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Form" ToRole="Inspection" />
+          <NavigationProperty Name="Formfield" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Form" ToRole="Formfield" />
+        </EntityType>
+        <EntityType Name="Formfield">
+          <Key>
+            <PropertyRef Name="form_id" />
+            <PropertyRef Name="field_title" />
+            <PropertyRef Name="field_template_id" />
+          </Key>
+          <Property Name="form_id" Type="Int32" Nullable="false" />
+          <Property Name="field_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="field_template_id" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Field" Relationship="Self.FK_Questionair_Questionair" FromRole="Formfield" ToRole="Field" />
+          <NavigationProperty Name="Form" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Formfield" ToRole="Form" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="image1" />
+            <PropertyRef Name="form_id" />
+          </Key>
+          <Property Name="image1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="form_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Form" Relationship="Self.FK_Image_Raport" FromRole="Image" ToRole="Form" />
+        </EntityType>
+        <EntityType Name="Inspection">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="parking_id" Type="Int32" Nullable="false" />
+          <Property Name="form_id" Type="Int32" />
+          <Property Name="follow_up_id" Type="Int32" />
+          <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="deadline" Type="DateTime" Precision="3" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="assignment_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asignment" Relationship="Self.FK_Inspectie_Opdracht" FromRole="Inspection" ToRole="Asignment" />
+          <NavigationProperty Name="Form" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Inspection" ToRole="Form" />
+          <NavigationProperty Name="Inspection1" Relationship="Self.FK_Inspectie_Inspectie" FromRole="Inspection" ToRole="Inspection1" />
+          <NavigationProperty Name="Inspection2" Relationship="Self.FK_Inspectie_Inspectie" FromRole="Inspection1" ToRole="Inspection" />
+          <NavigationProperty Name="Parkinglot" Relationship="Self.FK_Inspectie_Parkeerplaats" FromRole="Inspection" ToRole="Parkinglot" />
+          <NavigationProperty Name="State1" Relationship="Self.FK_Inspectie_Status" FromRole="Inspection" ToRole="State" />
+          <NavigationProperty Name="Report" Relationship="Self.FK_Raport_Inspection" FromRole="Inspection" ToRole="Report" />
+          <NavigationProperty Name="Employee" Relationship="Self.Inspector_has_Inspection" FromRole="Inspection" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Parkinglot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="region_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="streetname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="clarification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Inspection" Relationship="Self.FK_Inspectie_Parkeerplaats" FromRole="Parkinglot" ToRole="Inspection" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Parkinglot_Region" FromRole="Parkinglot" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Parkinglot" Relationship="Self.FK_Parkinglot_Region" FromRole="Region" ToRole="Parkinglot" />
+          <NavigationProperty Name="Employee" Relationship="Self.Inspector" FromRole="Region" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="inspection_id" />
+          </Key>
+          <Property Name="inspection_id" Type="Int32" Nullable="false" />
+          <Property Name="clarifaction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pdf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Inspection" Relationship="Self.FK_Raport_Inspection" FromRole="Report" ToRole="Inspection" />
+        </EntityType>
+        <EntityType Name="ReportFieldType">
+          <Key>
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Field" Relationship="Self.FK_Field_RapportFieldType" FromRole="ReportFieldType" ToRole="Field" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="role1" />
+          </Key>
+          <Property Name="role1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="state1" />
+          </Key>
+          <Property Name="state1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Asignment" Relationship="Self.FK_Asignment_Status" FromRole="State" ToRole="Asignment" />
+          <NavigationProperty Name="Inspection" Relationship="Self.FK_Inspectie_Status" FromRole="State" ToRole="Inspection" />
+        </EntityType>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="version_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Field" Relationship="Self.FK_Field_Template" FromRole="Template" ToRole="Field" />
+          <NavigationProperty Name="Form" Relationship="Self.FK_Form_Template" FromRole="Template" ToRole="Form" />
+        </EntityType>
+        <Association Name="FK_Absence_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Absence" Type="Self.Absence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Absence">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asignment_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Asignment" Type="Self.Asignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Asignment">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asignment_Status">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Asignment" Type="Self.Asignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="state1" />
+            </Principal>
+            <Dependent Role="Asignment">
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Opdracht">
+          <End Role="Asignment" Type="Self.Asignment" Multiplicity="1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Contactperson">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Contactperson" Type="Self.Contactperson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Contactperson">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_Datatype">
+          <End Role="Datatype" Type="Self.Datatype" Multiplicity="1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Datatype">
+              <PropertyRef Name="datatype1" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="datatype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Employee_status">
+          <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Status">
+              <PropertyRef Name="employee_status1" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="employee_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role1" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_RapportFieldType">
+          <End Role="ReportFieldType" Type="Self.ReportFieldType" Multiplicity="0..1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportFieldType">
+              <PropertyRef Name="title" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="reportFieldType_title" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="template_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questionair_Questionair">
+          <End Role="Field" Type="Self.Field" Multiplicity="1" />
+          <End Role="Formfield" Type="Self.Formfield" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Field">
+              <PropertyRef Name="title" />
+              <PropertyRef Name="template_id" />
+            </Principal>
+            <Dependent Role="Formfield">
+              <PropertyRef Name="field_title" />
+              <PropertyRef Name="field_template_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Form_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Form" Type="Self.Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Form">
+              <PropertyRef Name="template_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Raport">
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Vragenlijst">
+          <End Role="Form" Type="Self.Form" Multiplicity="0..1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vragenlijstveld_Veld_vregenlijst_id">
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
+          <End Role="Formfield" Type="Self.Formfield" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Formfield">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Inspectie">
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="0..1" />
+          <End Role="Inspection1" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspection">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection1">
+              <PropertyRef Name="follow_up_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Parkeerplaats">
+          <End Role="Parkinglot" Type="Self.Parkinglot" Multiplicity="1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parkinglot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="parking_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspectie_Status">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="state1" />
+            </Principal>
+            <Dependent Role="Inspection">
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Raport_Inspection">
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Inspection">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="inspection_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parkinglot_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Parkinglot" Type="Self.Parkinglot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="Parkinglot">
+              <PropertyRef Name="region_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Inspector">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+        </Association>
+        <Association Name="Inspector_has_Inspection">
+          <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="LocalDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Absence" EntityType="Self.Absence" />
+          <EntitySet Name="Asignment" EntityType="Self.Asignment" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Contactperson" EntityType="Self.Contactperson" />
+          <EntitySet Name="Datatype" EntityType="Self.Datatype" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
+          <EntitySet Name="Field" EntityType="Self.Field" />
+          <EntitySet Name="Form" EntityType="Self.Form" />
+          <EntitySet Name="Formfield" EntityType="Self.Formfield" />
+          <EntitySet Name="Image" EntityType="Self.Image" />
+          <EntitySet Name="Inspection" EntityType="Self.Inspection" />
+          <EntitySet Name="Parkinglot" EntityType="Self.Parkinglot" />
+          <EntitySet Name="Region" EntityType="Self.Region" />
+          <EntitySet Name="Report" EntityType="Self.Report" />
+          <EntitySet Name="ReportFieldType" EntityType="Self.ReportFieldType" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="State" EntityType="Self.State" />
+          <EntitySet Name="Template" EntityType="Self.Template" />
+          <AssociationSet Name="FK_Absence_Employee" Association="Self.FK_Absence_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Absence" EntitySet="Absence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asignment_Client" Association="Self.FK_Asignment_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Asignment" EntitySet="Asignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asignment_Status" Association="Self.FK_Asignment_Status">
+            <End Role="State" EntitySet="State" />
+            <End Role="Asignment" EntitySet="Asignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Opdracht" Association="Self.FK_Inspectie_Opdracht">
+            <End Role="Asignment" EntitySet="Asignment" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Contactperson" Association="Self.FK_Client_Contactperson">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Contactperson" EntitySet="Contactperson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_Datatype" Association="Self.FK_Field_Datatype">
+            <End Role="Datatype" EntitySet="Datatype" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee_status" Association="Self.FK_Employee_Employee_status">
+            <End Role="Employee_Status" EntitySet="Employee_Status" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_RapportFieldType" Association="Self.FK_Field_RapportFieldType">
+            <End Role="ReportFieldType" EntitySet="ReportFieldType" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_Template" Association="Self.FK_Field_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questionair_Questionair" Association="Self.FK_Questionair_Questionair">
+            <End Role="Field" EntitySet="Field" />
+            <End Role="Formfield" EntitySet="Formfield" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Form_Template" Association="Self.FK_Form_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Form" EntitySet="Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_Raport" Association="Self.FK_Image_Raport">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Vragenlijst" Association="Self.FK_Inspectie_Vragenlijst">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vragenlijstveld_Veld_vregenlijst_id" Association="Self.FK_Vragenlijstveld_Veld_vregenlijst_id">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Formfield" EntitySet="Formfield" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Inspectie" Association="Self.FK_Inspectie_Inspectie">
+            <End Role="Inspection" EntitySet="Inspection" />
+            <End Role="Inspection1" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Parkeerplaats" Association="Self.FK_Inspectie_Parkeerplaats">
+            <End Role="Parkinglot" EntitySet="Parkinglot" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspectie_Status" Association="Self.FK_Inspectie_Status">
+            <End Role="State" EntitySet="State" />
+            <End Role="Inspection" EntitySet="Inspection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Raport_Inspection" Association="Self.FK_Raport_Inspection">
+            <End Role="Inspection" EntitySet="Inspection" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parkinglot_Region" Association="Self.FK_Parkinglot_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Parkinglot" EntitySet="Parkinglot" />
+          </AssociationSet>
+          <AssociationSet Name="Inspector" Association="Self.Inspector">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Region" EntitySet="Region" />
+          </AssociationSet>
+          <AssociationSet Name="Inspector_has_Inspection" Association="Self.Inspector_has_Inspection">
+            <End Role="Inspection" EntitySet="Inspection" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LocalDatabaseModelStoreContainer" CdmEntityContainer="LocalDatabaseEntities">
+          <EntitySetMapping Name="Absence">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Absence">
+              <MappingFragment StoreEntitySet="Absence">
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="end" ColumnName="end" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Asignment">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Asignment">
+              <MappingFragment StoreEntitySet="Asignment">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="deadline" ColumnName="deadline" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="clarification" ColumnName="clarification" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contactperson">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Contactperson">
+              <MappingFragment StoreEntitySet="Contactperson">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Datatype">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Datatype">
+              <MappingFragment StoreEntitySet="Datatype">
+                <ScalarProperty Name="datatype1" ColumnName="datatype" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="employee_status" ColumnName="employee_status" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="in_service_date" ColumnName="in_service_date" />
+                <ScalarProperty Name="out_service_date" ColumnName="out_service_date" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Status">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Employee_Status">
+              <MappingFragment StoreEntitySet="Employee_Status">
+                <ScalarProperty Name="employee_status1" ColumnName="employee_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Field">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Field">
+              <MappingFragment StoreEntitySet="Field">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="template_id" ColumnName="template_id" />
+                <ScalarProperty Name="datatype" ColumnName="datatype" />
+                <ScalarProperty Name="reportFieldType_title" ColumnName="reportFieldType_title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Form">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Form">
+              <MappingFragment StoreEntitySet="Form">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="template_id" ColumnName="template_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formfield">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Formfield">
+              <MappingFragment StoreEntitySet="Formfield">
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+                <ScalarProperty Name="field_title" ColumnName="field_title" />
+                <ScalarProperty Name="field_template_id" ColumnName="field_template_id" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Image">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="image1" ColumnName="image" />
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspection">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Inspection">
+              <MappingFragment StoreEntitySet="Inspection">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="parking_id" ColumnName="parking_id" />
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+                <ScalarProperty Name="follow_up_id" ColumnName="follow_up_id" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="deadline" ColumnName="deadline" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="clarification" ColumnName="clarification" />
+                <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parkinglot">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Parkinglot">
+              <MappingFragment StoreEntitySet="Parkinglot">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="region_name" ColumnName="region_name" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="streetname" ColumnName="streetname" />
+                <ScalarProperty Name="clarification" ColumnName="clarification" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Report">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
+                <ScalarProperty Name="clarifaction" ColumnName="clarifaction" />
+                <ScalarProperty Name="pdf" ColumnName="pdf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportFieldType">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.ReportFieldType">
+              <MappingFragment StoreEntitySet="ReportFieldType">
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="role1" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="State">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="state1" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Template">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Template">
+              <MappingFragment StoreEntitySet="Template">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="version_number" ColumnName="version_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Inspector" TypeName="LocalDatabaseModel.Inspector" StoreEntitySet="Inspector">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="id" ColumnName="employee_id" />
+            </EndProperty>
+            <EndProperty Name="Region">
+              <ScalarProperty Name="name" ColumnName="region_name" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Inspector_has_Inspection" TypeName="LocalDatabaseModel.Inspector_has_Inspection" StoreEntitySet="Inspector_has_Inspection">
+            <EndProperty Name="Inspection">
+              <ScalarProperty Name="id" ColumnName="inspection_id" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="id" ColumnName="employee_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

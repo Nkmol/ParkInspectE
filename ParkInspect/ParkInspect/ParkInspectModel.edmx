@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ParkInspectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absence">
           <Key>
             <PropertyRef Name="start" />
@@ -103,10 +103,10 @@
         <EntityType Name="Image">
           <Key>
             <PropertyRef Name="image" />
-            <PropertyRef Name="inspection_id" />
+            <PropertyRef Name="form_id" />
           </Key>
           <Property Name="image" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="inspection_id" Type="int" Nullable="false" />
+          <Property Name="form_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inspection">
           <Key>
@@ -309,14 +309,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Image_Raport">
-          <End Role="Report" Type="Self.Report" Multiplicity="1" />
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Report">
-              <PropertyRef Name="inspection_id" />
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Image">
-              <PropertyRef Name="inspection_id" />
+              <PropertyRef Name="form_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -541,7 +541,7 @@
             <End Role="Form" EntitySet="Form" />
           </AssociationSet>
           <AssociationSet Name="FK_Image_Raport" Association="Self.FK_Image_Raport">
-            <End Role="Report" EntitySet="Report" />
+            <End Role="Form" EntitySet="Form" />
             <End Role="Image" EntitySet="Image" />
           </AssociationSet>
           <AssociationSet Name="FK_Inspecteur_has_Inspectie_Inspection" Association="Self.FK_Inspecteur_has_Inspectie_Inspection">
@@ -695,6 +695,7 @@
           <NavigationProperty Name="Template" Relationship="Self.FK_Form_Template" FromRole="Form" ToRole="Template" />
           <NavigationProperty Name="Inspections" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Form" ToRole="Inspection" />
           <NavigationProperty Name="Formfields" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Form" ToRole="Formfield" />
+          <NavigationProperty Name="Images" Relationship="ParkInspectModel.FK_Image_Raport1" FromRole="Form" ToRole="Image" />
         </EntityType>
         <EntityType Name="Formfield">
           <Key>
@@ -712,11 +713,11 @@
         <EntityType Name="Image">
           <Key>
             <PropertyRef Name="image1" />
-            <PropertyRef Name="inspection_id" />
+            <PropertyRef Name="form_id" />
           </Key>
           <Property Name="image1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="inspection_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Report" Relationship="Self.FK_Image_Raport" FromRole="Image" ToRole="Report" />
+          <Property Name="form_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Form" Relationship="ParkInspectModel.FK_Image_Raport1" FromRole="Image" ToRole="Form" />
         </EntityType>
         <EntityType Name="Inspection">
           <Key>
@@ -768,7 +769,6 @@
           </Key>
           <Property Name="inspection_id" Type="Int32" Nullable="false" />
           <Property Name="clarifaction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Images" Relationship="Self.FK_Image_Raport" FromRole="Report" ToRole="Image" />
           <NavigationProperty Name="Inspection" Relationship="Self.FK_Raport_Inspection" FromRole="Report" ToRole="Inspection" />
         </EntityType>
         <EntityType Name="ReportFieldType">
@@ -961,18 +961,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Image_Raport">
-          <End Role="Report" Type="Self.Report" Multiplicity="1" />
-          <End Role="Image" Type="Self.Image" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Report">
-              <PropertyRef Name="inspection_id" />
-            </Principal>
-            <Dependent Role="Image">
-              <PropertyRef Name="inspection_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Inspectie_Inspectie">
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="0..1" />
           <End Role="Inspection1" Type="Self.Inspection" Multiplicity="*" />
@@ -1112,10 +1100,6 @@
             <End Role="Form" EntitySet="Forms" />
             <End Role="Formfield" EntitySet="Formfields" />
           </AssociationSet>
-          <AssociationSet Name="FK_Image_Raport" Association="Self.FK_Image_Raport">
-            <End Role="Report" EntitySet="Reports" />
-            <End Role="Image" EntitySet="Images" />
-          </AssociationSet>
           <AssociationSet Name="FK_Inspectie_Inspectie" Association="Self.FK_Inspectie_Inspectie">
             <End Role="Inspection" EntitySet="Inspections" />
             <End Role="Inspection1" EntitySet="Inspections" />
@@ -1149,6 +1133,10 @@
             <End Role="Client" EntitySet="Clients" />
             <End Role="Contactperson" EntitySet="Contactpersons" />
           </AssociationSet>
+          <AssociationSet Name="FK_Image_Raport1" Association="ParkInspectModel.FK_Image_Raport1">
+            <End Role="Form" EntitySet="Forms" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Contactperson">
           <Key>
@@ -1169,6 +1157,18 @@
             </Principal>
             <Dependent Role="Contactperson">
               <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Raport1">
+          <End Type="ParkInspectModel.Form" Role="Form" Multiplicity="1" />
+          <End Type="ParkInspectModel.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="form_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1272,8 +1272,8 @@
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="ParkInspectModel.Image">
               <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
                 <ScalarProperty Name="image1" ColumnName="image" />
-                <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
