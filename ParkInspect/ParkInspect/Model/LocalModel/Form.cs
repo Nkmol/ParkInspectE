@@ -27,9 +27,9 @@ namespace ParkInspect.Model.LocalModel
     
         public virtual LocalTemplate Template { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollectionLocal<Image> Image { get; set; }
+        public virtual ICollection<LocalImage> Image { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollectionLocal<Inspection> Inspection { get; set; }
+        public virtual ICollection<LocalInspection> Inspection { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LocalFormfield> Formfield { get; set; }
     }

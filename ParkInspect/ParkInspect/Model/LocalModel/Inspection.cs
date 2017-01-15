@@ -40,6 +40,6 @@ namespace ParkInspect.Model.LocalModel
         public virtual LocalState State1 { get; set; }
         public virtual LocalReport Report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<LocalEmployee> Employee { get; set; }
     }
 }
