@@ -40,7 +40,7 @@ namespace ParkInspect.View.UserControls
         String street;
         int inspection_id;
         String home_adress;
-        Inspection inspection;
+        ParkInspect.Inspection inspection;
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private OfflineViewModel vm;
@@ -54,7 +54,7 @@ namespace ParkInspect.View.UserControls
             routingService = new RoutingService();
 
             service = vm.service;
-            inspection = new Inspection();
+            inspection = new ParkInspect.Inspection();
             OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
             gmap_offline.MapProvider = OpenStreetMapProvider.Instance;
             gmap_offline.Manager.Mode = AccessMode.ServerAndCache;
