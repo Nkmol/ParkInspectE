@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e83d13c065034ca58741df677804ecd3" Name="Diagram1">
+        <EntityTypeShape EntityType="LocalDatabaseModel.Absence" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Asignment" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Client" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Contactperson" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Datatype" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Employee" Width="1.5" PointX="7.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Employee_Status" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Field" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Form" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Formfield" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Image" Width="1.5" PointX="9.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Inspection" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Parkinglot" Width="1.5" PointX="12" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Region" Width="1.5" PointX="9.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Report" Width="1.5" PointX="7.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.ReportFieldType" Width="1.5" PointX="0.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Role" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.State" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Template" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Absence_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Asignment_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Asignment_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Opdracht" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Client_Contactperson" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Field_Datatype" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Employee_Employee_status" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Employee_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Field_RapportFieldType" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Field_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Questionair_Questionair" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Form_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Vragenlijst" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Vragenlijstveld_Veld_vregenlijst_id" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Image_Raport" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Inspectie" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Parkeerplaats" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Raport_Inspection" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Parkinglot_Region" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.Inspector" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalDatabaseModel.Inspector_has_Inspection" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
