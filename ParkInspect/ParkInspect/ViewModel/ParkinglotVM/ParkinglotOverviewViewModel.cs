@@ -55,6 +55,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             builder.Add("Number", NumberFilter);
             builder.Add("Zipcode", ZipFilter);
             builder.Add("Clarification", ClarificationFilter);
+            builder.Add("Streetname", StreetnameFilter);
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
@@ -78,6 +79,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             builder.Add("Number", NumberFilter);
             builder.Add("Zipcode", ZipFilter);
             builder.Add("Clarification", ClarificationFilter);
+            builder.Add("Streetname", StreetnameFilter);
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
@@ -91,6 +93,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         private string _numberFilter;
         private string _regionFilter;
         private string _clarificationFilter;
+        private string _streetnameFilter;
 
         public string NameFilter
         {
@@ -138,6 +141,16 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             set
             {
                 _clarificationFilter = value;
+                UpdateParkinglots();
+            }
+        }
+
+        public string StreetnameFilter
+        {
+            get { return _streetnameFilter; }
+            set
+            {
+                _streetnameFilter = value;
                 UpdateParkinglots();
             }
         }

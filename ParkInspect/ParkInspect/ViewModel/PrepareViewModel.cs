@@ -272,19 +272,28 @@ namespace ParkInspect.ViewModel
         }
         private void SaveDirections()
         {
+            vm.CleanFiles();
             if (directionItems.Count > 0)
             {
                 String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 {
-                    System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
-                    SaveFile.WriteLine("ID:" + selectedInspection.id);
-                    SaveFile.WriteLine("HOME:" + _home_adress);
-                    foreach (String s in directionItems)
+                    if (!File.Exists((runpath + "/directions/" + _directions_save_name + ".txt")))
                     {
-                        SaveFile.WriteLine(s);
+                        System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
+
+                        SaveFile.WriteLine("ID:" + selectedInspection.id);
+                        SaveFile.WriteLine("HOME:" + _home_adress);
+                        foreach (String s in directionItems)
+                        {
+                            SaveFile.WriteLine(s);
+                        }
+                        SaveFile.Close();
+                        _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgeslagen!");
                     }
-                    SaveFile.Close();
-                    _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
+                    else
+                    {
+                        _dialog.ShowMessage("Er ging iets mis!", "Deze naam bestaat al!");
+                    }
                 }
 
                 vm.LoadDirections();
