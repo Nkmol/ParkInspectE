@@ -366,6 +366,14 @@ namespace ParkInspect.ViewModel
         }
         public void CleanFiles()
         {
+            String path = runpath + "/directions/deletelist.txt";
+            FileInfo fileInfo = new FileInfo(runpath + "/directions/deletelist.txt");
+
+            if (!File.Exists(path))
+            {
+                using (FileStream fs = File.Create(path))
+                {}
+            }
             String line;
             System.IO.StreamReader fileReader = new System.IO.StreamReader(runpath + "/directions/deletelist.txt");
             while ((line = fileReader.ReadLine()) != null)
@@ -391,7 +399,8 @@ namespace ParkInspect.ViewModel
             String path = runpath + "/directions/deletelist.txt";
             if (!File.Exists(path))
             {
-                File.Create(path);
+                using (FileStream fs = File.Create(path))
+                { }
             }
             TextWriter tw = new StreamWriter(path, true);
             tw.WriteLine(name);
