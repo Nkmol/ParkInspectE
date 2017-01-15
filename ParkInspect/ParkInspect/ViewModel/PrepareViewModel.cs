@@ -283,6 +283,16 @@ namespace ParkInspect.ViewModel
 
                         SaveFile.WriteLine("ID:" + selectedInspection.id);
                         SaveFile.WriteLine("HOME:" + _home_adress);
+                        SaveFile.WriteLine("DATE:" + selectedInspection.date);
+                        SaveFile.WriteLine("DEADLINE:" + selectedInspection.deadline );
+                        SaveFile.WriteLine("CLIENT:" + selectedInspection.Asignment.Client.name);
+                        SaveFile.WriteLine("PARKINGLOT:" + selectedInspection.Parkinglot.name);
+                        SaveFile.WriteLine("STREET:" + selectedInspection.Parkinglot.streetname);
+                        SaveFile.WriteLine("REGION:" + selectedInspection.Parkinglot.Region.name);
+                        SaveFile.WriteLine("POSTAL:" + selectedInspection.Parkinglot.zipcode);
+                        SaveFile.WriteLine("NUMBER:" + selectedInspection.Parkinglot.number);
+                        SaveFile.WriteLine("REMARK:" + selectedInspection.clarification);
+
                         foreach (String s in directionItems)
                         {
                             SaveFile.WriteLine(s);

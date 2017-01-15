@@ -40,7 +40,6 @@ namespace ParkInspect.View.UserControls
         String street;
         int inspection_id;
         String home_adress;
-        Inspection inspection;
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private OfflineViewModel vm;
@@ -54,7 +53,6 @@ namespace ParkInspect.View.UserControls
             routingService = new RoutingService();
 
             service = vm.service;
-            inspection = new Inspection();
             OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
             gmap_offline.MapProvider = OpenStreetMapProvider.Instance;
             gmap_offline.Manager.Mode = AccessMode.ServerAndCache;
@@ -87,21 +85,14 @@ namespace ParkInspect.View.UserControls
             }
 
         }
-
-        private void GetInspectionInfo()
-        {
-            inspection = service.GetInspectionWithId(inspection_id).First();
-            vm.selectedInspection = inspection;
-        }
         private void loadRoute()
         {
             if (!clear)
             {
                 ReadInspectionInfoFromFile();
-                GetInspectionInfo();
-                zip = inspection.Parkinglot.zipcode;
-                region = inspection.Parkinglot.Region.name;
-                street = inspection.Parkinglot.streetname;
+                zip = vm.region_zip;
+                region = vm.region_name;
+                street = vm.street;
                 gmap_offline.Markers.Clear();
                 if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
                     !String.IsNullOrWhiteSpace(home_adress))
