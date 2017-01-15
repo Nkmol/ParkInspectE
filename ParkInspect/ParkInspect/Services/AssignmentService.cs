@@ -20,8 +20,10 @@ namespace ParkInspect.Services
 
         private AssignmentViewModel Combine(AssignmentViewModel viewModel)
         {
+            viewModel.Data.Inspections.Clear();
             foreach (var inspection in viewModel.Inspections)
             {
+                inspection.Data.Employees.Clear();
                 // Add inspectors to POCO inspection
                 foreach (var inspector in inspection.AssignedInspectors)
                 {
@@ -53,7 +55,7 @@ namespace ParkInspect.Services
             // Remove unassigned/removed inspections
             foreach (var inspection in viewModel.UnassignedInspections)
             {
-                Delete(inspection);
+                Delete(inspection.Data);
             }
 
             return Update(viewModel.Data);

@@ -153,7 +153,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             States = new ObservableCollection<State>(_service.GetAll<State>());
             Clients = new ObservableCollection<Client>(_service.GetAll<Client>());
 
-            SaveCommand = new RelayCommand<AssignmentOverviewViewModel>(Add, (_) => Data.id <= 0);
+            SaveCommand = new RelayCommand<AssignmentOverviewViewModel>(Save);
             EditCommand = new RelayCommand(Edit, () => Data.id > 0);
             AddInspectionCommand = new RelayCommand(ShowAddPopup);
             EditInspectionCommand = new RelayCommand(ShowEditPopup, () => SelectedInspection != null);
@@ -226,6 +226,14 @@ namespace ParkInspect.ViewModel.AssignmentVM
         {
             UnassignedInspections.Add(SelectedInspection);
             FormInspections.Remove(SelectedInspection);
+        }
+
+        private void Save(AssignmentOverviewViewModel overView)
+        {
+            if(Data.id <= 0) 
+                Add(overView);
+            else
+                Edit();
         }
 
         public void Add(AssignmentOverviewViewModel overview)

@@ -19,13 +19,17 @@ BEGIN
 	SET @assignment_date = (SELECT [date] FROM @assignment);
 	SET @assignment_deadline = (SELECT deadline FROM @assignment);
 
-	-- datestart and deadline of an inspection should be in the span of the whole assignment/project
-	IF @datestart >= @assignment_date AND @deadline >= @assignment_date
-			AND
-		@datestart <= @assignment_deadline AND @deadline <= @assignment_deadline
-		RETURN 1;
+	-- Not null
+	IF @datestart IS NOT NULL AND @deadline IS NOT NULL
+		-- datestart and deadline of an inspection should be in the span of the whole assignment/project
+		IF @datestart >= @assignment_date AND @deadline >= @assignment_date
+				AND
+			@datestart <= @assignment_deadline AND @deadline <= @assignment_deadline
+			RETURN 1;
+		ELSE
+			RETURN 0;
 	ELSE
-		RETURN 0;
+		RETURN 1 -- NULL is always allowed
 
 	RETURN 0;
 END

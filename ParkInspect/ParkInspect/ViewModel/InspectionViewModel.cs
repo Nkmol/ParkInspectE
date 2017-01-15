@@ -182,7 +182,7 @@ namespace ParkInspect.ViewModel
 
             // set services and Lists
             _service = new InspectionService(context);
-            EmptyForm();
+            // EmptyForm();
 
             // set commands
             ResetCommand = new RelayCommand(EmptyForm);
@@ -228,6 +228,16 @@ namespace ParkInspect.ViewModel
 
         private void EmptyForm()
         {
+            Parkinglot = null;
+            Form = null;
+            State = null;
+            FollowUpInspection = null;
+            Date = null;
+            Deadline = null;
+            Clarification = null;
+            AssignedInspectors = new ObservableCollection<Employee>();
+            SelectedInspector = null;
+
             base.RaisePropertyChanged();
         }
 
