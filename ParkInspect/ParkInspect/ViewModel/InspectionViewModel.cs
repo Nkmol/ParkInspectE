@@ -11,6 +11,7 @@ using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.Popup;
+using ParkInspect.View.UserControls;
 
 namespace ParkInspect.ViewModel
 {
@@ -34,7 +35,7 @@ namespace ParkInspect.ViewModel
 
         public Employee SelectedInspector { get; set; }
         public Employee SelectedAssignedInspector { get; set; }
-        
+
         public string Message { get; set; }
 
         // commands
@@ -52,191 +53,195 @@ namespace ParkInspect.ViewModel
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
 
-        public DateTime? BoundryStartDate
-        {
-            get { return _boundryStartDate; }
-            set
+            #region properties
+
+            public DateTime? BoundryStartDate
             {
-                if (_boundryStartDate != value)
+                get { return _boundryStartDate; }
+                set
                 {
-                    _boundryStartDate = value;
+                    if (_boundryStartDate != value)
+                    {
+                        _boundryStartDate = value;
+                        RaisePropertyChanged();
+                    }
+                }
+            }
+
+            public DateTime? BoundryEndDate
+            {
+                get { return _boundryEndDate; }
+                set
+                {
+                    if (_boundryEndDate != value)
+                    {
+                        _boundryEndDate = value;
+                        RaisePropertyChanged();
+                    }
+                }
+            }
+
+            #region ViewModel POCO Properties
+
+            // Is not used in the form
+            public int AssignmentId
+            {
+                get { return Data.assignment_id; }
+                set { Data.assignment_id = value; }
+            }
+
+            public Asignment Assigment
+            {
+                get { return Data.Asignment; }
+                set
+                {
+                    Data.Asignment = value;
                     RaisePropertyChanged();
                 }
             }
-        }
 
-        public DateTime? BoundryEndDate
-        {
-            get { return _boundryEndDate; }
-            set
+            public Form Form
             {
-                if (_boundryEndDate != value)
+                get { return Data.Form; }
+                set
                 {
-                    _boundryEndDate = value;
+                    Data.Form = value;
                     RaisePropertyChanged();
                 }
             }
-        }
 
-        #region ViewModel POCO Properties
-
-        // Is not used in the form
-        public int AssignmentId
-        {
-            get { return Data.assignment_id; }
-            set { Data.assignment_id = value; }
-        }
-
-        public Asignment Assigment
-        {
-            get { return Data.Asignment; }
-            set
+            public Inspection FollowUpInspection
             {
-                Data.Asignment = value;
-                RaisePropertyChanged();
+                get { return Data.Inspection2; }
+                set
+                {
+                    Data.Inspection2 = value;
+                    RaisePropertyChanged();
+                }
             }
-        }
 
-        public Form Form
-        {
-            get { return Data.Form; }
-            set
+            #endregion
+
+            public Parkinglot Parkinglot
             {
-                Data.Form = value;
-                RaisePropertyChanged();
+                get { return Data.Parkinglot; }
+                set
+                {
+                    Data.Parkinglot = value;
+                    RaisePropertyChanged();
+                }
             }
-        }
 
-        public Inspection FollowUpInspection
-        {
-            get { return Data.Inspection2; }
-            set
+            public State State
             {
-                Data.Inspection2 = value;
-                RaisePropertyChanged();
+                get { return Data.State1; }
+                set
+                {
+                    Data.State1 = value;
+                    RaisePropertyChanged();
+                }
             }
-        }
 
-        public Parkinglot Parkinglot
-        {
-            get { return Data.Parkinglot; }
-            set
+            public ObservableCollection<Employee> AssignedInspectors { get; set; }
+
+            public DateTime? Deadline
             {
-                Data.Parkinglot = value;
-                RaisePropertyChanged();
+                get { return Data.deadline; }
+                set
+                {
+                    Data.deadline = value;
+                    RaisePropertyChanged();
+                }
             }
-        }
 
-        public State State
-        {
-            get { return Data.State1; }
-            set
+            public DateTime? Date
             {
-                Data.State1 = value;
-                RaisePropertyChanged();
+                get { return Data.date; }
+                set
+                {
+                    Data.date = value;
+                    RaisePropertyChanged();
+                }
             }
-        }
 
-        public ObservableCollection<Employee> AssignedInspectors { get; set; }
-
-        public DateTime? Deadline
-        {
-            get { return Data.deadline; }
-            set
+            public string Clarification
             {
-                Data.deadline = value;
-                RaisePropertyChanged();
+                get { return Data.clarification; }
+                set
+                {
+                    Data.clarification = value;
+                    RaisePropertyChanged();
+                }
             }
-        }
 
-        public DateTime? Date
-        {
-            get { return Data.date; }
-            set
+            #endregion
+
+            [PreferredConstructor]
+            public InspectionViewModel(IRepository context) : this(context, null)
             {
-                Data.date = value;
-                RaisePropertyChanged();
             }
-        }
-
-        public string Clarification
-        {
-            get { return Data.clarification; }
-            set
+            public InspectionViewModel(IRepository context, Inspection data = null)
             {
-                Data.clarification = value;
-                RaisePropertyChanged();
+                Data = data ?? new Inspection();
+
+                // set services and Lists
+                _service = new InspectionService(context);
+                // EmptyForm();
+
+                // set commands
+                ResetCommand = new RelayCommand(EmptyForm);
+                SaveCommand = new RelayCommand(Save);
+
+                AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
+
+                UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
+                AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
+
+                States = new ObservableCollection<State>(_service.GetAll<State>());
+                Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
+                Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
+                Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
+                Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
             }
-        }
-        #endregion
 
-        [PreferredConstructor]
-        public InspectionViewModel(IRepository context) : this(context, null)
-        {
-        }
+            private void AssignInspector()
+            {
+                AssignedInspectors.Add(SelectedInspector);
+                Inspectors.Remove(SelectedInspector);
+            }
 
-        public InspectionViewModel(IRepository context, Inspection data = null)
-        {
-            Data = data ?? new Inspection();
+            private void UnassignInspecteur()
+            {
+                Inspectors.Add(SelectedAssignedInspector);
+                AssignedInspectors.Remove(SelectedAssignedInspector);
 
-            // set services and Lists
-            _service = new InspectionService(context);
-            // EmptyForm();
+                Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
+                RaisePropertyChanged(() => Inspectors);
+            }
 
-            // set commands
-            ResetCommand = new RelayCommand(EmptyForm);
-            SaveCommand = new RelayCommand(Save);
+            private void Save()
+            {
+                PopupBeforeFinish();
+            }
 
-            AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
+            private void EmptyForm()
+            {
+                Parkinglot = null;
+                Form = null;
+                State = null;
+                FollowUpInspection = null;
+                Date = null;
+                Deadline = null;
+                Clarification = null;
+                AssignedInspectors = new ObservableCollection<Employee>();
+                SelectedInspector = null;
 
-            UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
-            AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
+                base.RaisePropertyChanged();
+            }
 
-            States = new ObservableCollection<State>(_service.GetAll<State>());
-            Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
-            Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
-            Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
-            Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
-        }
-
-        private void AssignInspector()
-        {
-            AssignedInspectors.Add(SelectedInspector);
-            Inspectors.Remove(SelectedInspector);
-        }
-
-        private void UnassignInspecteur()
-        {
-            Inspectors.Add(SelectedAssignedInspector);
-            AssignedInspectors.Remove(SelectedAssignedInspector);
-
-            Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
-            RaisePropertyChanged(() => Inspectors);
-        }
-
-        private void Save()
-        {
-            PopupBeforeFinish();
-        }
-
-        private void EmptyForm()
-        {
-            Parkinglot = null;
-            Form = null;
-            State = null;
-            FollowUpInspection = null;
-            Date = null;
-            Deadline = null;
-            Clarification = null;
-            AssignedInspectors = new ObservableCollection<Employee>();
-            SelectedInspector = null;
-
-            base.RaisePropertyChanged();
-        }
-
-        private void PopupBeforeFinish()
-        {
-            PopupDone();
+            private void PopupBeforeFinish()
+            {
+                PopupDone();
+            }
         }
     }
-}

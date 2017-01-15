@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
@@ -14,8 +9,8 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 {
     public class ParkinglotViewModel : ViewModelBase
     {
+        private readonly DialogManager _dialogManager;
         private readonly Parkinglot _parkinglot;
-        private DialogManager _dialogManager;
 
         #region ViewModel POCO properties
         public string Name
@@ -67,6 +62,16 @@ namespace ParkInspect.ViewModel.ParkinglotVM
                 RaisePropertyChanged();
             }
         }
+
+        public string Streetname
+        {
+            get { return _parkinglot.streetname; }
+            set
+            {
+                _parkinglot.streetname = value;
+                RaisePropertyChanged();
+            }
+        }
         #endregion
 
         #region Property Form
@@ -76,11 +81,12 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public string FormRegion { get; set; }
         public string FormNumber { get; set; }
         public string FormClarification { get; set; }
+        public string FormStreetname { get; set; }
         #endregion
 
         protected ParkinglotService Service { get; set; }
 
-        public ObservableCollection<RegionViewModel> Regions { get; set; }
+        public ObservableCollection<Region> Regions { get; set; }
 
         public RelayCommand<ParkinglotOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
@@ -93,8 +99,8 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             _parkinglot = parkinglot;
             Service = new ParkinglotService(context);
 
-            Regions = new ObservableCollection<RegionViewModel>(Service.GetAll<Region>().Select(x => new RegionViewModel(x))); // TODO: Load this once
-            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, (_) => _parkinglot.id <= 0);
+            Regions = new ObservableCollection<Region>(Service.GetAll<Region>()); // TODO: Load this once
+            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, _ => _parkinglot.id <= 0);
             EditCommand = new RelayCommand(Edit, () => _parkinglot.id > 0);
 
             FillForm();
@@ -108,6 +114,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             FormRegion = Region;
             FormNumber = Number;
             FormClarification = Clarification;
+            FormStreetname = Streetname;
         }
 
         private void SaveForm()
@@ -117,6 +124,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Region = FormRegion;
             Number = FormNumber;
             Clarification = FormClarification;
+            Streetname = FormStreetname;
         }
 
         public void Add(ParkinglotOverviewViewModel overview)

@@ -12,17 +12,103 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParkInspect.ViewModel;
+using ParkInspect;
+using System.Diagnostics;
+using System.Timers;
+using ParkInspect.Model.ValidationRules;
 
 namespace ParkInspect.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for FormControl.xaml
-    /// </summary>
     public partial class FormControl : UserControl
     {
+        List<CachedFormField> fields;
         public FormControl()
         {
             InitializeComponent();
+            FormViewModel viewmodel = (FormViewModel) DataContext;
+            fields = new List<CachedFormField>();
+            viewmodel.View = this;
+        }
+
+        public void clear()
+        {
+            foreach (Control element in FormGrid.Children) {
+                if (element.Name.IndexOf("FormElement") > 0)
+                {
+                    FormGrid.Children.Remove(element);
+                }
+            }
+        }
+
+        public void addFormField(CachedFormField field,int count, bool isReadonly)
+        {
+            if (isReadonly)
+            {
+                saveButton.Visibility = Visibility.Hidden;
+            } else
+            {
+                saveButton.Visibility = Visibility.Visible;
+            }
+            Control element = null;
+            switch (field.datatype)
+            {
+                case "Boolean":
+                    element = new CheckBox();
+                    ((CheckBox)element).IsHitTestVisible = !isReadonly;
+                    Binding binding = new Binding("cachedForm.fields[" + count + "].value.boolvalue");
+                    BindingOperations.SetBinding(element, CheckBox.IsCheckedProperty, binding);
+                    break;
+                case "Date":
+                    element = new DatePicker();
+                    ((DatePicker)element).Focusable = !isReadonly;
+                    ((DatePicker)element).IsHitTestVisible = !isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
+                    break;
+                case "Double":
+                    element = new TextBox();
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    Binding doubleBinding = new Binding("cachedForm.fields[" + count + "].value.doublevalue");
+                    doubleBinding.ValidationRules.Add(new StringToIntValidationRule());
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, doubleBinding);
+                    break;
+                case "Integer":
+                    element = new TextBox();
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    Binding intBinding = new Binding("cachedForm.fields[" + count + "].value.intvalue");
+                    intBinding.ValidationRules.Add(new StringToIntValidationRule());
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, intBinding);
+                    break;
+                case "String":
+                    element = new TextBox();
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    Binding stringbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
+                    stringbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, stringbinding);
+                    break;
+                case "Time":
+                    element = new TextBox();
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
+                    break;
+                default:
+                    element = new TextBox();
+                    ((TextBox)element).IsReadOnly = isReadonly;
+                    Binding defaultbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
+                    defaultbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
+                    BindingOperations.SetBinding(element, TextBox.TextProperty, defaultbinding);
+                    break;
+            }
+            Label textLabel = new Label();
+            textLabel.Content = field.field_title;
+
+            textLabel.Margin = new Thickness(50, 50 + fields.Count * 50, 250, 850 - (50 + fields.Count * 50 + 40));
+            element.Margin = new Thickness(250, 50 + fields.Count * 50, 250, 850 - (50 + fields.Count * 50 + 40));
+            element.Name = "FormElement" + count;
+
+            fields.Add(field);
+            FormGrid.Children.Add(textLabel);
+            FormGrid.Children.Add(element);
         }
     }
 }

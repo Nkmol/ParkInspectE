@@ -15,8 +15,8 @@ namespace ParkInspect
     public partial class Image
     {
         public string image1 { get; set; }
-        public int inspection_id { get; set; }
+        public int form_id { get; set; }
     
-        public virtual Report Report { get; set; }
+        public virtual Form Form { get; set; }
     }
 }

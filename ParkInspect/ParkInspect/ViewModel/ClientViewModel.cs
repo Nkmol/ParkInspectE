@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -69,6 +70,16 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        public string Password
+        {
+            get { return _selectedClient.password; }
+            set
+            {
+                _selectedClient.password = value;
+                RaisePropertyChanged(("Password"));
+            }
+        }
+
         public string NameFilter
         {
             get { return _nameFilter; }
@@ -109,6 +120,7 @@ namespace ParkInspect.ViewModel
                 RaisePropertyChanged("name");
                 RaisePropertyChanged("phonenumber");
                 RaisePropertyChanged("email");
+                RaisePropertyChanged("password");
             }
         }
 
@@ -125,6 +137,18 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedClient.id == 0)
             {
+                SHA256 sha = SHA256.Create();
+
+                byte[] bytes = new byte[SelectedClient.password.Length * sizeof(char)];
+                System.Buffer.BlockCopy(SelectedClient.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+                sha.ComputeHash(bytes);
+
+                char[] chars = new char[sha.Hash.Length / sizeof(char)];
+                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+                SelectedClient.password = new string(chars);
+
                 Service.Add(SelectedClient);
                 _dialog.ShowMessage("Actie", "Klant toegevoegd");
             }

@@ -8,7 +8,6 @@ namespace ParkInspect.Model.Factory.Builder
 {
     public class FilterBuilder
     {
-
         private Dictionary<string, object> filters { get; set; }
 
         public FilterBuilder()
@@ -25,6 +24,5 @@ namespace ParkInspect.Model.Factory.Builder
         {
             return filters;
         }
-
     }
 }

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
+using ParkInspect.Model.Factory;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
