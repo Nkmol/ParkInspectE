@@ -41,6 +41,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             FormRegion = Region;
             FormNumber = Number;
             FormClarification = Clarification;
+            FormStreetname = Streetname;
         }
 
         private void SaveForm()
@@ -50,6 +51,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Region = FormRegion;
             Number = FormNumber;
             Clarification = FormClarification;
+            Streetname = FormStreetname;
         }
 
         public void Add(ParkinglotOverviewViewModel overview)
@@ -126,6 +128,16 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             }
         }
 
+        public string Streetname
+        {
+            get { return _parkinglot.streetname; }
+            set
+            {
+                _parkinglot.streetname = value;
+                RaisePropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Property Form
@@ -135,6 +147,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         public string FormRegion { get; set; }
         public string FormNumber { get; set; }
         public string FormClarification { get; set; }
+        public string FormStreetname { get; set; }
 
         #endregion
     }
