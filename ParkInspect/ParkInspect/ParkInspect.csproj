@@ -174,28 +174,15 @@
     <Compile Include="Contactperson.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
-    <Compile Include="Model\Factory\ExportFactory.cs" />
-    <Compile Include="Routing\CustomMarkers\Circle.xaml.cs" />
-    <Compile Include="Routing\CustomMarkers\CircleVisual.cs" />
-    <Compile Include="Routing\CustomMarkers\Controls\TrolleyTooltip.xaml.cs" />
-    <Compile Include="Routing\CustomMarkers\Cross.xaml.cs" />
-    <Compile Include="Routing\CustomMarkers\CustomMarkerDemo.xaml.cs" />
-    <Compile Include="Routing\CustomMarkers\CustomMarkerRed.xaml.cs" />
-    <Compile Include="Routing\CustomMarkers\Test.xaml.cs" />
     <Compile Include="Datatype.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Design\DesignDataService.cs" />
-    <Compile Include="Routing\RouteObject.cs" />
-    <Compile Include="Routing\RoutingService.cs" />
     <Compile Include="Employee.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Employee_Status.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Direction.cs" />
     <Compile Include="Field.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -211,10 +198,8 @@
     <Compile Include="Inspection.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataItem.cs" />
-    <Compile Include="Model\DataService.cs" />
-    <Compile Include="Model\Factory\FilterFactory.cs" />
-    <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
+    <Compile Include="Model\Factory\ExportFactory.cs" />
     <Compile Include="Model\LocalModel\Absence.cs">
       <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
     </Compile>
@@ -287,6 +272,36 @@
     <Compile Include="Model\LocalModel\Template.cs">
       <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Parkinglot.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Region.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Report.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportFieldType.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>ParkInspectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Routing\CustomMarkers\Circle.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\CircleVisual.cs" />
+    <Compile Include="Routing\CustomMarkers\Controls\TrolleyTooltip.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\Cross.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\CustomMarkerDemo.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\CustomMarkerRed.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\Test.xaml.cs" />
+    <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Routing\RouteObject.cs" />
+    <Compile Include="Routing\RoutingService.cs" />
+    <Compile Include="Model\Direction.cs" />
+    <Compile Include="Model\DataItem.cs" />
+    <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\Factory\FilterFactory.cs" />
+    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ValidationRules\IsNotEmptyValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsNotIntegerValidationRule.cs" />
     <Compile Include="Model\ValidationRules\IsPositiveNumberRule.cs" />
@@ -297,9 +312,6 @@
     <Compile Include="Model\ValidationRules\IsValidZipCodeValidationRule.cs" />
     <Compile Include="Model\ValidationRules\StringToIntValidationRule.cs" />
     <Compile Include="Model\Factory\Builder\PdfBuilder.cs" />
-    <Compile Include="Parkinglot.cs">
-      <DependentUpon>ParkInspectModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ParkInspectModel.Context.cs">
       <DependentUpon>ParkInspectModel.Context.tt</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -315,22 +327,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Region.cs">
-      <DependentUpon>ParkInspectModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Report.cs">
-      <DependentUpon>ParkInspectModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ReportFieldType.cs">
-      <DependentUpon>ParkInspectModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Repository\EntityFrameworkReadOnlyRepository.cs" />
     <Compile Include="Repository\EntityFrameworkRepository.cs" />
     <Compile Include="Repository\IReadOnlyRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Role.cs">
-      <DependentUpon>ParkInspectModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Services\AbsenceService.cs" />
     <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\ClientService.cs" />

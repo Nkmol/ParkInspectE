@@ -12,10 +12,10 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class ReportFieldType
+    public partial class LocalReportFieldType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReportFieldType()
+        public LocalReportFieldType()
         {
             this.Field = new HashSet<Field>();
         }

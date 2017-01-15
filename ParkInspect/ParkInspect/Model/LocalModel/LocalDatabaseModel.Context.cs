@@ -25,24 +25,24 @@ namespace ParkInspect.Model.LocalModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Absence> Absence { get; set; }
-        public virtual DbSet<Asignment> Asignment { get; set; }
-        public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<Contactperson> Contactperson { get; set; }
-        public virtual DbSet<Datatype> Datatype { get; set; }
-        public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<Employee_Status> Employee_Status { get; set; }
-        public virtual DbSet<Field> Field { get; set; }
-        public virtual DbSet<Form> Form { get; set; }
-        public virtual DbSet<Formfield> Formfield { get; set; }
-        public virtual DbSet<Image> Image { get; set; }
-        public virtual DbSet<Inspection> Inspection { get; set; }
-        public virtual DbSet<Parkinglot> Parkinglot { get; set; }
-        public virtual DbSet<Region> Region { get; set; }
-        public virtual DbSet<Report> Report { get; set; }
-        public virtual DbSet<ReportFieldType> ReportFieldType { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<State> State { get; set; }
-        public virtual DbSet<Template> Template { get; set; }
+        public virtual DbSet<LocalAbsence> Absence { get; set; }
+        public virtual DbSet<LocalAsignment> Asignment { get; set; }
+        public virtual DbSet<LocalClient> Client { get; set; }
+        public virtual DbSet<LocalContactperson> Contactperson { get; set; }
+        public virtual DbSet<LocalDatatype> Datatype { get; set; }
+        public virtual DbSet<LocalEmployee> Employee { get; set; }
+        public virtual DbSet<LocalEmployee_Status> Employee_Status { get; set; }
+        public virtual DbSet<LocalField> Field { get; set; }
+        public virtual DbSet<LocalForm> Form { get; set; }
+        public virtual DbSet<LocalFormfield> Formfield { get; set; }
+        public virtual DbSet<LocalImage> Image { get; set; }
+        public virtual DbSet<LocalInspection> Inspection { get; set; }
+        public virtual DbSet<LocalParkinglot> Parkinglot { get; set; }
+        public virtual DbSet<LocalRegion> Region { get; set; }
+        public virtual DbSet<LocalReport> Report { get; set; }
+        public virtual DbSet<LocalReportFieldType> ReportFieldType { get; set; }
+        public virtual DbSet<LocalRole> Role { get; set; }
+        public virtual DbSet<LocalState> State { get; set; }
+        public virtual DbSet<LocalTemplate> Template { get; set; }
     }
 }

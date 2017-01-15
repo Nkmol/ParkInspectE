@@ -12,10 +12,10 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Client
+    public partial class LocalClient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Client()
+        public LocalClient()
         {
             this.Asignment = new HashSet<Asignment>();
             this.Contactperson = new HashSet<Contactperson>();
@@ -25,6 +25,7 @@ namespace ParkInspect.Model.LocalModel
         public string name { get; set; }
         public string phonenumber { get; set; }
         public string email { get; set; }
+        public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asignment> Asignment { get; set; }

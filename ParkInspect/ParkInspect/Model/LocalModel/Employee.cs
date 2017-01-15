@@ -12,10 +12,10 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class LocalEmployee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
+        public LocalEmployee()
         {
             this.Absence = new HashSet<Absence>();
             this.Inspection = new HashSet<Inspection>();

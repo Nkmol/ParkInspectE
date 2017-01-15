@@ -12,19 +12,12 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Report
+    public partial class LocalReport
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Report()
-        {
-            this.Image = new HashSet<Image>();
-        }
-    
         public int inspection_id { get; set; }
         public string clarifaction { get; set; }
+        public string pdf { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Image { get; set; }
         public virtual Inspection Inspection { get; set; }
     }
 }
