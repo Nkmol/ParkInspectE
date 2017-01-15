@@ -26,7 +26,7 @@
                             <Label x:Name="l_number" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_clarification" Content="Opmerkingen:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         </StackPanel>
-                        <StackPanel  HorizontalAlignment="Left" Height="254" Margin="129,0,-2,0" VerticalAlignment="Top" Width="206">
+                        <StackPanel  HorizontalAlignment="Left" Height="293" Margin="129,0,-2,0" VerticalAlignment="Top" Width="206">
                             <Label x:Name="l_inspection_id_text" Content="{Binding inspection_id}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_date_text" Content="{Binding inspection_date}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_deadline_text" Content="{Binding inspection_deadline}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -36,7 +36,9 @@
                             <Label x:Name="l_street_text" Content="{Binding street}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_zip_text" Content="{Binding region_zip}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label x:Name="l_number_text" Content="{Binding region_number}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBlock x:Name="l_clarification_text" TextWrapping="Wrap" Text="{Binding clarification}" Height="54" Margin="0,5,0,0"/>
+                            <ScrollViewer>
+                                <TextBlock x:Name="l_clarification_text" TextWrapping="Wrap" Text="{Binding clarification}" Height="54" Margin="0,5,0,0"/>
+                            </ScrollViewer>
                         </StackPanel>
                     </Grid>
                 </GroupBox>

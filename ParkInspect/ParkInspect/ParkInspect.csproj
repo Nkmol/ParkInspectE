@@ -200,6 +200,78 @@
     </Compile>
     <Compile Include="Model\Factory\Builder\FilterBuilder.cs" />
     <Compile Include="Model\Factory\ExportFactory.cs" />
+    <Compile Include="Model\LocalModel\Absence.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Asignment.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Client.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Contactperson.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Datatype.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Employee.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Employee_Status.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Field.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Form.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Formfield.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Image.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Inspection.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\LocalDatabaseModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalDatabaseModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\LocalDatabaseModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\LocalDatabaseModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalDatabaseModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Parkinglot.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Region.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Report.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\ReportFieldType.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Role.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\State.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalModel\Template.cs">
+      <DependentUpon>LocalDatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Parkinglot.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -478,6 +550,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LocalDatabase.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LocalDatabase_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>LocalDatabase.mdf</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -495,6 +576,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\LocalModel\LocalDatabaseModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LocalDatabaseModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\LocalModel\LocalDatabaseModel.edmx.diagram">
+      <DependentUpon>LocalDatabaseModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="ParkInspectModel.edmx.diagram">
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
@@ -525,6 +613,16 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Model\LocalModel\LocalDatabaseModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LocalDatabaseModel.edmx</DependentUpon>
+      <LastGenOutput>LocalDatabaseModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\LocalModel\LocalDatabaseModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LocalDatabaseModel.edmx</DependentUpon>
+      <LastGenOutput>LocalDatabaseModel.cs</LastGenOutput>
+    </Content>
     <Content Include="ParkInspectModel.Context.tt">
       <DependentUpon>ParkInspectModel.edmx</DependentUpon>
       <Generator>TextTemplatingFileGenerator</Generator>
