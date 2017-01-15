@@ -18,6 +18,6 @@ namespace ParkInspect.Model.LocalModel
         public string clarifaction { get; set; }
         public string pdf { get; set; }
     
-        public virtual Inspection Inspection { get; set; }
+        public virtual LocalInspection Inspection { get; set; }
     }
 }

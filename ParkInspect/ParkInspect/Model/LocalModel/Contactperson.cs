@@ -19,6 +19,6 @@ namespace ParkInspect.Model.LocalModel
         public string firstname { get; set; }
         public string lastname { get; set; }
     
-        public virtual Client Client { get; set; }
+        public virtual LocalClient Client { get; set; }
     }
 }
