@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System.Reflection;
 using System.IO;
 using ParkInspect.Model;
+using ParkInspect.Model.LocalModel;
 
 namespace ParkInspect.ViewModel
 {
@@ -20,7 +21,7 @@ namespace ParkInspect.ViewModel
         public ObservableCollection<String> directionItems { get; set; }
         public ObservableCollection<Direction> _directions;
 
-        public Inspection _selectedInspection;
+        public LocalInspection _selectedInspection;
         public Direction _selectedDirection;
         public string _inspection_id;
         public string _inspection_date;
@@ -185,7 +186,7 @@ namespace ParkInspect.ViewModel
 
             }
         }
-        public Inspection selectedInspection
+        public LocalInspection selectedInspection
         {
             get
             {

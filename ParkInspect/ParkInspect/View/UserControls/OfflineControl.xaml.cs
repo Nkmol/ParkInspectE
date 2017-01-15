@@ -27,6 +27,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ParkInspect.Model;
 using ParkInspect.Routing;
+using ParkInspect.Model.LocalModel;
 
 namespace ParkInspect.View.UserControls
 {
@@ -40,7 +41,7 @@ namespace ParkInspect.View.UserControls
         String street;
         int inspection_id;
         String home_adress;
-        Inspection inspection;
+        LocalInspection inspection;
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private OfflineViewModel vm;
@@ -54,7 +55,7 @@ namespace ParkInspect.View.UserControls
             routingService = new RoutingService();
 
             service = vm.service;
-            inspection = new Inspection();
+            inspection = new LocalInspection();
             OpenStreetMapProvider.UserAgent = ".NET Framework Test Client";
             gmap_offline.MapProvider = OpenStreetMapProvider.Instance;
             gmap_offline.Manager.Mode = AccessMode.ServerAndCache;
@@ -90,7 +91,10 @@ namespace ParkInspect.View.UserControls
 
         private void GetInspectionInfo()
         {
-            inspection = service.GetInspectionWithId(inspection_id).First();
+            using (var context = new LocalDatabaseEntities())
+            {
+               inspection = context.Inspection.ToList().Where(i => i.id == inspection_id).First();
+            }
             vm.selectedInspection = inspection;
         }
         private void loadRoute()
