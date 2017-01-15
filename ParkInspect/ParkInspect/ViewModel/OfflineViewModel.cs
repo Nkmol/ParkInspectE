@@ -335,14 +335,25 @@ namespace ParkInspect.ViewModel
             {
                 if (!name.Equals("deletelist"))
                 {
-                    Direction direction = new Direction();
-                    direction.Name = name;
-                    if (!directions.Contains(direction))
+                    if (!DirectionExists(name))
                     {
+                        Direction direction = new Direction();
+                        direction.Name = name;
                         directions.Add(direction);
                     }
                 }
             }
+        }
+        private bool DirectionExists(String name)
+        {
+            foreach (Direction d in directions)
+            {
+                if (d.Name.Equals(name))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private void DeleteInspection()
         {
@@ -372,7 +383,7 @@ namespace ParkInspect.ViewModel
             if (!File.Exists(path))
             {
                 using (FileStream fs = File.Create(path))
-                {}
+                { }
             }
             String line;
             System.IO.StreamReader fileReader = new System.IO.StreamReader(runpath + "/directions/deletelist.txt");
