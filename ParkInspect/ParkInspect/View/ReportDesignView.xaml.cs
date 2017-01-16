@@ -10,28 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ParkInspect.ViewModel;
+using Syncfusion.Windows.Reports.Designer;
 
-namespace ParkInspect.View.UserControls
+namespace ParkInspect
 {
     /// <summary>
-    /// Interaction logic for ReportControl.xaml
+    /// Interaction logic for ReportDesignView.xaml
     /// </summary>
-    public partial class ReportControl : UserControl
+    public partial class ReportDesignView : Window
     {
-        public ReportControl()
+        public ReportDesignView()
         {
             InitializeComponent();
-        }
-
-        public void Select(object sender, MouseButtonEventArgs e)
-        {
-
-            ((ReportViewModel)DataContext).OpenReportView(Reports.SelectedIndex);
-
-
         }
     }
 }

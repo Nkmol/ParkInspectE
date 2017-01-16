@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{Binding Reports, Source={StaticResource Locator}}" >
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
@@ -14,10 +16,35 @@
     <Grid>
         <TabControl>
             <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[25], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Label Content="Overview goes here..." />
-            </TabItem>
-            <TabItem Header="Management" Visibility="{Binding Dashboard.TabStatus[26], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Label Content="Management goes here..." />
+                <Grid Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" x:Name="NewButton" Content="Nieuw" Height="30" Width="120"
+					        Command="{Binding CreateCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+					        Margin="0,10,0,0" VerticalAlignment="Top" />
+                    <Button Grid.Row="0" Grid.Column="1" x:Name="OpenButton" Content="Importeer" Height="30" Width="120"
+					        Command="{Binding ImportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+					        Margin="0,10,0,0" VerticalAlignment="Top" />
+                    <UniformGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="FilterGrid" Rows="1">
+                        <TextBox materialDesign:HintAssist.Hint="Zoek op naam" Name="NameFilter" Margin="0,0,5,10" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"/>
+                    </UniformGrid>
+                    <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Name="Reports" ItemsSource="{Binding Names}" SelectedItem="{Binding SelectedReport, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="Select">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Rapport" Binding="{Binding Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Grid.Row="3" Grid.Column="0"  x:Name="OpenReportButton" Content="Openen" Height="30" Width="120"
+					        Command="{Binding OpenReportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+					        Margin="0,10,0,0" VerticalAlignment="Top" />
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
