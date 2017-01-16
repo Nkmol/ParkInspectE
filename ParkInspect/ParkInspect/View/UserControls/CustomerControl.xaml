@@ -12,7 +12,12 @@
              DataContext="{Binding Client, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
-        <convertor1:VisibilityConverter x:Key="VisibilityConverter" />
+        <ResourceDictionary>
+            <convertor1:VisibilityConverter x:Key="VisibilityConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>

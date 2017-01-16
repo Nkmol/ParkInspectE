@@ -50,6 +50,10 @@ namespace ParkInspect.View.UserControls
         public OfflineControl()
         {
             InitializeComponent();
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
             vm = (OfflineViewModel)this.DataContext;
             routingService = new RoutingService();
 
@@ -118,7 +122,7 @@ namespace ParkInspect.View.UserControls
 
         private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            loadRoute();   
+            loadRoute();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

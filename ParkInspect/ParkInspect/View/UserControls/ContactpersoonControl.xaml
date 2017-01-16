@@ -10,6 +10,13 @@
              d:DesignHeight="600" d:DesignWidth="1000"
              VerticalAlignment="Top"
              DataContext="{Binding Contactperson, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <TabControl>
             <TabItem Header="Overview">

@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Collections;
@@ -12,6 +13,7 @@ using Microsoft.Win32;
 using System.IO;
 using Microsoft.Practices.ServiceLocation;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.Popup;
 
 /*
 using Microsoft.Practices.ServiceLocation;
@@ -24,7 +26,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace ParkInspect.ViewModel
 {
-    public class FormViewModel : ViewModelBase
+    public class FormViewModel : ViewModelBase, IPopup
     {
         public EntityFrameworkRepository<ParkInspectEntities> Context { get; set; }
         public TemplatesViewModel TemplatesViewModel { get; set; }
@@ -96,6 +98,7 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        public object SelectedItemPopup => this;
 
         public FormViewModel(IRepository context, DialogManager dialog)
         {

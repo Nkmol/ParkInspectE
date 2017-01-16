@@ -16,6 +16,13 @@
         d:DesignHeight="300"
         Name="ChildWindow"
         DataContext="{Binding PopupUpdateNew, Source={StaticResource Locator}}">
+    <simpleChildWindow:ChildWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </simpleChildWindow:ChildWindow.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top">
             <ContentPresenter Content="{Binding AdditionalContent, ElementName=ChildWindow}"></ContentPresenter>
