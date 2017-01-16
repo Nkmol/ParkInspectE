@@ -23,12 +23,16 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Zoek in voornaam" Name="FirstnameFilter" HorizontalAlignment="Stretch"
-                                 Text="{Binding FirstnameFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,5" />
-                        <TextBox Grid.Column="1" Name="LastnameFilter" materialDesign:HintAssist.Hint="Zoek in achternaam" HorizontalAlignment="Stretch"
-                                 Text="{Binding LastnameFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,5"/>
-                        <TextBox Grid.Column="2" materialDesign:HintAssist.Hint="Zoek in klant" Name="ClientFilter" HorizontalAlignment="Stretch"
-                                 Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,5"/>
+                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Zoek in voornaam"
+                                 Name="FirstnameFilter" HorizontalAlignment="Stretch"
+                                 Text="{Binding FirstnameFilter, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,15,5" />
+                        <TextBox Grid.Column="1" Name="LastnameFilter"
+                                 materialDesign:HintAssist.Hint="Zoek in achternaam" HorizontalAlignment="Stretch"
+                                 Text="{Binding LastnameFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,5" />
+                        <TextBox Grid.Column="2" materialDesign:HintAssist.Hint="Zoek in klant" Name="ClientFilter"
+                                 HorizontalAlignment="Stretch"
+                                 Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,5" />
                     </Grid>
 
                     <DataGrid ItemsSource="{Binding Contactpersons, UpdateSourceTrigger=PropertyChanged}"
@@ -45,54 +49,59 @@
 
             <TabItem Header="Management">
                 <Grid>
-                    <DockPanel Height="200" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <DockPanel Height="200" Width="255" Margin="100,0,0,0" VerticalAlignment="Top"
+                               HorizontalAlignment="Left">
                         <StackPanel>
-                            <Label x:Name="NameLabel" Content="Voornaam"/>
+                            <Label x:Name="NameLabel" Content="Voornaam" />
                             <TextBox x:Name="Firstname" Margin="5,0,0,10" Width="250">
-                        <TextBox.Text>
-                            <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
-                                                                              ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                            <Label x:Name="TelnrLabel" Content="Achternaam"/>
-                            <TextBox x:Name="Lastname" Margin="5,0,0,10" Width="250">
                                 <TextBox.Text>
-                                    <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <validationrules:IsValidNameValidationRule ValidationStep="ConvertedProposedValue"
-                                                                              ValidatesOnTargetUpdated="True" />
+                                            <validationrules:IsValidNameValidationRule
+                                                ValidationStep="ConvertedProposedValue"
+                                                ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                        </StackPanel>     
-                   </DockPanel>
-                    <DockPanel Height="200" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <StackPanel>
-                            <Label Content="Klant:"/>
-                            <ComboBox Name="Customer" HorizontalAlignment="Left"  Margin="5,0,0,10" Width="250" DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
-                              SelectedItem="{Binding SelectedClient}" Grid.RowSpan="2">
-                                <ComboBox.Text>
-                            <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                              ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
+                            <Label x:Name="TelnrLabel" Content="Achternaam" />
+                            <TextBox x:Name="Lastname" Margin="5,0,0,10" Width="250">
+                                <TextBox.Text>
+                                    <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationrules:IsValidNameValidationRule
+                                                ValidationStep="ConvertedProposedValue"
+                                                ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
-                   </DockPanel>
+                    </DockPanel>
+                    <DockPanel Height="200" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right"
+                               VerticalAlignment="Top">
+                        <StackPanel>
+                            <Label Content="Klant:" />
+                            <ComboBox Name="Customer" HorizontalAlignment="Left" Margin="5,0,0,10" Width="250"
+                                      DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                                      ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                                      SelectedItem="{Binding SelectedClient}" Grid.RowSpan="2">
+                                <ComboBox.Text>
+                                    <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                      ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
+                        </StackPanel>
+                    </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,200,100,0">
                         <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-			                    Content="Opslaan"
-			                    VerticalAlignment="Top" Margin="415,0,10,0"
-			                    Width="120">
+                                Content="Opslaan"
+                                VerticalAlignment="Top" Margin="415,0,10,0"
+                                Width="120">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -116,10 +125,10 @@
                             </Button.Style>
                         </Button>
                         <Button Command="{Binding ResetButtonCommand}" Content="Deselecteren"
-			                    VerticalAlignment="Top" Width="120" Margin="0,0,10,0"/>
+                                VerticalAlignment="Top" Width="120" Margin="0,0,10,0" />
                         <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijderen"
-                        	VerticalAlignment="Top" Margin="0,0,0,0"
-                        	Width="120">
+                                VerticalAlignment="Top" Margin="0,0,0,0"
+                                Width="120">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -127,13 +136,13 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                        							Binding="{Binding (Validation.HasError), ElementName=Firstname}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Firstname}"
                                                     Value="false" />
                                                 <Condition
-                        							Binding="{Binding (Validation.HasError), ElementName=Lastname}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Lastname}"
                                                     Value="false" />
                                                 <Condition
-                        							Binding="{Binding (Validation.HasError), ElementName=Customer}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Customer}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />

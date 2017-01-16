@@ -265,26 +265,35 @@ namespace ParkInspect.ViewModel
             routingService = new RoutingService();
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
-            inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
+            inspections = new ObservableCollection<Inspection>(service.GetAll<Inspection>());
             saveDirections = new RelayCommand(SaveDirections);
             getDirections = new RelayCommand(GetDirections);
 
         }
         private void SaveDirections()
         {
+            vm.CleanFiles();
             if (directionItems.Count > 0)
             {
                 String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 {
-                    System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
-                    SaveFile.WriteLine("ID:" + selectedInspection.id);
-                    SaveFile.WriteLine("HOME:" + _home_adress);
-                    foreach (String s in directionItems)
+                    if (!File.Exists((runpath + "/directions/" + _directions_save_name + ".txt")))
                     {
-                        SaveFile.WriteLine(s);
+                        System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(runpath + "/directions/" + _directions_save_name + ".txt");
+
+                        SaveFile.WriteLine("ID:" + selectedInspection.id);
+                        SaveFile.WriteLine("HOME:" + _home_adress);
+                        foreach (String s in directionItems)
+                        {
+                            SaveFile.WriteLine(s);
+                        }
+                        SaveFile.Close();
+                        _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgeslagen!");
                     }
-                    SaveFile.Close();
-                    _dialog.ShowMessage("Succes!", "De routebeschrijving is succesvol opgelsagen!");
+                    else
+                    {
+                        _dialog.ShowMessage("Er ging iets mis!", "Deze naam bestaat al!");
+                    }
                 }
 
                 vm.LoadDirections();
@@ -310,7 +319,7 @@ namespace ParkInspect.ViewModel
                         _dialog.ShowMessage("Fout!", "Voer een geldig vertrek adres in!");
                         break;
                     case "directionsFailed":
-                        _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?)");
+                        _dialog.ShowMessage("Fout!", "Er ging iets fout met het laden van de routebeschrijving! (Zijn de adres gegevens correct?/Ben je verbonden met internet?)");
                         break;
                 }
             }

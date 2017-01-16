@@ -33,18 +33,18 @@
                     <DataGrid Height="400" Name="DataGrid" Grid.Row="2" SelectionMode="Single" AutoGenerateColumns="False" 
                               IsReadOnly="True" ItemsSource="{Binding Employees}" 
                               SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
-                        <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
-                        <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
+                            <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
+                            <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
                             <DataGridTextColumn Header="In dienst datum" Binding="{Binding in_service_date, StringFormat={}{0:dd/MM/yyyy}}" />
                             <DataGridTextColumn Header="Uit dienst datum" Binding="{Binding out_service_date, StringFormat={}{0:dd/MM/yyyy}}"/>
-                        <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
+                            <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
                             <DataGridTextColumn Header="In dienst" Binding="{Binding active}" />
-                        <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
-                        <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Management" DataContext="{Binding SelectedEmployee}" Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
@@ -60,7 +60,7 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                              </TextBox>
+                            </TextBox>
 
                             <Label Content="Achternaam"/>
                             <TextBox Name="lname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
@@ -76,14 +76,14 @@
                             <Label Content="Emailadres"/>
                             <TextBox Name="email" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
                                 <TextBox.Text>
-                                        <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                                <validationRules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                            <validationRules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
                             <Label Content="Telefoonnummer" />
                             <TextBox Name="phone" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
@@ -111,18 +111,19 @@
                     </DockPanel>
 
                     <DockPanel>
-                        <StackPanel VerticalAlignment="Bottom">
-                            <DataGrid ScrollViewer.CanContentScroll="True" 
+                        <DataGrid ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                               SelectionMode="Single" AutoGenerateColumns="False" 
-                              IsReadOnly="True" Height="175" ItemsSource="{Binding Absences}" 
-                              Margin="100,0,494,27">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Afwezig Begin" Binding="{Binding start}"  />
-                                    <DataGridTextColumn Header="Afwezig Einde" Binding="{Binding end}" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                              IsReadOnly="True" ItemsSource="{Binding Absences}" 
+                              Margin="100,329,494,42" Width="261">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Afwezig Begin" Binding="{Binding start}"  />
+                                <DataGridTextColumn Header="Afwezig Einde" Binding="{Binding end}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel VerticalAlignment="Bottom">
+
                         </StackPanel>
                     </DockPanel>
 
@@ -151,7 +152,7 @@
             	                    VerticalAlignment="Top">
                                 <DatePicker.SelectedDate>
                                     <Binding Path="out_service_date" UpdateSourceTrigger="PropertyChanged"></Binding>
-                            </DatePicker.SelectedDate>
+                                </DatePicker.SelectedDate>
                             </DatePicker>
 
                             <Label Content="Rol" />
@@ -177,7 +178,7 @@
                             </ComboBox>
                         </StackPanel>
                     </DockPanel>
-                    <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
+                    <StackPanel Orientation="Horizontal" Margin="85,521,100,0">
                         <Label  Width="300" Height="50" VerticalAlignment="Top" DataContext="{Binding Employees, Source={StaticResource Locator}}" Content="{Binding Notification, Mode=TwoWay}"></Label>
                         <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding SaveCommand}" Margin="240,0,10,0" Content="Opslaan">
                             <Button.Style>
@@ -201,7 +202,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        
+
                         <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,0" Content="Deselecteren"/>
                     </StackPanel>
                 </Grid>
