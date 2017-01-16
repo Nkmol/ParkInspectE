@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -107,8 +109,7 @@ namespace ParkInspect.WEB.Controllers
                 : "";
 
             var clients = new UserManager().GetClients();
-            var model = new Models.Client(clients.Find(c => c.email == User.Identity.Name));
-            
+            var model = new Models.Client(clients.Find(c => c.email == User.Identity.Name));            
                       
             return View(model);
         }
@@ -130,14 +131,43 @@ namespace ParkInspect.WEB.Controllers
             var clients = new UserManager().GetClients();
             var modal = new Models.Client(clients.Find(c => c.id == id));
 
+            var sha = SHA256.Create();
+
+            var bytes = new byte[model.OldPassword.Length * sizeof(char)];
+            System.Buffer.BlockCopy(model.OldPassword.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+            sha.ComputeHash(bytes);
+
+            var chars = new char[sha.Hash.Length / sizeof(char)];
+            System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+            var pw = new string(chars);
+
             if (model.OldPassword != modal.Password)
             {
-                AddError("Uw oude wachtwoord is niet correct");
-                return View(model);
+                if (pw != modal.Password)
+                {
+                    AddError("Uw oude wachtwoord is niet correct");
+                    return View(model);
+                }
             }
 
+            var sha1 = SHA256.Create();
+
+            var bytes1 = new byte[model.NewPassword.Length * sizeof(char)];
+            System.Buffer.BlockCopy(model.NewPassword.ToCharArray(), 0, bytes1, 0, bytes1.Length);
+
+            sha1.ComputeHash(bytes1);
+
+            var chars1 = new char[sha1.Hash.Length / sizeof(char)];
+            System.Buffer.BlockCopy(sha1.Hash, 0, chars1, 0, sha1.Hash.Length);
+
+            var pw1 = new string(chars1);
+
+            modal.Password = pw1;
+
             var result = new UserManager().ChangePassword(modal);
-            
+
             if (result == 1)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -145,10 +175,9 @@ namespace ParkInspect.WEB.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", new {Message = ManageMessageId.ChangePasswordSuccess});
             }
-            //AddErrors(result);
-            
+
             return View(model);
         }
 

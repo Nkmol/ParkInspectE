@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 
 namespace ParkInspect.WEB.Models
@@ -13,9 +14,21 @@ namespace ParkInspect.WEB.Models
         {
             using (var db = new ParkInspectEntities()) // use your DbConext
             {
+                var sha = SHA256.Create();
+
+                var bytes = new byte[password.Length * sizeof(char)];
+                System.Buffer.BlockCopy(password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+                sha.ComputeHash(bytes);
+
+                var chars = new char[sha.Hash.Length / sizeof(char)];
+                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+                var result = new string(chars);
+
                 // if your users set name is Users
                 return db.Clients.ToList().Find(u => u.email == username
-                    && u.password == password) != null;
+                    && u.password == result) != null;
             }
         }
 
