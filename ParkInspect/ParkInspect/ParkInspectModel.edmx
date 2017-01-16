@@ -102,10 +102,9 @@
         </EntityType>
         <EntityType Name="Image">
           <Key>
-            <PropertyRef Name="image" />
             <PropertyRef Name="form_id" />
           </Key>
-          <Property Name="image" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="image" Type="ntext" Nullable="false" />
           <Property Name="form_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inspection">
@@ -161,6 +160,7 @@
           </Key>
           <Property Name="inspection_id" Type="int" Nullable="false" />
           <Property Name="clarifaction" Type="text" />
+          <Property Name="pdf" Type="ntext" />
         </EntityType>
         <EntityType Name="ReportFieldType">
           <Key>
@@ -310,7 +310,7 @@
         </Association>
         <Association Name="FK_Image_Raport">
           <End Role="Form" Type="Self.Form" Multiplicity="1" />
-          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <End Role="Image" Type="Self.Image" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Form">
               <PropertyRef Name="id" />
@@ -715,7 +715,7 @@
             <PropertyRef Name="image1" />
             <PropertyRef Name="form_id" />
           </Key>
-          <Property Name="image1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="form_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Form" Relationship="ParkInspectModel.FK_Image_Raport1" FromRole="Image" ToRole="Form" />
         </EntityType>
@@ -770,6 +770,7 @@
           <Property Name="inspection_id" Type="Int32" Nullable="false" />
           <Property Name="clarifaction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Inspection" Relationship="Self.FK_Raport_Inspection" FromRole="Report" ToRole="Inspection" />
+          <Property Name="pdf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReportFieldType">
           <Key>
@@ -1315,6 +1316,7 @@
           <EntitySetMapping Name="Reports">
             <EntityTypeMapping TypeName="ParkInspectModel.Report">
               <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="pdf" ColumnName="pdf" />
                 <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
                 <ScalarProperty Name="clarifaction" ColumnName="clarifaction" />
               </MappingFragment>
