@@ -10,9 +10,14 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Reports, Source={StaticResource Locator}}" >
     <UserControl.Resources>
-        <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+        <ResourceDictionary>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid>
         <TabControl>
             <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[25], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">

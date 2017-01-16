@@ -8,6 +8,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Inspection;
 using ParkInspect.ViewModel.Popup;
 
@@ -40,6 +41,8 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public RelayCommand EditInspectionCommand { get; set; }
         public RelayCommand RemoveInspectionCommand { get; set; }
         public RelayCommand RestoreCommand { get; set; }
+        public RelayCommand PrepareCommand { get; set; }
+
 
         #region ViewModel Poco properties
 
@@ -145,7 +148,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             if (Deadline == DateTime.MinValue)
                 Deadline = DateTime.Now.AddDays(1);
 
-            Inspections = new ObservableCollection<InspectionViewModel>(Data.Inspections.Select(x => new InspectionViewModel(repository, x)));
+            Inspections = new ObservableCollection<InspectionViewModel>(Data.Inspections.Select(x => new InspectionViewModel(repository, popupManager, x)));
             UnassignedInspections = new ObservableCollection<InspectionViewModel>();
 
             // TODO global data
@@ -159,8 +162,13 @@ namespace ParkInspect.ViewModel.AssignmentVM
             EditInspectionCommand = new RelayCommand(ShowEditPopup, () => SelectedInspection != null);
             RemoveInspectionCommand = new RelayCommand(UnassignInspection, () => SelectedInspection != null);
             RestoreCommand = new RelayCommand(Reset);
+            PrepareCommand = new RelayCommand(ShowPreparePopup, () => SelectedInspection != null);
 
             FillForm();
+        }
+        private void ShowPreparePopup()
+        {
+            _popupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection.Data), null);
         }
 
         // TODO: Improve the way to make a 'property shadow object'. There is need for double property decleration at the moment.

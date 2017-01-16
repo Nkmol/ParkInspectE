@@ -8,7 +8,13 @@
              xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="ParkInspect.View.UserControls.PrepareControl"
              mc:Ignorable="d"
                 DataContext="{Binding Prepare, Source={StaticResource Locator}}" Width="965" Height="565">
-
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <TabControl Height="565" VerticalAlignment="Top">
         <Canvas Margin="0,-37,0,-4" Height="595" VerticalAlignment="Top" HorizontalAlignment="Left" Width="955">
             <Canvas>

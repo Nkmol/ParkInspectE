@@ -8,7 +8,13 @@
              xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
              mc:Ignorable="d"
                 DataContext="{Binding Offline, Source={StaticResource Locator}}" Width="1005.5" Height="634.965">
-
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <TabControl Height="635" VerticalAlignment="Top">
         <Grid Margin="0,-1,0,242">
             <GroupBox x:Name="groupBox3" Header="Opgeslagen Inspecties" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="284" Height="227">

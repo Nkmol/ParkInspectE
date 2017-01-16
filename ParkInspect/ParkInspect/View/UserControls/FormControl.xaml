@@ -8,6 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="500"
              DataContext="{Binding Forms, Source={StaticResource Locator}}" Width="944">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <TabControl SelectedIndex="{Binding SelectedTab}">
             <Custom:MetroTabItem Header="Vragenlijsten" >

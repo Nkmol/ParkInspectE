@@ -26,6 +26,10 @@ namespace ParkInspect.View.UserControls
         public FormControl()
         {
             InitializeComponent();
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
             FormViewModel viewmodel = (FormViewModel) DataContext;
             fields = new List<CachedFormField>();
             viewmodel.View = this;
