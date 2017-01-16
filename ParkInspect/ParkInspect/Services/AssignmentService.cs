@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ParkInspect.Repository;
+using ParkInspect.ViewModel.AssignmentVM;
 
 namespace ParkInspect.Services
 {
@@ -16,36 +17,48 @@ namespace ParkInspect.Services
         {
             _context = context;
         }
-        /*
-        public ObservableCollection<Tuple<IEnumerable<Parkinglot>, IEnumerable<Form>, IEnumerable<State>, IEnumerable<Inspection>, IEnumerable<Asignment>>> GetAllTuple()
+
+        private AssignmentViewModel Combine(AssignmentViewModel viewModel)
         {
-            var t = new Tuple<IEnumerable<Parkinglot>, IEnumerable<Form>, IEnumerable<State>, IEnumerable<Inspection>, IEnumerable<Asignment>>(GetAll<Parkinglot>(), GetAll<Form>(), GetAll<State>(), GetAll<Inspection>(), GetAll<Asignment>());
-            return new ObservableCollection<Tuple<IEnumerable<Parkinglot>, IEnumerable<Form>, IEnumerable<State>, IEnumerable<Inspection>, IEnumerable<Asignment>>>(t);
+            viewModel.Data.Inspections.Clear();
+            foreach (var inspection in viewModel.Inspections)
+            {
+                inspection.Data.Employees.Clear();
+                // Add inspectors to POCO inspection
+                foreach (var inspector in inspection.AssignedInspectors)
+                {
+                    inspection.Data.Employees.Add(inspector);
+                }
+                // Add Inspections to POCO assignment
+                viewModel.Data.Inspections.Add(inspection.Data);
+            }
+
+            return viewModel;
         }
-        */
+
         public IEnumerable<Asignment> GetAsignmentWithClient(string name)
         {
             return _context.GetAll<Asignment>(null, c => c.Inspections)
                 .Where(k => k.Client.name == name);
         }
 
-        public void UpdateAssignment(Asignment assignment)
+        public bool Add(AssignmentViewModel viewModel)
         {
-
-            _context.Update(assignment);
-            _context.Save();
+            viewModel = Combine(viewModel);
+            return Add(viewModel.Data);
         }
 
-        public void DeleteAssignment(Asignment assignment)
+        public bool Update(AssignmentViewModel viewModel)
         {
-            _context.Delete(assignment);
-            _context.Save();
-        }
+            viewModel = Combine(viewModel);
 
-        public void CreateNewAssignemnt(Asignment assignment)
-        {
-            _context.Create(assignment);
-            _context.Save();
+            // Remove unassigned/removed inspections
+            foreach (var inspection in viewModel.UnassignedInspections)
+            {
+                Delete(inspection.Data);
+            }
+
+            return Update(viewModel.Data);
         }
     }
 }

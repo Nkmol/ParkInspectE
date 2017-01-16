@@ -100,7 +100,7 @@ namespace ParkInspect.ViewModel
             if (NewRegion?.name == null)
                 return;
             Message = Service.Add(NewRegion) ? "Een nieuwe regio is opgeslagen!" : "Something went wrong.";
-            _dialog.ShowMessage("Action", Message);
+            _dialog.ShowMessage("Succes!", Message);
 
             Regions.Add(NewRegion);
             base.RaisePropertyChanged();
@@ -113,7 +113,7 @@ namespace ParkInspect.ViewModel
             if (SelectedRegion == null)
             {
                 Message = Service.Delete(SelectedRegion) ? "Something went wrong." : "Selecteer een regio!";
-                _dialog.ShowMessage("Action", Message);
+                _dialog.ShowMessage("Er ging iets fout!", Message);
                 return;
             }
 

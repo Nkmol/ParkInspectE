@@ -42,7 +42,7 @@ namespace ParkInspect.View.UserControls
         public InspectionService service;
         private String runpath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private PrepareViewModel vm;
-        public PrepareControl(Inspection inspection)
+        public PrepareControl(ParkInspect.Inspection inspection)
         {
             InitializeComponent();
             vm = (PrepareViewModel)this.DataContext;

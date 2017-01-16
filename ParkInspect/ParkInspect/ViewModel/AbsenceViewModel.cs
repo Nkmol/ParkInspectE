@@ -216,7 +216,7 @@ namespace ParkInspect.ViewModel
 
             if (SelectedAbsence == null)
             {
-                _dialog.ShowMessage("Action", "Selecteer een afwezigheid");
+                _dialog.ShowMessage("Er ging iets fout!", "Selecteer een afwezigheid");
                 return;
             }
 
@@ -225,7 +225,7 @@ namespace ParkInspect.ViewModel
             if (dialogResult == DialogResult.Yes)
             {
                 Message = (Service.Delete<Absence>(SelectedAbsence) ? "Afwezigheid verwijderd" : "Something went wrong.");
-                _dialog.ShowMessage("Action", Message);
+                _dialog.ShowMessage("Succes!", Message);
 
                 Absences.Remove(SelectedAbsence);
 
@@ -239,12 +239,12 @@ namespace ParkInspect.ViewModel
 
             if (NewAbsence.start >= NewAbsence.end)
             {
-                _dialog.ShowMessage("Action", "De einddatum  mag niet voor de begindatum liggen!");
+                _dialog.ShowMessage("Er ging iets fout!", "De einddatum  mag niet voor de begindatum liggen!");
                 return;
             }
             
             Message = (Service.Add<Absence>(NewAbsence) ? "Een nieuwe afwezigheid is opgeslagen!" : "Something went wrong." );
-            _dialog.ShowMessage("Action", Message);
+            _dialog.ShowMessage("Succes!", Message);
 
             Absences = new ObservableCollection<Absence>(Service.GetAll<Absence>());
             Reset();

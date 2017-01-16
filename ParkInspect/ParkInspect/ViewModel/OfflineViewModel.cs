@@ -243,6 +243,7 @@ namespace ParkInspect.ViewModel
         }
         public OfflineViewModel(IRepository context, DialogManager dialog)
         {
+            Directory.CreateDirectory(runpath + "/directions");
             _dialog = dialog;
             deleted_list = new List<string>();
             service = new InspectionService(context);
@@ -311,7 +312,6 @@ namespace ParkInspect.ViewModel
             {
                 directions.Clear();
             }
-            Directory.CreateDirectory(runpath + "/directions");
             foreach (String name in Directory.GetFiles(runpath + "/directions", "*.txt").Select((Path.GetFileNameWithoutExtension)))
             {
                 if (!name.Equals("deletelist"))

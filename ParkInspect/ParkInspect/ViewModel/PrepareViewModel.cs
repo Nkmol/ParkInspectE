@@ -265,7 +265,7 @@ namespace ParkInspect.ViewModel
             routingService = new RoutingService();
             directions = new ObservableCollection<Direction>();
             directionItems = new ObservableCollection<string>();
-            inspections = new ObservableCollection<Inspection>(service.GetAllInspections());
+            inspections = new ObservableCollection<Inspection>(service.GetAll<Inspection>());
             saveDirections = new RelayCommand(SaveDirections);
             getDirections = new RelayCommand(GetDirections);
 

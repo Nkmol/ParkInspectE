@@ -16,6 +16,7 @@ namespace ParkInspect
     {
         public int inspection_id { get; set; }
         public string clarifaction { get; set; }
+        public string pdf { get; set; }
     
         public virtual Inspection Inspection { get; set; }
     }
