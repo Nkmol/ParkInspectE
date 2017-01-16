@@ -45,6 +45,9 @@ namespace ParkInspect.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
+            localRepo = new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities());
+
+
             SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
             SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
@@ -78,6 +81,7 @@ namespace ParkInspect.ViewModel
 
         }
 
+        public static IRepository localRepo;
         /// <summary>
         /// Gets the Main property.
         /// </summary>
