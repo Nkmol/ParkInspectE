@@ -31,7 +31,7 @@
                         <Label x:Name="l_deadline" Content="inspectie deadline:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="l_client" Content="Klant:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="l_parkinglot" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label x:Name="l_street" Content="Parkeerplaats:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="l_street" Content="Straat:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="l_region" Content="Regio:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="l_zip" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="l_number" Content="Nummer:" HorizontalAlignment="Left" VerticalAlignment="Top"/>

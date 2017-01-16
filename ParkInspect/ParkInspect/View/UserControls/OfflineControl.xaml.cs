@@ -87,21 +87,14 @@ namespace ParkInspect.View.UserControls
             }
 
         }
-
-        private void GetInspectionInfo()
-        {
-            inspection = service.GetInspectionWithId(inspection_id).First();
-            vm.selectedInspection = inspection;
-        }
         private void loadRoute()
         {
             if (!clear)
             {
                 ReadInspectionInfoFromFile();
-                GetInspectionInfo();
-                zip = inspection.Parkinglot.zipcode;
-                region = inspection.Parkinglot.Region.name;
-                street = inspection.Parkinglot.streetname;
+                zip = vm.region_zip;
+                region = vm.region_name;
+                street = vm.street;
                 gmap_offline.Markers.Clear();
                 if (!String.IsNullOrWhiteSpace(zip) || !String.IsNullOrWhiteSpace(region) ||
                     !String.IsNullOrWhiteSpace(home_adress))

@@ -185,28 +185,6 @@ namespace ParkInspect.ViewModel
 
             }
         }
-        public Inspection selectedInspection
-        {
-            get
-            {
-                return _selectedInspection;
-            }
-            set
-            {
-                _selectedInspection = value;
-                inspection_id = selectedInspection.id.ToString();
-                inspection_date = selectedInspection.date.ToString();
-                inspection_deadline = selectedInspection.deadline.ToString();
-                client_name = selectedInspection.Asignment.Client.name;
-                region_name = selectedInspection.Parkinglot.Region.name;
-                parkinglot_name = selectedInspection.Parkinglot.name;
-                region_zip = selectedInspection.Parkinglot.zipcode;
-                street = selectedInspection.Parkinglot.streetname;
-                region_number = selectedInspection.Parkinglot.number.ToString();
-                clarification = selectedInspection.clarification;
-                base.RaisePropertyChanged();
-            }
-        }
         public Direction selectedDirection
         {
             get
@@ -219,6 +197,7 @@ namespace ParkInspect.ViewModel
                 {
                     _selectedDirection = value;
                     SetDirectionItems();
+                    SetInspectionInfo();
                     base.RaisePropertyChanged();
                 }
             }
@@ -304,6 +283,7 @@ namespace ParkInspect.ViewModel
         private void SetDirectionItems()
         {
             String line;
+            int counter = 0;
             System.IO.StreamReader file;
             if (_selectedDirection != null)
             {
@@ -312,10 +292,11 @@ namespace ParkInspect.ViewModel
                     file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
                     while ((line = file.ReadLine()) != null)
                     {
-                        if (!line.Contains("ID:") && !line.Contains("HOME:"))
+                        if (counter > 10)
                         {
                             _selectedDirection.direction_items.Add(line);
                         }
+                        counter++;
                     }
                     file.Dispose();
                     file.Close();
@@ -439,6 +420,57 @@ namespace ParkInspect.ViewModel
                 _selectedDirection.direction_items.Clear();
                 _selectedDirection.index = 0;
             }
+        }
+        private void SetInspectionInfo()
+        {
+            String line;
+            System.IO.StreamReader file;
+            file = new System.IO.StreamReader(runpath + "/directions/" + _selectedDirection.Name + ".txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("ID:"))
+                {
+                    inspection_id = line.Replace("ID:", "");
+                }
+                if (line.Contains("DATE:"))
+                {
+                    inspection_date = line.Replace("DATE:", "");
+                }
+                if (line.Contains("DEADLINE:"))
+                {
+                    inspection_deadline = line.Replace("DEADLINE:", "");
+                }
+                if (line.Contains("CLIENT:"))
+                {
+                    client_name = line.Replace("CLIENT:", "");
+                }
+                if (line.Contains("PARKINGLOT:"))
+                {
+                    parkinglot_name = line.Replace("PARKINGLOT:", "");
+                }
+                if (line.Contains("STREET:"))
+                {
+                    street = line.Replace("STREET:", "");
+                }
+                if (line.Contains("REGION:"))
+                {
+                    region_name = line.Replace("REGION:", "");
+                }
+                if (line.Contains("POSTAL:"))
+                {
+                    region_zip = line.Replace("POSTAL:", "");
+                }
+                if (line.Contains("NUMBER:"))
+                {
+                    region_number = line.Replace("NUMBER:", "");
+                }
+                if (line.Contains("REMARK:"))
+                {
+                    clarification = line.Replace("REMARK:", "");
+                }
+            }
+            file.Dispose();
+            file.Close();
         }
         protected virtual bool IsFileLocked(FileInfo file)
         {
