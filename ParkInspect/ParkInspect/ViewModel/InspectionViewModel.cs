@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Ioc;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
+using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.Popup;
 
 namespace ParkInspect.ViewModel
@@ -39,6 +40,7 @@ namespace ParkInspect.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand AssignInspectorCommand { get; set; }
         public RelayCommand UnassignInspecteurCommand { get; set; }
+        public RelayCommand SearchFormCommand { get; set; }
 
         public Action PopupDone { get; set; }
 
@@ -190,12 +192,18 @@ namespace ParkInspect.ViewModel
 
             UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
             AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
+            SearchFormCommand = new RelayCommand(SearchCommand);
 
             States = new ObservableCollection<State>(_service.GetAll<State>());
             Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
             Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
             Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+        }
+
+        private void SearchCommand()
+        {
+            //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(), x => Form = x.);
         }
 
         private void AssignInspector()
