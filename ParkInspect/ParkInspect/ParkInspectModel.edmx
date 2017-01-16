@@ -102,10 +102,9 @@
         </EntityType>
         <EntityType Name="Image">
           <Key>
-            <PropertyRef Name="image" />
             <PropertyRef Name="form_id" />
           </Key>
-          <Property Name="image" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="image" Type="ntext" Nullable="false" />
           <Property Name="form_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inspection">
@@ -161,6 +160,7 @@
           </Key>
           <Property Name="inspection_id" Type="int" Nullable="false" />
           <Property Name="clarifaction" Type="text" />
+          <Property Name="pdf" Type="ntext" />
         </EntityType>
         <EntityType Name="ReportFieldType">
           <Key>
@@ -310,7 +310,7 @@
         </Association>
         <Association Name="FK_Image_Raport">
           <End Role="Form" Type="Self.Form" Multiplicity="1" />
-          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <End Role="Image" Type="Self.Image" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Form">
               <PropertyRef Name="id" />
@@ -695,7 +695,7 @@
           <NavigationProperty Name="Template" Relationship="Self.FK_Form_Template" FromRole="Form" ToRole="Template" />
           <NavigationProperty Name="Inspections" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Form" ToRole="Inspection" />
           <NavigationProperty Name="Formfields" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Form" ToRole="Formfield" />
-          <NavigationProperty Name="Images" Relationship="ParkInspectModel.FK_Image_Raport1" FromRole="Form" ToRole="Image" />
+          <NavigationProperty Name="Image" Relationship="ParkInspectModel.FK_Image_Raport" FromRole="Form" ToRole="Image" />
         </EntityType>
         <EntityType Name="Formfield">
           <Key>
@@ -709,15 +709,6 @@
           <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Field" Relationship="Self.FK_Questionair_Questionair" FromRole="Formfield" ToRole="Field" />
           <NavigationProperty Name="Form" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Formfield" ToRole="Form" />
-        </EntityType>
-        <EntityType Name="Image">
-          <Key>
-            <PropertyRef Name="image1" />
-            <PropertyRef Name="form_id" />
-          </Key>
-          <Property Name="image1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="form_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Form" Relationship="ParkInspectModel.FK_Image_Raport1" FromRole="Image" ToRole="Form" />
         </EntityType>
         <EntityType Name="Inspection">
           <Key>
@@ -770,6 +761,7 @@
           <Property Name="inspection_id" Type="Int32" Nullable="false" />
           <Property Name="clarifaction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Inspection" Relationship="Self.FK_Raport_Inspection" FromRole="Report" ToRole="Inspection" />
+          <Property Name="pdf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReportFieldType">
           <Key>
@@ -1039,7 +1031,6 @@
           <EntitySet Name="Fields" EntityType="Self.Field" />
           <EntitySet Name="Forms" EntityType="Self.Form" />
           <EntitySet Name="Formfields" EntityType="Self.Formfield" />
-          <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="Inspections" EntityType="Self.Inspection" />
           <EntitySet Name="Parkinglots" EntityType="Self.Parkinglot" />
           <EntitySet Name="Regions" EntityType="Self.Region" />
@@ -1133,7 +1124,8 @@
             <End Role="Client" EntitySet="Clients" />
             <End Role="Contactperson" EntitySet="Contactpersons" />
           </AssociationSet>
-          <AssociationSet Name="FK_Image_Raport1" Association="ParkInspectModel.FK_Image_Raport1">
+          <EntitySet Name="Images" EntityType="ParkInspectModel.Image" />
+          <AssociationSet Name="FK_Image_Raport" Association="ParkInspectModel.FK_Image_Raport">
             <End Role="Form" EntitySet="Forms" />
             <End Role="Image" EntitySet="Images" />
           </AssociationSet>
@@ -1160,9 +1152,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Image_Raport1">
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="form_id" />
+          </Key>
+          <Property Name="image1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="form_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Form" Relationship="ParkInspectModel.FK_Image_Raport" FromRole="Image" ToRole="Form" />
+        </EntityType>
+        <Association Name="FK_Image_Raport">
           <End Type="ParkInspectModel.Form" Role="Form" Multiplicity="1" />
-          <End Type="ParkInspectModel.Image" Role="Image" Multiplicity="*" />
+          <End Type="ParkInspectModel.Image" Role="Image" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Form">
               <PropertyRef Name="id" />
@@ -1269,14 +1269,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="ParkInspectModel.Image">
-              <MappingFragment StoreEntitySet="Image">
-                <ScalarProperty Name="form_id" ColumnName="form_id" />
-                <ScalarProperty Name="image1" ColumnName="image" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Inspections">
             <EntityTypeMapping TypeName="ParkInspectModel.Inspection">
               <MappingFragment StoreEntitySet="Inspection">
@@ -1315,6 +1307,7 @@
           <EntitySetMapping Name="Reports">
             <EntityTypeMapping TypeName="ParkInspectModel.Report">
               <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="pdf" ColumnName="pdf" />
                 <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
                 <ScalarProperty Name="clarifaction" ColumnName="clarifaction" />
               </MappingFragment>
@@ -1373,6 +1366,14 @@
                 <ScalarProperty Name="firstname" ColumnName="firstname" />
                 <ScalarProperty Name="client_id" ColumnName="client_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="ParkInspectModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+                <ScalarProperty Name="image1" ColumnName="image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

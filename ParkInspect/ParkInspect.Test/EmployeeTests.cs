@@ -38,6 +38,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void Create()
         {
             var test = new Employee
@@ -60,6 +61,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void Update()
         {
             _newEmployee.firstname = "Test2";
@@ -72,6 +74,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void Delete()
         {
             var test = new Employee
@@ -96,6 +99,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void GetAllEmployees()
         {
             var list = _service.GetAllEmployees().ToList();
@@ -104,6 +108,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void FirstNameIsNull()
         {
             var test1 = new Employee
@@ -125,6 +130,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void LastNameIsNull()
         {
             var test1 = new Employee
@@ -146,6 +152,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void ActiveIsNull()
         {
             var test1 = new Employee
@@ -167,6 +174,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void InservicedateIsNull()
         {
             var test1 = new Employee
@@ -188,6 +196,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
+        [TestCategory("Employee")]
         public void EmailIsNull()
         {
             var test1 = new Employee
