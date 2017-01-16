@@ -23,5 +23,10 @@ namespace ParkInspect.Services
         {
             return _context.Get<Parkinglot>().FirstOrDefault(x => x == pl);
         }
+        public IEnumerable<Parkinglot> GetAllParkinglots()
+        {
+            return Context.GetAll<Parkinglot>();
+
+        }
     }
 }

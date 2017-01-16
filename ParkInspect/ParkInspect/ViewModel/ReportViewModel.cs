@@ -19,6 +19,7 @@ using System.Windows;
 using System.Windows.Forms;
 using MahApps.Metro.Controls.Dialogs;
 using ParkInspect.Model.Factory.Builder;
+using ParkInspect.Services;
 
 
 namespace ParkInspect.ViewModel
@@ -26,7 +27,9 @@ namespace ParkInspect.ViewModel
     
     public class ReportViewModel : ViewModelBase
     {
-
+        public InspectionService inspection_service { get; set; }
+        public AbsenceService absence_service { get; set; }
+        public ParkinglotService parkinglot_service { get; set; }
         private string _nameFilter;
 
         public string NameFilter
@@ -63,7 +66,9 @@ namespace ParkInspect.ViewModel
         
         public ReportViewModel(IRepository context, DialogManager dialog)
         {
-
+            inspection_service = new InspectionService(context);
+            absence_service = new AbsenceService(context);
+            parkinglot_service = new ParkinglotService(context);
             _dialog = dialog;
 
             if (!Directory.Exists("reports"))

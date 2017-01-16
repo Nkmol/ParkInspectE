@@ -9,13 +9,17 @@ namespace ParkInspect.Services
 {
     public class AbsenceService : DataService
     {
-
+        private readonly IRepository _context;
         public AbsenceService(IRepository context) : base(context)
         {
-            
+            _context = context;
+        }
+        public IEnumerable<Absence> GetAllAbsences()
+        {
+            return _context.GetAll<Absence>();
+
         }
 
-       
 
     }
 }

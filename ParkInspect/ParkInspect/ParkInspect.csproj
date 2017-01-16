@@ -293,6 +293,7 @@
     <Compile Include="Routing\CustomMarkers\Cross.xaml.cs" />
     <Compile Include="Routing\CustomMarkers\CustomMarkerDemo.xaml.cs" />
     <Compile Include="Routing\CustomMarkers\CustomMarkerRed.xaml.cs" />
+    <Compile Include="Routing\CustomMarkers\MyMarker.cs" />
     <Compile Include="Routing\CustomMarkers\Test.xaml.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="Routing\RouteObject.cs" />
