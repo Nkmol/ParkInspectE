@@ -12,12 +12,12 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Report
+    public partial class LocalReport
     {
         public int inspection_id { get; set; }
         public string clarifaction { get; set; }
         public string pdf { get; set; }
     
-        public virtual Inspection Inspection { get; set; }
+        public virtual LocalInspection Inspection { get; set; }
     }
 }

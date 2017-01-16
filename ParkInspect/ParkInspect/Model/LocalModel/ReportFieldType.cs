@@ -12,17 +12,17 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class ReportFieldType
+    public partial class LocalReportFieldType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReportFieldType()
+        public LocalReportFieldType()
         {
-            this.Field = new HashSet<Field>();
+            this.Field = new HashSet<LocalField>();
         }
     
         public string title { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual ICollection<LocalField> Field { get; set; }
     }
 }

@@ -12,20 +12,20 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class State
+    public partial class LocalState
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public State()
+        public LocalState()
         {
-            this.Asignment = new HashSet<Asignment>();
-            this.Inspection = new HashSet<Inspection>();
+            this.Asignment = new HashSet<LocalAsignment>();
+            this.Inspection = new HashSet<LocalInspection>();
         }
     
         public string state1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignment> Asignment { get; set; }
+        public virtual ICollection<LocalAsignment> Asignment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<LocalInspection> Inspection { get; set; }
     }
 }

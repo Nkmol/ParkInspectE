@@ -12,12 +12,12 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Field
+    public partial class LocalField
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Field()
+        public LocalField()
         {
-            this.Formfield = new HashSet<Formfield>();
+            this.Formfield = new HashSet<LocalFormfield>();
         }
     
         public string title { get; set; }
@@ -25,10 +25,10 @@ namespace ParkInspect.Model.LocalModel
         public string datatype { get; set; }
         public string reportFieldType_title { get; set; }
     
-        public virtual Datatype Datatype1 { get; set; }
-        public virtual ReportFieldType ReportFieldType { get; set; }
-        public virtual Template Template { get; set; }
+        public virtual LocalDatatype Datatype1 { get; set; }
+        public virtual LocalReportFieldType ReportFieldType { get; set; }
+        public virtual LocalTemplate Template { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formfield> Formfield { get; set; }
+        public virtual ICollection<LocalFormfield> Formfield { get; set; }
     }
 }

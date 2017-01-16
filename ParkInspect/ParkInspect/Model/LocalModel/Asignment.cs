@@ -12,12 +12,12 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Asignment
+    public partial class LocalAsignment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Asignment()
+        public LocalAsignment()
         {
-            this.Inspection = new HashSet<Inspection>();
+            this.Inspection = new HashSet<LocalInspection>();
         }
     
         public int client_id { get; set; }
@@ -27,9 +27,9 @@ namespace ParkInspect.Model.LocalModel
         public string state { get; set; }
         public string clarification { get; set; }
     
-        public virtual Client Client { get; set; }
-        public virtual State State1 { get; set; }
+        public virtual LocalClient Client { get; set; }
+        public virtual LocalState State1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<LocalInspection> Inspection { get; set; }
     }
 }

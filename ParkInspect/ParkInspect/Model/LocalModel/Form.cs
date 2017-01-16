@@ -12,23 +12,23 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Form
+    public partial class LocalForm
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Form()
+        public LocalForm()
         {
-            this.Inspection = new HashSet<Inspection>();
-            this.Formfield = new HashSet<Formfield>();
+            this.Inspection = new HashSet<LocalInspection>();
+            this.Formfield = new HashSet<LocalFormfield>();
         }
     
         public int id { get; set; }
         public int template_id { get; set; }
     
-        public virtual Template Template { get; set; }
+        public virtual LocalTemplate Template { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
+        public virtual ICollection<LocalInspection> Inspection { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formfield> Formfield { get; set; }
-        public virtual Image Image { get; set; }
+        public virtual ICollection<LocalFormfield> Formfield { get; set; }
+        public virtual LocalImage Image { get; set; }
     }
 }

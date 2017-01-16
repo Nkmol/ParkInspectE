@@ -12,13 +12,13 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Contactperson
+    public partial class LocalContactperson
     {
         public int id { get; set; }
         public int client_id { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
     
-        public virtual Client Client { get; set; }
+        public virtual LocalClient Client { get; set; }
     }
 }

@@ -12,17 +12,17 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class LocalRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public LocalRole()
         {
-            this.Employee = new HashSet<Employee>();
+            this.Employee = new HashSet<LocalEmployee>();
         }
     
         public string role1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<LocalEmployee> Employee { get; set; }
     }
 }

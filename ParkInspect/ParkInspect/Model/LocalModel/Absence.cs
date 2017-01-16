@@ -12,12 +12,12 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Absence
+    public partial class LocalAbsence
     {
         public System.DateTime start { get; set; }
         public int employee_id { get; set; }
         public Nullable<System.DateTime> end { get; set; }
     
-        public virtual Employee Employee { get; set; }
+        public virtual LocalEmployee Employee { get; set; }
     }
 }
