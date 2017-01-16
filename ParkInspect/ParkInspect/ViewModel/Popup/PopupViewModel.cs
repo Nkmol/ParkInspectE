@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.Popup;
 
 namespace ParkInspect.ViewModel
 {
@@ -15,12 +16,10 @@ namespace ParkInspect.ViewModel
         public IPopup ContentContext { get; set; } 
         public Action<object> OwnerTask { get; set; }
         public RelayCommand SelectCommand { get; set; }
-        public RelayCommand ConfirmCommand { get; set; }
         public Action CloseWindow { get; set; }
         public PopupViewModel()
         {
             SelectCommand = new RelayCommand(SelectEntity, () => OwnerTask != null); // TODO If SelectedItem != null
-            ConfirmCommand = new RelayCommand(Confirm);
         }
 
         private void SelectEntity()
@@ -29,13 +28,7 @@ namespace ParkInspect.ViewModel
             CloseWindow(); // Close popup after something has been selected
         }
 
-        private void Confirm()
-        {
-            OwnerTask(ContentContext);
-            CloseWindow();
-        }
-
-        public void Ready()
+        public virtual void Ready()
         {
             SelectCommand.RaiseCanExecuteChanged();
         }

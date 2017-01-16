@@ -1,0 +1,20 @@
+﻿<Window x:Class="ParkInspect.ReportDesignView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"            
+        xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        mc:Ignorable="d ignore"
+        Height="600"
+        Width="1010"
+        Title="ParkInspect"
+        BorderThickness="1"
+        popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}"
+        dialogs:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}">
+    <Grid>
+        <syncfusion:ReportDesigner Name="Designer" syncfusion:SkinStorage.VisualStyle="Metro"/>
+    </Grid>
+</Window>

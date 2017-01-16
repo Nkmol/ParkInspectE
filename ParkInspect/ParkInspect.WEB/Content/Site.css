@@ -31,3 +31,10 @@ textarea {
 .navbar a {
     color: white !important;
 }
+
+#username {
+    color: #ffffff !important;
+    font-size: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

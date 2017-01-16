@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.IO;
 using System.Web.Mvc;
 
 namespace ParkInspect.WEB.Controllers
@@ -11,14 +7,14 @@ namespace ParkInspect.WEB.Controllers
     {
         public ActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
 
-            string path = Server.MapPath("~/App_LocalResources");
-          var x =  Directory.GetFiles(path);
+            var path = Server.MapPath("~/App_LocalResources");
+            var x = Directory.GetFiles(path);
 
-            for (int i = 0; i < x.Length; i++)
-            {
+            for (var i = 0; i < x.Length; i++)
                 x[i] = x[i].Replace('\\', '/');
-            }
 
             ViewBag.pdf = x;
 
@@ -27,6 +23,8 @@ namespace ParkInspect.WEB.Controllers
 
         public ActionResult Details(string path)
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
 
             ViewBag.pdf = path;
 
@@ -35,9 +33,8 @@ namespace ParkInspect.WEB.Controllers
 
         public FileStreamResult GetPdf(string path)
         {
-            FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
             return File(stream, "application/pdf");
         }
-
     }
 }

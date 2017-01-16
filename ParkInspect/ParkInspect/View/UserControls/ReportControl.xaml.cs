@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParkInspect.ViewModel;
 
 namespace ParkInspect.View.UserControls
 {
@@ -23,6 +24,14 @@ namespace ParkInspect.View.UserControls
         public ReportControl()
         {
             InitializeComponent();
+        }
+
+        public void Select(object sender, MouseButtonEventArgs e)
+        {
+
+            ((ReportViewModel)DataContext).OpenReportView(Reports.SelectedIndex);
+
+
         }
     }
 }
