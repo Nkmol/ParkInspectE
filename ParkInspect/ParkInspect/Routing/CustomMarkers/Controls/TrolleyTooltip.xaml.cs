@@ -20,9 +20,16 @@ namespace ParkInspect.View.Controls
     /// </summary>
     public partial class TrolleyTooltip : UserControl
     {
+        Dictionary<string,string> statusConverter;
         public TrolleyTooltip()
         {
             InitializeComponent();
+            statusConverter = new Dictionary<string, string>();
+            statusConverter.Add("Finished", "Voltooid");
+            statusConverter.Add("Halted", "Gestopt");
+            statusConverter.Add("In progress", "In voortgang");
+            statusConverter.Add("Unbegun", "Onbegonnen");
+
         }
         public void SetValues(object o, int inspections = 0)
         {
@@ -31,7 +38,7 @@ namespace ParkInspect.View.Controls
                 Inspection i = (Inspection)o;
                 Place.Content = "Plaats: " + i.Parkinglot.Region.name;
                 Name.Content = "Naam: " + i.Parkinglot.name;
-                Status.Content = "Status: " + i.state;
+                Status.Content = "Status: " + statusConverter[i.state];
             }
             if (o is Absence)
             {
