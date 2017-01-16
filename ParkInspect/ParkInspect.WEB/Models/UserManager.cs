@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Web;
 
 namespace ParkInspect.WEB.Models
 {
@@ -26,9 +24,10 @@ namespace ParkInspect.WEB.Models
 
                 var result = new string(chars);
 
-                // if your users set name is Users
-                return db.Clients.ToList().Find(u => u.email == username
-                    && u.password == result) != null;
+                var client = db.Clients.ToList().Find(u => u.email == username && u.password == password);
+
+                return client != null ||
+                       db.Clients.ToList().Find(u => u.email == username && u.password == result) != null;
             }
         }
 
