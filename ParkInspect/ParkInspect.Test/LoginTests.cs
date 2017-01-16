@@ -40,7 +40,7 @@ namespace ParkInspect.Test
         // http://softwareengineering.stackexchange.com/questions/7823/is-it-ok-to-have-multiple-asserts-in-a-single-unit-test
 
         [TestMethod]
-        [TestCategory("Service")]
+        [TestCategory("Login")]
         public void CanLogin()
         {
             // Assert
@@ -49,7 +49,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
-        [TestCategory("Service")]
+        [TestCategory("Login")]
         public void WrongPassword()
         {
             // Assert
@@ -58,7 +58,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
-        [TestCategory("Service")]
+        [TestCategory("Login")]
         public void WrongUsername()
         {
             // Assert
@@ -67,7 +67,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
-        [TestCategory("Service")]
+        [TestCategory("Login")]
         public void NullUsername()
         {
             // Assert
@@ -76,7 +76,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
-        [TestCategory("Service")]
+        [TestCategory("Login")]
         public void NullPassword()
         {
             // Assert
@@ -85,7 +85,7 @@ namespace ParkInspect.Test
         }
 
         [TestMethod]
-        [TestCategory("Service")]
+        [TestCategory("Login")]
         public void NullValues()
         {
             // Assert
