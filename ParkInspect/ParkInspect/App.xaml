@@ -6,6 +6,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
 			 xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+			 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+			 xmlns:parkInspect="clr-namespace:ParkInspect"
+			 xmlns:system="clr-namespace:System;assembly=mscorlib"
 			 StartupUri="View/DashboardView.xaml"
              mc:Ignorable="d ignore">
 
@@ -13,7 +16,6 @@
         <!--Global View Model Locator-->
         <ResourceDictionary>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

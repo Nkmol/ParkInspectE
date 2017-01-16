@@ -4,10 +4,13 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Ioc;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.ViewModel.AssignmentVM;
+using ParkInspect.ViewModel.Popup;
 using ParkInspect.View.UserControls;
 
 namespace ParkInspect.ViewModel
@@ -18,415 +21,227 @@ namespace ParkInspect.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InspectionViewModel : ViewModelBase, IPopup
+    public class InspectionViewModel : ViewModelBase, ICreateUpdatePopup
     {
-        // collections
-        private ObservableCollection<Inspection> _allInspections;
-        public ObservableCollection<State> InspectionStateList { get; set; }
-        public ObservableCollection<Parkinglot> ParkinglotList { get; set; }
-        public ObservableCollection<Asignment> Assignmentlist { get; set; }
-        public ObservableCollection<Form> FormList { get; set; }
-        public RelayCommand PrepareCommand { get; set; }
-        public PopupManager PopupManager { get; set; }
-        private DialogManager _dialog;
-
-        private ObservableCollection<Inspection> _inspections;
-        #region properties
-        public ObservableCollection<Inspection> InspectieCollection
-        {
-            get
-            {
-                return _inspections;
-            }
-            set
-            {
-                _inspections = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-       
-        private ObservableCollection<Employee> _employeelist;
-        public ObservableCollection<Employee> EmployeesList
-        {
-            get { return _employeelist; }
-            set
-            {
-                _employeelist = value;
-                base.RaisePropertyChanged();
-            }
-        }
-     
-
-        // functional properties
-        private Inspection _selectedInspection;
-        public Inspection SelectedInspection
-        {
-            get
-            {
-                return _selectedInspection;
-
-            }
-            set
-            {
-                Set(ref _selectedInspection, value);
-                InspectionInspectors = new ObservableCollection<Employee>(value.Employees);
-
-                base.RaisePropertyChanged();
-            }
-        }
+        public Inspection Data;
 
 
-        private ObservableCollection<Employee> _inspecteurs;
-        public ObservableCollection<Employee> InspectionInspectors
-        {
-            get
-            {
-                return _inspecteurs;
-            }
-            set
-            {
-                _inspecteurs = value;
-                base.RaisePropertyChanged();
-            }
-        }
-       
+        // TODO Global Data
+        public ObservableCollection<Inspection> Inspections { get; set; }
+        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
+        public ObservableCollection<Form> Forms { get; set; }
+        public ObservableCollection<Employee> Inspectors { get; set; }
+        public ObservableCollection<State> States { get; set; }
 
-        private Employee _selectedInspecteur;
-        public Employee SelectedInspecteur
-        {
-            get
-            {
-                return _selectedInspecteur;
-            }
-            set
-            {
-                _selectedInspecteur = value;
-                base.RaisePropertyChanged();
-            }
-        }
+        public Employee SelectedInspector { get; set; }
+        public Employee SelectedAssignedInspector { get; set; }
 
-
-        private Employee _selectedEmployee;
-        public Employee SelectedEmployee
-
-        {
-            get
-            {
-                return _selectedEmployee;
-            }
-            set
-            {
-                _selectedEmployee = value;
-                base.RaisePropertyChanged();
-            }
-        }
-        #endregion
-
-        #region List of filters
-        private string _parkinglotFilter;
-
-        public string ParkinglotFilter
-        {
-            get
-            {
-                return _parkinglotFilter;
-            }
-            set
-            {
-                _parkinglotFilter = value;
-                UpdateOverview();
-            }
-        }
-
-        private string _stateFilter;
-
-        public string StateFilter
-        {
-            get
-            {
-                return _stateFilter;
-            }
-            set
-            {
-                _stateFilter = value;
-                UpdateOverview();
-            }
-        }
-
-        private string _dateFilter;
-
-        public string DateFilter
-        {
-            get
-            {
-                return _dateFilter;
-            }
-            set
-            {
-                _dateFilter = value;
-                UpdateOverview();
-            }
-        }
-
-        private string _deadlineFilter;
-
-        public string DeadlineFIlter
-        {
-            get
-            {
-                return _deadlineFilter;
-            }
-            set
-            {
-                _deadlineFilter = value;
-                UpdateOverview();
-            }
-        }
-
-        private string _clarificationFilter;
-
-        public string ClarificationFilter
-        {
-            get
-            {
-                return _clarificationFilter;
-            }
-            set
-            {
-                _clarificationFilter = value;
-                UpdateOverview();
-            }
-        }
-
-
-
-
-        #endregion
-
-        private string _commandError;
-        public string CommandError
-        {
-            get
-            {
-                return _commandError;
-
-            }
-
-            set
-            {
-                _commandError = value;
-                base.RaisePropertyChanged();
-            }
-        }
+        public string Message { get; set; }
 
         // commands
-        public ICommand ResetCommand { get; set; }
-        public ICommand CreateInspectionCommand { get; set; }
-        public ICommand EditInspectionCommand { get; set; }
-        public ICommand AddInspecteurCommand { get; set; }
-        public ICommand RemoveInspecteurCommand { get; set; }
+        public RelayCommand ResetCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
+        public RelayCommand AssignInspectorCommand { get; set; }
+        public RelayCommand UnassignInspecteurCommand { get; set; }
 
-        public object SelectedItemPopup
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Action PopupDone { get; set; }
+
+        public object SelectedItemPopup => this;
 
         private readonly InspectionService _service;
-       
-        public InspectionViewModel(IRepository context, PopupManager popupManager, DialogManager dialog)
-        {
-            // set services and Lists
-            _service = new InspectionService(context);
-            UpdateProperties();
-            SetNewInspection();
-            PopupManager = popupManager;
-            _dialog = dialog;
-            // set commands
-            ResetCommand = new RelayCommand(ResetInspection);
-            CreateInspectionCommand = new RelayCommand(CreateInspection, CanCreateInspection);
-            EditInspectionCommand = new RelayCommand(EditInspection, CanEditInspection);
-            PrepareCommand = new RelayCommand(ShowPreparePopup);
 
-            RemoveInspecteurCommand = new RelayCommand(RemoveInspecteur, CanRemoveInspecteur);
-            AddInspecteurCommand = new RelayCommand(AddInspecteur, CanAddInspecteur);
+        private DateTime? _boundryStartDate;
+        private DateTime? _boundryEndDate;
 
-        }
+            #region properties
 
-        private void ShowPreparePopup()
-        {
-            if (SelectedInspection.id != 0)
+            public DateTime? BoundryStartDate
             {
-                PopupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection), null);
-            } else
-            {
-                _dialog.ShowMessage("Whoops", "Selecteer eerst een inspectie!");
-            }
-        }
-
-        private bool CanAddInspecteur()
-        {
-            return SelectedEmployee != null;
-        }
-
-        private bool CanRemoveInspecteur()
-        {
-            return SelectedInspecteur != null; 
-        }
-
-        private void UpdateOverview()
-        {
-            var builder = new FilterBuilder();
-            builder.Add("Parkinglot.name", ParkinglotFilter);
-            builder.Add("State1.state1", StateFilter);
-            builder.Add("date", DateFilter);
-            builder.Add("deadline", DeadlineFIlter);
-            builder.Add("clarification", ClarificationFilter);
-
-            var filters = builder.Get();
-            var result = _allInspections.Where(a => a.Like(filters));
-            InspectieCollection = new ObservableCollection<Inspection>(result);
-            RaisePropertyChanged();
-        }
-
-        private void UpdateProperties()
-        {
-            InspectieCollection = new ObservableCollection<Inspection>(_service.GetAllInspections());
-            _allInspections = new ObservableCollection<Inspection>(_service.GetAllInspections());
-            ParkinglotList = new ObservableCollection<Parkinglot>(_service.GetAllParkinglots());
-            InspectionStateList = new ObservableCollection<State>(_service.GetAllStates());
-            Assignmentlist = new ObservableCollection<Asignment>(_service.GetallAsignments());
-            FormList = new ObservableCollection<Form>(_service.GetAllForms());
-            EmployeesList = new ObservableCollection<Employee>(_service.GetAllInspecteurs());
-        }
-
-        private void AddInspecteur()
-        {
-          
-            if (SelectedEmployee == null) return;
-            if (InspectionInspectors.Contains(SelectedEmployee)) return;
-
-            SelectedInspection.Employees.Add(SelectedEmployee);
-            InspectionInspectors.Add(SelectedEmployee);
-
-            SelectedEmployee = null;
-            UpdateProperties();
-        }
-
-        private void RemoveInspecteur()
-        {
-            if (SelectedInspecteur == null) return;
-
-            SelectedInspection.Employees.Remove(SelectedInspecteur);
-            InspectionInspectors.Remove(SelectedInspecteur);
-
-            SelectedInspecteur = null;
-            UpdateProperties();
-        }
-
-        private bool CanEditInspection()
-        {
-            return _selectedInspection.id != 0;
-        }
-
-        private bool CanCreateInspection()
-        {
-            return _selectedInspection.id == 0;
-        }      
-
-        public void ResetInspection()
-        {
-            SetNewInspection();
-            CommandError = "";
-        }
-
-        public void CreateInspection()
-        {
-            if (!CreateInspectionValidation()) return;
-            if (_selectedInspection.date == null) { _selectedInspection.date = DateTime.Today; }
-
-
-            _service.CreateNewAssignemnt(_selectedInspection);
-            SetNewInspection();
-            CommandError = "Created";
-            UpdateProperties();
-        }
-
-        private bool CreateInspectionValidation()
-        {
-            CommandError = "";
-            if (_selectedInspection == null)
-            {
-                CommandError =
-                    "_selectedAsignment is null, please contact your ICT department, something went horrably wrong";
-                return false;
+                get { return _boundryStartDate; }
+                set
+                {
+                    if (_boundryStartDate != value)
+                    {
+                        _boundryStartDate = value;
+                        RaisePropertyChanged();
+                    }
+                }
             }
 
-            if (_selectedInspection.Asignment == null)
+            public DateTime? BoundryEndDate
             {
-                CommandError = "Geen opdracht geselecteerd";
-                return false;
+                get { return _boundryEndDate; }
+                set
+                {
+                    if (_boundryEndDate != value)
+                    {
+                        _boundryEndDate = value;
+                        RaisePropertyChanged();
+                    }
+                }
             }
 
-            if (_selectedInspection.Parkinglot == null) CommandError = "Geen Parkeerplaats geselecteerd";
-            if (_selectedInspection.State1 == null) CommandError = "Geen status geselecteerd";
-            if (_selectedInspection.deadline < DateTime.Today) CommandError = "Deadline te vroeg.";
-            if (_selectedInspection.deadline > _selectedInspection.Asignment.deadline)
-                CommandError = "Inspectie deadline valt buiten de opdracht.";
+            #region ViewModel POCO Properties
 
-            return CommandError.Equals("");
-        }
-
-
-        public void EditInspection()
-        {
-            if (EditInspectionValidation())
+            // Is not used in the form
+            public int AssignmentId
             {
-                _service.UpdateInspection(_selectedInspection);
-                SetNewInspection();
-
-                CommandError = "Updated";
-                UpdateProperties();
-            }
-        }
-
-
-        private bool EditInspectionValidation()
-        {
-
-            CommandError = "";
-            if (_selectedInspection == null)
-            {
-                CommandError =
-              "_selectedAsignment is null, please contact your ICT department, something went horrably wrong";
-                return false;
+                get { return Data.assignment_id; }
+                set { Data.assignment_id = value; }
             }
 
-            if (_selectedInspection.Asignment == null) CommandError = "Geen opdracht geselecteerd";
-            if (_selectedInspection.Parkinglot == null) CommandError = "Geen Parkeerplaats geselecteerd";
-            if (_selectedInspection.State1 == null) CommandError = "Geen status geselecteerd";
-            if (_selectedInspection.date >= _selectedInspection.deadline) CommandError = "Deadline is al geweest.";
-
-
-            return CommandError.Equals("");
-        }
-
-        private void SetNewInspection()
-        {
-            SelectedInspection = new Inspection
+            public Asignment Assigment
             {
-                deadline = DateTime.Now,
-                date = DateTime.Today
-            };
+                get { return Data.Asignment; }
+                set
+                {
+                    Data.Asignment = value;
+                    RaisePropertyChanged();
+                }
+            }
 
-            SelectedEmployee = null;
-            SelectedInspecteur = null;
+            public Form Form
+            {
+                get { return Data.Form; }
+                set
+                {
+                    Data.Form = value;
+                    RaisePropertyChanged();
+                }
+            }
 
-            base.RaisePropertyChanged();
+            public Inspection FollowUpInspection
+            {
+                get { return Data.Inspection2; }
+                set
+                {
+                    Data.Inspection2 = value;
+                    RaisePropertyChanged();
+                }
+            }
 
+            #endregion
+
+            public Parkinglot Parkinglot
+            {
+                get { return Data.Parkinglot; }
+                set
+                {
+                    Data.Parkinglot = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            public State State
+            {
+                get { return Data.State1; }
+                set
+                {
+                    Data.State1 = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            public ObservableCollection<Employee> AssignedInspectors { get; set; }
+
+            public DateTime? Deadline
+            {
+                get { return Data.deadline; }
+                set
+                {
+                    Data.deadline = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            public DateTime? Date
+            {
+                get { return Data.date; }
+                set
+                {
+                    Data.date = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            public string Clarification
+            {
+                get { return Data.clarification; }
+                set
+                {
+                    Data.clarification = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            #endregion
+
+            [PreferredConstructor]
+            public InspectionViewModel(IRepository context) : this(context, null)
+            {
+            }
+            public InspectionViewModel(IRepository context, Inspection data = null)
+            {
+                Data = data ?? new Inspection();
+
+                // set services and Lists
+                _service = new InspectionService(context);
+                // EmptyForm();
+
+                // set commands
+                ResetCommand = new RelayCommand(EmptyForm);
+                SaveCommand = new RelayCommand(Save);
+
+                AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
+
+                UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
+                AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
+
+                States = new ObservableCollection<State>(_service.GetAll<State>());
+                Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
+                Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
+                Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
+                Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+            }
+
+            private void AssignInspector()
+            {
+                AssignedInspectors.Add(SelectedInspector);
+                Inspectors.Remove(SelectedInspector);
+            }
+
+            private void UnassignInspecteur()
+            {
+                Inspectors.Add(SelectedAssignedInspector);
+                AssignedInspectors.Remove(SelectedAssignedInspector);
+
+                Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
+                RaisePropertyChanged(() => Inspectors);
+            }
+
+            private void Save()
+            {
+                PopupBeforeFinish();
+            }
+
+            private void EmptyForm()
+            {
+                Parkinglot = null;
+                Form = null;
+                State = null;
+                FollowUpInspection = null;
+                Date = null;
+                Deadline = null;
+                Clarification = null;
+                AssignedInspectors = new ObservableCollection<Employee>();
+                SelectedInspector = null;
+
+                base.RaisePropertyChanged();
+            }
+
+            private void PopupBeforeFinish()
+            {
+                PopupDone();
+            }
         }
     }
-}

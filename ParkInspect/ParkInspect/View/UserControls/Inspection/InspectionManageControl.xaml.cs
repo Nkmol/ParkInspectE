@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ParkInspect.View.UserControls
+namespace ParkInspect.View.UserControls.Inspection
 {
     /// <summary>
-    /// Interaction logic for InspectionControl.xaml
+    /// Interaction logic for InspectionManageControl.xaml
     /// </summary>
-    public partial class InspectionControl : UserControl
+    public partial class InspectionManageControl : UserControl
     {
-        public InspectionControl()
+        public InspectionManageControl()
         {
             InitializeComponent();
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

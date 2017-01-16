@@ -5,6 +5,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,12 +22,29 @@ namespace ParkInspect.Repository
             where TEntity : class
         {
             Context.Set<TEntity>().Add(entity);
-            
+
+            #if DEBUG
+
+                        Context.ChangeTracker.DetectChanges(); // Force EF to match associations.
+                        var objectContext = ((IObjectContextAdapter)Context).ObjectContext;
+                        var objectStateManager = objectContext.ObjectStateManager;
+                        var fieldInfo = objectStateManager.GetType().GetField("_entriesWithConceptualNulls", BindingFlags.Instance | BindingFlags.NonPublic);
+                        var conceptualNulls = fieldInfo.GetValue(objectStateManager);
+            #endif
         }
 
         public void Update<TEntity>(TEntity entity, string modifiedBy = null) where TEntity : class
         {
             Context.Set<TEntity>().Attach(entity);
+            #if DEBUG
+
+                        Context.ChangeTracker.DetectChanges(); // Force EF to match associations.
+                        var objectContext = ((IObjectContextAdapter)Context).ObjectContext;
+                        var objectStateManager = objectContext.ObjectStateManager;
+                        var fieldInfo = objectStateManager.GetType().GetField("_entriesWithConceptualNulls", BindingFlags.Instance | BindingFlags.NonPublic);
+                        var conceptualNulls = fieldInfo.GetValue(objectStateManager);
+            #endif
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete<TEntity>(object id) where TEntity : class

@@ -18,7 +18,7 @@ namespace ParkInspect.View.UserControls.Popup
     /// <summary>
     /// Interaction logic for ConfirmPopupWIndow.xaml
     /// </summary>
-    public partial class ConfirmPopupWindow : ChildWindow
+    public partial class UpdateNewPopupWindow : ChildWindow
     {
 
         public object AdditionalContent
@@ -27,10 +27,10 @@ namespace ParkInspect.View.UserControls.Popup
             set { SetValue(AdditionalContentProperty, value); }
         }
         public static readonly DependencyProperty AdditionalContentProperty =
-            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(ConfirmPopupWindow),
+            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(UpdateNewPopupWindow),
               new PropertyMetadata(null));
 
-        public ConfirmPopupWindow()
+        public UpdateNewPopupWindow()
         {
             InitializeComponent();
         }
