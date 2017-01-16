@@ -1,9 +1,13 @@
 ﻿using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using ParkInspect.Services;
 using ParkInspect.WEB.Models;
 
 namespace ParkInspect.WEB.Controllers
@@ -98,6 +102,85 @@ namespace ParkInspect.WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult Index(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : "";
+
+            var clients = new UserManager().GetClients();
+            var model = new Models.Client(clients.Find(c => c.email == User.Identity.Name));            
+                      
+            return View(model);
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model, int? id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+                       
+            var clients = new UserManager().GetClients();
+            var modal = new Models.Client(clients.Find(c => c.id == id));
+
+            var sha = SHA256.Create();
+
+            var bytes = new byte[model.OldPassword.Length * sizeof(char)];
+            System.Buffer.BlockCopy(model.OldPassword.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+            sha.ComputeHash(bytes);
+
+            var chars = new char[sha.Hash.Length / sizeof(char)];
+            System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+            var pw = new string(chars);
+
+            if (model.OldPassword != modal.Password)
+            {
+                if (pw != modal.Password)
+                {
+                    AddError("Uw oude wachtwoord is niet correct");
+                    return View(model);
+                }
+            }
+
+            var sha1 = SHA256.Create();
+
+            var bytes1 = new byte[model.NewPassword.Length * sizeof(char)];
+            System.Buffer.BlockCopy(model.NewPassword.ToCharArray(), 0, bytes1, 0, bytes1.Length);
+
+            sha1.ComputeHash(bytes1);
+
+            var chars1 = new char[sha1.Hash.Length / sizeof(char)];
+            System.Buffer.BlockCopy(sha1.Hash, 0, chars1, 0, sha1.Hash.Length);
+
+            var pw1 = new string(chars1);
+
+            modal.Password = pw1;
+
+            var result = new UserManager().ChangePassword(modal);
+
+            if (result == 1)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new {Message = ManageMessageId.ChangePasswordSuccess});
+            }
+
+            return View(model);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -124,6 +207,19 @@ namespace ParkInspect.WEB.Controllers
 
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+        private void AddError(string error)
+        {
+            ModelState.AddModelError("", error);
+        }
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -131,6 +227,17 @@ namespace ParkInspect.WEB.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        private bool HasPassword()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            return user?.PasswordHash != null;
+        }
+
+        public enum ManageMessageId
+        {
+            ChangePasswordSuccess,
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
@@ -159,7 +266,7 @@ namespace ParkInspect.WEB.Controllers
                     properties.Dictionary[XsrfKey] = UserId;
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
-            }
+            }           
         }
         #endregion
     }
