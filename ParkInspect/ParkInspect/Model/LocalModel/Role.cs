@@ -12,10 +12,10 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class LocalRole
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LocalRole()
+        public Role()
         {
             this.Employee = new HashSet<Employee>();
         }

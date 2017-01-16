@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LocalDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LocalDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absence">
           <Key>
             <PropertyRef Name="start" />
@@ -102,10 +102,9 @@
         </EntityType>
         <EntityType Name="Image">
           <Key>
-            <PropertyRef Name="image" />
             <PropertyRef Name="form_id" />
           </Key>
-          <Property Name="image" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="image" Type="ntext" Nullable="false" />
           <Property Name="form_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inspection">
@@ -311,7 +310,7 @@
         </Association>
         <Association Name="FK_Image_Raport">
           <End Role="Form" Type="Self.Form" Multiplicity="1" />
-          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <End Role="Image" Type="Self.Image" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Form">
               <PropertyRef Name="id" />
@@ -598,8 +597,7 @@
             <End Role="Formfield" EntitySet="Formfield" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LocalDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -705,9 +703,9 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="template_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Template" Relationship="Self.FK_Form_Template" FromRole="Form" ToRole="Template" />
-          <NavigationProperty Name="Image" Relationship="Self.FK_Image_Raport" FromRole="Form" ToRole="Image" />
           <NavigationProperty Name="Inspection" Relationship="Self.FK_Inspectie_Vragenlijst" FromRole="Form" ToRole="Inspection" />
           <NavigationProperty Name="Formfield" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Form" ToRole="Formfield" />
+          <NavigationProperty Name="Image" Relationship="LocalDatabaseModel.FK_Image_Raport" FromRole="Form" ToRole="Image" />
         </EntityType>
         <EntityType Name="Formfield">
           <Key>
@@ -721,15 +719,6 @@
           <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Field" Relationship="Self.FK_Questionair_Questionair" FromRole="Formfield" ToRole="Field" />
           <NavigationProperty Name="Form" Relationship="Self.FK_Vragenlijstveld_Veld_vregenlijst_id" FromRole="Formfield" ToRole="Form" />
-        </EntityType>
-        <EntityType Name="Image">
-          <Key>
-            <PropertyRef Name="image1" />
-            <PropertyRef Name="form_id" />
-          </Key>
-          <Property Name="image1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="form_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Form" Relationship="Self.FK_Image_Raport" FromRole="Image" ToRole="Form" />
         </EntityType>
         <EntityType Name="Inspection">
           <Key>
@@ -962,18 +951,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Image_Raport">
-          <End Role="Form" Type="Self.Form" Multiplicity="1" />
-          <End Role="Image" Type="Self.Image" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Form">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Image">
-              <PropertyRef Name="form_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Inspectie_Vragenlijst">
           <End Role="Form" Type="Self.Form" Multiplicity="0..1" />
           <End Role="Inspection" Type="Self.Inspection" Multiplicity="*" />
@@ -1077,7 +1054,6 @@
           <EntitySet Name="Field" EntityType="Self.Field" />
           <EntitySet Name="Form" EntityType="Self.Form" />
           <EntitySet Name="Formfield" EntityType="Self.Formfield" />
-          <EntitySet Name="Image" EntityType="Self.Image" />
           <EntitySet Name="Inspection" EntityType="Self.Inspection" />
           <EntitySet Name="Parkinglot" EntityType="Self.Parkinglot" />
           <EntitySet Name="Region" EntityType="Self.Region" />
@@ -1134,10 +1110,6 @@
             <End Role="Template" EntitySet="Template" />
             <End Role="Form" EntitySet="Form" />
           </AssociationSet>
-          <AssociationSet Name="FK_Image_Raport" Association="Self.FK_Image_Raport">
-            <End Role="Form" EntitySet="Form" />
-            <End Role="Image" EntitySet="Image" />
-          </AssociationSet>
           <AssociationSet Name="FK_Inspectie_Vragenlijst" Association="Self.FK_Inspectie_Vragenlijst">
             <End Role="Form" EntitySet="Form" />
             <End Role="Inspection" EntitySet="Inspection" />
@@ -1174,7 +1146,32 @@
             <End Role="Inspection" EntitySet="Inspection" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <EntitySet Name="Image" EntityType="LocalDatabaseModel.Image" />
+          <AssociationSet Name="FK_Image_Raport" Association="LocalDatabaseModel.FK_Image_Raport">
+            <End Role="Form" EntitySet="Form" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="form_id" />
+          </Key>
+          <Property Name="image1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="form_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Form" Relationship="LocalDatabaseModel.FK_Image_Raport" FromRole="Image" ToRole="Form" />
+        </EntityType>
+        <Association Name="FK_Image_Raport">
+          <End Type="LocalDatabaseModel.Form" Role="Form" Multiplicity="1" />
+          <End Type="LocalDatabaseModel.Image" Role="Image" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1282,14 +1279,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Image">
-            <EntityTypeMapping TypeName="LocalDatabaseModel.Image">
-              <MappingFragment StoreEntitySet="Image">
-                <ScalarProperty Name="image1" ColumnName="image" />
-                <ScalarProperty Name="form_id" ColumnName="form_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Inspection">
             <EntityTypeMapping TypeName="LocalDatabaseModel.Inspection">
               <MappingFragment StoreEntitySet="Inspection">
@@ -1380,6 +1369,14 @@
               <ScalarProperty Name="id" ColumnName="employee_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Image">
+            <EntityTypeMapping TypeName="LocalDatabaseModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+                <ScalarProperty Name="image1" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

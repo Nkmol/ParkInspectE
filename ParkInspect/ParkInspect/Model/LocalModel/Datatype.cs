@@ -12,10 +12,10 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class LocalDatatype
+    public partial class Datatype
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LocalDatatype()
+        public Datatype()
         {
             this.Field = new HashSet<Field>();
         }

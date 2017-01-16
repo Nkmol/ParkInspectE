@@ -12,7 +12,7 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class LocalFormfield
+    public partial class Formfield
     {
         public int form_id { get; set; }
         public string field_title { get; set; }

@@ -34,7 +34,6 @@ namespace ParkInspect
         public virtual DbSet<Field> Fields { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<Formfield> Formfields { get; set; }
-        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Inspection> Inspections { get; set; }
         public virtual DbSet<Parkinglot> Parkinglots { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
@@ -44,5 +43,6 @@ namespace ParkInspect
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<Contactperson> Contactpersons { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
     }
 }

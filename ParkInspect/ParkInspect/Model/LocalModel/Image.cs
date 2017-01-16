@@ -12,7 +12,7 @@ namespace ParkInspect.Model.LocalModel
     using System;
     using System.Collections.Generic;
     
-    public partial class LocalImage
+    public partial class Image
     {
         public string image1 { get; set; }
         public int form_id { get; set; }
