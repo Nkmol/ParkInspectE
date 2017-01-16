@@ -37,7 +37,7 @@
 
                     <DataGrid ItemsSource="{Binding Contactpersons, UpdateSourceTrigger=PropertyChanged}"
                               IsReadOnly="True" AutoGenerateColumns="False"
-                              SelectedItem="{Binding SelectedContactperson}">
+                              SelectedItem="{Binding SelectedContactperson}" VerticalScrollBarVisibility="Visible">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="150" Header="Voornaam" Binding="{Binding firstname}" />
                             <DataGridTextColumn Width="150" Header="Achternaam" Binding="{Binding lastname}" />
