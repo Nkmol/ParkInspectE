@@ -17,7 +17,7 @@ namespace ParkInspect.Model.LocalModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocalParkinglot()
         {
-            this.Inspection = new HashSet<Inspection>();
+            this.Inspection = new HashSet<LocalInspection>();
         }
     
         public int id { get; set; }
@@ -29,7 +29,7 @@ namespace ParkInspect.Model.LocalModel
         public string clarification { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inspection> Inspection { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual ICollection<LocalInspection> Inspection { get; set; }
+        public virtual LocalRegion Region { get; set; }
     }
 }

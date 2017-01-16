@@ -18,6 +18,6 @@ namespace ParkInspect.Model.LocalModel
         public int employee_id { get; set; }
         public Nullable<System.DateTime> end { get; set; }
     
-        public virtual Employee Employee { get; set; }
+        public virtual LocalEmployee Employee { get; set; }
     }
 }

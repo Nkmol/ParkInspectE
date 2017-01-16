@@ -17,8 +17,8 @@ namespace ParkInspect.Model.LocalModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocalClient()
         {
-            this.Asignment = new HashSet<Asignment>();
-            this.Contactperson = new HashSet<Contactperson>();
+            this.Asignment = new HashSet<LocalAsignment>();
+            this.Contactperson = new HashSet<LocalContactperson>();
         }
     
         public int id { get; set; }
@@ -28,8 +28,8 @@ namespace ParkInspect.Model.LocalModel
         public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignment> Asignment { get; set; }
+        public virtual ICollection<LocalAsignment> Asignment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contactperson> Contactperson { get; set; }
+        public virtual ICollection<LocalContactperson> Contactperson { get; set; }
     }
 }

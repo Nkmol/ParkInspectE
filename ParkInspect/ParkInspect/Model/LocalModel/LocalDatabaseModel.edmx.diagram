@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="LocalDatabaseModel.Field" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LocalDatabaseModel.Form" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LocalDatabaseModel.Formfield" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LocalDatabaseModel.Image" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LocalDatabaseModel.Inspection" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LocalDatabaseModel.Parkinglot" Width="1.5" PointX="12" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LocalDatabaseModel.Region" Width="1.5" PointX="9.75" PointY="11.875" IsExpanded="true" />
@@ -36,7 +35,6 @@
         <AssociationConnector Association="LocalDatabaseModel.FK_Field_Template" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.FK_Questionair_Questionair" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.FK_Form_Template" ManuallyRouted="false" />
-        <AssociationConnector Association="LocalDatabaseModel.FK_Image_Raport" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Vragenlijst" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.FK_Vragenlijstveld_Veld_vregenlijst_id" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.FK_Inspectie_Inspectie" ManuallyRouted="false" />
@@ -46,6 +44,8 @@
         <AssociationConnector Association="LocalDatabaseModel.FK_Parkinglot_Region" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.Inspector" ManuallyRouted="false" />
         <AssociationConnector Association="LocalDatabaseModel.Inspector_has_Inspection" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LocalDatabaseModel.Image" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="LocalDatabaseModel.FK_Image_Raport" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
