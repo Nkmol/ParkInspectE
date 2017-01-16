@@ -6,13 +6,14 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Reports, Source={StaticResource Locator}}" >
     <UserControl.Resources>
         <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <TabControl>
             <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[25], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
@@ -46,6 +47,21 @@
 					        Margin="0,10,0,0" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
+            <TabItem Header="Geografische overzicht" Visibility="{Binding Dashboard.TabStatus[26], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source={StaticResource Locator}}">
+                <Grid Margin="0,9,0,-9">
+                    <Grid>
+                        <Label x:Name="label" Content="Selecteer:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68"/>
+                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="68,-2,0,0" SelectionChanged="comboBox_SelectionChanged" VerticalAlignment="Top" Width="120">
+                            <ComboBoxItem Content="Inspecties"/>
+                            <ComboBoxItem Content="Afwezigheid"/>
+                            <ComboBoxItem Content="Parkeerplaatsen"/>
+                            <ComboBoxItem Content="Inspection Heatmap"/>
+                        </ComboBox>
+                        <windowsPresentation:GMapControl x:Name="gmap" Margin="0,31,0,0"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
         </TabControl>
     </Grid>
 </UserControl>

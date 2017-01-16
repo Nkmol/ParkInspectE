@@ -21,5 +21,9 @@ namespace ParkInspect.Services
             return _context.GetAll<Inspection>(null, c => c.Employees, k => k.Inspection1)
                 .Where(k => k.id == id);
         }
+        public IEnumerable<Inspection> GetAllInspections()
+        {
+            return _context.GetAll<Inspection>();
+        }
     }
 }
