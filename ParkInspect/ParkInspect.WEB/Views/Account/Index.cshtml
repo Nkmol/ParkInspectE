@@ -1,0 +1,27 @@
+﻿@model ParkInspect.WEB.Models.Client
+
+<h2>Manage</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Name, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Email, new { disabled = "disabled", @readonly = "readonly"})
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+
+        @Html.Label("Password:", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ActionLink("Change your password", "ChangePassword", new { id = Model.Id})
+        </div>   
+    </div>
+</div>
