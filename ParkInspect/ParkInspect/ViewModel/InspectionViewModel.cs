@@ -9,6 +9,7 @@ using ParkInspect.Services;
 using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.Popup;
+using Microsoft.Practices.ServiceLocation;
 
 namespace ParkInspect.ViewModel
 {
@@ -41,6 +42,7 @@ namespace ParkInspect.ViewModel
         public RelayCommand AssignInspectorCommand { get; set; }
         public RelayCommand UnassignInspecteurCommand { get; set; }
         public RelayCommand SearchFormCommand { get; set; }
+        public RelayCommand FillFormCommand { get; set; }
 
         public Action PopupDone { get; set; }
 
@@ -52,6 +54,19 @@ namespace ParkInspect.ViewModel
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
 
+        private string _fillFormText;
+        public string FillFormText
+        {
+           get
+            {
+                return _fillFormText;
+            }
+            set
+            {
+                _fillFormText = value;
+                RaisePropertyChanged("FillFormText");
+            }
+        }
 
         public DateTime? BoundryStartDate
         {
@@ -187,6 +202,14 @@ namespace ParkInspect.ViewModel
             // set commands
             ResetCommand = new RelayCommand(EmptyForm);
             SaveCommand = new RelayCommand(Save);
+            FillFormCommand = new RelayCommand(FillForm);
+            if (Data.Form == null)
+            {
+                FillFormText = "Vragenlijst aanmaken";
+            } else
+            {
+                FillFormText = "Vragenlijst inzien";
+            }
 
             AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
 
@@ -199,6 +222,23 @@ namespace ParkInspect.ViewModel
             Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
             Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+        }
+
+        public void FillForm()
+        {
+            if (this.Data.Form == null)
+            {
+                _popupManager.ShowPopupNoButton<TemplatesViewModel>("Template selecteren", new SelectTemplatePopup(), null);
+            } else
+            {
+                ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(Data);
+            }
+        }
+
+        public void createForm()
+        {
+            FormViewModel formViewModel = ServiceLocator.Current.GetInstance<FormViewModel>();
+            formViewModel.createForm(Data);
         }
 
         private void SearchCommand()

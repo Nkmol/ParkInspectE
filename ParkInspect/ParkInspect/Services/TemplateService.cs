@@ -10,12 +10,12 @@ namespace ParkInspect.Services
     public class TemplateService
     {
         public EntityFrameworkRepository<ParkInspectEntities> central;
-        private EntityFrameworkRepository<ParkInspectEntities> local;
+        private EntityFrameworkRepository<ParkInspectLocalEntities> local;
 
         public TemplateService(EntityFrameworkRepository<ParkInspectEntities> central, EntityFrameworkRepository<ParkInspectEntities> local)
         {
             this.central = central; 
-            this.local = local;
+            this.local = ViewModel.ViewModelLocator.localRepo;
         }
 
         public Template createTemplate()
@@ -86,13 +86,11 @@ namespace ParkInspect.Services
                 central.Save();
             } else
             {
-
-                /*
-                Template localTemplate = new ParkInspectEntities1.Template();
-                localTemplate.name = template.name;
-                localTemplate.version_number = template.version_number
-                local.Create<Template>(localTemplate);
-                */
+                using (var context = new ParkInspectLocalEntities())
+                {
+                    context.Templates.Add(template);
+                    context.SaveChanges();
+                }
             }
         }
     }

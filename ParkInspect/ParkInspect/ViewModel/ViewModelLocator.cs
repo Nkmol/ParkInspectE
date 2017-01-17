@@ -81,7 +81,7 @@ namespace ParkInspect.ViewModel
 
         }
 
-        public static IRepository localRepo;
+        public static EntityFrameworkRepository<ParkInspectLocalEntities> localRepo;
         /// <summary>
         /// Gets the Main property.
         /// </summary>

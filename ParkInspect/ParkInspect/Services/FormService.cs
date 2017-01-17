@@ -72,13 +72,11 @@ namespace ParkInspect.Services
             }
             else
             {
-
-                /*
-                Form localForm = new ParkInspectEntities1.Form();
-                localForm.field_title = form.field_title;
-                localForm.value = form.value
-                local.Create(localForm);
-                */
+                using (var context = new ParkInspectLocalEntities())
+                {
+                    context.Forms.Add(form);
+                    context.SaveChanges();
+                }
             }
         }
 

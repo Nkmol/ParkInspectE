@@ -9,6 +9,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using ParkInspect.Services;
 using ParkInspect.Repository;
+using ParkInspect.ViewModel;
 using System.Diagnostics;
 
 namespace ParkInspect.ViewModel
@@ -99,6 +100,14 @@ namespace ParkInspect.ViewModel
         public RelayCommand EditTemplateCommand { get; set; }
         public RelayCommand NewListCommand { get; set; }
 
+        public object SelectedItemPopup
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public TemplatesViewModel(FormViewModel super)
         {
             superViewModel = super;
@@ -113,6 +122,11 @@ namespace ParkInspect.ViewModel
         public void fillTemplates()
         {
             Templates = new ObservableCollection<TemplateCollection>(new TemplateCollection[]{ });
+            IRepository Context = this.Context;
+            if (!((EntityFrameworkRepository < ParkInspectEntities > )Context).IsConnected())
+            {
+                Context = ViewModelLocator.localRepo;
+            }
             foreach(Template template in Context.GetAll<Template>())
             {
                 bool added = false;

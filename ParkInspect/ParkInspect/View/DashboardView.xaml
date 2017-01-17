@@ -89,6 +89,8 @@
             <Button Command="{Binding LogoutCommand}"
                     Content="Logout"
                     IsEnabled="{Binding LogoutButtonEnabled}" />
+            <Button DataContext="{Binding Dashboard}" Command="{Binding syncCommand}"
+                    Content="Sync"/>
 
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
@@ -220,6 +221,9 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        public DataSync.DataSynchroniser synchroniser;
+        public RelayCommand syncCommand;
+
         public DashboardViewModel(IRepository repository)
         {
 
@@ -236,7 +240,8 @@ namespace ParkInspect.ViewModel
             ShowDefaultTabs();
 
             PossibleRoles = _employeeService.GetAllRoles().ToList();
-
+            synchroniser = new DataSync.DataSynchroniser();
+            syncCommand = new RelayCommand(synchroniser.synchronise);
         }
 
       
