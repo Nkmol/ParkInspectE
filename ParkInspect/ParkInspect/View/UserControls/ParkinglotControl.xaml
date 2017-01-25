@@ -213,8 +213,6 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button x:Name="NewButton" Content="Bewerken" Command="{Binding EditCommand}"
-                                VerticalAlignment="Top" Width="120" Margin="0,0,10,0" />
                         <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left"
                                 Margin="0,0,0,0" Command="{Binding DataContext.NewCommand, ElementName=Window}"
                                 VerticalAlignment="Top" Width="120" />
