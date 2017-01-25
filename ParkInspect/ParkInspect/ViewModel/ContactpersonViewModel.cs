@@ -175,13 +175,13 @@ namespace ParkInspect.ViewModel
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Add(SelectedContactperson);
-                _dialog.ShowMessage("Actie", "Contactpersoon toegevoegd");
+                _dialog.ShowMessage("Contactpersoon toevoegen", "Contactpersoon toegevoegd");
             }
             else
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Update(SelectedContactperson);
-                _dialog.ShowMessage("Actie", "Contactpersoon bijgewerkt");
+                _dialog.ShowMessage("Contactpersoon bijwerken", "Contactpersoon bijgewerkt");
             }
 
             UpdateContactpersons();
@@ -193,7 +193,7 @@ namespace ParkInspect.ViewModel
             Service.Delete(SelectedContactperson);
             UpdateContactpersons();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
-            _dialog.ShowMessage("Action", "Contactpersoon verwijderd");
+            _dialog.ShowMessage("Contactpersoon verwijderen", "Contactpersoon verwijderd");
         }
     }
 }

@@ -355,7 +355,6 @@
     <Compile Include="ViewModel\AssignmentVM\AssignmentOverviewViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonViewModel.cs" />
-    <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />

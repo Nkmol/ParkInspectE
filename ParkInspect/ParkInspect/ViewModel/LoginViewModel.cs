@@ -78,63 +78,7 @@ namespace ParkInspect.ViewModel
 
         public ICommand LogoutCommand => _logoutCommand
                                                   ?? (_logoutCommand = new RelayCommand(Logout));
-        /*
-        public async void ShowLoginDialog()
-        {
-            var loginDialogSettings = new LoginDialogSettings
-            {
-                UsernameWatermark = "Emailadres...",
-                PasswordWatermark = "Wachtwoord...",
-                NegativeButtonVisibility = Visibility.Hidden,
-                RememberCheckBoxVisibility = Visibility.Visible
-                
-            };
-
-            var logged = false;
-
-            while (!logged)
-            {
-                var result =
-                    await
-                        _dialogCoordinator.ShowLoginAsync(this, "Authenticatie", "Voer uw inloggegevens in",
-                            loginDialogSettings);
-
-                if (result != null)
-                {
-                    var rs = Service.GetEmployee(result.Username, result.Password).Count() != 0;
-
-                    if (!rs)
-                    {
-                        if (result.ShouldRemember)
-                        {
-                            loginDialogSettings.InitialUsername = result.Username;
-                        }
-
-                        await
-                            _dialogCoordinator.ShowMessageAsync(this, "Oeps er is iets misgegaan",
-                                "Ongeldig email/wachtwoord");
-
-                    }
-                    else
-                    {
-                        await _dialogCoordinator.ShowMessageAsync(this, "Welkom: " + result.Username, "Fijne dag!");
-                        logged = true;
-                        LoginName = result.Username;
-                        LoginButtonEnabled = false;
-                        LogoutButtonEnabled = true;
-
-                        // goes wrong on multiple users with the same username and password with different roles.
-                        CurrentUser = Service.GetEmployee(result.Username, result.Password).First();
-                        dashboard.ChangeAuthorization(CurrentUser.Role1);
-
-                    }
-                }
-            }
-            
-        }
-        */
-
-
+       
         private void Logout()
         {
             LoginName = "";
