@@ -150,12 +150,12 @@ namespace ParkInspect.ViewModel
                 SelectedClient.password = new string(chars);
 
                 Service.Add(SelectedClient);
-                _dialog.ShowMessage("Actie", "Klant toegevoegd");
+                _dialog.ShowMessage("Klant toevoegen", "Klant toegevoegd");
             }
             else
             {
                 Service.Update(SelectedClient);
-                _dialog.ShowMessage("Actie", "Klant bijgewerkt");
+                _dialog.ShowMessage("Klant bijwerken", "Klant bijgewerkt");
             }
 
             UpdateClients();
