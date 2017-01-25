@@ -194,23 +194,6 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-            /*
-            SHA256 sha = SHA256.Create();
-
-            byte[] bytes = new byte[SelectedEmployee.password.Length * sizeof(char)];
-            System.Buffer.BlockCopy(SelectedEmployee.password.ToCharArray(), 0, bytes, 0, bytes.Length);
-
-            sha.ComputeHash(bytes);
-
-            char[] chars = new char[sha.Hash.Length / sizeof(char)];
-            System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
-
-            SelectedEmployee.password = new string(chars);
-
-            Service.Add(SelectedEmployee);
-
-            SelectedEmployee.password = new string(chars);
-            */
             if (SelectedEmployee.id == 0)
             {
                 Service.Add(SelectedEmployee);
