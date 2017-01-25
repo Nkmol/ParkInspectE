@@ -91,7 +91,7 @@
                             <Label Content="Klant:" />
                             <ComboBox Name="Customer" HorizontalAlignment="Left" Margin="5,0,0,10" Width="250"
                                       DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                                      ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                                      ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}" DisplayMemberPath="name"
                                       SelectedItem="{Binding SelectedClient}" Grid.RowSpan="2">
                                 <ComboBox.Text>
                                     <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">

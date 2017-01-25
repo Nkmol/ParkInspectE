@@ -161,7 +161,11 @@
                             </DatePicker>
 
                             <Label Content="Rol" />
-                            <ComboBox Name="role" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                            <ComboBox Name="role" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" 
+                                      DataContext="{Binding Employees, Source={StaticResource Locator}}" 
+                                      ItemsSource="{Binding Global.Roles, Source={StaticResource Locator}}" 
+                                      DisplayMemberPath="role1" SelectedValuePath="role1" 
+                                      SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                                 <ComboBox.Text>
                                     <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -172,7 +176,7 @@
                             </ComboBox>
 
                             <Label Content="Status" />
-                            <ComboBox Name="status" Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                            <ComboBox Name="status" Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding Global.States, Source={StaticResource Locator}}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                                 <ComboBox.Text>
                                     <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>

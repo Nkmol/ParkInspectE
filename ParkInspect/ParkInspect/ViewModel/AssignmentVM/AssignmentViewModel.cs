@@ -33,7 +33,6 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public ObservableCollection<Form> Forms { get; set; }
         public ObservableCollection<State> States { get; set; }
         public ObservableCollection<Client> Clients { get; set; }
-        public ObservableCollection<Asignment> Assignments { get; set; }
 
         public RelayCommand<AssignmentOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
@@ -150,11 +149,6 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
             Inspections = new ObservableCollection<InspectionViewModel>(Data.Inspections.Select(x => new InspectionViewModel(repository, popupManager, x)));
             UnassignedInspections = new ObservableCollection<InspectionViewModel>();
-
-            // TODO global data
-            Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
-            States = new ObservableCollection<State>(_service.GetAll<State>());
-            Clients = new ObservableCollection<Client>(_service.GetAll<Client>());
 
             SaveCommand = new RelayCommand<AssignmentOverviewViewModel>(Save);
             EditCommand = new RelayCommand(Edit, () => Data.id > 0);

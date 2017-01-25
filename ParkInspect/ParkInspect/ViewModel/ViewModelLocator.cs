@@ -53,6 +53,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
             SimpleIoc.Default.Register<PopupCoordinator>();
 
+
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
@@ -62,23 +63,23 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<FormViewModel>();
-            //ServiceLocator.Current.GetInstance<FormViewModel>().Context = ServiceLocator.Current.GetInstance<EntityFrameworkRepository<ParkInspectEntities>>();
             SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
-
             SimpleIoc.Default.Register<RegionViewModel>();
+            SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
+
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
-            SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupCreateUpdateViewModel>();
 
+            SimpleIoc.Default.Register<GlobalViewModel>();
         }
 
         public static IRepository localRepo;
@@ -123,6 +124,8 @@ namespace ParkInspect.ViewModel
         public DialogManager Dialog => ServiceLocator.Current.GetInstance<DialogManager>();
 
         public AssignmentOverviewViewModel Assignments => ServiceLocator.Current.GetInstance<AssignmentOverviewViewModel>();
+
+        public GlobalViewModel Global => ServiceLocator.Current.GetInstance<GlobalViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

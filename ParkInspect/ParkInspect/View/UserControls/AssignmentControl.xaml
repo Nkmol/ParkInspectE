@@ -126,7 +126,7 @@
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
                         <ComboBox Text="{Binding State.state1}"
-                                  ItemsSource="{Binding States}" DisplayMemberPath="state1"
+                                  ItemsSource="{Binding Global.States, Source={StaticResource Locator}}" DisplayMemberPath="state1"
                                   x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10" >
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormState">
@@ -137,7 +137,7 @@
                             </ComboBox.SelectedItem>
                         </ComboBox>
                         <ComboBox Text="{Binding Client.name}"
-                                  ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient" materialDesign:HintAssist.Hint="Selecteer een Klant" materialDesign:HintAssist.IsFloating="True" Padding="0,10" >
+                                  ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}" DisplayMemberPath="name" x:Name="cbClient" materialDesign:HintAssist.Hint="Selecteer een Klant" materialDesign:HintAssist.IsFloating="True" Padding="0,10" >
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormClient">
                                     <Binding.ValidationRules>
