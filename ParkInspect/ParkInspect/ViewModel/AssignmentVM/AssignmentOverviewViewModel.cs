@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using Org.BouncyCastle.Crypto.Digests;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.ViewModel.Popup;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ParkInspect.ViewModel.AssignmentVM
 {

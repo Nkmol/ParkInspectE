@@ -73,10 +73,6 @@
                         <DataGridTextColumn Header="Verduidelijking" Width="1*" Binding="{Binding Clarification}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Grid.Row="3" x:Name="ExportButton" Content="Exporteer Data" PreviewMouseDown="Unselect"
-                        Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}"
-                        HorizontalAlignment="Left"
-                        Margin="0,10,0,0" VerticalAlignment="Top" Width="130" />
             </Grid>
         </TabItem>
         <TabItem Header="Management"
