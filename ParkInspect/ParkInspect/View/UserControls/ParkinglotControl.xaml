@@ -18,14 +18,15 @@
              VerticalAlignment="Top">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <TabControl>
-        <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+        <TabItem Header="Overzicht"
+                 Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -35,23 +36,27 @@
                     <TextBox materialDesign:HintAssist.Hint="Zoek in naam" materialDesign:HintAssist.IsFloating="True"
                              Margin="0,3"
                              Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode" materialDesign:HintAssist.IsFloating="True"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode"
+                             materialDesign:HintAssist.IsFloating="True"
                              Margin="5,3,0,3"
                              Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer" materialDesign:HintAssist.IsFloating="True"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer"
+                             materialDesign:HintAssist.IsFloating="True"
                              Margin="5,3,0,3"
                              Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in straatnaam" materialDesign:HintAssist.IsFloating="True"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in straatnaam"
+                             materialDesign:HintAssist.IsFloating="True"
                              Margin="5,3,0,3"
                              Text="{Binding StreetnameFilter, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox materialDesign:HintAssist.Hint="Zoek in regio" materialDesign:HintAssist.IsFloating="True"
                              Margin="5,3,0,3"
                              Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" materialDesign:HintAssist.IsFloating="True"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking"
+                             materialDesign:HintAssist.IsFloating="True"
                              Margin="5,3,0,3"
                              Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
-                <DataGrid ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding SelectedParkinglot}" 
+                <DataGrid ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding SelectedParkinglot}"
                           IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Naam" Width="1*" Binding="{Binding Name}" />
@@ -68,17 +73,18 @@
                  Visibility="{Binding Dashboard.TabStatus[24], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}"
                  DataContext="{Binding SelectedParkinglot}">
             <Border Padding="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <StackPanel>
-                        <TextBox x:Name="NameBox" materialDesign:HintAssist.Hint="Parkeerplaats naam" materialDesign:HintAssist.IsFloating="True">
+                        <TextBox x:Name="NameBox" materialDesign:HintAssist.Hint="Parkeerplaats naam"
+                                 materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -88,7 +94,8 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Parkeerplaats postcode" materialDesign:HintAssist.IsFloating="True">
+                        <TextBox materialDesign:HintAssist.Hint="Parkeerplaats postcode"
+                                 materialDesign:HintAssist.IsFloating="True" Name="ZipBox">
                             <TextBox.Text>
                                 <Binding Path="FormZipcode" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -101,7 +108,9 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <ComboBox ItemsSource="{Binding Regions}" DisplayMemberPath="name" SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio" materialDesign:HintAssist.IsFloating="True">
+                        <ComboBox Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name"
+                                  SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio"
+                                  materialDesign:HintAssist.IsFloating="True">
                             <ComboBox.Text>
                                 <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -112,27 +121,31 @@
                             </ComboBox.Text>
                         </ComboBox>
                         <UniformGrid Rows="1">
-                            <TextBox materialDesign:HintAssist.Hint="Parkeerplaats straatnaam" materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
-                            <TextBox.Text>
-                                <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
-                                        <validationrules:IsValidNameValidationRule
-                                            ValidationStep="ConvertedProposedValue"
-                                            ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                            <TextBox materialDesign:HintAssist.Hint="Parkeerplaats straatnummer" materialDesign:HintAssist.IsFloating="True">
+                            <TextBox materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
+                                     materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
+                                <TextBox.Text>
+                                    <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                      ValidatesOnTargetUpdated="True" />
+                                            <validationrules:IsValidNameValidationRule
+                                                ValidationStep="ConvertedProposedValue"
+                                                ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBox Name="NumberBox" materialDesign:HintAssist.Hint="Parkeerplaats straatnummer"
+                                     materialDesign:HintAssist.IsFloating="True">
                                 <TextBox.Text>
                                     <Binding Path="FormNumber" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue"
-                                                                                   ValidatesOnTargetUpdated="True" />
-                                            <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue"
-                                                                              ValidatesOnTargetUpdated="True" />
+                                            <validationrules:StringToIntValidationRule
+                                                ValidationStep="RawProposedValue"
+                                                ValidatesOnTargetUpdated="True" />
+                                            <validationrules:IsPositiveNumberRule
+                                                ValidationStep="ConvertedProposedValue"
+                                                ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
@@ -140,9 +153,10 @@
                         </UniformGrid>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                        <TextBox Name="ClarificationBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                                  AcceptsReturn="True" MaxHeight="178"
-                                 materialDesign:HintAssist.Hint="Parkeerplaats verduidelijking" materialDesign:HintAssist.IsFloating="True">
+                                 materialDesign:HintAssist.Hint="Parkeerplaats verduidelijking"
+                                 materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="FormClarification" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -156,7 +170,8 @@
                     <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
                         <Button x:Name="SaveButton2"
                                 Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-                                CommandParameter="{Binding DataContext, ElementName=Window}" Content="Opslaan" Margin="0,10,0,0" >
+                                CommandParameter="{Binding DataContext, ElementName=Window}" Content="Opslaan"
+                                Margin="0,10,0,0">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -185,9 +200,10 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button x:Name="DeselectButton" Content="Scherm legen" Command="{Binding DataContext.NewCommand, ElementName=Window}" Margin="0,10,0,0"/>
+                        <Button x:Name="DeselectButton" Content="Scherm legen"
+                                Command="{Binding DataContext.NewCommand, ElementName=Window}" Margin="0,10,0,0" />
                     </StackPanel>
-            </Grid>
+                </Grid>
             </Border>
         </TabItem>
     </TabControl>

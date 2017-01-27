@@ -52,7 +52,7 @@
             <Border Padding="10">
                 <StackPanel>
                     <TextBox materialDesign:HintAssist.Hint="Vul de voornaam in"
-                             materialDesign:HintAssist.IsFloating="True">
+                             materialDesign:HintAssist.IsFloating="True" Name="FirstName">
                         <TextBox.Text>
                             <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -64,7 +64,7 @@
                         </TextBox.Text>
                     </TextBox>
                     <TextBox materialDesign:HintAssist.Hint="Vul de achternaam in"
-                             materialDesign:HintAssist.IsFloating="True">
+                             materialDesign:HintAssist.IsFloating="True" Name="LastName">
                         <TextBox.Text>
                             <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -79,7 +79,7 @@
                               materialDesign:HintAssist.IsFloating="True"
                               DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
                               ItemsSource="{Binding Clients}" DisplayMemberPath="name"
-                              SelectedItem="{Binding SelectedClient}">
+                              SelectedItem="{Binding SelectedClient}" Name="CbCustomer">
                         <ComboBox.Text>
                             <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -100,13 +100,13 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Binding="{Binding ElementName=CbCustomer, Path=(Validation.HasError)}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />

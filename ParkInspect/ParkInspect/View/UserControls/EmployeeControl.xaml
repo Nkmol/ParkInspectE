@@ -68,7 +68,7 @@
                 <Border Padding="10" Grid.Column="0" Grid.RowSpan="2">
                     <StackPanel>
                         <TextBox materialDesign:HintAssist.Hint="Voornaam werknemer"
-                                 materialDesign:HintAssist.IsFloating="True">
+                                 materialDesign:HintAssist.IsFloating="True" Name="FirstName">
                             <TextBox.Text>
                                 <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -79,7 +79,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBox materialDesign:HintAssist.Hint="Achternaam werknemer"
-                                 materialDesign:HintAssist.IsFloating="True">
+                                 materialDesign:HintAssist.IsFloating="True" Name="LastName">
                             <TextBox.Text>
                                 <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -90,7 +90,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBox materialDesign:HintAssist.Hint="Email werknemer"
-                                 materialDesign:HintAssist.IsFloating="True">
+                                 materialDesign:HintAssist.IsFloating="True" Name="Email">
                             <TextBox.Text>
                                 <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -103,7 +103,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBox materialDesign:HintAssist.Hint="Telefoonnummer werknemer"
-                                 materialDesign:HintAssist.IsFloating="True">
+                                 materialDesign:HintAssist.IsFloating="True" Name="Phonenumber">
                             <TextBox.Text>
                                 <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -116,7 +116,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBox materialDesign:HintAssist.Hint="Password werknemer"
-                                 materialDesign:HintAssist.IsFloating="True">
+                                 materialDesign:HintAssist.IsFloating="True" Name="Password">
                             <TextBox.Text>
                                 <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -127,7 +127,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <DatePicker materialDesign:HintAssist.Hint="Werkenemer datum gestart"
-                                    materialDesign:HintAssist.IsFloating="True">
+                                    materialDesign:HintAssist.IsFloating="True" Name="StartDate">
                             <DatePicker.SelectedDate>
                                 <Binding Path="in_service_date" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -153,7 +153,7 @@
                                   DisplayMemberPath="role1" SelectedValuePath="role1"
                                   SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                   materialDesign:HintAssist.Hint="Werkenemer rol"
-                                  materialDesign:HintAssist.IsFloating="True">
+                                  materialDesign:HintAssist.IsFloating="True" Name="Role">
                             <ComboBox.Text>
                                 <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -168,7 +168,7 @@
                                   DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1"
                                   SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                   materialDesign:HintAssist.Hint="Werkenemer status"
-                                  materialDesign:HintAssist.IsFloating="True">
+                                  materialDesign:HintAssist.IsFloating="True" Name="Status">
                             <ComboBox.Text>
                                 <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -202,28 +202,28 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition
-                                                Binding="{Binding ElementName=fname, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=lname, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=email, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=Email, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=phone, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=Phonenumber, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=start_date, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=StartDate, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=pass, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=Password, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=role, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=Role, Path=(Validation.HasError)}"
                                                 Value="false" />
                                             <Condition
-                                                Binding="{Binding ElementName=status, Path=(Validation.HasError)}"
+                                                Binding="{Binding ElementName=Status, Path=(Validation.HasError)}"
                                                 Value="false" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="true" />

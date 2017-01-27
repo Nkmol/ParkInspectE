@@ -60,7 +60,7 @@
             <Border Padding="10">
                 <StackPanel>
                     <Label Content="Begin Datum" />
-                    <controls:DateTimePicker>
+                    <controls:DateTimePicker Name="StartDate">
                         <controls:DateTimePicker.SelectedDate>
                             <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged"
                                      Mode="TwoWay">
@@ -73,7 +73,7 @@
                     </controls:DateTimePicker>
 
                     <Label Content="Eind Datum" />
-                    <controls:DateTimePicker>
+                    <controls:DateTimePicker Name="EndDate">
                         <controls:DateTimePicker.SelectedDate>
                             <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                 <Binding.ValidationRules>
@@ -86,7 +86,8 @@
                     <ComboBox ItemsSource="{Binding Employees}"
                               materialDesign:HintAssist.Hint="Selecteer een medewerker"
                               materialDesign:HintAssist.IsFloating="True"
-                              SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname">
+                              SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname"
+                              Name="CbEmployee">
                         <ComboBox.Text>
                             <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -106,13 +107,13 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition
-                                                        Binding="{Binding (Validation.HasError), ElementName=EmployeeBox}"
+                                                        Binding="{Binding (Validation.HasError), ElementName=CbEmployee}"
                                                         Value="false" />
                                                     <Condition
-                                                        Binding="{Binding (Validation.HasError), ElementName=beginDatenew}"
+                                                        Binding="{Binding (Validation.HasError), ElementName=StartDate}"
                                                         Value="false" />
                                                     <Condition
-                                                        Binding="{Binding (Validation.HasError), ElementName=endDatenew}"
+                                                        Binding="{Binding (Validation.HasError), ElementName=EndDate}"
                                                         Value="false" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="true" />

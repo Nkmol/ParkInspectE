@@ -58,7 +58,7 @@
                  Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
             <Border Padding="10">
                 <StackPanel>
-                    <TextBox materialDesign:HintAssist.Hint="Klant naam" materialDesign:HintAssist.IsFloating="True">
+                    <TextBox Name="Name" materialDesign:HintAssist.Hint="Klant naam" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -71,7 +71,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    <TextBox materialDesign:HintAssist.Hint="Klant email" materialDesign:HintAssist.IsFloating="True">
+                    <TextBox Name="Email" materialDesign:HintAssist.Hint="Klant email" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -92,7 +92,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    <TextBox materialDesign:HintAssist.Hint="Klant telefoonnummer" materialDesign:HintAssist.IsFloating="True">
+                    <TextBox Name="Telnr" materialDesign:HintAssist.Hint="Klant telefoonnummer" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
