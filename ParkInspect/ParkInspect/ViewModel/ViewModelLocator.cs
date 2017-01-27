@@ -9,6 +9,7 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System;
 using System.Xml.Serialization.Advanced;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
@@ -48,8 +49,15 @@ namespace ParkInspect.ViewModel
             localRepo = new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities());
 
 
-            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
-            SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            try
+            {
+                SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+                SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            } catch (Exception)
+            {
+                SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities()));
+                SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectLocalEntities>>(() => new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities()));
+            }
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
             SimpleIoc.Default.Register<PopupCoordinator>();
 

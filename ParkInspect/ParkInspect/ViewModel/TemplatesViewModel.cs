@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace ParkInspect.ViewModel
 {
-    public class TemplatesViewModel : ViewModelBase
+    public class TemplatesViewModel : ViewModelBase, IPopup
     {
         private TemplateService _service;
         public TemplateService Service
@@ -23,14 +23,14 @@ namespace ParkInspect.ViewModel
             {
                 if (_service == null && superViewModel.Context != null)
                 {
-                    _service = new TemplateService(superViewModel.Context, superViewModel.Context);
+                    _service = new TemplateService(superViewModel.Context);
                 }
                 return _service;
             }
         }
 
         public FormViewModel superViewModel { get; }
-        private EntityFrameworkRepository<ParkInspectEntities> Context { get { return superViewModel.Context; } }
+        private IRepository Context { get { return superViewModel.Context; } }
 
         private ObservableCollection<TemplateCollection> _templates;
         public ObservableCollection<TemplateCollection> Templates
@@ -104,7 +104,9 @@ namespace ParkInspect.ViewModel
         {
             get
             {
-                throw new NotImplementedException();
+                TemplateCollection collection = SelectedTemplateCollection;
+                Template template = collection.getTemplateFromVersion(SelectedVersion);
+                return template;
             }
         }
 

@@ -224,6 +224,20 @@ namespace ParkInspect.ViewModel
         public DataSync.DataSynchroniser synchroniser;
         public RelayCommand syncCommand;
 
+        private int _selectedTab;
+        public int SelectedTab
+        {
+            get
+            {
+                return _selectedTab;
+            }
+            set
+            {
+                _selectedTab = value;
+                RaisePropertyChanged("SelectedTab");
+            }
+        }
+
         public DashboardViewModel(IRepository repository)
         {
 

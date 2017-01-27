@@ -28,14 +28,14 @@ namespace ParkInspect.ViewModel
 {
     public class FormViewModel : ViewModelBase, IPopup
     {
-        public EntityFrameworkRepository<ParkInspectEntities> Context { get; set; }
+        public IRepository Context { get; set; }
         public TemplatesViewModel TemplatesViewModel { get; set; }
         private FormService service { get; set; }
         private Inspection inspection;
         public DialogManager _dialog;
 
-        private FormControl _view;
-        public FormControl View {
+        private FormPopup _view;
+        public FormPopup View {
             get
             {
                 return _view;
@@ -49,7 +49,7 @@ namespace ParkInspect.ViewModel
 
                 //loadForm(inspections.ToArray()[0]);
 
-                createForm(inspections.ToArray()[0], templates.ToArray()[0]);
+                //createForm(inspections.ToArray()[0], templates.ToArray()[0]);
             }
         }
 
@@ -103,7 +103,7 @@ namespace ParkInspect.ViewModel
         public FormViewModel(IRepository context, DialogManager dialog)
         {
             Context = (EntityFrameworkRepository<ParkInspectEntities>)context;
-            service = new FormService(Context, Context);
+            service = new FormService(Context);
             EditorVisibility = Visibility.Hidden;
             TemplatesViewModel = new TemplatesViewModel(this);
             SaveCommand = new RelayCommand(saveForm);
@@ -160,6 +160,7 @@ namespace ParkInspect.ViewModel
             form.Template = template;
             CachedForm cachedForm = service.createFormFromTemplate(template);
             loadForm(cachedForm);
+            SelectedTab = 0;
         }
 
         public void createForm(Inspection inspection)
@@ -214,6 +215,7 @@ namespace ParkInspect.ViewModel
             string path = fileDialog.FileName;
             string content = File.ReadAllText(path);
             _cachedForm.attachments.Add(content);
+            Debug.WriteLine(content);
             _dialog.ShowMessage("Vragenlijst", "Je bijlage is toegevoegd.");
 
         }

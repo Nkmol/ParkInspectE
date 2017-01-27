@@ -9,10 +9,10 @@ namespace ParkInspect.Services
 {
     public class TemplateService
     {
-        public EntityFrameworkRepository<ParkInspectEntities> central;
+        public IRepository central;
         private EntityFrameworkRepository<ParkInspectLocalEntities> local;
 
-        public TemplateService(EntityFrameworkRepository<ParkInspectEntities> central, EntityFrameworkRepository<ParkInspectEntities> local)
+        public TemplateService(IRepository central)
         {
             this.central = central; 
             this.local = ViewModel.ViewModelLocator.localRepo;
@@ -80,7 +80,7 @@ namespace ParkInspect.Services
 
         public void SaveTemplate(Template template)
         {
-            if (central.IsConnected())
+            if (central is EntityFrameworkReadOnlyRepository<ParkInspectEntities> && ((EntityFrameworkReadOnlyRepository < ParkInspectEntities > )central).IsConnected())
             {
                 central.Create(template);
                 central.Save();

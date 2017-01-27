@@ -411,6 +411,9 @@
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\Popup\FormPopup.xaml.cs">
+      <DependentUpon>FormPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\Popup\UpdateNewPopupWindow.xaml.cs">
       <DependentUpon>UpdateNewPopupWindow.xaml</DependentUpon>
     </Compile>
@@ -522,6 +525,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\EmployeeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Popup\FormPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

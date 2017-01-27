@@ -11,13 +11,12 @@ namespace ParkInspect.Services
 {
     class FormService
     {
-        public EntityFrameworkRepository<ParkInspectEntities> central;
+        public IRepository central;
         private EntityFrameworkRepository<ParkInspectEntities> local;
 
-        public FormService(EntityFrameworkRepository<ParkInspectEntities> central, EntityFrameworkRepository<ParkInspectEntities> local)
+        public FormService(IRepository central)
         {
             this.central = central;
-            this.local = local;
         }
 
         public CachedForm createFormFromTemplate(Template fromTemplate)
@@ -51,7 +50,7 @@ namespace ParkInspect.Services
                 {
                     image1 = attachment
                 };
-                //form.images.add(image);
+                form.Image = image;
             }
             foreach(CachedFormField field in cachedForm.fields)
             {
@@ -65,11 +64,11 @@ namespace ParkInspect.Services
                 Debug.WriteLine(field.field_title + " : " + field.value.ToString() + "(" + field.value.type + ")");
                 form.Formfields.Add(formField);
             }
-            if (central.IsConnected())
-            {
+            //if (central.IsConnected())
+            //{
                 central.Create(form);
                 central.Save();
-            }
+            /*}
             else
             {
                 using (var context = new ParkInspectLocalEntities())
@@ -78,6 +77,7 @@ namespace ParkInspect.Services
                     context.SaveChanges();
                 }
             }
+            */
         }
 
     }

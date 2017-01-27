@@ -13,51 +13,55 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ParkInspect.ViewModel;
-using ParkInspect;
-using System.Diagnostics;
-using System.Timers;
 using ParkInspect.Model.ValidationRules;
 
-namespace ParkInspect.View.UserControls
+namespace ParkInspect.View.UserControls.Popup
 {
-    public partial class FormControl : UserControl
+    /// <summary>
+    /// Interaction logic for FormControl.xaml
+    /// </summary>
+    public partial class FormPopup : UserControl
     {
         List<CachedFormField> fields;
-        public FormControl()
+        public FormPopup()
         {
             InitializeComponent();
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
             }
-            FormViewModel viewmodel = (FormViewModel) DataContext;
+            FormViewModel viewmodel = (FormViewModel)DataContext;
             fields = new List<CachedFormField>();
-            //viewmodel.View = this;
+            viewmodel.View = this;
         }
 
         public void clear()
         {
             List<Control> toRemoveElements = new List<Control>();
-            foreach (Control element in FormGrid.Children) {
+            foreach (Control element in FormGrid.Children)
+            {
                 if (element.Name.IndexOf("ormElement") > 0)
                 {
                     toRemoveElements.Add(element);
                 }
             }
-            foreach(Control element in toRemoveElements)
+            foreach (Control element in toRemoveElements)
             {
                 FormGrid.Children.Remove(element);
             }
         }
 
-        public void addFormField(CachedFormField field,int count, bool isReadonly)
+        public void addFormField(CachedFormField field, int count, bool isReadonly)
         {
             if (isReadonly)
             {
                 saveButton.Visibility = Visibility.Hidden;
-            } else
+                addAttachmentButton.Visibility = Visibility.Hidden;
+            }
+            else
             {
                 saveButton.Visibility = Visibility.Visible;
+                addAttachmentButton.Visibility = Visibility.Visible;
             }
             Control element = null;
             switch (field.datatype)
@@ -114,8 +118,8 @@ namespace ParkInspect.View.UserControls
 
             textLabel.Margin = new Thickness(50, 50 + count * 50, 250, 850 - (50 + count * 50 + 40));
             element.Margin = new Thickness(250, 50 + count * 50, 250, 850 - (50 + count * 50 + 40));
-            element.Name = "FormElement" + (count*2 + 1);
-            
+            element.Name = "FormElement" + (count * 2 + 1);
+
 
             fields.Add(field);
             FormGrid.Children.Add(textLabel);

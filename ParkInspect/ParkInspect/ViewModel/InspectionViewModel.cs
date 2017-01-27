@@ -10,6 +10,8 @@ using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.Popup;
 using Microsoft.Practices.ServiceLocation;
+using System.Threading.Tasks;
+using System.Resources;
 
 namespace ParkInspect.ViewModel
 {
@@ -49,7 +51,7 @@ namespace ParkInspect.ViewModel
         public object SelectedItemPopup => this;
 
         private readonly InspectionService _service;
-        private readonly PopupManager _popupManager;
+        private PopupManager _popupManager;
 
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
@@ -224,13 +226,31 @@ namespace ParkInspect.ViewModel
             Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
         }
 
-        public void FillForm()
+        private bool templatePopupCompleted
         {
+            set
+            {
+                if (value == true) {
+                    //SimpleIoc.Default.GetInstance<DashboardViewModel>().SelectedTab = 3;
+                    _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst invullen", new FormPopup(), null);
+                    ServiceLocator.Current.GetInstance<FormViewModel>().createForm(Data);
+                    //throw new Exception();
+                }
+            }
+        }
+
+        public async void FillForm()
+        {
+            if (_popupManager == null)
+            {
+                _popupManager = SimpleIoc.Default.GetInstance<PopupManager>();
+            }
             if (this.Data.Form == null)
             {
-                _popupManager.ShowPopupNoButton<TemplatesViewModel>("Template selecteren", new SelectTemplatePopup(), null);
+                await _popupManager.ShowPopup<FormViewModel>("Template selecteren", new SelectTemplatePopup(), x => templatePopupCompleted = (x.TemplatesViewModel.SelectedVersion != null) );
             } else
             {
+                _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst inzien", new FormPopup(), null);
                 ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(Data);
             }
         }
@@ -243,7 +263,7 @@ namespace ParkInspect.ViewModel
 
         private void SearchCommand()
         {
-            //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(), x => Form = x.);
+            //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(),null);
         }
 
         private void AssignInspector()
