@@ -36,7 +36,7 @@ namespace ParkInspect.View.Controls
             if (o is Inspection)
             {
                 Inspection i = (Inspection)o;
-                Place.Content = "Plaats: " + i.Parkinglot.Region.name;
+                Place.Content = "Regio: " + i.Parkinglot.Region.name;
                 Name.Content = "Naam: " + i.Parkinglot.name;
                 Status.Content = "Status: " + statusConverter[i.state];
             }
