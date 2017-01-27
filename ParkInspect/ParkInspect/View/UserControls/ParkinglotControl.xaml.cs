@@ -40,12 +40,6 @@ namespace ParkInspect.View.UserControls
                     return;
                 }
             }
-
-        }
-
-        public void Unselect(object sender, MouseButtonEventArgs e)
-        {
-            DataGrid.UnselectAll();
         }
     }
 }

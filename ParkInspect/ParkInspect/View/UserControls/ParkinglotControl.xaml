@@ -24,46 +24,35 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl Name="Tabs">
-        <TabItem Header="Overzicht"
-                 Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-            <Grid Margin="0">
+    <TabControl>
+        <TabItem Header="Overzicht" Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <!-- Datagrid row -->
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <UniformGrid Grid.Row="1" Name="FilterGrid" Rows="1">
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in naam" Grid.Column="0" Name="NameFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                <UniformGrid Grid.Row="0" Rows="1">
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in naam" materialDesign:HintAssist.IsFloating="True"
+                             Margin="0,3"
                              Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode" Grid.Column="1" Name="ZipFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode" materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer" Grid.Column="2" Name="NumberFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer" materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in straatnaam" Grid.Column="3" Name="StreetnameFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in straatnaam" materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding StreetnameFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in regio" Grid.Column="4" Name="RegionFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in regio" materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" Grid.Column="5"
-                             Name="ClarificationFilter"
-                             Margin="0,0,5,10" HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
-                <DataGrid Grid.Row="2" Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots}"
-                          SelectedItem="{Binding SelectedParkinglot}" IsReadOnly="True" MouseDoubleClick="Update"
-                          VerticalScrollBarVisibility="Visible">
+                <DataGrid ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding SelectedParkinglot}" 
+                          IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Naam" Width="1*" Binding="{Binding Name}" />
                         <DataGridTextColumn Header="Postcode" Width="1*" Binding="{Binding Zipcode}" />
