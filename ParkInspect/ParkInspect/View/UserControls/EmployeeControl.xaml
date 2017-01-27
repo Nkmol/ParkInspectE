@@ -55,7 +55,10 @@
         </TabItem>
         <TabItem Header="Management" DataContext="{Binding SelectedEmployee}"
                  Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-            <Grid>
+            <StackPanel>
+                <Label Content="Personeel" FontSize="18" />
+                <Separator Margin="0,2,0,10" />
+                <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
@@ -67,7 +70,7 @@
                 </Grid.RowDefinitions>
                 <Border Padding="10" Grid.Column="0" Grid.RowSpan="2">
                     <StackPanel>
-                        <TextBox materialDesign:HintAssist.Hint="Voornaam werknemer"
+                        <TextBox materialDesign:HintAssist.Hint="Voornaam"
                                  materialDesign:HintAssist.IsFloating="True" Name="FirstName">
                             <TextBox.Text>
                                 <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
@@ -78,7 +81,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Achternaam werknemer"
+                        <TextBox materialDesign:HintAssist.Hint="Achternaam"
                                  materialDesign:HintAssist.IsFloating="True" Name="LastName">
                             <TextBox.Text>
                                 <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
@@ -89,7 +92,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Email werknemer"
+                        <TextBox materialDesign:HintAssist.Hint="Email"
                                  materialDesign:HintAssist.IsFloating="True" Name="Email">
                             <TextBox.Text>
                                 <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
@@ -102,7 +105,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Telefoonnummer werknemer"
+                        <TextBox materialDesign:HintAssist.Hint="Telefoonnummer"
                                  materialDesign:HintAssist.IsFloating="True" Name="Phonenumber">
                             <TextBox.Text>
                                 <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
@@ -115,7 +118,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Password werknemer"
+                        <TextBox materialDesign:HintAssist.Hint="Password"
                                  materialDesign:HintAssist.IsFloating="True" Name="Password">
                             <TextBox.Text>
                                 <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
@@ -126,7 +129,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <DatePicker materialDesign:HintAssist.Hint="Werkenemer datum gestart"
+                        <DatePicker materialDesign:HintAssist.Hint="Datum gestart"
                                     materialDesign:HintAssist.IsFloating="True" Name="StartDate">
                             <DatePicker.SelectedDate>
                                 <Binding Path="in_service_date" UpdateSourceTrigger="PropertyChanged">
@@ -141,7 +144,7 @@
                             <Label Content="In dienst (contract loopt nog)" />
                             <CheckBox IsChecked="{Binding active, Mode=TwoWay}" />
                         </StackPanel>
-                        <DatePicker materialDesign:HintAssist.Hint="Werkenemer datum uit dienst"
+                        <DatePicker materialDesign:HintAssist.Hint="Datum uit dienst"
                                     materialDesign:HintAssist.IsFloating="True">
                             <DatePicker.SelectedDate>
                                 <Binding Path="out_service_date" UpdateSourceTrigger="PropertyChanged" />
@@ -152,7 +155,7 @@
                                   ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                   DisplayMemberPath="role1" SelectedValuePath="role1"
                                   SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                  materialDesign:HintAssist.Hint="Werkenemer rol"
+                                  materialDesign:HintAssist.Hint="Rol"
                                   materialDesign:HintAssist.IsFloating="True" Name="Role">
                             <ComboBox.Text>
                                 <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
@@ -167,7 +170,7 @@
                                   ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                   DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1"
                                   SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                  materialDesign:HintAssist.Hint="Werkenemer status"
+                                  materialDesign:HintAssist.Hint="Status"
                                   materialDesign:HintAssist.IsFloating="True" Name="Status">
                             <ComboBox.Text>
                                 <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
@@ -180,7 +183,7 @@
                         </ComboBox>
                     </StackPanel>
                 </Border>
-                <GroupBox Header="Werknemer afwezigheden" Grid.Column="1">
+                <GroupBox Header="Afwezigheden" Grid.Column="1">
                     <DataGrid ScrollViewer.CanContentScroll="True"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ScrollViewer.HorizontalScrollBarVisibility="Visible"
@@ -239,6 +242,7 @@
                 </StackPanel>
 
             </Grid>
+            </StackPanel>
         </TabItem>
     </TabControl>
 

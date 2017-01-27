@@ -58,7 +58,9 @@
                  Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
             <Border Padding="10">
                 <StackPanel>
-                    <TextBox Name="Name" materialDesign:HintAssist.Hint="Klant naam" materialDesign:HintAssist.IsFloating="True">
+                    <Label Content="Klant" FontSize="18" />
+                    <Separator Margin="0,2,0,10" />
+                    <TextBox Name="Name" materialDesign:HintAssist.Hint="Naam" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -71,7 +73,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    <TextBox Name="Email" materialDesign:HintAssist.Hint="Klant email" materialDesign:HintAssist.IsFloating="True">
+                    <TextBox Name="Email" materialDesign:HintAssist.Hint="Email" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -82,7 +84,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    <TextBox materialDesign:HintAssist.Hint="Klant password" materialDesign:HintAssist.IsFloating="True" MaxLength="50">
+                    <TextBox materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" MaxLength="50">
                             <TextBox.Text>
                                 <Binding Path="Password" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -92,7 +94,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    <TextBox Name="Telnr" materialDesign:HintAssist.Hint="Klant telefoonnummer" materialDesign:HintAssist.IsFloating="True">
+                    <TextBox Name="Telnr" materialDesign:HintAssist.Hint="Telefoonnummer" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>

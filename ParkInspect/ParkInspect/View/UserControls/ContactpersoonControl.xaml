@@ -51,6 +51,8 @@
         <TabItem Header="Management">
             <Border Padding="10">
                 <StackPanel>
+                    <Label Content="Contactpersoon" FontSize="18" />
+                    <Separator Margin="0,2,0,10" />
                     <TextBox materialDesign:HintAssist.Hint="Vul de voornaam in"
                              materialDesign:HintAssist.IsFloating="True" Name="FirstName">
                         <TextBox.Text>
