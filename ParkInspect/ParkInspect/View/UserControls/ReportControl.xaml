@@ -42,7 +42,7 @@
                     <UniformGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="FilterGrid" Rows="1">
                         <TextBox materialDesign:HintAssist.Hint="Zoek op naam" materialDesign:HintAssist.IsFloating="True" Margin="0,3" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"/>
                     </UniformGrid>
-                    <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Names}" SelectedItem="{Binding SelectedReport, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="Select">
+                    <DataGrid Name="Reports"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Names}" SelectedItem="{Binding SelectedReport, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="Select">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Rapport" Binding="{Binding Name}"/>
                         </DataGrid.Columns>

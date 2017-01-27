@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="1000"
+             d:DesignHeight="600" d:DesignWidth="1000"
              x:Name="Window"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -15,10 +15,10 @@
              DataContext="{Binding Assignments, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <TabControl Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
@@ -127,7 +127,7 @@
                         <ComboBox Text="{Binding State.state1}"
                                   ItemsSource="{Binding States}" DisplayMemberPath="state1"
                                   x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status"
-                                  materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                                  materialDesign:HintAssist.IsFloating="True">
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormState">
                                     <Binding.ValidationRules>
@@ -139,7 +139,7 @@
                         <ComboBox Text="{Binding Client.name}"
                                   ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient"
                                   materialDesign:HintAssist.Hint="Selecteer een Klant"
-                                  materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                                  materialDesign:HintAssist.IsFloating="True">
                             <ComboBox.SelectedItem>
                                 <Binding Path="FormClient">
                                     <Binding.ValidationRules>
@@ -155,8 +155,7 @@
                     </StackPanel>
                 </Border>
                 <StackPanel Grid.Column="1" Grid.Row="0">
-                    <GroupBox x:Name="Inspecties" Header="Toegekende inspecties" Height="204"
-                              HorizontalAlignment="Left" Width="479">
+                    <GroupBox Header="Toegekende inspecties" Height="204" >
                         <DataGrid IsReadOnly="True" ItemsSource="{Binding FormInspections}"
                                   SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False"
                                   ScrollViewer.CanContentScroll="True"

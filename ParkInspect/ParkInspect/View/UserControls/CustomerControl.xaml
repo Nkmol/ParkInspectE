@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="ParkInspect.View.UserControls.CustomerControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d"
-             xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              DataContext="{Binding Client, Source={StaticResource Locator}}"
              d:DesignHeight="600"
              d:DesignWidth="1000"
@@ -56,12 +56,9 @@
 
         <TabItem Header="Management"
                  Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-            <Grid>
-                <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top"
-                           HorizontalAlignment="Left">
-                    <StackPanel>
-                        <Label x:Name="NameLabel" Content="Naam" />
-                        <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+            <Border Padding="10">
+                <StackPanel>
+                    <TextBox materialDesign:HintAssist.Hint="Klant naam" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -74,9 +71,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-
-                        <Label x:Name="EmailLabel" Content="Emailadres" />
-                        <TextBox x:Name="Email" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                    <TextBox materialDesign:HintAssist.Hint="Klant email" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -87,9 +82,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <Label Content="Wachtwoord" />
-                        <TextBox Name="pass" Width="250" HorizontalAlignment="Left" Margin="5,0,0,10"
-                                 MaxLength="50">
+                    <TextBox materialDesign:HintAssist.Hint="Klant password" materialDesign:HintAssist.IsFloating="True" MaxLength="50">
                             <TextBox.Text>
                                 <Binding Path="Password" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -99,13 +92,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right"
-                           VerticalAlignment="Top">
-                    <StackPanel>
-                        <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
-                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                    <TextBox materialDesign:HintAssist.Hint="Klant telefoonnummer" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -115,38 +102,34 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
+                    <StackPanel>
+                        <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" Content="Opslaan" Margin="0,10,0,0">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition
+                                                    Binding="{Binding (Validation.HasError), ElementName=Name}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding (Validation.HasError), ElementName=Telnr}"
+                                                    Value="false" />
+                                                <Condition
+                                                    Binding="{Binding (Validation.HasError), ElementName=Email}"
+                                                    Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="true" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Command="{Binding ResetButtonCommand}" Content="Scherm legen" Margin="0,10,0,0"  />
                     </StackPanel>
-                </DockPanel>
-                <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
-                    <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-                            Content="Sla klant op" Margin="540,0,10,0"
-                            VerticalAlignment="Top" Width="120">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                <Setter Property="IsEnabled" Value="false" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition
-                                                Binding="{Binding (Validation.HasError), ElementName=Name}"
-                                                Value="false" />
-                                            <Condition
-                                                Binding="{Binding (Validation.HasError), ElementName=Telnr}"
-                                                Value="false" />
-                                            <Condition
-                                                Binding="{Binding (Validation.HasError), ElementName=Email}"
-                                                Value="False" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="IsEnabled" Value="true" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Command="{Binding ResetButtonCommand}" Content="Reset" Margin="0,0,0,0"
-                            VerticalAlignment="Top" Width="120" />
                 </StackPanel>
-            </Grid>
+            </Border>
         </TabItem>
     </TabControl>
 </UserControl>

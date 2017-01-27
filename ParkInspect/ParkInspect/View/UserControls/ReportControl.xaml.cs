@@ -197,7 +197,6 @@ namespace ParkInspect.View.UserControls
         }
         public void Select(object sender, MouseButtonEventArgs e)
         {
-
             ((ReportViewModel)DataContext).OpenReportView(Reports.SelectedIndex);
         }
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
