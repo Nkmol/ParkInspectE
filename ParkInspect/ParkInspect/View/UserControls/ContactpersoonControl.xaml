@@ -47,7 +47,6 @@
                 </DataGrid>
             </Grid>
         </TabItem>
-
         <TabItem Header="Management">
             <Border Padding="10">
                 <StackPanel>
@@ -80,7 +79,7 @@
                     <ComboBox materialDesign:HintAssist.Hint="Kies een klant uit"
                               materialDesign:HintAssist.IsFloating="True"
                               DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                              ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}" DisplayMemberPath="name"
                               SelectedItem="{Binding SelectedClient}" Name="CbCustomer">
                         <ComboBox.Text>
                             <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
@@ -125,13 +124,13 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Firstname}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=FirstName}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Lastname}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=LastName}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Customer}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=CbCustomer}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />

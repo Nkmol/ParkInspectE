@@ -74,10 +74,6 @@ namespace ParkInspect.ViewModel
 
         private DialogManager _dialog;
 
-        //Data for comboBoxes
-        public ObservableCollection<Role> RoleCollection { get; set; }
-        public ObservableCollection<Employee_Status> StatusCollection { get; set; }
-
         //Data Employees
         private ObservableCollection<Employee> _employees;
         public ObservableCollection<Employee> Employees
@@ -126,10 +122,6 @@ namespace ParkInspect.ViewModel
             SelectedEmployee = new Employee();
             SelectedEmployee.in_service_date = DateTime.Today;
             SelectedEmployee.out_service_date = DateTime.Today;
-
-            //Collections for comboboxes
-            RoleCollection = new ObservableCollection<Role>(Service.GetAll<Role>());
-            StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAll<Employee_Status>());
 
             //Initialize commands
             SaveCommand = new RelayCommand(SaveEmployee);

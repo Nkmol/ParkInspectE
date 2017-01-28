@@ -10,12 +10,11 @@ using System.Runtime.InteropServices;
 
 namespace ParkInspect.Services
 {
-    public abstract class DataService
+    public class DataService
     {
-
         protected IRepository Context;
 
-        protected DataService(IRepository context)
+        public DataService(IRepository context)
         {
             Context = context;
         }
