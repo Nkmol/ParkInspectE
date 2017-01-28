@@ -15,7 +15,7 @@ namespace ParkInspect.Model.ValidationRules
             DateTime temp;
 
             // WPF transforms value to general format, checking on format should not be necessary
-            if (DateTime.TryParse(Convert.ToString(value), DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out temp))
+            if (DateTime.TryParse(Convert.ToString(value), out temp))
                 return new ValidationResult(true, null);
 
             return new ValidationResult(false, "Voer een geldige datum in!");

@@ -100,8 +100,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Service = new ParkinglotService(context);
 
             Regions = new ObservableCollection<Region>(Service.GetAll<Region>()); // TODO: Load this once
-            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Add, _ => _parkinglot.id <= 0);
-            EditCommand = new RelayCommand(Edit, () => _parkinglot.id > 0);
+            SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Save);
 
             FillForm();
         }
@@ -127,22 +126,29 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Streetname = FormStreetname;
         }
 
-        public void Add(ParkinglotOverviewViewModel overview)
+        private void Save(ParkinglotOverviewViewModel overview)
         {
             SaveForm();
-            Message = Service.Add(_parkinglot) ? "De parkeerplaats is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
 
-            _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
+            if (_parkinglot.id <= 0)
+            {
+                Message = Service.Add(_parkinglot)
+                    ? "De parkeerplaats is toegevoegd!"
+                    : "Er is iets misgegaan tijdens het toevoegen.";
 
-            overview.Parkinglots.Add(this);
-        }
+                _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
 
-        public void Edit()
-        {
-            SaveForm();
-            Message = Service.Update(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+                overview.Parkinglots.Add(this);
+            }
+            else
+            {
+                Message = Service.Update(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
 
-            _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
+                _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
+
+                overview.NewCommand.RaiseCanExecuteChanged();
+            }
+
         }
     }
 }

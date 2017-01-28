@@ -201,7 +201,7 @@ namespace ParkInspect.ViewModel
             Employees = new ObservableCollection<Employee>(Service.GetAll<Employee>());
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
-            DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod);
+            DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod, () => SelectedAbsence != null);
             ResetFieldsCommand = new RelayCommand(ResetFieldsMethod);
         }
 

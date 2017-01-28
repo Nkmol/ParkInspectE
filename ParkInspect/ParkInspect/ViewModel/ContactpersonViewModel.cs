@@ -31,7 +31,6 @@ namespace ParkInspect.ViewModel
             _dialog = dialog;
             Service = new ContactpersonService(context);
             Data = Service.GetAll<Contactperson>();
-            Clients = new ObservableCollection<Client>(Service.GetAll<Client>());
             ResetButtonCommand = new RelayCommand(Reset);
             SaveCommand = new RelayCommand(SaveContactperson);
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
@@ -43,19 +42,6 @@ namespace ParkInspect.ViewModel
         private IEnumerable<Contactperson> Data { get; set; }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
-
-        private ObservableCollection<Client> _clients;
-        public ObservableCollection<Client> Clients
-        {
-            get
-            {
-                return _clients;
-            } 
-            set
-            {
-                Set(ref _clients, value);
-            }
-        }
 
         public Contactperson SelectedContactperson
         {
@@ -174,13 +160,13 @@ namespace ParkInspect.ViewModel
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Add(SelectedContactperson);
-                _dialog.ShowMessage("Actie", "Contactpersoon toegevoegd");
+                _dialog.ShowMessage("Contactpersoon toevoegen", "Contactpersoon toegevoegd");
             }
             else
             {
                 SelectedContactperson.client_id = SelectedClient.id;
                 Service.Update(SelectedContactperson);
-                _dialog.ShowMessage("Actie", "Contactpersoon bijgewerkt");
+                _dialog.ShowMessage("Contactpersoon bijwerken", "Contactpersoon bijgewerkt");
             }
 
             UpdateContactpersons();
@@ -192,7 +178,7 @@ namespace ParkInspect.ViewModel
             Service.Delete(SelectedContactperson);
             UpdateContactpersons();
             DeleteContactpersonCommand.RaiseCanExecuteChanged();
-            _dialog.ShowMessage("Action", "Contactpersoon verwijderd");
+            _dialog.ShowMessage("Contactpersoon verwijderen", "Contactpersoon verwijderd");
         }
     }
 }

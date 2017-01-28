@@ -106,9 +106,7 @@
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="100,200,100,0">
                         <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Opslaan"
-                                VerticalAlignment="Top" Margin="415,0,10,0"
-                                Width="120">
+                                Content="Opslaan" Margin="0,10,10,0">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -116,13 +114,13 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding ElementName=Firstname, Path=(Validation.HasError)}"
+                                                    Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding ElementName=Lastname, Path=(Validation.HasError)}"
+                                                    Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding ElementName=Customer, Path=(Validation.HasError)}"
+                                                    Binding="{Binding ElementName=CbCustomer, Path=(Validation.HasError)}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
@@ -131,11 +129,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Command="{Binding ResetButtonCommand}" Content="Deselecteren"
-                                VerticalAlignment="Top" Width="120" Margin="0,0,10,0" />
-                        <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijderen"
-                                VerticalAlignment="Top" Margin="0,0,0,0"
-                                Width="120">
+                        <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijderen" Margin="0,10,0,0">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -143,13 +137,13 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Firstname}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=FirstName}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Lastname}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=LastName}"
                                                     Value="false" />
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Client}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=CbCustomer}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
@@ -158,9 +152,11 @@
                                 </Style>
                             </Button.Style>
                         </Button>
+                        </UniformGrid>
+                        <Button Command="{Binding ResetButtonCommand}" Content="Scherm legen" Margin="0,10,0,0" />
                     </StackPanel>
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+                </StackPanel>
+            </Border>
+        </TabItem>
+    </TabControl>
 </UserControl>
