@@ -9,7 +9,6 @@ using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
-using ParkInspect.View.UserControls.Inspection;
 using ParkInspect.ViewModel.Popup;
 
 namespace ParkInspect.ViewModel.AssignmentVM

@@ -126,7 +126,7 @@ namespace ParkInspect.View.UserControls
         {
             String zip = inspection.Parkinglot.zipcode.Trim();
             String region = inspection.Parkinglot.Region.name;
-            GMapMarker marker = new GMapMarker(routingService.getPointFromKeyWord(zip + " " + inspection.Parkinglot.streetname + " " + region));
+            GMapMarker marker = new GMapMarker(routingService.getPointFromKeyWord(inspection.Parkinglot.streetname + " " + zip + " " + region));
             if (marker.Position.Lat != 0 || marker.Position.Lng != 0)
             {
                 var shape = new CircleVisual(marker, color);
@@ -197,7 +197,6 @@ namespace ParkInspect.View.UserControls
         }
         public void Select(object sender, MouseButtonEventArgs e)
         {
-
             ((ReportViewModel)DataContext).OpenReportView(Reports.SelectedIndex);
         }
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
