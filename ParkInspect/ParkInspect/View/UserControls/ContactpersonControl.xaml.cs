@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ParkInspect.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for CustomerControl.xaml
+    /// Interaction logic for ContactpersoonControl.xaml
     /// </summary>
-    public partial class CustomerControl : UserControl
+    public partial class ContactpersonControl : UserControl
     {
-        public CustomerControl()
+        public ContactpersonControl()
         {
             InitializeComponent();
         }

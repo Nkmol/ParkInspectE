@@ -8,6 +8,7 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.ViewModel.ClientVM;
 
 namespace ParkInspect.ViewModel
 {
@@ -24,9 +25,8 @@ namespace ParkInspect.ViewModel
         private Contactperson _selectedContactperson;
 
         protected ContactpersonService Service;
-        public ClientViewModel ClientviewModel { get; set; }
 
-        public ContactpersonViewModel(IRepository context, DialogManager dialog, ClientViewModel clientvm)
+        public ContactpersonViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
             Service = new ContactpersonService(context);
@@ -37,7 +37,6 @@ namespace ParkInspect.ViewModel
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
             SelectedClient = new Client();
             UpdateContactpersons();
-            ClientviewModel = clientvm;
             Reset();
         }
 
