@@ -51,31 +51,35 @@
         <Border Padding="10" Grid.Column="0" Grid.Row="0">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0">
             <StackPanel Width="300" VerticalAlignment="Top">
-                <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Parkinglots}" materialDesign:HintAssist.Hint="Selecteer een parkeerplaats" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
-                    <ComboBox.SelectedItem>
-                        <Binding Path="Parkinglot">
-                            <Binding.ValidationRules>
-                                <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.SelectedItem>
-                </ComboBox>
+                <AdornerDecorator>
+                    <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Parkinglots}" materialDesign:HintAssist.Hint="Selecteer een parkeerplaats" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="Parkinglot">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                </AdornerDecorator>
                     <!--<DockPanel LastChildFill="False">
                         <ComboBox Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" materialDesign:HintAssist.IsFloating="True" Padding="0,10" Width="252"/>
                         <Button Padding="0" Width="32" Content="🔎" DockPanel.Dock="Right" VerticalAlignment="Bottom"></Button>
                     </DockPanel>-->
                     <ComboBox Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" materialDesign:HintAssist.IsFloating="True" Padding="0,10" />
-
+                    
+                <AdornerDecorator>
                     <ComboBox Name="CbStatus" Text="{Binding State.state1}" ItemsSource="{Binding States}" DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
-                    <ComboBox.SelectedItem>
-                        <Binding Path="State">
-                            <Binding.ValidationRules>
-                                <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.SelectedItem>
-                </ComboBox>
-                <ComboBox Text="{Binding FollowUpInspection.Parkinglot.name}" ItemsSource="{Binding Inspections}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}" 
+                        <ComboBox.SelectedItem>
+                            <Binding Path="State">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                </AdornerDecorator>
+                    <ComboBox Text="{Binding FollowUpInspection.Parkinglot.name}" ItemsSource="{Binding Inspections}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}" 
                             materialDesign:HintAssist.Hint="Vervolg op een onafgemaakte inspectie" materialDesign:HintAssist.IsFloating="True" Padding="0,10"/>
                 <Label Content="Datum" Padding="5,10,5,5"  />
                 <controls:DateTimePicker Name="DateStart" DisplayDateEnd="{Binding BoundryEndDate}" DisplayDateStart="{Binding BoundryStartDate}" >

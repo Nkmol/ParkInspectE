@@ -53,44 +53,50 @@
                 <StackPanel>
                     <Label Content="Contactpersoon" FontSize="18" />
                     <Separator Margin="0,2,0,10" />
-                    <TextBox materialDesign:HintAssist.Hint="Vul de voornaam in"
-                             materialDesign:HintAssist.IsFloating="True" Name="FirstName">
-                        <TextBox.Text>
-                            <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:IsValidNameValidationRule
-                                        ValidationStep="ConvertedProposedValue"
-                                        ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBox materialDesign:HintAssist.Hint="Vul de achternaam in"
-                             materialDesign:HintAssist.IsFloating="True" Name="LastName">
-                        <TextBox.Text>
-                            <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:IsValidNameValidationRule
-                                        ValidationStep="ConvertedProposedValue"
-                                        ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <ComboBox materialDesign:HintAssist.Hint="Kies een klant uit"
-                              materialDesign:HintAssist.IsFloating="True"
-                              DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                              ItemsSource="{Binding Clients}" DisplayMemberPath="name"
-                              SelectedItem="{Binding SelectedClient}" Name="CbCustomer">
-                        <ComboBox.Text>
-                            <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                              ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
+                    <AdornerDecorator>
+                        <TextBox materialDesign:HintAssist.Hint="Vul de voornaam in"
+                                 materialDesign:HintAssist.IsFloating="True" Name="FirstName">
+                            <TextBox.Text>
+                                <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsValidNameValidationRule
+                                            ValidationStep="ConvertedProposedValue"
+                                            ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </AdornerDecorator>
+                    <AdornerDecorator>
+                        <TextBox materialDesign:HintAssist.Hint="Vul de achternaam in"
+                                 materialDesign:HintAssist.IsFloating="True" Name="LastName">
+                            <TextBox.Text>
+                                <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsValidNameValidationRule
+                                            ValidationStep="ConvertedProposedValue"
+                                            ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </AdornerDecorator>
+                    <AdornerDecorator>
+                        <ComboBox materialDesign:HintAssist.Hint="Kies een klant uit"
+                                  materialDesign:HintAssist.IsFloating="True"
+                                  DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
+                                  ItemsSource="{Binding Clients}" DisplayMemberPath="name"
+                                  SelectedItem="{Binding SelectedClient}" Name="CbCustomer">
+                            <ComboBox.Text>
+                                <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                    </AdornerDecorator>    
                     <StackPanel>
                         <UniformGrid Rows="1">
                         <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"

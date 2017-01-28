@@ -86,20 +86,22 @@
                                 </Binding>
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
-                        <ComboBox ItemsSource="{Binding Employees}"
-                                  materialDesign:HintAssist.Hint="Selecteer een medewerker"
-                                  materialDesign:HintAssist.IsFloating="True"
-                                  SelectedValue="{Binding SelectedAbsence.Employee}" DisplayMemberPath="firstname"
-                                  Name="CbEmployee">
-                            <ComboBox.Text>
-                                <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule
-                                            ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </ComboBox.Text>
-                        </ComboBox>
+                        <AdornerDecorator>
+                            <ComboBox ItemsSource="{Binding Employees}"
+                                      materialDesign:HintAssist.Hint="Selecteer een medewerker"
+                                      materialDesign:HintAssist.IsFloating="True"
+                                      SelectedValue="{Binding SelectedAbsence.Employee}" DisplayMemberPath="firstname"
+                                      Name="CbEmployee">
+                                <ComboBox.Text>
+                                    <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationrules:IsNotEmptyValidationRule
+                                                ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
+                        </AdornerDecorator>
                         <StackPanel Margin="0,10,0,0">
                             <UniformGrid Rows="1">
                                 <Button Command="{Binding SaveNewAbsenceCommand}" Margin="5" Content="Opslaan">
