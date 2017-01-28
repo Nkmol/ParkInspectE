@@ -28,24 +28,5 @@ namespace ParkInspect.View.UserControls
         {
             InitializeComponent();
         }
-
-        public void Update(object sender, MouseButtonEventArgs e)
-        {
-
-            foreach (TabItem ti in Tabs.GetChildObjects())
-            {
-                if (ti.Header.Equals("Management"))
-                {
-                    Dispatcher.BeginInvoke((Action)(() => Tabs.SelectedItem = ti));
-                    return;
-                }
-            }
-
-        }
-
-        public void Unselect(object sender, MouseButtonEventArgs e)
-        {
-            DataGrid.UnselectAll();
-        }
     }
 }
