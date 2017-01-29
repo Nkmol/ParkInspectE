@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="600" d:DesignWidth="1000"
              x:Name="Window"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -15,65 +15,67 @@
              DataContext="{Binding Assignments, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}"
-                    Height="486" Margin="0,0,-684,-186" Width="984" Grid.ColumnSpan="2">
-            <TabItem Header="Overzicht">
-                <StackPanel>
-                    <DockPanel>
-                        <TextBox Width="162" Margin="0,3" materialDesign:HintAssist.Hint="Zoek op klant naam"
-                                 Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="189" Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op status"
-                                 Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="180" Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op aangemaakt"
-                                 Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="186" Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op deadline"
-                                 Text="{Binding DeadlineFilter, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Width="229" Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op toelichting"
-                                 Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}"
-                                 HorizontalAlignment="Left" />
-                    </DockPanel>
-
-                    <!-- na het wijzigen van een item, is het niet mogelijk het gewijzigde item met een klik te selecteren.-->
-                    <DataGrid Width="969" ItemsSource="{Binding Assignments}"
-                              SelectedItem="{Binding SelectedAssignment}"
-                              AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="401"
-                              Margin="0,0,-2,0"
-                              ScrollViewer.CanContentScroll="True"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Klant Naam" Width="*" Binding="{Binding Client.name, Mode=OneWay}" />
-                            <DataGridTextColumn Header="Status" Width="*" Binding="{Binding State.state1, Mode=OneWay}" />
-                            <DataGridTextColumn Header="Aangemaakt" Width="*" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}" />
-                            <DataGridTextColumn Header="Deadline" Width="*" Binding="{Binding Deadline, StringFormat={}{0:dd/MM/yyyy}, Mode=OneWay}" />
-                            <DataGridTextColumn Header="Toelichting" Width="*" Binding="{Binding Clarification}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    
-                </StackPanel>
-
-            </TabItem>
-            <TabItem Header="Management"
-                     Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}" DataContext="{Binding SelectedAssignment}">
+    <TabControl
+        Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+        <TabItem Header="Overzicht">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <UniformGrid Rows="1" Grid.Row="0">
+                    <TextBox Margin="0,3" materialDesign:HintAssist.Hint="Zoek op klant naam"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op status"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Text="{Binding StateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op aangemaakt"
+                             Text="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op deadline"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Text="{Binding DeadlineFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Margin="5,3,0,3" materialDesign:HintAssist.Hint="Zoek op toelichting"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
+                </UniformGrid>
+                <DataGrid ItemsSource="{Binding Assignments}" SelectedItem="{Binding SelectedAssignment}"
+                          IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Klant Naam" Width="*" Binding="{Binding Client.name}" />
+                        <DataGridTextColumn Header="Status" Width="*" Binding="{Binding State.state1}" />
+                        <DataGridTextColumn Header="Aangemaakt" Width="*" Binding="{Binding Date}" />
+                        <DataGridTextColumn Header="Deadline" Width="*" Binding="{Binding Deadline}" />
+                        <DataGridTextColumn Header="Toelichting" Width="*" Binding="{Binding Clarification}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Management"
+                 Visibility="{Binding Dashboard.TabStatus[13], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}"
+                 DataContext="{Binding SelectedAssignment}">
+            <StackPanel>
+                <Label Content="Opdracht" FontSize="18" />
+                <Separator Margin="0,2,0,10" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,10,0,0">
                         <!-- <Button Content="Reset scherm" Command="{Binding RestoreCommand}" Margin="0,10,0,0" /> -->
-                        <Button Content="Opslaan" Command="{Binding SaveCommand}" CommandParameter="{Binding DataContext, ElementName=Window}" Margin="5,0,5,10">
+                        <Button Content="Opslaan" Command="{Binding SaveCommand}"
+                                CommandParameter="{Binding DataContext, ElementName=Window}" Margin="5,0,5,10">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -81,17 +83,17 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                        Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}"
-                                                        Value="false" />
+                                                    Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}"
+                                                    Value="false" />
                                                 <Condition
-                                                        Binding="{Binding ElementName=DateEnd, Path=(Validation.HasError)}"
-                                                        Value="false" />
+                                                    Binding="{Binding ElementName=DateEnd, Path=(Validation.HasError)}"
+                                                    Value="false" />
                                                 <Condition
-                                                        Binding="{Binding ElementName=cbState, Path=(Validation.HasError)}"
-                                                        Value="false" />
+                                                    Binding="{Binding ElementName=cbState, Path=(Validation.HasError)}"
+                                                    Value="false" />
                                                 <Condition
-                                                        Binding="{Binding ElementName=cbClient, Path=(Validation.HasError)}"
-                                                        Value="false" />
+                                                    Binding="{Binding ElementName=cbClient, Path=(Validation.HasError)}"
+                                                    Value="false" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>
@@ -99,67 +101,72 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Content="Scherm legen" Command="{Binding DataContext.NewCommand, ElementName=Window}" Margin="5,0,7,10" />
+                        <Button Content="Scherm legen" Command="{Binding DataContext.NewCommand, ElementName=Window}"
+                                Margin="5,0,7,10" />
                     </StackPanel>
                     <Border Grid.Column="0" Grid.Row="0" Padding="10">
-                    <StackPanel>
-                        <Label Content="Aangemaakt" />
-                        <controls:DateTimePicker x:Name="DateStart" >
-                            <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="FormDate">
-                                    <Binding.ValidationRules>
-                                        <validationRules:IsNotEmptyValidationRule />
-                                        <validationRules:IsValidDateTimeRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </controls:DateTimePicker.SelectedDate>
-                        </controls:DateTimePicker>
-                        <Label Content="Deadline" Padding="5,10,5,5" />
-                        <controls:DateTimePicker x:Name="DateEnd">
-                            <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="FormDeadline" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationRules:IsNotEmptyValidationRule />
-                                        <validationRules:IsValidDateTimeRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </controls:DateTimePicker.SelectedDate>
-                        </controls:DateTimePicker>
-                        <ComboBox Text="{Binding State.state1}"
-                                  ItemsSource="{Binding States}" DisplayMemberPath="state1"
-                                  x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10" >
-                            <ComboBox.SelectedItem>
-                                <Binding Path="FormState">
-                                    <Binding.ValidationRules>
-                                        <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </ComboBox.SelectedItem>
-                        </ComboBox>
-                        <ComboBox Text="{Binding Client.name}"
-                                  ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient" materialDesign:HintAssist.Hint="Selecteer een Klant" materialDesign:HintAssist.IsFloating="True" Padding="0,10" >
-                            <ComboBox.SelectedItem>
-                                <Binding Path="FormClient">
-                                    <Binding.ValidationRules>
-                                        <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </ComboBox.SelectedItem>
-                        </ComboBox>
-                        <TextBox Name="Clarificationbox" Text="{Binding FormClarification}" AcceptsReturn="True"
-                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Vul informatie over de opdracht in." materialDesign:HintAssist.IsFloating="True" Height="105" />
-                    </StackPanel>
+                        <StackPanel>
+                            <Label Content="Aangemaakt" />
+                            <controls:DateTimePicker x:Name="DateStart">
+                                <controls:DateTimePicker.SelectedDate>
+                                    <Binding Path="FormDate">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule />
+                                            <validationRules:IsValidDateTimeRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </controls:DateTimePicker.SelectedDate>
+                            </controls:DateTimePicker>
+                            <Label Content="Deadline" Padding="5,10,5,5" />
+                            <controls:DateTimePicker x:Name="DateEnd">
+                                <controls:DateTimePicker.SelectedDate>
+                                    <Binding Path="FormDeadline" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule />
+                                            <validationRules:IsValidDateTimeRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </controls:DateTimePicker.SelectedDate>
+                            </controls:DateTimePicker>
+                            <ComboBox Text="{Binding State.state1}"
+                                      ItemsSource="{Binding States}" DisplayMemberPath="state1"
+                                      x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status"
+                                      materialDesign:HintAssist.IsFloating="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="FormState">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                            <ComboBox Text="{Binding Client.name}"
+                                      ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient"
+                                      materialDesign:HintAssist.Hint="Selecteer een Klant"
+                                      materialDesign:HintAssist.IsFloating="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="FormClient">
+                                        <Binding.ValidationRules>
+                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                            <TextBox Name="Clarificationbox" Text="{Binding FormClarification}" AcceptsReturn="True"
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                     materialDesign:HintAssist.Hint="Vul informatie over de opdracht in."
+                                     materialDesign:HintAssist.IsFloating="True" Height="105" />
+                        </StackPanel>
                     </Border>
                     <StackPanel Grid.Column="1" Grid.Row="0">
-                        <GroupBox x:Name="Inspecties" Header="Toegekende inspecties" Height="204"
-                                  HorizontalAlignment="Left" Width="479">
+                        <GroupBox Header="Toegekende inspecties" Height="204">
                             <DataGrid IsReadOnly="True" ItemsSource="{Binding FormInspections}"
                                       SelectedItem="{Binding SelectedInspection}" AutoGenerateColumns="False"
                                       ScrollViewer.CanContentScroll="True"
                                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                 <DataGrid.Resources>
-                                    <CollectionViewSource x:Key="AssignedEmplyees" Source="{Binding }"></CollectionViewSource>
+                                    <CollectionViewSource x:Key="AssignedEmplyees" Source="{Binding }" />
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Parkeerplaats" Binding="{Binding Parkinglot.name}" />
@@ -168,13 +175,17 @@
                             </DataGrid>
                         </GroupBox>
                         <DockPanel Margin="10,10,10,0">
-                            <Button Content="Inspectie ontrekken" Command="{Binding RemoveInspectionCommand}" Margin="0,0,10,0" />
+                            <Button Content="Inspectie ontrekken" Command="{Binding RemoveInspectionCommand}"
+                                    Margin="0,0,10,0" />
                             <Button Content="Nieuwe inspectie" Command="{Binding AddInspectionCommand}" />
-                            <Button Content="Inspectie bewerken" Command="{Binding EditInspectionCommand}" Margin="10,0,0,0"/>
+                            <Button Content="Inspectie bewerken" Command="{Binding EditInspectionCommand}"
+                                    Margin="10,0,0,0" />
                         </DockPanel>
-                    <Button Content="Inspectie voorbereiding" Command="{Binding PrepareCommand}" Margin="10,10,10,0" />
+                        <Button Content="Inspectie voorbereiding" Command="{Binding PrepareCommand}"
+                                Margin="10,10,10,0" />
                     </StackPanel>
                 </Grid>
-            </TabItem>
-        </TabControl>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>

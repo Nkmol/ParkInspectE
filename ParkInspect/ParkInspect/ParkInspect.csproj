@@ -349,13 +349,13 @@
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\GlobalViewModel.cs" />
     <Compile Include="ViewModel\OfflineViewModel.cs" />
     <Compile Include="ViewModel\PrepareViewModel.cs" />
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\AssignmentVM\AssignmentOverviewViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonViewModel.cs" />
-    <Compile Include="ViewModel\CRUDViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
     <Compile Include="ViewModel\InspectionViewModel.cs" />
@@ -396,7 +396,7 @@
     <Compile Include="View\UserControls\CustomerControl.xaml.cs">
       <DependentUpon>CustomerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Inspection\InspectionManageControl.xaml.cs">
+    <Compile Include="View\UserControls\InspectionManageControl.xaml.cs">
       <DependentUpon>InspectionManageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ParkinglotControl.xaml.cs">
@@ -507,7 +507,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Inspection\InspectionManageControl.xaml">
+    <Page Include="View\UserControls\InspectionManageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

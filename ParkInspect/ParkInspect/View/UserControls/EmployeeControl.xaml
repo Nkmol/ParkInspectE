@@ -1,218 +1,248 @@
 ﻿<UserControl x:Class="ParkInspect.View.UserControls.EmployeeControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="1000"
              VerticalAlignment="Top"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <TabControl>
-            <TabItem Header="Overzicht">
+    <TabControl>
+        <TabItem Header="Overzicht">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <UniformGrid Rows="1" Grid.Row="0">
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op voornaam"
+                             materialDesign:HintAssist.IsFloating="True" Margin="0,3"
+                             Text="{Binding FirstNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op achternaam"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                </UniformGrid>
+                <DataGrid ItemsSource="{Binding Employees}"
+                          SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
+                          IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Voornaam" Binding="{Binding firstname}" />
+                        <DataGridTextColumn Width="*" Header="Achternaam" Binding="{Binding lastname}" />
+                        <DataGridTextColumn Width="*" Header="Telefoonnummer" Binding="{Binding phonenumber}" />
+                        <DataGridTextColumn Width="*" Header="In dienst datum" Binding="{Binding in_service_date}" />
+                        <DataGridTextColumn Width="*" Header="Uit dienst datum" Binding="{Binding out_service_date}" />
+                        <DataGridTextColumn Width="*" Header="Emailadres" Binding="{Binding email}" />
+                        <DataGridTextColumn Width="*" Header="In dienst" Binding="{Binding active}" />
+                        <DataGridTextColumn Width="*" Header="Rol" Binding="{Binding role}" />
+                        <DataGridTextColumn Width="*" Header="Status" Binding="{Binding employee_status}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Management" DataContext="{Binding SelectedEmployee}"
+                 Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+            <StackPanel>
+                <Label Content="Personeel" FontSize="18" />
+                <Separator Margin="0,2,0,10" />
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <!-- Datagrid row -->
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <UniformGrid Grid.Row="1" Name="FilterGrid">
-                        <TextBox materialDesign:HintAssist.Hint="Zoek in voornaam" Name="NameFilter" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding FirstNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBox materialDesign:HintAssist.Hint="Zoek in achternaam" Name="ZipFilter" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                    </UniformGrid>
-                    <DataGrid Height="400" Name="DataGrid" Grid.Row="2" SelectionMode="Single" AutoGenerateColumns="False" 
-                              IsReadOnly="True" ItemsSource="{Binding Employees}" 
-                              SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Border Padding="10" Grid.Column="0" Grid.RowSpan="2">
+                    <StackPanel>
+                        <TextBox materialDesign:HintAssist.Hint="Voornaam"
+                                 materialDesign:HintAssist.IsFloating="True" Name="FirstName">
+                            <TextBox.Text>
+                                <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox materialDesign:HintAssist.Hint="Achternaam"
+                                 materialDesign:HintAssist.IsFloating="True" Name="LastName">
+                            <TextBox.Text>
+                                <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox materialDesign:HintAssist.Hint="Email"
+                                 materialDesign:HintAssist.IsFloating="True" Name="Email">
+                            <TextBox.Text>
+                                <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                        <validationRules:IsValidEmailValidationRule
+                                            ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox materialDesign:HintAssist.Hint="Telefoonnummer"
+                                 materialDesign:HintAssist.IsFloating="True" Name="Phonenumber">
+                            <TextBox.Text>
+                                <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                        <validationRules:IsValidPhoneNumberRule ValidationStep="ConvertedProposedValue"
+                                                                                ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox materialDesign:HintAssist.Hint="Password"
+                                 materialDesign:HintAssist.IsFloating="True" Name="Password">
+                            <TextBox.Text>
+                                <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <DatePicker materialDesign:HintAssist.Hint="Datum gestart"
+                                    materialDesign:HintAssist.IsFloating="True" Name="StartDate">
+                            <DatePicker.SelectedDate>
+                                <Binding Path="in_service_date" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </DatePicker.SelectedDate>
+                        </DatePicker>
+                        <StackPanel Orientation="Horizontal" Margin="0, 10">
+                            <Label Content="In dienst (contract loopt nog)" />
+                            <CheckBox IsChecked="{Binding active, Mode=TwoWay}" />
+                        </StackPanel>
+                        <DatePicker materialDesign:HintAssist.Hint="Datum uit dienst"
+                                    materialDesign:HintAssist.IsFloating="True">
+                            <DatePicker.SelectedDate>
+                                <Binding Path="out_service_date" UpdateSourceTrigger="PropertyChanged" />
+                            </DatePicker.SelectedDate>
+                        </DatePicker>
+
+                        <ComboBox DataContext="{Binding Employees, Source={StaticResource Locator}}"
+                                  ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                  DisplayMemberPath="role1" SelectedValuePath="role1"
+                                  SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                  materialDesign:HintAssist.Hint="Rol"
+                                  materialDesign:HintAssist.IsFloating="True" Name="Role">
+                            <ComboBox.Text>
+                                <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                        <ComboBox DataContext="{Binding Employees, Source={StaticResource Locator}}"
+                                  ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                  DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1"
+                                  SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                  materialDesign:HintAssist.Hint="Status"
+                                  materialDesign:HintAssist.IsFloating="True" Name="Status">
+                            <ComboBox.Text>
+                                <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+                <GroupBox Header="Afwezigheden" Grid.Column="1">
+                    <DataGrid ScrollViewer.CanContentScroll="True"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                              SelectionMode="Single" AutoGenerateColumns="False"
+                              IsReadOnly="True" ItemsSource="{Binding Absences}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Voornaam" Binding="{Binding firstname}"  />
-                            <DataGridTextColumn Header="Achternaam" Binding="{Binding lastname}" />
-                            <DataGridTextColumn Header="Telefoonnummer" Binding="{Binding phonenumber}"/>
-                            <DataGridTextColumn Header="In dienst datum" Binding="{Binding in_service_date, StringFormat={}{0:dd/MM/yyyy}}" />
-                            <DataGridTextColumn Header="Uit dienst datum" Binding="{Binding out_service_date, StringFormat={}{0:dd/MM/yyyy}}"/>
-                            <DataGridTextColumn Header="Emailadres" Binding="{Binding email}"  />
-                            <DataGridTextColumn Header="In dienst" Binding="{Binding active}" />
-                            <DataGridTextColumn Header="Rol" Binding="{Binding role}"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding employee_status}"/>
+                            <DataGridTextColumn Width="*" Header="Datum begin" Binding="{Binding start}" />
+                            <DataGridTextColumn Width="*" Header="Datum einde" Binding="{Binding end}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Management" DataContext="{Binding SelectedEmployee}" Visibility="{Binding Dashboard.TabStatus[18], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <Grid>
-                    <DockPanel Height="310" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <StackPanel>
-                            <Label Content="Voornaam" />
-                            <TextBox Name="fname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
-                                <TextBox.Text>
-                                    <Binding Path="firstname" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                </GroupBox>
+                <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0">
+                    <Button DataContext="{Binding Employees, Source={StaticResource Locator}}"
+                            Command="{Binding SaveCommand}" Content="Opslaan" Margin="0,10,0,0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="IsEnabled" Value="false" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition
+                                                Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=Email, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=Phonenumber, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=StartDate, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=Password, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=Role, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                            <Condition
+                                                Binding="{Binding ElementName=Status, Path=(Validation.HasError)}"
+                                                Value="false" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="true" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
-                            <Label Content="Achternaam"/>
-                            <TextBox Name="lname" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
-                                <TextBox.Text>
-                                    <Binding Path="lastname" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                    <Button DataContext="{Binding Employees, Source={StaticResource Locator}}"
+                            Command="{Binding DeselectEmployeeCommand}"
+                            Content="Scherm legen" Margin="0,10,0,0" />
+                </StackPanel>
+            </Grid>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 
-                            <Label Content="Emailadres"/>
-                            <TextBox Name="email" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
-                                <TextBox.Text>
-                                    <Binding Path="email" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                            <validationRules:IsValidEmailValidationRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-
-                            <Label Content="Telefoonnummer" />
-                            <TextBox Name="phone" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
-                                <TextBox.Text>
-                                    <Binding Path="phonenumber" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                            <validationRules:IsValidPhoneNumberRule ValidationStep="ConvertedProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-
-                            <Label Content="Wachtwoord" />
-                            <TextBox Name="pass" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" MaxLength="50">
-                                <TextBox.Text>
-                                    <Binding Path="password" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </StackPanel>
-                    </DockPanel>
-
-                    <DockPanel>
-                        <DataGrid ScrollViewer.CanContentScroll="True" 
-                              ScrollViewer.VerticalScrollBarVisibility="Visible"
-                              ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                              SelectionMode="Single" AutoGenerateColumns="False" 
-                              IsReadOnly="True" ItemsSource="{Binding Absences}" 
-                              Margin="100,329,494,42" Width="261">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Afwezig Begin" Binding="{Binding start}"  />
-                                <DataGridTextColumn Header="Afwezig Einde" Binding="{Binding end}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <StackPanel VerticalAlignment="Bottom">
-
-                        </StackPanel>
-                    </DockPanel>
-
-
-                    <DockPanel Height="310" Width="255" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <StackPanel>
-                            <Label Content="Datum in dienst" />
-                            <DatePicker Name="start_date" Width="250" HorizontalAlignment="Left"
-            	                    Margin="5,0,0,10"
-            	                    VerticalAlignment="Top">
-                                <DatePicker.SelectedDate>
-                                    <Binding Path="in_service_date" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </DatePicker.SelectedDate>
-                            </DatePicker>
-
-                            <Label Content="In dienst (contract loopt nog)" />
-                            <CheckBox Margin="5,0,0,10" Name="Cbox1" HorizontalAlignment="Left" IsChecked="{Binding active, Mode=TwoWay}"></CheckBox>
-
-                            <Label Content="Datum uit dienst" />
-                            <DatePicker Name="end_date" Width="250" HorizontalAlignment="Left"
-            	                    Margin="5,0,0,10"
-            	                    VerticalAlignment="Top">
-                                <DatePicker.SelectedDate>
-                                    <Binding Path="out_service_date" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                </DatePicker.SelectedDate>
-                            </DatePicker>
-
-                            <Label Content="Rol" />
-                            <ComboBox Name="role" Width="250" HorizontalAlignment="Left"  Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding RoleCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="role1" SelectedValuePath="role1" SelectedValue="{Binding SelectedEmployee.role, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
-                                <ComboBox.Text>
-                                    <Binding Path="RoleCollection" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.Text>
-                            </ComboBox>
-
-                            <Label Content="Status" />
-                            <ComboBox Name="status" Width="250" HorizontalAlignment="Left" Margin="5,0,0,10" DataContext="{Binding Employees, Source={StaticResource Locator}}" ItemsSource="{Binding StatusCollection, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" DisplayMemberPath="employee_status1" SelectedValuePath="employee_status1" SelectedValue="{Binding SelectedEmployee.employee_status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
-                                <ComboBox.Text>
-                                    <Binding Path="StatusCollection" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.Text>
-                            </ComboBox>
-                        </StackPanel>
-                    </DockPanel>
-                    <StackPanel Orientation="Horizontal" Margin="85,521,100,0">
-                        <Label  Width="300" Height="50" VerticalAlignment="Top" DataContext="{Binding Employees, Source={StaticResource Locator}}" Content="{Binding Notification, Mode=TwoWay}"></Label>
-                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding SaveCommand}" Margin="240,0,10,0" Content="Opslaan">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="IsEnabled" Value="false" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding ElementName=fname, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=lname, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=email, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=phone, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=start_date, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=pass, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=role, Path=(Validation.HasError)}" Value="false" />
-                                                <Condition Binding="{Binding ElementName=status, Path=(Validation.HasError)}" Value="false" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="IsEnabled" Value="true" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-
-                        <Button Width="120" DataContext="{Binding Employees, Source={StaticResource Locator}}" VerticalAlignment="Top" Command="{Binding DeselectEmployeeCommand}" Margin="0,0,0,0" Content="Deselecteren"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-        </TabControl>
-
-    </Grid>
 </UserControl>
