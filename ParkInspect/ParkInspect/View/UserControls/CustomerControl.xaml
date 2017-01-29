@@ -89,7 +89,7 @@
                         </TextBox>
                     </AdornerDecorator>
                     <AdornerDecorator>
-                        <TextBox materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" MaxLength="50">
+                        <TextBox materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" MaxLength="50" IsEnabled="{Binding PasswordEnabled}">
                             <TextBox.Text>
                                 <Binding Path="Password" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
@@ -18,6 +19,7 @@ namespace ParkInspect.ViewModel
         private string _emailFilter;
 
         private string _nameFilter;
+        private bool _passwordEnabled;
         private string _phoneFilter;
         private Client _selectedClient;
         private IEnumerable<Client> Data;
@@ -36,6 +38,12 @@ namespace ParkInspect.ViewModel
             Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
         }
 
+        public bool PasswordEnabled
+        {
+            get { return SelectedClient.id <= 0; }
+            set { _passwordEnabled = value; }
+        }
+
         public ObservableCollection<Client> Clients { get; set; }
         public ObservableCollection<Asignment> Assignments { get; set; }
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
@@ -46,7 +54,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.name = value;
-                RaisePropertyChanged(("Name"));
+                RaisePropertyChanged("Name");
             }
         }
 
@@ -56,7 +64,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.phonenumber = value;
-                RaisePropertyChanged(("Phonenumber"));
+                RaisePropertyChanged("Phonenumber");
             }
         }
 
@@ -66,7 +74,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.email = value;
-                RaisePropertyChanged(("Email"));
+                RaisePropertyChanged("Email");
             }
         }
 
@@ -76,7 +84,7 @@ namespace ParkInspect.ViewModel
             set
             {
                 _selectedClient.password = value;
-                RaisePropertyChanged(("Password"));
+                RaisePropertyChanged("Password");
             }
         }
 
@@ -121,6 +129,7 @@ namespace ParkInspect.ViewModel
                 RaisePropertyChanged("phonenumber");
                 RaisePropertyChanged("email");
                 RaisePropertyChanged("password");
+                RaisePropertyChanged("PasswordEnabled");
             }
         }
 
@@ -137,15 +146,15 @@ namespace ParkInspect.ViewModel
         {
             if (SelectedClient.id == 0)
             {
-                SHA256 sha = SHA256.Create();
+                var sha = SHA256.Create();
 
-                byte[] bytes = new byte[SelectedClient.password.Length * sizeof(char)];
-                System.Buffer.BlockCopy(SelectedClient.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+                var bytes = new byte[SelectedClient.password.Length*sizeof(char)];
+                Buffer.BlockCopy(SelectedClient.password.ToCharArray(), 0, bytes, 0, bytes.Length);
 
                 sha.ComputeHash(bytes);
 
-                char[] chars = new char[sha.Hash.Length / sizeof(char)];
-                System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+                var chars = new char[sha.Hash.Length/sizeof(char)];
+                Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
 
                 SelectedClient.password = new string(chars);
 
