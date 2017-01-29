@@ -302,8 +302,6 @@ namespace ParkInspect.ViewModel
             builder.Add("active", ActiveFilter);
             builder.Add("role", RoleFilter);
             builder.Add("employee_status", StatusFilter);
-            
-            //SelectedEmployee.
 
             var result = Data.Where(x => x.Like(builder.Get()));
 
