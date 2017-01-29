@@ -34,7 +34,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Grid.Column="0"  x:Name="OpenReportButton" Content="Openen" Height="30" Width="120"
-					        Command="{Binding OpenReportCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+					        Command="{Binding OpenReportCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch"
 					        Margin="0,10,0,0" VerticalAlignment="Top" />
                     <Button Grid.Row="0" Grid.Column="1" x:Name="NewButton" Content="Nieuw" Height="30" Width="120"
 					        Command="{Binding CreateCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
@@ -45,7 +45,7 @@
                     <UniformGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="FilterGrid" Rows="1">
                         <TextBox materialDesign:HintAssist.Hint="Zoek op naam" materialDesign:HintAssist.IsFloating="True" Margin="0,3" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}"/>
                     </UniformGrid>
-                    <DataGrid Name="Reports"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Names}" SelectedItem="{Binding SelectedReport, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="Select">
+                    <DataGrid Name="Reports"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Names}" SelectedItem="{Binding SelectedReport, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="Select">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Rapport" Binding="{Binding Name}"/>
                         </DataGrid.Columns>

@@ -42,7 +42,18 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public Report SelectedReport { get; set; }
+        private Report _selectedReport { get; set; }
+
+        public Report SelectedReport
+        {
+            get { return _selectedReport; }
+            set
+            {
+                _selectedReport = value;
+                this.RaisePropertyChanged();
+                OpenReportCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         private ReportViewer _report;
         public ObservableCollection<Report> Names { get; set; }
@@ -76,7 +87,7 @@ namespace ParkInspect.ViewModel
 
             CreateCommand = new RelayCommand(OpenDesignView);
             ImportCommand = new RelayCommand(ImportReport);
-            OpenReportCommand = new RelayCommand(OpenReport);
+            OpenReportCommand = new RelayCommand(OpenReport, () => SelectedReport != null);
 
             UpdateReports();
 
