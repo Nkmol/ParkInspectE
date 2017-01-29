@@ -87,7 +87,7 @@
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
                         <AdornerDecorator>
-                            <ComboBox ItemsSource="{Binding Employees}"
+                            <ComboBox ItemsSource="{Binding Global.Employees, Source={StaticResource Locator}}"
                                       materialDesign:HintAssist.Hint="Selecteer een medewerker"
                                       materialDesign:HintAssist.IsFloating="True"
                                       SelectedValue="{Binding SelectedAbsence.Employee}" DisplayMemberPath="firstname"

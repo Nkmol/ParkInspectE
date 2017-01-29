@@ -116,7 +116,7 @@
                                 </TextBox>
                             </AdornerDecorator>
                             <AdornerDecorator>
-                                <ComboBox Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name"
+                                <ComboBox Name="RegionBox" ItemsSource="{Binding Global.Regions, Source={StaticResource Locator}}" DisplayMemberPath="name"
                                       SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio"
                                       materialDesign:HintAssist.IsFloating="True">
                                     <ComboBox.Text>
