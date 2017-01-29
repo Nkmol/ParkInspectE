@@ -86,8 +86,6 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 
         protected ParkinglotService Service { get; set; }
 
-        public ObservableCollection<Region> Regions { get; set; }
-
         public RelayCommand<ParkinglotOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
 
@@ -99,7 +97,6 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             _parkinglot = parkinglot;
             Service = new ParkinglotService(context);
 
-            Regions = new ObservableCollection<Region>(Service.GetAll<Region>()); // TODO: Load this once
             SaveCommand = new RelayCommand<ParkinglotOverviewViewModel>(Save);
 
             FillForm();

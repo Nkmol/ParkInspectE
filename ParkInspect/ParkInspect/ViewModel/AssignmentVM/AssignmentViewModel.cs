@@ -29,11 +29,6 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public readonly Asignment Data;
         public InspectionViewModel SelectedInspection { get; set; }
 
-        // TODO global data
-        public ObservableCollection<Form> Forms { get; set; }
-        public ObservableCollection<State> States { get; set; }
-        public ObservableCollection<Client> Clients { get; set; }
-
         public RelayCommand<AssignmentOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }

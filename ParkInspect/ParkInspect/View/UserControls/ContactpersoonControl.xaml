@@ -84,7 +84,7 @@
                         <ComboBox materialDesign:HintAssist.Hint="Kies een klant uit"
                                   materialDesign:HintAssist.IsFloating="True"
                                   DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                                  ItemsSource="{Binding Global.Clients}" DisplayMemberPath="name"
+                                  ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}" DisplayMemberPath="name"
                                   SelectedItem="{Binding SelectedClient}" Name="CbCustomer">
                             <ComboBox.Text>
                                 <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
