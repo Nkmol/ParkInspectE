@@ -166,8 +166,6 @@ namespace ParkInspect.ViewModel
         }
 
         private IEnumerable<Employee> Data { get; set; }
-        public ObservableCollection<Role> RoleCollection { get; set; }
-        public ObservableCollection<Employee_Status> StatusCollection { get; set; }
 
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
@@ -207,9 +205,6 @@ namespace ParkInspect.ViewModel
             //Initialize commands
             SaveCommand = new RelayCommand(SaveEmployee);
             DeselectEmployeeCommand = new RelayCommand(SetNewEmployee);
-
-            RoleCollection = new ObservableCollection<Role>(Service.GetAll<Role>());
-            StatusCollection = new ObservableCollection<Employee_Status>(Service.GetAll<Employee_Status>());
         }
 
 
