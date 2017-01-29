@@ -51,15 +51,17 @@
                 <GroupBox x:Name="groupBox1" Header="Navigatie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="585" Height="345" Grid.Column="1" Canvas.Left="362" Canvas.Top="34">
                     <Grid Margin="0,0,0,-22" Width="574">
                         <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="236" VerticalAlignment="Top" Width="564" Margin="0,26,0,0"/>
-                        <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Margin="116,261,0,22" TextWrapping="Wrap" Width="218">
-                            <TextBox.Text>
-                                <Binding Path="home_adress" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <AdornerDecorator>
+                            <TextBox x:Name="txt_home_adres" HorizontalAlignment="Left" Margin="116,261,0,22" TextWrapping="Wrap" Width="218">
+                                <TextBox.Text>
+                                    <Binding Path="home_adress" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </AdornerDecorator>
                         <Label x:Name="label1" Content="Vertrek adres:" HorizontalAlignment="Left" Margin="28,277,0,0" VerticalAlignment="Top" Height="26" RenderTransformOrigin="0.5,0.5">
 
                         </Label>

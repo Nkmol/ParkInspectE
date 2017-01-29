@@ -86,59 +86,68 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <TextBox x:Name="NameBox" materialDesign:HintAssist.Hint="Parkeerplaats naam"
-                                     materialDesign:HintAssist.IsFloating="True">
-                                <TextBox.Text>
-                                    <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                      ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <TextBox materialDesign:HintAssist.Hint="Parkeerplaats postcode"
-                                     materialDesign:HintAssist.IsFloating="True" Name="ZipBox">
-                                <TextBox.Text>
-                                    <Binding Path="FormZipcode" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                      ValidatesOnTargetUpdated="True" />
-                                            <validationrules:IsValidZipCodeValidationRule
-                                                ValidationStep="ConvertedProposedValue"
-                                                ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <ComboBox Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name"
-                                      SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio"
-                                      materialDesign:HintAssist.IsFloating="True">
-                                <ComboBox.Text>
-                                    <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                      ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.Text>
-                            </ComboBox>
-                            <UniformGrid Rows="1">
-                                <TextBox materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
-                                         materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
+                            <AdornerDecorator>
+                                <TextBox x:Name="NameBox" materialDesign:HintAssist.Hint="Parkeerplaats naam"
+                                         materialDesign:HintAssist.IsFloating="True">
                                     <TextBox.Text>
-                                        <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validationrules:IsNotEmptyValidationRule
-                                                    ValidationStep="RawProposedValue"
-                                                    ValidatesOnTargetUpdated="True" />
-                                                <validationrules:IsValidNameValidationRule
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
+                            <AdornerDecorator>
+                                <TextBox materialDesign:HintAssist.Hint="Parkeerplaats postcode"
+                                     materialDesign:HintAssist.IsFloating="True" Name="ZipBox">
+                                    <TextBox.Text>
+                                        <Binding Path="FormZipcode" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                                <validationrules:IsValidZipCodeValidationRule
                                                     ValidationStep="ConvertedProposedValue"
                                                     ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                            </AdornerDecorator>
+                            <AdornerDecorator>
+                                <ComboBox Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name"
+                                      SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio"
+                                      materialDesign:HintAssist.IsFloating="True">
+                                    <ComboBox.Text>
+                                        <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
+                            </AdornerDecorator>
+                            <UniformGrid Rows="1">
+                                <AdornerDecorator>
+                                    <TextBox materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
+                                         materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
+                                        <TextBox.Text>
+                                            <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:IsNotEmptyValidationRule
+                                                        ValidationStep="RawProposedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                    <validationrules:IsValidNameValidationRule
+                                                        ValidationStep="ConvertedProposedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </AdornerDecorator>
+                                <AdornerDecorator>
                                 <TextBox Name="NumberBox" materialDesign:HintAssist.Hint="Parkeerplaats straatnummer"
                                          materialDesign:HintAssist.IsFloating="True">
                                     <TextBox.Text>
@@ -154,22 +163,25 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                                </AdornerDecorator>
                             </UniformGrid>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                            <TextBox Name="ClarificationBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                                     AcceptsReturn="True" MaxHeight="178"
-                                     materialDesign:HintAssist.Hint="Parkeerplaats verduidelijking"
-                                     materialDesign:HintAssist.IsFloating="True">
-                                <TextBox.Text>
-                                    <Binding Path="FormClarification" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                      ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                            <AdornerDecorator>
+                                <TextBox Name="ClarificationBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                         AcceptsReturn="True" MaxHeight="178"
+                                         materialDesign:HintAssist.Hint="Parkeerplaats verduidelijking"
+                                         materialDesign:HintAssist.IsFloating="True">
+                                    <TextBox.Text>
+                                        <Binding Path="FormClarification" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
                             <Button x:Name="SaveButton2"
