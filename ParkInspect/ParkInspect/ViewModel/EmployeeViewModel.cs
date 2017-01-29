@@ -133,6 +133,36 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private string _inServiceFilter;
+
+        public string InServiceFilter
+        {
+            get
+            {
+                return _inServiceFilter;
+            }
+            set
+            {
+                _inServiceFilter = value;
+                Filter();
+            }
+        }
+
+        private string _outServiceFilter;
+
+        public string OutServiceFilter
+        {
+            get
+            {
+                return _outServiceFilter;
+            }
+            set
+            {
+                _outServiceFilter = value;
+                Filter();
+            }
+        }
+
         private string _activeFilter;
 
         public string ActiveFilter
@@ -298,6 +328,8 @@ namespace ParkInspect.ViewModel
             builder.Add("firstname", FirstNameFilter);
             builder.Add("lastname", LastNameFilter);
             builder.Add("phonenumber", PhoneFilter);
+            builder.Add("in_service_date", InServiceFilter);
+            builder.Add("out_service_date", OutServiceFilter);
             builder.Add("email", EmailFilter);
             builder.Add("active", ActiveFilter);
             builder.Add("role", RoleFilter);
