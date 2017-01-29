@@ -38,6 +38,12 @@
                     <TextBox materialDesign:HintAssist.Hint="Zoek op telefoonnummer"
                              materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
                              Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op datum in dienst"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding InServiceFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op datum uit dienst"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding OutServiceFilter, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox materialDesign:HintAssist.Hint="Zoek op email"
                              materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
                              Text="{Binding EmailFilter, UpdateSourceTrigger=PropertyChanged}" />
