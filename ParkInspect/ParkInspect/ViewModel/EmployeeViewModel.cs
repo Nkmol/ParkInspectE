@@ -42,6 +42,7 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        #region Filters
         private string _firstNameFilter;
 
         public string FirstNameFilter
@@ -71,6 +72,84 @@ namespace ParkInspect.ViewModel
                 Filter();
             }
         }
+
+        private string _phoneFilter;
+
+        public string PhoneFilter
+        {
+            get
+            {
+                return _phoneFilter;
+            }
+            set
+            {
+                _phoneFilter = value;
+                Filter();
+            }
+        }
+
+        private string _emailFilter;
+
+        public string EmailFilter
+        {
+            get
+            {
+                return _emailFilter;
+            }
+            set
+            {
+                _emailFilter = value;
+                Filter();
+            }
+        }
+
+        private string _statusFilter;
+
+        public string StatusFilter
+        {
+            get
+            {
+                return _statusFilter;
+            }
+            set
+            {
+                _statusFilter = value;
+                Filter();
+            }
+        }
+
+        private string _roleFilter;
+
+        public string RoleFilter
+        {
+            get
+            {
+                return _roleFilter;
+            }
+            set
+            {
+                _roleFilter = value;
+                Filter();
+            }
+        }
+
+        private string _activeFilter;
+
+        public string ActiveFilter
+        {
+            get
+            {
+                return _activeFilter;
+            }
+            set
+            {
+                _activeFilter = value;
+                Filter();
+            }
+        }
+
+        #endregion
+
 
         private DialogManager _dialog;
 
@@ -218,6 +297,11 @@ namespace ParkInspect.ViewModel
             var builder = new FilterBuilder();
             builder.Add("firstname", FirstNameFilter);
             builder.Add("lastname", LastNameFilter);
+            builder.Add("phonenumber", PhoneFilter);
+            builder.Add("email", EmailFilter);
+            builder.Add("active", ActiveFilter);
+            builder.Add("role", RoleFilter);
+            builder.Add("employee_status", StatusFilter);
 
             var result = Data.Where(x => x.Like(builder.Get()));
 

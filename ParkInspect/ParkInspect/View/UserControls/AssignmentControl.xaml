@@ -128,30 +128,34 @@
                                     </Binding>
                                 </controls:DateTimePicker.SelectedDate>
                             </controls:DateTimePicker>
-                            <ComboBox Text="{Binding State.state1}"
-                                      ItemsSource="{Binding States}" DisplayMemberPath="state1"
-                                      x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status"
-                                      materialDesign:HintAssist.IsFloating="True">
-                                <ComboBox.SelectedItem>
-                                    <Binding Path="FormState">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.SelectedItem>
-                            </ComboBox>
-                            <ComboBox Text="{Binding Client.name}"
-                                      ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient"
-                                      materialDesign:HintAssist.Hint="Selecteer een Klant"
-                                      materialDesign:HintAssist.IsFloating="True">
-                                <ComboBox.SelectedItem>
-                                    <Binding Path="FormClient">
-                                        <Binding.ValidationRules>
-                                            <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.SelectedItem>
-                            </ComboBox>
+                            <AdornerDecorator>
+                                <ComboBox Text="{Binding State.state1}"
+                                          ItemsSource="{Binding States}" DisplayMemberPath="state1"
+                                          x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status"
+                                          materialDesign:HintAssist.IsFloating="True">
+                                    <ComboBox.SelectedItem>
+                                        <Binding Path="FormState">
+                                            <Binding.ValidationRules>
+                                                <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.SelectedItem>
+                                </ComboBox>
+                            </AdornerDecorator>
+                            <AdornerDecorator>
+                                <ComboBox Text="{Binding Client.name}"
+                                          ItemsSource="{Binding Clients}" DisplayMemberPath="name" x:Name="cbClient"
+                                          materialDesign:HintAssist.Hint="Selecteer een Klant"
+                                          materialDesign:HintAssist.IsFloating="True">
+                                    <ComboBox.SelectedItem>
+                                        <Binding Path="FormClient">
+                                            <Binding.ValidationRules>
+                                                <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.SelectedItem>
+                                </ComboBox>
+                            </AdornerDecorator>    
                             <TextBox Name="Clarificationbox" Text="{Binding FormClarification}" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                                      materialDesign:HintAssist.Hint="Vul informatie over de opdracht in."
