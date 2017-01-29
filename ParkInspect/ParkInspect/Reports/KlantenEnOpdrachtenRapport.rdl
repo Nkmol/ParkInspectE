@@ -637,7 +637,7 @@
     <DataSource Name="ParkInspect">
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
-        <ConnectString>Data Source=bhooff.database.windows.net;Initial Catalog=Parkinspect</ConnectString>
+        <ConnectString>Data source=bhooff.database.windows.net;initial  catalog=Parkinspect;persist security info=True;user id=bhooff;password=Wachtwoord123;</ConnectString>
       </ConnectionProperties>
     </DataSource>
   </DataSources>
