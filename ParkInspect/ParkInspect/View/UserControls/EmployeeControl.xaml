@@ -35,6 +35,21 @@
                     <TextBox materialDesign:HintAssist.Hint="Zoek op achternaam"
                              materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
                              Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op telefoonnummer"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op email"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding EmailFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op dienst"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding ActiveFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op rol"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding RoleFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op beschikbaarheid"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding StatusFilter, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
                 <DataGrid ItemsSource="{Binding Employees}"
                           SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
