@@ -593,6 +593,9 @@
     <None Include="Reports\KlantenEnOpdrachtenRapport.rdl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Reports\WerknemerRapport.rdl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
