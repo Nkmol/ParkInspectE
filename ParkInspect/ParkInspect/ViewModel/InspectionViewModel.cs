@@ -4,6 +4,7 @@ using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
@@ -22,13 +23,7 @@ namespace ParkInspect.ViewModel
     {
         public Inspection Data;
 
-
-        // TODO Global Data
-        public ObservableCollection<Inspection> Inspections { get; set; }
-        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
-        public ObservableCollection<Form> Forms { get; set; }
         public ObservableCollection<Employee> Inspectors { get; set; }
-        public ObservableCollection<State> States { get; set; }
 
         public Employee SelectedInspector { get; set; }
         public Employee SelectedAssignedInspector { get; set; }
@@ -194,16 +189,22 @@ namespace ParkInspect.ViewModel
             AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
             SearchFormCommand = new RelayCommand(SearchCommand);
 
-            States = new ObservableCollection<State>(_service.GetAll<State>());
-            Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
-            Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
-            Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
-            Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+            LoadInspector();
         }
 
+        // TODO BOB
         private void SearchCommand()
         {
             //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(), x => Form = x.);
+        }
+
+        private void LoadInspector()
+        {
+            // TODO Automatic injection without Current.GetInstance
+            Inspectors = new ObservableCollection<Employee>(ServiceLocator.Current.GetInstance<GlobalViewModel>().Employees
+                .Where(x => x.role == "Inspector")
+                .OrderBy(x => x.firstname)
+                );
         }
 
         private void AssignInspector()
@@ -217,7 +218,7 @@ namespace ParkInspect.ViewModel
             Inspectors.Add(SelectedAssignedInspector);
             AssignedInspectors.Remove(SelectedAssignedInspector);
 
-            Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
+            LoadInspector();
             RaisePropertyChanged(() => Inspectors);
         }
 

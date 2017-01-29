@@ -31,7 +31,6 @@ namespace ParkInspect.ViewModel
             _dialog = dialog;
             Service = new ContactpersonService(context);
             Data = Service.GetAll<Contactperson>();
-            Clients = new ObservableCollection<Client>(Service.GetAll<Client>());
             ResetButtonCommand = new RelayCommand(Reset);
             SaveCommand = new RelayCommand(SaveContactperson);
             DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
@@ -44,19 +43,6 @@ namespace ParkInspect.ViewModel
         private IEnumerable<Contactperson> Data { get; set; }
 
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
-
-        private ObservableCollection<Client> _clients;
-        public ObservableCollection<Client> Clients
-        {
-            get
-            {
-                return _clients;
-            } 
-            set
-            {
-                Set(ref _clients, value);
-            }
-        }
 
         public Contactperson SelectedContactperson
         {

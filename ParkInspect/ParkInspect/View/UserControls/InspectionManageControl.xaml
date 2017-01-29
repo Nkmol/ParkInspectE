@@ -52,7 +52,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0">
             <StackPanel Width="300" VerticalAlignment="Top">
                 <AdornerDecorator>
-                    <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Parkinglots}" materialDesign:HintAssist.Hint="Selecteer een parkeerplaats" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                    <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Global.Parkinglots}" materialDesign:HintAssist.Hint="Selecteer een parkeerplaats" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
                         <ComboBox.SelectedItem>
                             <Binding Path="Parkinglot">
                                 <Binding.ValidationRules>
@@ -69,7 +69,7 @@
                     <ComboBox Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" materialDesign:HintAssist.IsFloating="True" Padding="0,10" />
                     
                 <AdornerDecorator>
-                    <ComboBox Name="CbStatus" Text="{Binding State.state1}" ItemsSource="{Binding States}" DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                    <ComboBox Name="CbStatus" Text="{Binding State.state1}" ItemsSource="{Binding Global.States}" DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
                         <ComboBox.SelectedItem>
                             <Binding Path="State">
                                 <Binding.ValidationRules>
