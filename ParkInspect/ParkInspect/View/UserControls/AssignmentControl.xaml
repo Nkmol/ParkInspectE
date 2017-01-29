@@ -183,6 +183,8 @@
                         </DockPanel>
                         <Button Content="Inspectie voorbereiding" Command="{Binding PrepareCommand}"
                                 Margin="10,10,10,0" />
+                        <Button Content="Inspectierapport genereren" Command="{Binding ReportCommand}"
+                                Margin="10,10,10,0" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
