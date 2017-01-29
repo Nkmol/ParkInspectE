@@ -590,6 +590,9 @@
     <None Include="Reports\InspectieRapport.rdl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Reports\KlantenEnOpdrachtenRapport.rdl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Reports\WerknemerRapport.rdl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
