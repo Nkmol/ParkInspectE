@@ -165,6 +165,7 @@ namespace ParkInspect.ViewModel
 
             if (SelectedReport == null)
             {
+                _dialog.ShowMessage("Er is een fout opgetreden", "Er is geen rapport geselecteerd!");
                 return;
             }
 
