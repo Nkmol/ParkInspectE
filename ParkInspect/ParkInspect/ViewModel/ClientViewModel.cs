@@ -19,7 +19,6 @@ namespace ParkInspect.ViewModel
         private string _emailFilter;
 
         private string _nameFilter;
-        private bool _passwordEnabled;
         private string _phoneFilter;
         private Client _selectedClient;
         private IEnumerable<Client> Data;
@@ -38,11 +37,7 @@ namespace ParkInspect.ViewModel
             Contactpersons = new ObservableCollection<Contactperson>(SelectedClient.Contactpersons);
         }
 
-        public bool PasswordEnabled
-        {
-            get { return SelectedClient.id <= 0; }
-            set { _passwordEnabled = value; }
-        }
+        public bool PasswordEnabled => SelectedClient.id <= 0;
 
         public ObservableCollection<Client> Clients { get; set; }
         public ObservableCollection<Asignment> Assignments { get; set; }
