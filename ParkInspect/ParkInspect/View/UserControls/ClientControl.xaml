@@ -63,8 +63,8 @@
                 <StackPanel>
                     <Label Content="Klant" FontSize="18" />
                     <Separator Margin="0,2,0,10" />
+                    <Label x:Name="NameLabel" Content="Naam" />
                     <AdornerDecorator>
-                        <Label x:Name="NameLabel" Content="Naam" />
                         <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
                                 <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
@@ -79,8 +79,8 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
+                    <Label x:Name="EmailLabel" Content="Emailadres" />
                     <AdornerDecorator>
-                        <Label x:Name="EmailLabel" Content="Emailadres" />
                         <TextBox x:Name="Email" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
                                 <Binding Path="FormEmail" UpdateSourceTrigger="PropertyChanged">
@@ -93,8 +93,8 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
+                    <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
                     <AdornerDecorator>
-                        <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
                         <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
                                 <Binding Path="FormPhonenumber" UpdateSourceTrigger="PropertyChanged">
@@ -106,8 +106,8 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
+                    <Label Content="Wachtwoord:" />
                     <AdornerDecorator>
-                        <Label Content="Wachtwoord:" />
                         <TextBox x:Name="Password" Width="250" IsEnabled="{Binding PasswordEnabled}">
                             <TextBox.Text>
                                 <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">
