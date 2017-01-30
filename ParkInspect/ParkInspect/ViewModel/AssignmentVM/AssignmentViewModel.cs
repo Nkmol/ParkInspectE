@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.SqlServer.ReportingServices2005;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
@@ -28,11 +29,6 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public readonly Asignment Data;
         public InspectionViewModel SelectedInspection { get; set; }
 
-        // TODO global data
-        public ObservableCollection<Form> Forms { get; set; }
-        public ObservableCollection<State> States { get; set; }
-        public ObservableCollection<Client> Clients { get; set; }
-
         public RelayCommand<AssignmentOverviewViewModel> SaveCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
@@ -40,6 +36,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
         public RelayCommand RemoveInspectionCommand { get; set; }
         public RelayCommand RestoreCommand { get; set; }
         public RelayCommand PrepareCommand { get; set; }
+        public RelayCommand ReportCommand { get; set; }
 
 
         #region ViewModel Poco properties
@@ -156,6 +153,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             RemoveInspectionCommand = new RelayCommand(UnassignInspection, () => SelectedInspection != null);
             RestoreCommand = new RelayCommand(Reset);
             PrepareCommand = new RelayCommand(ShowPreparePopup, () => SelectedInspection != null);
+            ReportCommand = new RelayCommand(GenerateReport, () => SelectedInspection != null);
 
             FillForm();
         }
@@ -254,6 +252,15 @@ namespace ParkInspect.ViewModel.AssignmentVM
             Message = _service.Update(this) ? "De opdracht is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
 
             _dialogManager.ShowMessage("Opdracht bewerken", Message);
+        }
+
+        private void GenerateReport()
+        {
+            
+            ReportView view = new ReportView();
+            view.LoadInspectionReport("reports/InspectieRapport.rdl", SelectedInspection.Data.id);
+            view.Show();
+
         }
     }
 }

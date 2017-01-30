@@ -133,6 +133,36 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private string _inServiceFilter;
+
+        public string InServiceFilter
+        {
+            get
+            {
+                return _inServiceFilter;
+            }
+            set
+            {
+                _inServiceFilter = value;
+                Filter();
+            }
+        }
+
+        private string _outServiceFilter;
+
+        public string OutServiceFilter
+        {
+            get
+            {
+                return _outServiceFilter;
+            }
+            set
+            {
+                _outServiceFilter = value;
+                Filter();
+            }
+        }
+
         private string _activeFilter;
 
         public string ActiveFilter
@@ -213,70 +243,74 @@ namespace ParkInspect.ViewModel
         {
             bool error = false;
 
-            //Checking all combinations between 'Active' AND 'status' for not possible combinations.
-            //Using a boolean error to trigger error message and popup the error dialog.
-
-            if (SelectedEmployee.active)
+            //Boolean: employee activity
+            //List: statusses
+            Dictionary<bool, List<string>> statusses = new Dictionary<bool, List<string>>()
             {
-                if (SelectedEmployee.employee_status.Equals("Retired"))
                 {
-                    Notification = "Een medewerker kan niet 'actief' zijn als hij/zij met pensioen is.";
-                    error = true;
-                }
-                else if (SelectedEmployee.employee_status.Equals("Terminated"))
+                    true, new List<string>()
+                    {
+                        "Retired",
+                        "Terminated"
+                    }
+                },
                 {
-                    Notification = "Een medewerker kan niet 'actief' zijn als hij/zij ontslagen is.";
-                    error = true;
+                    false, new List<string>()
+                    {
+                        "Available",
+                        "On Non-Pay leave",
+                        "Suspended",
+                        null
+                    }
                 }
+            };
 
-                SelectedEmployee.out_service_date = null;
+            Dictionary<bool, List<string>> notifications = new Dictionary<bool, List<string>>()
+            {
+                {
+                    true, new List<string>()
+                    {
+                        "Een medewerker kan niet 'actief' zijn als hij/zij met pensioen is.",
+                        "Een medewerker kan niet 'actief' zijn als hij/zij ontslagen is."
+                    }
+                },
+                {
+                    false, new List<string>()
+                    {
+                        "Een medewerker kan niet 'beschikbaar' zijn als hij/zij geen lopend contract heeft.",
+                        "Een medewerker kan niet 'Op betaald verlof' zijn als hij/zij geen lopend contract heeft.",
+                        "Een medewerker kan niet 'Geschorst' zijn als hij/zij geen lopend contract heeft.",
+                        "Er moet een datum uit dienst ingevoerd worden"
+                    }
+                }
+            };
+
+            if (statusses[SelectedEmployee.active].Contains(SelectedEmployee.employee_status))
+            {
+                var id = statusses[SelectedEmployee.active].IndexOf(SelectedEmployee.employee_status);
+                Notification = notifications[SelectedEmployee.active][id];
+                error = true;
             }
-            else
+
+            if (!error)
             {
-                if (SelectedEmployee.employee_status.Equals("Available"))
+
+                if (SelectedEmployee.id == 0)
                 {
-                    Notification = "Een medewerker kan niet 'beschikbaar' zijn als hij/zij geen lopend contract heeft.";
-                    error = true;
+                    Service.Add(SelectedEmployee);
+                }
+                else
+                {
+                    Service.Update(SelectedEmployee);
+                    Notification = "De medewerker is aangepast";
                 }
 
-                if (SelectedEmployee.employee_status.Equals("On Non-Pay leave"))
-                {
-                    Notification =
-                        "Een medewerker kan niet 'Op betaald verlof' zijn als hij/zij geen lopend contract heeft.";
-                    error = true;
-                }
-
-                if (SelectedEmployee.employee_status.Equals("Suspended"))
-                {
-                    Notification = "Een medewerker kan niet 'Geschorst' zijn als hij/zij geen lopend contract heeft.";
-                    error = true;
-                }
-
-                if (SelectedEmployee.out_service_date.Equals(null))
-                {
-                    Notification = "Er moet een datum uit dienst ingevoerd worden";
-                    error = true;
-                }
-            }
-
-            if (error)
-            {
-                _dialog.ShowMessage("Fout opgetreden", Notification);
+                _dialog.ShowMessage("Gelukt!", Notification);
+                UpdateDataGrid();
                 return;
             }
 
-            if (SelectedEmployee.id == 0)
-            {
-                Service.Add(SelectedEmployee);
-            }
-            else
-            {
-                Service.Update(SelectedEmployee);
-                Notification = "De medewerker is aangepast";
-            }
-            
-            _dialog.ShowMessage("Gelukt!", Notification);
-            UpdateDataGrid();
+            _dialog.ShowMessage("Fout opgetreden", Notification);
         }
 
         /// <summary>
@@ -298,6 +332,8 @@ namespace ParkInspect.ViewModel
             builder.Add("firstname", FirstNameFilter);
             builder.Add("lastname", LastNameFilter);
             builder.Add("phonenumber", PhoneFilter);
+            builder.Add("in_service_date", InServiceFilter);
+            builder.Add("out_service_date", OutServiceFilter);
             builder.Add("email", EmailFilter);
             builder.Add("active", ActiveFilter);
             builder.Add("role", RoleFilter);

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ParkInspect.Model.ValidationRules
@@ -12,11 +8,13 @@ namespace ParkInspect.Model.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int i;
-                if(value != null && !int.TryParse((string)value, out i))
-                    return new ValidationResult(true, null);
+            if (value == null) return new ValidationResult(false, "Numerieke karakters zijn niet toegestaan!");
+            var chars = value.ToString().ToCharArray();
+            var s = "1234567890";
 
-            return new ValidationResult(false, "Numerieke karakters zijn niet toegestaan!");
+            return chars.Any(c => s.Contains(c))
+                ? new ValidationResult(false, "Numerieke karakters zijn niet toegestaan!")
+                : new ValidationResult(true, null);
         }
     }
 }

@@ -15,6 +15,6 @@
         popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}"
         dialogs:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}">
     <Grid>
-        <syncfusion:ReportDesigner Name="Designer" syncfusion:SkinStorage.VisualStyle="Metro"/>
+        <syncfusion:ReportDesigner Name="Designer" syncfusion:SkinStorage.VisualStyle="Metro" Margin="0,55,0,0"/>
     </Grid>
 </Window>

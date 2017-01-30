@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ParkInspect.View.UserControls.CustomerControl"
+﻿<UserControl x:Class="ParkInspect.View.UserControls.ClientControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,12 @@
              xmlns:convertor1="clr-namespace:ParkInspect.Convertor"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              mc:Ignorable="d"
-             DataContext="{Binding Client, Source={StaticResource Locator}}"
-             d:DesignHeight="600"
-             d:DesignWidth="1000"
+             x:Name="Window"
+             Width="1000"
+             Height="600"
+             DataContext="{Binding Clients, Source={StaticResource Locator}}"
              VerticalAlignment="Top">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <convertor1:VisibilityConverter x:Key="VisibilityConverter" />
@@ -46,24 +48,26 @@
                     Grid.RowSpan="2">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="*" Header="Naam" Binding="{Binding name}" />
-                        <DataGridTextColumn Width="*" Header="Telefoonnummer" Binding="{Binding phonenumber}" />
-                        <DataGridTextColumn Width="*" Header="Emailadres" Binding="{Binding email}" />
+                        <DataGridTextColumn Width="*" Header="Naam" Binding="{Binding Name}" />
+                        <DataGridTextColumn Width="*" Header="Telefoonnummer" Binding="{Binding Phonenumber}" />
+                        <DataGridTextColumn Width="*" Header="Emailadres" Binding="{Binding Email}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
 
         <TabItem Header="Management"
-                 Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+                 Visibility="{Binding Dashboard.TabStatus[16], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}"
+                 DataContext="{Binding SelectedClient}">
             <Border Padding="10">
                 <StackPanel>
                     <Label Content="Klant" FontSize="18" />
                     <Separator Margin="0,2,0,10" />
                     <AdornerDecorator>
-                    <TextBox Name="Name" materialDesign:HintAssist.Hint="Naam" materialDesign:HintAssist.IsFloating="True">
+                        <Label x:Name="NameLabel" Content="Naam" />
+                        <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
-                                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
@@ -76,9 +80,10 @@
                         </TextBox>
                     </AdornerDecorator>
                     <AdornerDecorator>
-                        <TextBox Name="Email" materialDesign:HintAssist.Hint="Email" materialDesign:HintAssist.IsFloating="True">
+                        <Label x:Name="EmailLabel" Content="Emailadres" />
+                        <TextBox x:Name="Email" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
-                                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormEmail" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsValidEmailValidationRule
                                             ValidationStep="ConvertedProposedValue"
@@ -89,9 +94,23 @@
                         </TextBox>
                     </AdornerDecorator>
                     <AdornerDecorator>
-                        <TextBox materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" MaxLength="50" IsEnabled="{Binding PasswordEnabled}" Name="PasswordBox">
+                        <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
+                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <TextBox.Text>
-                                <Binding Path="Password" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormPhonenumber" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
+                                                                                ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </AdornerDecorator>
+                    <AdornerDecorator>
+                        <Label Content="Wachtwoord:" />
+                        <TextBox x:Name="Password" Width="250" IsEnabled="{Binding PasswordEnabled}">
+                            <TextBox.Text>
+                                <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
@@ -100,20 +119,11 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
-                    <AdornerDecorator>
-                        <TextBox Name="Telnr" materialDesign:HintAssist.Hint="Telefoonnummer" materialDesign:HintAssist.IsFloating="True">
-                                <TextBox.Text>
-                                    <Binding Path="Phonenumber" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
-                                                                                    ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                    </AdornerDecorator>
-                    <StackPanel>
-                        <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}" Content="Opslaan" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
+                        <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
+                                CommandParameter="{Binding DataContext, ElementName=Window}"
+                                Content="Sla klant op" Margin="540,0,10,0"
+                                VerticalAlignment="Top" Width="120">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -130,7 +140,7 @@
                                                     Binding="{Binding (Validation.HasError), ElementName=Email}"
                                                     Value="False" />
                                                 <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=PasswordBox}"
+                                                    Binding="{Binding (Validation.HasError), ElementName=Password}"
                                                     Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
@@ -139,7 +149,9 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Command="{Binding ResetButtonCommand}" Content="Scherm legen" Margin="0,10,0,0"  />
+                        <Button DataContext="{Binding Clients, Source={StaticResource Locator}}"
+                                Command="{Binding NewCommand}" Content="Reset" Margin="0,0,0,0"
+                                VerticalAlignment="Top" Width="120" />
                     </StackPanel>
                 </StackPanel>
             </Border>
