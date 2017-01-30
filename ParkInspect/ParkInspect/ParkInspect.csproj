@@ -349,12 +349,13 @@
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ClientVM\ClientOverviewViewModel.cs" />
     <Compile Include="ViewModel\GlobalViewModel.cs" />
     <Compile Include="ViewModel\OfflineViewModel.cs" />
     <Compile Include="ViewModel\PrepareViewModel.cs" />
     <Compile Include="ViewModel\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\AssignmentVM\AssignmentOverviewViewModel.cs" />
-    <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Compile Include="ViewModel\ClientVM\ClientViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
     <Compile Include="ViewModel\ExportViewModel.cs" />
@@ -384,8 +385,8 @@
     <Compile Include="View\UserControls\AssignmentControl.xaml.cs">
       <DependentUpon>AssignmentControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\ContactpersoonControl.xaml.cs">
-      <DependentUpon>ContactpersoonControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\ContactpersonControl.xaml.cs">
+      <DependentUpon>ContactpersonControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ExportView.xaml.cs">
       <DependentUpon>ExportView.xaml</DependentUpon>
@@ -393,8 +394,8 @@
     <Compile Include="View\UserControls\AbsenceControl.xaml.cs">
       <DependentUpon>AbsenceControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\CustomerControl.xaml.cs">
-      <DependentUpon>CustomerControl.xaml</DependentUpon>
+    <Compile Include="View\UserControls\ClientControl.xaml.cs">
+      <DependentUpon>ClientControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\InspectionManageControl.xaml.cs">
       <DependentUpon>InspectionManageControl.xaml</DependentUpon>
@@ -491,7 +492,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\ContactpersoonControl.xaml">
+    <Page Include="View\UserControls\ContactpersonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -503,7 +504,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\CustomerControl.xaml">
+    <Page Include="View\UserControls\ClientControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
