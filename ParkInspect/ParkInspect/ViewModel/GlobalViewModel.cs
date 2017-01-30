@@ -28,6 +28,13 @@ namespace ParkInspect.ViewModel
             set { _states = value; }
         }
 
+        private ObservableCollection<Employee_Status> _employeeStates;
+        public ObservableCollection<Employee_Status> EmployeeStates
+        {
+            get { return _employeeStates ?? (_employeeStates = new ObservableCollection<Employee_Status>(_serivce.GetAll<Employee_Status>())); }
+            set { _employeeStates = value; }
+        }
+
         private ObservableCollection<Client> _clients;
         public ObservableCollection<Client> Clients
         {
@@ -75,6 +82,13 @@ namespace ParkInspect.ViewModel
         {
             get { return _employees ?? (_employees = new ObservableCollection<Employee>(_serivce.GetAll<Employee>())); }
             set { _employees = value; }
+        }
+
+        private ObservableCollection<Region> _regions;
+        public ObservableCollection<Region> Regions
+        {
+            get { return _regions ?? (_regions = new ObservableCollection<Region>(_serivce.GetAll<Region>())); }
+            set { _regions = value; }
         }
 
         public GlobalViewModel(IRepository repository)

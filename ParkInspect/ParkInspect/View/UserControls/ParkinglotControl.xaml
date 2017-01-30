@@ -116,7 +116,7 @@
                                 </TextBox>
                             </AdornerDecorator>
                             <AdornerDecorator>
-                                <ComboBox Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name"
+                                <ComboBox Name="RegionBox" ItemsSource="{Binding Global.Regions, Source={StaticResource Locator}}" DisplayMemberPath="name"
                                       SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio"
                                       materialDesign:HintAssist.IsFloating="True">
                                     <ComboBox.Text>
@@ -131,7 +131,7 @@
                             </AdornerDecorator>
                             <UniformGrid Rows="1">
                                 <AdornerDecorator>
-                                    <TextBox materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
+                                    <TextBox Name="StreetnameBox"  materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
                                          materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
                                         <TextBox.Text>
                                             <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
@@ -208,6 +208,9 @@
                                                         Value="false" />
                                                     <Condition
                                                         Binding="{Binding ElementName=ClarificationBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=StreetnameBox, Path=(Validation.HasError)}"
                                                         Value="false" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="true" />

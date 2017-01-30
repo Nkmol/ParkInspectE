@@ -39,8 +39,6 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public ObservableCollection<Employee> Employees { get; set; }
-
         protected AbsenceService Service;
 
         public ICommand SaveNewAbsenceCommand { get; set; }
@@ -198,7 +196,6 @@ namespace ParkInspect.ViewModel
             NewAbsence.start = DateTime.Now;
 
             Absences = new ObservableCollection<Absence>(Service.GetAll<Absence>());
-            Employees = new ObservableCollection<Employee>(Service.GetAll<Employee>());
 
             SaveNewAbsenceCommand = new RelayCommand(SaveNewAbsenceMethod);
             DeleteAbsenceCommand = new RelayCommand(DeleteAbsenceMethod, () => SelectedAbsence != null);

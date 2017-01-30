@@ -47,7 +47,6 @@ namespace ParkInspect.ViewModel
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
 
-
         public DateTime? BoundryStartDate
         {
             get { return _boundryStartDate; }
