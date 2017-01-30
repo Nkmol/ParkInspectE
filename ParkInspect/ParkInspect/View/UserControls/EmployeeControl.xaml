@@ -202,7 +202,7 @@
                                     materialDesign:HintAssist.IsFloating="True" Name="Role">
                                     <ComboBox.Text>
                                         <Binding Path="FormRole.role1" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
+                                            <Binding.ValidationRules> 
                                                 <validationRules:IsNotEmptyValidationRule
                                                     ValidationStep="RawProposedValue"
                                                     ValidatesOnTargetUpdated="True" />
