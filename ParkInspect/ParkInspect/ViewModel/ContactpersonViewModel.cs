@@ -8,7 +8,6 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using ParkInspect.ViewModel.ClientVM;
 
 namespace ParkInspect.ViewModel
 {
