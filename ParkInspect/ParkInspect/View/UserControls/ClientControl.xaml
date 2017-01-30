@@ -108,7 +108,7 @@
                     </AdornerDecorator>
                     <Label Content="Wachtwoord:" />
                     <AdornerDecorator>
-                        <TextBox x:Name="Password" Width="250" IsEnabled="{Binding PasswordEnabled}">
+                        <TextBox x:Name="Password" Width="250" HorizontalAlignment="Left" Margin="5,0,0,15" IsEnabled="{Binding PasswordEnabled}">
                             <TextBox.Text>
                                 <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -119,7 +119,7 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
-                    <StackPanel Orientation="Horizontal" Margin="100,320,100,0">
+                    <StackPanel Orientation="Horizontal">
                         <Button Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
                                 CommandParameter="{Binding DataContext, ElementName=Window}"
                                 Content="Sla klant op" Margin="540,0,10,0"

@@ -84,7 +84,7 @@ namespace ParkInspect.ViewModel.ClientVM
             NewClient();
         }
 
-        private void NewClient()
+        public void NewClient()
         {
             SelectedClient = new ClientViewModel(_context, new Client(), _dialog);
             RaisePropertyChanged();

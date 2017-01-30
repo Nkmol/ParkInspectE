@@ -136,6 +136,8 @@ namespace ParkInspect.ViewModel.ClientVM
                 Add(overview);
             else
                 Edit();
+
+            overview.NewClient();
         }     
 
         public void Add(ClientOverviewViewModel overview)
