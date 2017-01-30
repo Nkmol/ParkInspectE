@@ -105,6 +105,7 @@ namespace ParkInspect.ViewModel.ClientVM
         #endregion
 
         public string Message { get; set; }
+        public bool PasswordEnabled => Data.id <= 0;
 
         public RelayCommand<ClientOverviewViewModel> SaveCommand { get; set; }
 
@@ -135,6 +136,8 @@ namespace ParkInspect.ViewModel.ClientVM
                 Add(overview);
             else
                 Edit();
+
+            overview.NewClient();
         }     
 
         public void Add(ClientOverviewViewModel overview)
