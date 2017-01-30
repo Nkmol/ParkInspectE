@@ -350,7 +350,6 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ClientVM\ClientOverviewViewModel.cs" />
-    <Compile Include="ViewModel\EmployeeVM\EmployeeOverviewViewModel.cs" />
     <Compile Include="ViewModel\GlobalViewModel.cs" />
     <Compile Include="ViewModel\OfflineViewModel.cs" />
     <Compile Include="ViewModel\PrepareViewModel.cs" />
@@ -369,7 +368,7 @@
     <Compile Include="ViewModel\AssignmentVM\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\NewTemplateViewModel.cs" />
     <Compile Include="ViewModel\ParkinglotVM\ParkinglotOverviewViewModel.cs" />
-    <Compile Include="ViewModel\EmployeeVM\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupCreateUpdateViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupManager.cs" />
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
