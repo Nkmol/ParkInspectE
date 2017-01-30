@@ -19,6 +19,7 @@ using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.ClientVM;
+using ParkInspect.ViewModel.EmployeeVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
 
@@ -57,7 +58,6 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
-            SimpleIoc.Default.Register<EmployeeViewModel>();
             SimpleIoc.Default.Register<InspectionViewModel>();
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
@@ -70,7 +70,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<AbsenceViewModel>();
             SimpleIoc.Default.Register<RegionViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
-
+            SimpleIoc.Default.Register<EmployeeOverviewViewModel>();
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
@@ -94,7 +94,7 @@ namespace ParkInspect.ViewModel
 
 	    public ExportViewModel Export => ServiceLocator.Current.GetInstance<ExportViewModel>();
 
-        public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
+        public EmployeeOverviewViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeOverviewViewModel>();
 
         public InspectionViewModel Inspection => new InspectionViewModel(SimpleIoc.Default.GetInstance<IRepository>());
         public OfflineViewModel Offline => ServiceLocator.Current.GetInstance<OfflineViewModel>();
