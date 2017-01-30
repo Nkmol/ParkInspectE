@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using ParkInspect.Model.Factory;
-using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 
-namespace ParkInspect.ViewModel
+namespace ParkInspect.ViewModel.ContactpersonVM
 {
     public class ContactpersonViewModel : ViewModelBase
     {
@@ -91,64 +88,13 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public string FirstnameFilter
-        {
-            get { return _firstnameFilter; }
-            set
-            {
-                _firstnameFilter = value;
-                UpdateContactpersons();
-            }
-        }
-
-        public string LastnameFilter
-        {
-            get { return _lastnameFilter; }
-            set
-            {
-                _lastnameFilter = value;
-                UpdateContactpersons();
-            }
-        }
-
-        public string ClientFilter
-        {
-            get { return _clientFilter; }
-            set
-            {
-                _clientFilter = value;
-                UpdateContactpersons();
-            }
-        }
+        
 
         public ICommand ResetButtonCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand DeleteContactpersonCommand { get; set; }
 
-        private void Reset()
-        {
-            SelectedContactperson = new Contactperson();
-            RaisePropertyChanged("SelectedContactperson");
-            SelectedContactperson.id = -1;
-            SelectedContactperson.firstname = "";
-            SelectedContactperson.lastname = "";
-        }
-
-        private void UpdateContactpersons()
-        {
-            Data = Service.GetAll<Contactperson>();
-
-            var builder = new FilterBuilder();
-            builder.Add("firstname", FirstnameFilter);
-            builder.Add("lastname", LastnameFilter);
-            builder.Add("Client.name", ClientFilter);
-
-            var result = Data.Where(x => x.Like(builder.Get()));
-
-            Contactpersons = new ObservableCollection<Contactperson>(result);
-            Reset();
-            RaisePropertyChanged("Contactpersons");
-        }
+        
 
         private bool CanDelete()
         {

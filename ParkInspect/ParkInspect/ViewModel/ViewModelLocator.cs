@@ -18,6 +18,7 @@ using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.AssignmentVM;
+using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
 
@@ -55,7 +56,6 @@ namespace ParkInspect.ViewModel
 
 
             SimpleIoc.Default.Register<ClientViewModel>();
-            SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<EmployeeViewModel>();
@@ -71,6 +71,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<AbsenceViewModel>();
             SimpleIoc.Default.Register<RegionViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
+            SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
@@ -116,7 +117,7 @@ namespace ParkInspect.ViewModel
 
         public ClientViewModel Client => ServiceLocator.Current.GetInstance<ClientViewModel>();
 
-        public ContactpersonViewModel Contactperson => ServiceLocator.Current.GetInstance<ContactpersonViewModel>();
+        public ContactpersonOverviewViewModel Contactpersons => ServiceLocator.Current.GetInstance<ContactpersonOverviewViewModel>();
 
         public PopupViewModel Popup => new PopupViewModel(); // Always new link
         public PopupViewModel PopupUpdateNew => new PopupCreateUpdateViewModel(); // Always new link
