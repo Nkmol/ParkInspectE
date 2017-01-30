@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
+using ParkInspect.ViewModel.ClientVM;
 
 namespace ParkInspect.ViewModel.ContactpersonVM
 {
@@ -42,7 +43,7 @@ namespace ParkInspect.ViewModel.ContactpersonVM
 
         private bool CanDelete()
         {
-            return (Data != null) && (Data.id != -1);
+            return (Data != null) && (Data.id > 0);
         }
 
         private void SaveForm()

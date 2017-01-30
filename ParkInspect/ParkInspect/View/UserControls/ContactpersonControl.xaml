@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1000"
              VerticalAlignment="Top"
-             DataContext="{Binding Contactperson, Source={StaticResource Locator}}">
+             DataContext="{Binding Contactpersons, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -45,15 +45,14 @@
                           IsReadOnly="True" AutoGenerateColumns="False"
                           SelectedItem="{Binding SelectedContactperson}" VerticalScrollBarVisibility="Visible">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="150" Header="Voornaam" Binding="{Binding firstname}" />
-                        <DataGridTextColumn Width="150" Header="Achternaam" Binding="{Binding lastname}" />
-                        <DataGridTextColumn Width="150" Header="Klant" Binding="{Binding Client.name}" />
+                        <DataGridTextColumn Width="*" Header="Voornaam" Binding="{Binding Firstname}" />
+                        <DataGridTextColumn Width="*" Header="Achternaam" Binding="{Binding Lastname}" />
+                        <DataGridTextColumn Width="*" Header="Klant" Binding="{Binding Client.name}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
-
-        <TabItem Header="Management">
+        <TabItem Header="Management" DataContext="{Binding SelectedContactperson}">
             <Border Padding="10">
                 <StackPanel>
                     <Label Content="Contactpersoon" FontSize="18" />
@@ -62,7 +61,7 @@
                         <TextBox materialDesign:HintAssist.Hint="Vul de voornaam in"
                                  materialDesign:HintAssist.IsFloating="True" Name="FirstName">
                             <TextBox.Text>
-                                <Binding Path="Firstname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormFirstname"  UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsValidNameValidationRule
                                             ValidationStep="ConvertedProposedValue"
@@ -76,7 +75,7 @@
                         <TextBox materialDesign:HintAssist.Hint="Vul de achternaam in"
                                  materialDesign:HintAssist.IsFloating="True" Name="LastName">
                             <TextBox.Text>
-                                <Binding Path="Lastname" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormLastname" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsValidNameValidationRule
                                             ValidationStep="ConvertedProposedValue"
@@ -89,12 +88,10 @@
                     <AdornerDecorator>
                         <ComboBox materialDesign:HintAssist.Hint="Kies een klant uit"
                                   materialDesign:HintAssist.IsFloating="True"
-                                  DataContext="{Binding Contactperson, Source={StaticResource Locator}}"
-                                  ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}"
-                                  DisplayMemberPath="name"
-                                  SelectedItem="{Binding SelectedClient}" Name="CbCustomer">
+                                  ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}" DisplayMemberPath="name"
+                                  SelectedItem="{Binding Client}" Name="CbCustomer">
                             <ComboBox.Text>
-                                <Binding Path="SelectedClient.name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormClient.name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
@@ -132,7 +129,7 @@
                             <Button Command="{Binding DeleteContactpersonCommand}" Content="Verwijderen"
                                     Margin="0,10,0,0" />
                         </UniformGrid>
-                        <Button Command="{Binding ResetButtonCommand}" Content="Scherm legen" Margin="0,10,0,0" />
+                        <Button DataContext="{Binding Contactpersons, Source={StaticResource Locator}}" Command="{Binding NewCommand}" Content="Scherm legen" Margin="0,10,0,0" />
                     </StackPanel>
                 </StackPanel>
             </Border>
