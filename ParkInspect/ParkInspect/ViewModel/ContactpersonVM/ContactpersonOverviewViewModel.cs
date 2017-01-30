@@ -1,58 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 
 namespace ParkInspect.ViewModel.ContactpersonVM
 {
-    public class ContactpersonOverviewViewModel
+    public class ContactpersonOverviewViewModel : ViewModelBase
     {
-        private ObservableCollection<ContactpersonViewModel> Data;
-        private IRepository _context;
-        private DialogManager _dialog;
+        private readonly IRepository _context;
+        private readonly DialogManager _dialog;
 
-        private Contactperson SelectedContactperson
-        {
-            get
-            {
-                
-            }
-            set
-            {
-                
-            }
-        }
+        private ContactpersonViewModel _selectedContactperson;
 
         public ContactpersonOverviewViewModel(IRepository context, DialogManager dialog)
         {
             _context = context;
             _dialog = dialog;
+
+            Data =
+                new ObservableCollection<ContactpersonViewModel>(
+                    context.GetAll<Contactperson>().Select(x => new ContactpersonViewModel(context, x, dialog)));
+            Contactpersons = Data;
+
+            NewCommand = new RelayCommand(NewContactperson);
+            NewContactperson();
         }
 
-        #region Properties
+        private ObservableCollection<ContactpersonViewModel> Data { get; }
 
-        public string FormFirstname
+        public ObservableCollection<ContactpersonViewModel> Contactpersons { get; set; }
+
+        public ContactpersonViewModel SelectedContactperson
         {
-            get
-            {
-                
-            }
+            get { return _selectedContactperson; }
             set
             {
-                
+                Set(ref _selectedContactperson, value);
+                SelectedContactperson?.Reset();
             }
         }
 
-        #endregion
+        public RelayCommand NewCommand { get; set; }
+
+        private void NewContactperson()
+        {
+            SelectedContactperson = new ContactpersonViewModel(_context, new Contactperson(), _dialog);
+            RaisePropertyChanged();
+        }
+
+        private void UpdateContactpersons()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("Firstname", FirstnameFilter);
+            builder.Add("Lastname", LastnameFilter);
+            builder.Add("Client.name", ClientFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Contactpersons = new ObservableCollection<ContactpersonViewModel>(result);
+            RaisePropertyChanged("Contactpersons");
+        }
 
         #region Filters
 
         private string _firstnameFilter;
+
         public string FirstnameFilter
         {
             get { return _firstnameFilter; }
@@ -64,6 +79,7 @@ namespace ParkInspect.ViewModel.ContactpersonVM
         }
 
         private string _lastnameFilter;
+
         public string LastnameFilter
         {
             get { return _lastnameFilter; }
@@ -75,6 +91,7 @@ namespace ParkInspect.ViewModel.ContactpersonVM
         }
 
         private string _clientFilter;
+
         public string ClientFilter
         {
             get { return _clientFilter; }
@@ -86,18 +103,5 @@ namespace ParkInspect.ViewModel.ContactpersonVM
         }
 
         #endregion
-
-        private void UpdateContactpersons()
-        {
-            var builder = new FilterBuilder();
-            builder.Add("firstname", FirstnameFilter);
-            builder.Add("lastname", LastnameFilter);
-            builder.Add("Client.name", ClientFilter);
-
-            var result = Data.Where(x => x.Like(builder.Get()));
-
-            Contactpersons = new ObservableCollection<Contactperson>(result);
-            RaisePropertyChanged("Contactpersons");
-        }
     }
 }
