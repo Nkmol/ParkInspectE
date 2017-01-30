@@ -20,22 +20,9 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         private readonly Employee Data;
 
-        public bool InspectorSelected => Data.role == "Inspector";
+        public bool InspectorSelected { get; set; }
 
-        //Fields and Properties
-        private string _notification;
-
-        public string Notification
-        {
-            get { return _notification; }
-            set
-            {
-                _notification = value;
-                base.RaisePropertyChanged();
-            }
-        }     
-
-        private DialogManager _dialog;
+        private readonly DialogManager _dialog;
 
         public string Message { get; set; }
 
@@ -143,83 +130,44 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         #region Form
 
-        public string FormEmail
-        {
-            get { return Data.email; }
-            set { Data.email = value; }
-        }
+        public string FormEmail { get; set; }
 
+        private Role _formRole;
         public Role FormRole
         {
-            get { return Data.Role1; }
-            set { Data.Role1 = value; }
+            get { return _formRole; }
+            set
+            {
+                _formRole = value;
+                if (value?.role1 == "Inspector")
+                {
+                    InspectorSelected = true;
+                    RaisePropertyChanged("InspectorSelected");
+                }
+            }
         }
 
-        public Region FormRegion
-        {
-            get { return Data.Region; }
-            set { Data.Region = value; }
-        }
+        public Region FormRegion { get; set; }
 
-        public Employee_Status FormEmployeeStatus
-        {
-            get { return Data.Employee_Status1; }
-            set { Data.Employee_Status1 = value; }
-        }
+        public Employee_Status FormEmployeeStatus { get; set; }
 
-        public string FormFirstname
-        {
-            get { return Data.firstname; }
-            set { Data.firstname = value; }
-        }
+        public string FormFirstname { get; set; }
 
-        public string FormLastname
-        {
-            get { return Data.lastname; }
-            set { Data.lastname = value; }
-        }
+        public string FormLastname { get; set; }
 
-        public string FormPassword
-        {
-            get { return Data.password; }
-            set { Data.password = value; }
-        }
+        public string FormPassword { get; set; }
 
-        public string FormPhonenumber
-        {
-            get { return Data.phonenumber; }
-            set { Data.phonenumber = value; }
-        }
+        public string FormPhonenumber { get; set; }
 
-        public bool FormActive
-        {
-            get { return Data.active; }
-            set { Data.active = value; }
-        }
+        public bool FormActive { get; set; }
 
-        public DateTime FormInServiceDate
-        {
-            get { return Data.in_service_date; }
-            set { Data.in_service_date = value; }
-        }
+        public DateTime FormInServiceDate { get; set; }
 
-        public DateTime? FormOutServiceDate
-        {
-            get { return Data.out_service_date; }
-            set { Data.out_service_date = value; }
-        }
+        public DateTime? FormOutServiceDate { get; set; }
 
-        public ICollection<Absence> FormAbsences
-        {
-            get { return Data.Absences; }
-            set { Data.Absences = value; }
-        }
+        public ICollection<Absence> FormAbsences { get; set; }
 
-        public ICollection<Inspection> FormInspections
-        {
-            get { return Data.Inspections; }
-            set { Data.Inspections = value; }
-        }
+        public ICollection<Inspection> FormInspections { get; set; }
 
         #endregion
 
@@ -295,7 +243,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
                     }
                 }
             };
-            
+
             var notifications = new Dictionary<bool, List<string>>()
             {
                 {
@@ -316,18 +264,25 @@ namespace ParkInspect.ViewModel.EmployeeVM
                 }
             };
 
-            if (statusses[Data.active].Contains(Data.employee_status))
+            var notification = "";
+
+            if (statusses[Data.active].Contains(Data.Employee_Status1.employee_status1))
             {
-                var id = statusses[Data.active].IndexOf(Data.employee_status);
-                Notification = notifications[Data.active][id];
+                var id = statusses[Data.active].IndexOf(Data.Employee_Status1.employee_status1);
+                notification = notifications[Data.active][id];
                 error = true;
             }
 
-            if (error) _dialog.ShowMessage("Personeel toevoegen", "Er is iets misgegaan tijdens het toevoegen.");
+            if (error)
+            {
+                _dialog.ShowMessage("Personeel toevoegen", notification);
+                return;
+            }                
+
             Message = Service.Add(Data)
-                ? "Het personeelslid is toegevoegd!"
-                : "Er is iets misgegaan tijdens het toevoegen.";
-            _dialog.ShowMessage("Personeel toevoegen", Message);
+                    ? "Het personeelslid is toegevoegd!"
+                    : "Er is iets misgegaan tijdens het toevoegen.";
+                _dialog.ShowMessage("Personeel toevoegen", Message);
 
             overview.Employees.Add(this);
         }

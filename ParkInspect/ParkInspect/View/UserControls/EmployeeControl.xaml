@@ -12,6 +12,7 @@
              d:DesignHeight="670"
              d:DesignWidth="1000"
              VerticalAlignment="Top"
+             Name="Window"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -184,7 +185,7 @@
                             </AdornerDecorator>
                             <StackPanel Orientation="Horizontal" Margin="0, 10">
                                 <Label Content="In dienst (contract loopt nog)" />
-                                <CheckBox IsChecked="{Binding FormActive, Mode=TwoWay}" />
+                                <CheckBox IsChecked="{Binding FormActive}" />
                             </StackPanel>
                             <DatePicker materialDesign:HintAssist.Hint="Datum uit dienst"
                                         materialDesign:HintAssist.IsFloating="True">
@@ -201,8 +202,8 @@
                                     materialDesign:HintAssist.Hint="Rol"
                                     materialDesign:HintAssist.IsFloating="True" Name="Role">
                                     <ComboBox.Text>
-                                        <Binding Path="FormRole.role1" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules> 
+                                        <Binding Path="FormRole" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule
                                                     ValidationStep="RawProposedValue"
                                                     ValidatesOnTargetUpdated="True" />
@@ -219,7 +220,7 @@
                                     materialDesign:HintAssist.Hint="Status"
                                     materialDesign:HintAssist.IsFloating="True" Name="Status">
                                     <ComboBox.Text>
-                                        <Binding Path="FormEmployeeStatus.employee_status1"
+                                        <Binding Path="FormEmployeeStatus"
                                                  UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule
@@ -247,7 +248,7 @@
                     <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0">
 
                         <Button
-                            Command="{Binding SaveCommand}" Content="Opslaan" Margin="0,10,0.4,0">
+                            Command="{Binding SaveCommand}" Content="Opslaan" Margin="0,10,0.4,0" CommandParameter="{Binding DataContext, ElementName=Window}">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -278,9 +279,6 @@
                                                 <Condition
                                                     Binding="{Binding (Validation.HasError), ElementName=Status}"
                                                     Value="false" />
-                                                <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=RegioBox}"
-                                                    Value="false" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="true" />
                                         </MultiDataTrigger>
@@ -296,12 +294,13 @@
                     <ComboBox
                         ItemsSource="{Binding Global.Regions, Source={StaticResource Locator}}"
                         DisplayMemberPath="name"
+                        IsEnabled="{Binding InspectorSelected, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding FormRegion}"
                         materialDesign:HintAssist.Hint="Regio"
                         materialDesign:HintAssist.IsFloating="True" Name="RegioBox" Grid.Column="1"
                         Margin="45.4,55.2,201.4,133.8" Grid.Row="1" Width="250">
                         <ComboBox.Text>
-                            <Binding Path="FormRegion.name" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
