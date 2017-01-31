@@ -31,6 +31,8 @@ namespace ParkInspect.ViewModel
 
         public async Task<LoginDialogData> ShowLogin(string title, string message, LoginDialogSettings settings)
         {
+
+
             return await DialogCoordinator.ShowLoginAsync(this, title, message, settings);
         }
 
