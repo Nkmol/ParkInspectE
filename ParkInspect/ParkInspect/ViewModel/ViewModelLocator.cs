@@ -17,6 +17,7 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.AbsenceVM;
 using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.ClientVM;
@@ -67,7 +68,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
-            SimpleIoc.Default.Register<AbsenceViewModel>();
+            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
             SimpleIoc.Default.Register<RegionOverviewViewModel>();
@@ -110,7 +111,7 @@ namespace ParkInspect.ViewModel
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
 
-        public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
+        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
 
         public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 

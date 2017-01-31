@@ -13,7 +13,6 @@ namespace ParkInspect.ViewModel.ContactpersonVM
     {
         private readonly IRepository _context;
         private readonly DialogManager _dialog;
-        private readonly ContactpersonService _service;
 
         private ContactpersonViewModel _selectedContactperson;
 
@@ -21,7 +20,6 @@ namespace ParkInspect.ViewModel.ContactpersonVM
         {
             _context = context;
             _dialog = dialog;
-            _service = new ContactpersonService(context);
 
             Data =
                 new ObservableCollection<ContactpersonViewModel>(
