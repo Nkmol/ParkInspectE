@@ -13,7 +13,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
     {
         private readonly EmployeeService _service;
 
-        private ObservableCollection<EmployeeViewModel> Data { get; set; }
+        private ObservableCollection<EmployeeViewModel> Data { get;}
 
         private EmployeeViewModel _selectedEmployee;
 
@@ -185,7 +185,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
         private readonly IRepository _context;
         private readonly DialogManager _dialog;
 
-        private void NewEmployee()
+        public void NewEmployee()
         {
             SelectedEmployee = new EmployeeViewModel(_context, new Employee(), _dialog);
             RaisePropertyChanged();

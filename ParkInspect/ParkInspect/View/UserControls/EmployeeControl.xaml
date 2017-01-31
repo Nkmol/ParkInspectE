@@ -183,7 +183,7 @@
                                     </DatePicker.SelectedDate>
                                 </DatePicker>
                             </AdornerDecorator>
-                            <StackPanel Orientation="Horizontal" Margin="0, 10">
+                            <StackPanel Orientation="Horizontal" Margin="-3, 10, 0, -5">
                                 <Label Content="In dienst (contract loopt nog)" />
                                 <CheckBox IsChecked="{Binding FormActive}" />
                             </StackPanel>
@@ -238,7 +238,7 @@
                                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                                   ScrollViewer.HorizontalScrollBarVisibility="Visible"
                                   SelectionMode="Single" AutoGenerateColumns="False"
-                                  IsReadOnly="True" ItemsSource="{Binding Absences}">
+                                  IsReadOnly="True" ItemsSource="{Binding FormAbsences}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Header="Datum begin" Binding="{Binding start}" />
                                 <DataGridTextColumn Width="*" Header="Datum einde" Binding="{Binding end}" />

@@ -20,7 +20,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         private readonly Employee Data;
 
-        public bool InspectorSelected { get; set; }
+        public bool InspectorSelected => FormRole?.role1 == "Inspector";
 
         private readonly DialogManager _dialog;
 
@@ -32,15 +32,13 @@ namespace ParkInspect.ViewModel.EmployeeVM
         public EmployeeViewModel(IRepository context, Employee data, DialogManager dialog)
         {
             _dialog = dialog;
-            //Service and employees
             Service = new EmployeeService(context);
             Data = data;
 
             //Initialize startup Employee
             Data.in_service_date = DateTime.Today;
             Data.out_service_date = DateTime.Today;
-
-            //Initialize commands
+            
             SaveCommand = new RelayCommand<EmployeeOverviewViewModel>(Save);
             Reset();
             FillForm();
@@ -139,11 +137,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
             set
             {
                 _formRole = value;
-                if (value?.role1 == "Inspector")
-                {
-                    InspectorSelected = true;
-                    RaisePropertyChanged("InspectorSelected");
-                }
+                RaisePropertyChanged("InspectorSelected");
             }
         }
 
@@ -216,6 +210,8 @@ namespace ParkInspect.ViewModel.EmployeeVM
                 Add(overview);
             else
                 Edit();
+
+            overview.NewEmployee();
         }
 
         private void Add(EmployeeOverviewViewModel overview)
@@ -294,82 +290,5 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
             _dialog.ShowMessage("Personeel bewerken", Message);
         }
-
-        /*CRU METHODS
-        private void SaveEmployee()
-        {
-            bool error = false;
-
-            //Boolean: employee activity
-            //List: statusses
-            Dictionary<bool, List<string>> statusses = new Dictionary<bool, List<string>>()
-            {
-                {
-                    true, new List<string>()
-                    {
-                        "Retired",
-                        "Terminated"
-                    }
-                },
-                {
-                    false, new List<string>()
-                    {
-                        "Available",
-                        "On Non-Pay leave",
-                        "Suspended",
-                        null
-                    }
-                }
-            };
-
-            Dictionary<bool, List<string>> notifications = new Dictionary<bool, List<string>>()
-            {
-                {
-                    true, new List<string>()
-                    {
-                        "Een medewerker kan niet 'actief' zijn als hij/zij met pensioen is.",
-                        "Een medewerker kan niet 'actief' zijn als hij/zij ontslagen is."
-                    }
-                },
-                {
-                    false, new List<string>()
-                    {
-                        "Een medewerker kan niet 'beschikbaar' zijn als hij/zij geen lopend contract heeft.",
-                        "Een medewerker kan niet 'Op betaald verlof' zijn als hij/zij geen lopend contract heeft.",
-                        "Een medewerker kan niet 'Geschorst' zijn als hij/zij geen lopend contract heeft.",
-                        "Er moet een datum uit dienst ingevoerd worden"
-                    }
-                }
-            };
-
-            if (statusses[SelectedEmployee.active].Contains(SelectedEmployee.employee_status))
-            {
-                var id = statusses[SelectedEmployee.active].IndexOf(SelectedEmployee.employee_status);
-                Notification = notifications[SelectedEmployee.active][id];
-                error = true;
-            }
-
-            if (!error)
-            {
-
-                if (SelectedEmployee.id == 0)
-                {
-                    Service.Add(SelectedEmployee);
-                }
-                else
-                {
-                    Service.Update(SelectedEmployee);
-                    Notification = "De medewerker is aangepast";
-                }
-
-                _dialog.ShowMessage("Gelukt!", Notification);
-                UpdateDataGrid();
-                return;
-            }
-
-            _dialog.ShowMessage("Fout opgetreden", Notification);
-        }
-
-        */
     }
 }
