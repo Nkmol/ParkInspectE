@@ -22,6 +22,7 @@ using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.ClientVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
+using ParkInspect.ViewModel.Region;
 
 namespace ParkInspect.ViewModel
 {
@@ -67,9 +68,9 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AbsenceViewModel>();
-            SimpleIoc.Default.Register<RegionViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
+            SimpleIoc.Default.Register<RegionOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
@@ -111,7 +112,7 @@ namespace ParkInspect.ViewModel
 
         public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
 
-        public RegionViewModel Region => ServiceLocator.Current.GetInstance<RegionViewModel>();
+        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 

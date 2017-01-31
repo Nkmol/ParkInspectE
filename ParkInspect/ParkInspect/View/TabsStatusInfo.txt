@@ -28,8 +28,8 @@
 24 - MainTab:Parkeerplaatsen > SubTab:Management
 25 - MainTab:Rapportage      > SubTab:Overview 
 26 - MainTab:Rapportage      > SubTab:Management
-27 -
-28 -
+27 - MainTab:Contactpersonen > SubTab:Overview
+28 - MainTab:Contactpersonen > SubTab:Management
 29 -
 30 -
 
