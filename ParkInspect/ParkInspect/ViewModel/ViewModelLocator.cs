@@ -18,6 +18,7 @@ using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.AssignmentVM;
+using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.ClientVM;
 using ParkInspect.ViewModel.EmployeeVM;
 using ParkInspect.ViewModel.Popup;
@@ -54,8 +55,6 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
             SimpleIoc.Default.Register<PopupCoordinator>();
-            
-            SimpleIoc.Default.Register<ContactpersonViewModel>();
             SimpleIoc.Default.Register<DashboardViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<InspectionViewModel>();
@@ -71,6 +70,8 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<RegionViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<EmployeeOverviewViewModel>();
+            SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
+
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
@@ -115,7 +116,7 @@ namespace ParkInspect.ViewModel
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
-        public ContactpersonViewModel Contactperson => ServiceLocator.Current.GetInstance<ContactpersonViewModel>();
+        public ContactpersonOverviewViewModel Contactpersons => ServiceLocator.Current.GetInstance<ContactpersonOverviewViewModel>();
 
         public PopupViewModel Popup => new PopupViewModel(); // Always new link
         public PopupViewModel PopupUpdateNew => new PopupCreateUpdateViewModel(); // Always new link
