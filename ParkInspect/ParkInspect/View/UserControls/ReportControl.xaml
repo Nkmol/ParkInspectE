@@ -59,7 +59,6 @@
                         <Label x:Name="label" Content="Selecteer:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68"/>
                         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="68,-2,0,0" SelectionChanged="comboBox_SelectionChanged" VerticalAlignment="Top" Width="120">
                             <ComboBoxItem Content="Inspecties"/>
-                            <ComboBoxItem Content="Afwezigheid"/>
                             <ComboBoxItem Content="Parkeerplaatsen"/>
                             <ComboBoxItem Content="Inspection Heatmap"/>
                         </ComboBox>
