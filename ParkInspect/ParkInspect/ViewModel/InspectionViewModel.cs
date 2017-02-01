@@ -4,6 +4,7 @@ using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
@@ -23,15 +24,30 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class InspectionViewModel : ViewModelBase, ICreateUpdatePopup
     {
-        public Inspection Data;
+        private Inspection _data;
+        public Inspection Data
+        {
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = value;
+                updateFormButtonText();
+                if (_data != null)
+                {
+                    isSaved = true;
+                }
+            }
+        }
 
 
-        // TODO Global Data
         public ObservableCollection<Inspection> Inspections { get; set; }
         public ObservableCollection<Parkinglot> Parkinglots { get; set; }
         public ObservableCollection<Form> Forms { get; set; }
-        public ObservableCollection<Employee> Inspectors { get; set; }
         public ObservableCollection<State> States { get; set; }
+        public ObservableCollection<Employee> Inspectors { get; set; }
 
         public Employee SelectedInspector { get; set; }
         public Employee SelectedAssignedInspector { get; set; }
@@ -55,7 +71,7 @@ namespace ParkInspect.ViewModel
 
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
-
+        
         private string _fillFormText;
         public string FillFormText
         {
@@ -69,7 +85,7 @@ namespace ParkInspect.ViewModel
                 RaisePropertyChanged("FillFormText");
             }
         }
-
+        
         public DateTime? BoundryStartDate
         {
             get { return _boundryStartDate; }
@@ -203,7 +219,7 @@ namespace ParkInspect.ViewModel
             {
                 isSaved = false;
             }
-            Data = data ?? new Inspection();
+            _data = data ?? new Inspection();
 
             _service = new InspectionService(context);
             _popupManager = popupManager;
@@ -218,7 +234,7 @@ namespace ParkInspect.ViewModel
             UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
             AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
             SearchFormCommand = new RelayCommand(SearchCommand);
-
+            
             States = new ObservableCollection<State>(_service.GetAll<State>());
             Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
             Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
@@ -253,14 +269,14 @@ namespace ParkInspect.ViewModel
                     //_popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst invullen", new FormPopup(), null);
                     ServiceLocator.Current.GetInstance<FormViewModel>().createForm(Data);
                     ServiceLocator.Current.GetInstance<FormViewModel>().saveForm(true);
-                    //throw new Exception();
+                    updateFormButtonText();
                 }
             }
         }
 
         public async void FillForm()
         {   
-            if (Data == null || Data.Inspection1 == null || !isSaved)
+            if (Data == null || !isSaved)
             {
                 ServiceLocator.Current.GetInstance<DialogManager>().ShowMessage("Vragenlijst", "Gelieve eerst de inspectie op te slaan voor aanmaken vragenlijst.");
                 return;
@@ -283,11 +299,22 @@ namespace ParkInspect.ViewModel
         {
             FormViewModel formViewModel = ServiceLocator.Current.GetInstance<FormViewModel>();
             formViewModel.createForm(Data);
+            //LoadInspector();
         }
 
+        // TODO BOB
         private void SearchCommand()
         {
             //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(),null);
+        }
+
+        private void LoadInspector()
+        {
+            // TODO Automatic injection without Current.GetInstance
+            Inspectors = new ObservableCollection<Employee>(ServiceLocator.Current.GetInstance<GlobalViewModel>().Employees
+                .Where(x => x.role == "Inspector")
+                .OrderBy(x => x.firstname)
+                );
         }
 
         private void AssignInspector()
@@ -301,13 +328,15 @@ namespace ParkInspect.ViewModel
             Inspectors.Add(SelectedAssignedInspector);
             AssignedInspectors.Remove(SelectedAssignedInspector);
 
-            Inspectors = new ObservableCollection<Employee>(Inspectors.OrderBy(x => x.firstname));
+            LoadInspector();
             RaisePropertyChanged(() => Inspectors);
         }
 
         private void Save()
         {
             PopupBeforeFinish();
+            isSaved = true;
+            updateFormButtonText();
         }
 
         private void EmptyForm()

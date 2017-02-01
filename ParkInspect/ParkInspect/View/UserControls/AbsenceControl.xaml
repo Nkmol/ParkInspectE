@@ -1,166 +1,139 @@
 ﻿<UserControl x:Class="ParkInspect.View.UserControls.AbsenceControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:validationrules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d" 
-             Height="600"
-             Width="1000"
-             DataContext="{Binding Absence, Source={StaticResource Locator}}">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="1000"
+             DataContext="{Binding Absence, Source={StaticResource Locator}}"
+             VerticalAlignment="Top">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-
-    <Grid>
-        <TabControl Margin="0,0,-0.2,0">
-            <TabItem Header="Overview" Visibility="{Binding Dashboard.TabStatus[10], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-                <ScrollViewer>
+    <TabControl>
+        <TabItem Header="Overview"
+                 Visibility="{Binding Dashboard.TabStatus[10], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <UniformGrid Rows="1" Grid.Row="0">
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op datum"
+                             materialDesign:HintAssist.IsFloating="True" Margin="0,3"
+                             Text="{Binding StartDateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op einddatum"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding EndDateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op voornaam"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding SurnameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Zoek op achternaam"
+                             materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
+                             Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                </UniformGrid>
+                <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}"
+                          IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Start Datum" Width="1*" Binding="{Binding start}" />
+                        <DataGridTextColumn Header="Eind Datum" Width="1*" Binding="{Binding end}" />
+                        <DataGridTextColumn Header="Voornaam" Width="1*" Binding="{Binding Employee.firstname}" />
+                        <DataGridTextColumn Header="Achternaam" Width="1*"
+                                            Binding="{Binding Employee.lastname}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Management">
+            <StackPanel>
+                <Label Content="Afwezigheid" FontSize="18" />
+                <Separator Margin="0,2,0,10" />
+                <Border Padding="10">
                     <StackPanel>
-
-                        <Label Name="SearchLabel">
-                            Search:
-                        </Label>
-
-                        <Grid Name="FilterGrid">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBox Grid.Column="0" Name="NameFilter" HorizontalAlignment="Stretch" Text="{Binding StartDateFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <TextBox Grid.Column="1" Name="EnddateFilter" HorizontalAlignment="Stretch" Text="{Binding EndDateFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <TextBox Grid.Column="2" Name="SurnameFilter" HorizontalAlignment="Stretch" Text="{Binding SurnameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <TextBox Grid.Column="3" Name="LastnameFilter" HorizontalAlignment="Stretch" Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        </Grid>
-                        <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}" IsReadOnly="True"  AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Start Datum" Width="1*" Binding="{Binding start}"  />
-                                <DataGridTextColumn Header="Eind Datum" Width="1*" Binding="{Binding end}" />
-                                <DataGridTextColumn Header="Voornaam" Width="1*" Binding="{Binding Employee.firstname}"/>
-                                <DataGridTextColumn Header="Achternaam" Width="1*" Binding="{Binding Employee.lastname}"/>
-
-                            </DataGrid.Columns>
-                        </DataGrid>
-
-                        <Button Command="{Binding DeleteAbsenceCommand}" x:Name="button1" Content="Verwijder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125"/>
-                        
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem  Header="Afwezigheid invoeren">
-                <Grid>
-                    <DockPanel Height="150" Width="255" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <StackPanel>
-                            
-                            
-
-                            
-                           
-                        </StackPanel>
-                    </DockPanel>
-                    <DockPanel Height="250" Width="480" VerticalAlignment="Top" HorizontalAlignment="left">
-                        <StackPanel Margin="0,0,0,-16.4">
-
-                            <Label x:Name="label1" Content="Begin Datum" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top"/>
-                    <!--    <DatePicker x:Name="beginDate" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
-                            <DatePicker.SelectedDate>
-                                <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </DatePicker.SelectedDate>
-                        </DatePicker> -->
-
-                            <controls:DateTimePicker x:Name="beginDatenew" Height="25" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top" Width="250">
+                        <Label Content="Begin Datum" />
+                        <controls:DateTimePicker Name="StartDate">
                             <controls:DateTimePicker.SelectedDate>
-                                    <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay">
                                     <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
 
-                            <Label x:Name="label2" Content="Eind Datum" HorizontalAlignment="Left" Margin="5,0,0,10"  VerticalAlignment="Top"/>
-
-                            <controls:DateTimePicker x:Name="endDatenew" Height="25" HorizontalAlignment="Left" Margin="5,0,0,10" VerticalAlignment="Top" Width="250">
+                        <Label Content="Eind Datum" />
+                        <controls:DateTimePicker Name="EndDate">
                             <controls:DateTimePicker.SelectedDate>
                                 <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                     <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                  ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </controls:DateTimePicker.SelectedDate>
                         </controls:DateTimePicker>
-                        <!--<DatePicker  SelectedDate="{Binding NewAbsence.end}">-->
-                      <!--  <DatePicker x:Name="endDate" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
-                            <DatePicker.SelectedDate>
-                                <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </DatePicker.SelectedDate>
-                        </DatePicker> -->
-                        <DockPanel>
-                                <Label x:Name="label3" Content="Medewerker" Margin="5,0,0,10"/>
-                                <ComboBox Name="EmployeeBox" ItemsSource="{Binding Employees}" SelectedValue="{Binding SelectedEmployee}" DisplayMemberPath="firstname" HorizontalAlignment="Left" Margin="0,0,0,10" Width="250">
+                        <AdornerDecorator>
+                            <ComboBox ItemsSource="{Binding Global.Employees, Source={StaticResource Locator}}"
+                                      materialDesign:HintAssist.Hint="Selecteer een medewerker"
+                                      materialDesign:HintAssist.IsFloating="True"
+                                      SelectedValue="{Binding SelectedAbsence.Employee}" DisplayMemberPath="firstname"
+                                      Name="CbEmployee">
                                 <ComboBox.Text>
                                     <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
+                                            <validationrules:IsNotEmptyValidationRule
+                                                ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </ComboBox.Text>
                             </ComboBox>
-
-
-                            <TextBlock DataContext="{Binding Absence, Source={StaticResource Locator}}" Text="{Binding Notification, Mode=TwoWay}"></TextBlock>
-                        </DockPanel>
-
-
-
-                            <Button Command="{Binding ResetFieldsCommand}" x:Name="Button"  Content="Deselecteren" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" Margin="5,0,0,10"  />
-                            <Button Command="{Binding SaveNewAbsenceCommand}" x:Name="Button1"  Content="Voeg toe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="5,0,0,10"  >
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="IsEnabled" Value="false" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding (Validation.HasError), ElementName=EmployeeBox}" Value="false" />
-                                                <Condition Binding="{Binding (Validation.HasError), ElementName=beginDatenew}" Value="false"/>
-                                                <Condition Binding="{Binding (Validation.HasError), ElementName=endDatenew}" Value="false"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="IsEnabled" Value="true" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-
-                        </Button>
-
-
+                        </AdornerDecorator>
+                        <StackPanel Margin="0,10,0,0">
+                            <UniformGrid Rows="1">
+                                <Button Command="{Binding SaveNewAbsenceCommand}" Margin="5" Content="Opslaan">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                            <Setter Property="IsEnabled" Value="false" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition
+                                                            Binding="{Binding (Validation.HasError), ElementName=CbEmployee}"
+                                                            Value="false" />
+                                                        <Condition
+                                                            Binding="{Binding (Validation.HasError), ElementName=StartDate}"
+                                                            Value="false" />
+                                                        <Condition
+                                                            Binding="{Binding (Validation.HasError), ElementName=EndDate}"
+                                                            Value="false" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="true" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Command="{Binding DeleteAbsenceCommand}" Content="Verwijderen" Margin="5" />
+                            </UniformGrid>
+                            <Button Command="{Binding ResetFieldsCommand}" Margin="5" Content="Scherm legen" />
+                        </StackPanel>
                     </StackPanel>
-                   </DockPanel>
-                </Grid>
-            </TabItem>
-
-
-        </TabControl>
-    </Grid>
+                </Border>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>

@@ -258,9 +258,6 @@ namespace ParkInspect.ViewModel
             syncCommand = new RelayCommand(synchroniser.synchronise);
         }
 
-      
-
-
         public void ChangeAuthorization(Role role)
         {
             PossibleRoles = _employeeService.GetAllRoles().ToList();
@@ -284,22 +281,17 @@ namespace ParkInspect.ViewModel
             }
         }
 
-
         private void ChangeAuthorizationToEmployee()
         {
             ShowAllTabs();
 
             TabStatus[6] = false;
-            TabStatus[7] = false;
-            
-
+            TabStatus[7] = false;          
         }
-
 
         private void ChangeAuthorizationToManager()
         {
             ShowAllTabs();
-
         }
 
 
@@ -322,7 +314,6 @@ namespace ParkInspect.ViewModel
                 TabStatus[i] = true;
             }
         }
-
 
         private void ShowDefaultTabs()
         {
@@ -350,7 +341,5 @@ namespace ParkInspect.ViewModel
             ShowAbsence = false;
         }
         */
-
-
     }
 }

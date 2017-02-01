@@ -16,7 +16,7 @@ namespace ParkInspect.Model.ValidationRules
             bool isEmail = 
                 Regex.IsMatch(Convert.ToString(value), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
 
-            return isEmail ? new ValidationResult(true, null) : new ValidationResult(false, "Geen geldige email!");
+            return isEmail ? new ValidationResult(true, null) : new ValidationResult(false, "Voer een geldige email!");
 
         }
     }

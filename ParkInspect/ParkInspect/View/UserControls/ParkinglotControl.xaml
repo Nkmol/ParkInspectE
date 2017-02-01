@@ -18,52 +18,46 @@
              VerticalAlignment="Top">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convertor:VisibilityConverter x:Key="VisibilityConverter"/>
+            <convertor:VisibilityConverter x:Key="VisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl Name="Tabs">
+    <TabControl>
         <TabItem Header="Overzicht"
                  Visibility="{Binding Dashboard.TabStatus[23], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}">
-            <Grid Margin="0">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <!-- Datagrid row -->
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <UniformGrid Grid.Row="1" Name="FilterGrid" Rows="1">
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in naam" Grid.Column="0" Name="NameFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                <UniformGrid Grid.Row="0" Rows="1">
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in naam" materialDesign:HintAssist.IsFloating="True"
+                             Margin="0,3"
                              Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode" Grid.Column="1" Name="ZipFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in postcode"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding ZipFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer" Grid.Column="2" Name="NumberFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in nummer"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding NumberFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in straatnaam" Grid.Column="3" Name="StreetnameFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in straatnaam"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding StreetnameFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in regio" Grid.Column="4" Name="RegionFilter"
-                             Margin="0,0,15,10"
-                             HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in regio" materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding RegionFilter, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking" Grid.Column="5"
-                             Name="ClarificationFilter"
-                             Margin="0,0,5,10" HorizontalAlignment="Stretch"
+                    <TextBox materialDesign:HintAssist.Hint="Zoek in verduidelijking"
+                             materialDesign:HintAssist.IsFloating="True"
+                             Margin="5,3,0,3"
                              Text="{Binding ClarificationFilter, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
-                <DataGrid Grid.Row="2" Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Parkinglots}"
-                          SelectedItem="{Binding SelectedParkinglot}" IsReadOnly="True" MouseDoubleClick="Update"
-                          VerticalScrollBarVisibility="Visible">
+                <DataGrid ItemsSource="{Binding Parkinglots}" SelectedItem="{Binding SelectedParkinglot}"
+                          IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Naam" Width="1*" Binding="{Binding Name}" />
                         <DataGridTextColumn Header="Postcode" Width="1*" Binding="{Binding Zipcode}" />
@@ -73,154 +67,164 @@
                         <DataGridTextColumn Header="Verduidelijking" Width="1*" Binding="{Binding Clarification}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Grid.Row="3" x:Name="ExportButton" Content="Exporteer Data" PreviewMouseDown="Unselect"
-                        Command="{Binding ExportCommand, UpdateSourceTrigger=PropertyChanged}"
-                        HorizontalAlignment="Left"
-                        Margin="0,10,0,0" VerticalAlignment="Top" Width="130" />
             </Grid>
         </TabItem>
         <TabItem Header="Management"
                  Visibility="{Binding Dashboard.TabStatus[24], Converter={StaticResource VisibilityConverter}, Mode=TwoWay, Source= {StaticResource Locator}}"
                  DataContext="{Binding SelectedParkinglot}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="173*" />
-                    <ColumnDefinition Width="821*" />
-                </Grid.ColumnDefinitions>
-                <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="255" Height="279"
-                           Margin="100,0,0,0" Grid.ColumnSpan="2">
-                    <StackPanel>
-                        <Label Content="Naam" />
-                        <TextBox x:Name="NameBox" Margin="5,0,0,10" Width="250">
-                            <TextBox.Text>
-                                <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <Label Content="Postcode" />
-                        <TextBox x:Name="ZipBox" Margin="5,0,0,10" Width="250">
-                            <TextBox.Text>
-                                <Binding Path="FormZipcode" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
-                                        <validationrules:IsValidZipCodeValidationRule
-                                            ValidationStep="ConvertedProposedValue"
-                                            ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-
-                        <Label Content="Regio" />
-                        <ComboBox x:Name="RegionBox" ItemsSource="{Binding Regions}" DisplayMemberPath="name"
-                                  SelectedValuePath="Name"
-                                  Width="255" Margin="5,0,0,10">
-                            <ComboBox.Text>
-                                <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </ComboBox.Text>
-                        </ComboBox>
-
-                        <Label Content="Straatnaam" />
-                        <TextBox x:Name="StreetnameBox" Margin="5,0,0,10" Width="250">
-                            <TextBox.Text>
-                                <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
-                                        <validationrules:IsValidNameValidationRule
-                                            ValidationStep="ConvertedProposedValue"
-                                            ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="255" Height="250"
-                           Margin="0,0,100,0" Grid.Column="1">
-                    <StackPanel>
-                        <Label x:Name="NumberLabel" Content="Nummer" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <TextBox x:Name="NumberBox" Width="255" Margin="5,0,0,10">
-                            <TextBox.Text>
-                                <Binding Path="FormNumber" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:StringToIntValidationRule ValidationStep="RawProposedValue"
-                                                                                   ValidatesOnTargetUpdated="True" />
-                                        <validationrules:IsPositiveNumberRule ValidationStep="ConvertedProposedValue"
-                                                                              ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <Label Content="Verduidelijking" />
-                        <TextBox x:Name="ClarificationBox" HorizontalAlignment="Left" Height="121" TextWrapping="Wrap"
-                                 AcceptsReturn="True"
-                                 VerticalAlignment="Top" Width="255"
-                                 Margin="5,0,0,0">
-                            <TextBox.Text>
-                                <Binding Path="FormClarification" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel Grid.Column="1">
-                    <StackPanel Margin="100,255,100,0" Orientation="Horizontal">
-                        <Label x:Name="MessageLabel" Content="" Width="300" Height="50" VerticalAlignment="Top" />
-                        <Button x:Name="SaveButton2"
-                                Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
-                                CommandParameter="{Binding DataContext, ElementName=Window}" Content="Opslaan"
-                                VerticalAlignment="Top" Margin="-80,0,10,0" Width="120">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="IsEnabled" Value="false" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition
-                                                    Binding="{Binding ElementName=ZipBox, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                                <Condition
-                                                    Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                                <Condition
-                                                    Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                                <Condition
-                                                    Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                                <Condition
-                                                    Binding="{Binding ElementName=ClarificationBox, Path=(Validation.HasError)}"
-                                                    Value="false" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="IsEnabled" Value="true" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button x:Name="NewButton" Content="Bewerken" Command="{Binding EditCommand}"
-                                VerticalAlignment="Top" Width="120" Margin="0,0,10,0" />
-                        <Button x:Name="DeselectButton" Content="Deselecteren" HorizontalAlignment="Left"
-                                Margin="0,0,0,0" Command="{Binding DataContext.NewCommand, ElementName=Window}"
-                                VerticalAlignment="Top" Width="120" />
-                    </StackPanel>
-                </DockPanel>
-            </Grid>
+            <StackPanel>
+                <Label Content="Parkeerplaats" FontSize="18" />
+                <Separator Margin="0,2,0,10" />
+                <Border Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <AdornerDecorator>
+                                <TextBox x:Name="NameBox" materialDesign:HintAssist.Hint="Parkeerplaats naam"
+                                         materialDesign:HintAssist.IsFloating="True">
+                                    <TextBox.Text>
+                                        <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
+                            <AdornerDecorator>
+                                <TextBox materialDesign:HintAssist.Hint="Parkeerplaats postcode"
+                                     materialDesign:HintAssist.IsFloating="True" Name="ZipBox">
+                                    <TextBox.Text>
+                                        <Binding Path="FormZipcode" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                                <validationrules:IsValidZipCodeValidationRule
+                                                    ValidationStep="ConvertedProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
+                            <AdornerDecorator>
+                                <ComboBox Name="RegionBox" ItemsSource="{Binding Global.Regions, Source={StaticResource Locator}}" DisplayMemberPath="name"
+                                      SelectedValuePath="Name" materialDesign:HintAssist.Hint="Parkeerplaats regio"
+                                      materialDesign:HintAssist.IsFloating="True">
+                                    <ComboBox.Text>
+                                        <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
+                            </AdornerDecorator>
+                            <UniformGrid Rows="1">
+                                <AdornerDecorator>
+                                    <TextBox Name="StreetnameBox"  materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
+                                         materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
+                                        <TextBox.Text>
+                                            <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:IsNotEmptyValidationRule
+                                                        ValidationStep="RawProposedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                    <validationrules:IsValidNameValidationRule
+                                                        ValidationStep="ConvertedProposedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </AdornerDecorator>
+                                <AdornerDecorator>
+                                <TextBox Name="NumberBox" materialDesign:HintAssist.Hint="Parkeerplaats straatnummer"
+                                         materialDesign:HintAssist.IsFloating="True">
+                                    <TextBox.Text>
+                                        <Binding Path="FormNumber" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:StringToIntValidationRule
+                                                    ValidationStep="RawProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
+                                                <validationrules:IsPositiveNumberRule
+                                                    ValidationStep="ConvertedProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                </AdornerDecorator>
+                            </UniformGrid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <AdornerDecorator>
+                                <TextBox Name="ClarificationBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                         AcceptsReturn="True" MaxHeight="178"
+                                         materialDesign:HintAssist.Hint="Parkeerplaats verduidelijking"
+                                         materialDesign:HintAssist.IsFloating="True">
+                                    <TextBox.Text>
+                                        <Binding Path="FormClarification" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
+                                                                                          ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                            <Button x:Name="SaveButton2"
+                                    Command="{Binding SaveCommand, UpdateSourceTrigger=PropertyChanged}"
+                                    CommandParameter="{Binding DataContext, ElementName=Window}" Content="Opslaan"
+                                    Margin="0,10,0,0">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="IsEnabled" Value="false" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                        Binding="{Binding ElementName=ZipBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=NumberBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=RegionBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=ClarificationBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                    <Condition
+                                                        Binding="{Binding ElementName=StreetnameBox, Path=(Validation.HasError)}"
+                                                        Value="false" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="true" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name="DeselectButton" Content="Scherm legen"
+                                    Command="{Binding DataContext.NewCommand, ElementName=Window}" Margin="0,10,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
         </TabItem>
     </TabControl>
 </UserControl>

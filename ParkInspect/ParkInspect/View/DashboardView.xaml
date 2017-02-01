@@ -40,7 +40,7 @@
             </dragablz:TabablzControl.InterTabController>
         
             <TabItem Visibility="{Binding TabStatus[0], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Klanten">
-                <userControls1:CustomerControl />
+                <userControls1:ClientControl />
             </TabItem>
             <TabItem Visibility="{Binding TabStatus[1], Converter={StaticResource VisibilityConverter}, Mode=TwoWay}"  Header="Parkeerplaatsen">
                 <userControls1:ParkeerplaatsControl />
@@ -64,7 +64,7 @@
                 <userControls1:AbsenceControl />
             </TabItem>
             <TabItem Header="Contactpersonen">
-                <userControls1:ContactpersoonControl />
+                <userControls1:ContactpersonControl />
 
             </TabItem>
             <TabItem Header="Regio's">
