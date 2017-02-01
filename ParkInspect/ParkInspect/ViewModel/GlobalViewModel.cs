@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using ParkInspect.Repository;
 using ParkInspect.Services;
@@ -84,10 +79,10 @@ namespace ParkInspect.ViewModel
             set { _employees = value; }
         }
 
-        private ObservableCollection<Region> _regions;
-        public ObservableCollection<Region> Regions
+        private ObservableCollection<ParkInspect.Region> _regions;
+        public ObservableCollection<ParkInspect.Region> Regions
         {
-            get { return _regions ?? (_regions = new ObservableCollection<Region>(_serivce.GetAll<Region>())); }
+            get { return _regions ?? (_regions = new ObservableCollection<ParkInspect.Region>(_serivce.GetAll<ParkInspect.Region>())); }
             set { _regions = value; }
         }
 

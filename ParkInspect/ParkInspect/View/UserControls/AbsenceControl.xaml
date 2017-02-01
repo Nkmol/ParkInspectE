@@ -9,9 +9,10 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
+             x:Name="Window"
              d:DesignHeight="600"
              d:DesignWidth="1000"
-             DataContext="{Binding Absence, Source={StaticResource Locator}}"
+             DataContext="{Binding Absences, Source={StaticResource Locator}}"
              VerticalAlignment="Top">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -33,30 +34,29 @@
                 <UniformGrid Rows="1" Grid.Row="0">
                     <TextBox materialDesign:HintAssist.Hint="Zoek op datum"
                              materialDesign:HintAssist.IsFloating="True" Margin="0,3"
-                             Text="{Binding StartDateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding StartFilter, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox materialDesign:HintAssist.Hint="Zoek op einddatum"
                              materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
-                             Text="{Binding EndDateFilter, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding EndFilter, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox materialDesign:HintAssist.Hint="Zoek op voornaam"
                              materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
-                             Text="{Binding SurnameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding FirstnameFilter, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox materialDesign:HintAssist.Hint="Zoek op achternaam"
                              materialDesign:HintAssist.IsFloating="True" Margin="5,3,0,3"
-                             Text="{Binding LastNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding LastnameFilter, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
                 <DataGrid SelectedItem="{Binding SelectedAbsence}" ItemsSource="{Binding Absences}"
                           IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Start Datum" Width="1*" Binding="{Binding start}" />
-                        <DataGridTextColumn Header="Eind Datum" Width="1*" Binding="{Binding end}" />
+                        <DataGridTextColumn Header="Start Datum" Width="1*" Binding="{Binding Start}" />
+                        <DataGridTextColumn Header="Eind Datum" Width="1*" Binding="{Binding End}" />
                         <DataGridTextColumn Header="Voornaam" Width="1*" Binding="{Binding Employee.firstname}" />
-                        <DataGridTextColumn Header="Achternaam" Width="1*"
-                                            Binding="{Binding Employee.lastname}" />
+                        <DataGridTextColumn Header="Achternaam" Width="1*" Binding="{Binding Employee.lastname}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
-        <TabItem Header="Management">
+        <TabItem Header="Management" DataContext="{Binding SelectedAbsence}">
             <StackPanel>
                 <Label Content="Afwezigheid" FontSize="18" />
                 <Separator Margin="0,2,0,10" />
@@ -65,8 +65,7 @@
                         <Label Content="Begin Datum" />
                         <controls:DateTimePicker Name="StartDate">
                             <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="NewAbsence.start" UpdateSourceTrigger="PropertyChanged"
-                                         Mode="TwoWay">
+                                <Binding Path="FormStart"  UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
@@ -78,7 +77,7 @@
                         <Label Content="Eind Datum" />
                         <controls:DateTimePicker Name="EndDate">
                             <controls:DateTimePicker.SelectedDate>
-                                <Binding Path="NewAbsence.end" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding Path="FormEnd"  UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
@@ -90,10 +89,10 @@
                             <ComboBox ItemsSource="{Binding Global.Employees, Source={StaticResource Locator}}"
                                       materialDesign:HintAssist.Hint="Selecteer een medewerker"
                                       materialDesign:HintAssist.IsFloating="True"
-                                      SelectedValue="{Binding SelectedAbsence.Employee}" DisplayMemberPath="firstname"
+                                      SelectedItem="{Binding FormEmployee}" DisplayMemberPath="firstname"
                                       Name="CbEmployee">
                                 <ComboBox.Text>
-                                    <Binding Path="SelectedEmployee" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="FormEmployee" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validationrules:IsNotEmptyValidationRule
                                                 ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />
@@ -104,7 +103,7 @@
                         </AdornerDecorator>
                         <StackPanel Margin="0,10,0,0">
                             <UniformGrid Rows="1">
-                                <Button Command="{Binding SaveNewAbsenceCommand}" Margin="5" Content="Opslaan">
+                                <Button Command="{Binding SaveCommand}" Margin="5" Content="Opslaan" CommandParameter="{Binding DataContext, ElementName=Window}">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                             <Setter Property="IsEnabled" Value="false" />
@@ -127,9 +126,9 @@
                                         </Style>
                                     </Button.Style>
                                 </Button>
-                                <Button Command="{Binding DeleteAbsenceCommand}" Content="Verwijderen" Margin="5" />
+                                <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding DataContext, ElementName=Window}" Content="Verwijderen" Margin="5" IsEnabled="{Binding CanDelete}" />
                             </UniformGrid>
-                            <Button Command="{Binding ResetFieldsCommand}" Margin="5" Content="Scherm legen" />
+                            <Button DataContext="{Binding Absences, Source={StaticResource Locator}}" Command="{Binding NewCommand}" Margin="5" Content="Scherm legen" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
