@@ -177,6 +177,10 @@ namespace ParkInspect.ViewModel
 
         public void loadForm(CachedForm form)
         {
+            if (View == null)
+            {
+                new FormPopup();
+            }
             cachedForm = form;
             View.clear();
             int i = 0;
@@ -185,7 +189,7 @@ namespace ParkInspect.ViewModel
                 View.addFormField(field, i, false);
                 i++;
             }
-            selectedTab = 0;
+            //selectedTab = 0;
         }
 
         public void saveForm(bool isNew = false)
@@ -256,7 +260,7 @@ namespace ParkInspect.ViewModel
 
         public CachedValue(string sourceValue)
         {
-            boolvalue = sourceValue.Replace("[Boolean]", "") == "true";
+            boolvalue = sourceValue.Replace("[Boolean]", "") == "True";
             stringvalue = sourceValue.Replace("[String]", "");
 
             int intvalue;
