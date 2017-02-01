@@ -187,6 +187,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private bool isSaved;
+
         #endregion
 
         [PreferredConstructor]
@@ -196,6 +198,11 @@ namespace ParkInspect.ViewModel
 
         public InspectionViewModel(IRepository context, PopupManager popupManager, Inspection data = null)
         {
+            isSaved = true;
+            if (data == null)
+            {
+                isSaved = false;
+            }
             Data = data ?? new Inspection();
 
             _service = new InspectionService(context);
@@ -205,13 +212,6 @@ namespace ParkInspect.ViewModel
             ResetCommand = new RelayCommand(EmptyForm);
             SaveCommand = new RelayCommand(Save);
             FillFormCommand = new RelayCommand(FillForm);
-            if (Data.Form == null)
-            {
-                FillFormText = "Vragenlijst aanmaken";
-            } else
-            {
-                FillFormText = "Vragenlijst inzien";
-            }
 
             AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
 
@@ -224,6 +224,24 @@ namespace ParkInspect.ViewModel
             Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
             Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
             Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+            updateFormButtonText();
+        }
+
+        public void updateFormButtonText()
+        {
+            if (Data.Form == null)
+            {
+                FillFormText = "Vragenlijst aanmaken";
+            } else
+            {
+                if (Data.Form.Formfields != null && Data.Form.Formfields.ElementAtOrDefault(0) != null && Data.Form.Formfields.ElementAtOrDefault(0).value != null)
+                {
+                    FillFormText = "Vragenlijst inzien";
+                } else
+                {
+                    FillFormText = "Vragenlijst invullen";
+                }
+            }
         }
 
         private bool templatePopupCompleted
@@ -232,15 +250,21 @@ namespace ParkInspect.ViewModel
             {
                 if (value == true) {
                     //SimpleIoc.Default.GetInstance<DashboardViewModel>().SelectedTab = 3;
-                    _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst invullen", new FormPopup(), null);
+                    //_popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst invullen", new FormPopup(), null);
                     ServiceLocator.Current.GetInstance<FormViewModel>().createForm(Data);
+                    ServiceLocator.Current.GetInstance<FormViewModel>().saveForm(true);
                     //throw new Exception();
                 }
             }
         }
 
         public async void FillForm()
-        {
+        {   
+            if (Data == null || Data.Inspection1 == null || !isSaved)
+            {
+                ServiceLocator.Current.GetInstance<DialogManager>().ShowMessage("Vragenlijst", "Gelieve eerst de inspectie op te slaan voor aanmaken vragenlijst.");
+                return;
+            }
             if (_popupManager == null)
             {
                 _popupManager = SimpleIoc.Default.GetInstance<PopupManager>();

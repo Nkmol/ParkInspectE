@@ -147,10 +147,10 @@ namespace ParkInspect.ViewModel
                     value = new CachedValue(field.value)
                 };
                 cachedForm.fields.Add(cachedField);
-                View.addFormField(cachedField, i, true);
+                View.addFormField(cachedField, i, false);
                 i++;
             }
-            selectedTab = 0;
+            //selectedTab = 0;
         }
 
         public void createForm(Inspection inspection,Template template)
@@ -160,7 +160,7 @@ namespace ParkInspect.ViewModel
             form.Template = template;
             CachedForm cachedForm = service.createFormFromTemplate(template);
             loadForm(cachedForm);
-            SelectedTab = 0;
+            //SelectedTab = 0;
         }
 
         public void createForm(Inspection inspection)
@@ -188,15 +188,20 @@ namespace ParkInspect.ViewModel
             selectedTab = 0;
         }
 
-        public void saveForm()
+        public void saveForm(bool isNew = false)
         {
             Debug.WriteLine("SAVE FORM");
             if (cachedForm == null)
             {
                 return;
             }
-            service.SaveForm(inspection,cachedForm);
+            service.SaveForm(inspection,cachedForm,isNew);
             _dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
+        }
+
+        public void saveForm()
+        {
+            saveForm(false);
         }
 
         public void addAttachment()

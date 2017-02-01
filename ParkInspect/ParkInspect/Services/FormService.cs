@@ -11,12 +11,11 @@ namespace ParkInspect.Services
 {
     class FormService
     {
-        public IRepository central;
-        private EntityFrameworkRepository<ParkInspectEntities> local;
+        public IRepository repo;
 
-        public FormService(IRepository central)
+        public FormService(IRepository repo)
         {
-            this.central = central;
+            this.repo = repo;
         }
 
         public CachedForm createFormFromTemplate(Template fromTemplate)
@@ -39,10 +38,9 @@ namespace ParkInspect.Services
             return cachedForm;
         }
 
-        public void SaveForm(Inspection inspection,CachedForm cachedForm)
+        public void SaveForm(Inspection inspection,CachedForm cachedForm,bool isNew)
         {
             Form form = new Form();
-            inspection.Form = form;
             form.template_id = cachedForm.template_id;
             foreach(string attachment in cachedForm.attachments)
             {
@@ -64,20 +62,22 @@ namespace ParkInspect.Services
                 Debug.WriteLine(field.field_title + " : " + field.value.ToString() + "(" + field.value.type + ")");
                 form.Formfields.Add(formField);
             }
-            //if (central.IsConnected())
-            //{
-                central.Create(form);
-                central.Save();
-            /*}
-            else
+            if (isNew)
             {
-                using (var context = new ParkInspectLocalEntities())
+                inspection.Form = form;
+                repo.Create(form);
+                repo.Save();
+            } else
+            {
+                Form oldForm = repo.Get<Inspection>(x => x.id == inspection.id).First().Form;
+                foreach (Formfield oldFormField in oldForm.Formfields)
                 {
-                    context.Forms.Add(form);
-                    context.SaveChanges();
+                    oldFormField.value = (form.Formfields.First(x => x.field_title == oldFormField.field_title).value);
+                    Debug.WriteLine(oldFormField.value);
                 }
+                Debug.WriteLine("IS NOT NEW");
+                repo.Save();
             }
-            */
         }
 
     }
