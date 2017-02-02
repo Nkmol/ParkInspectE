@@ -1,4 +1,3 @@
-using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
@@ -103,11 +102,6 @@ namespace ParkInspect.ViewModel.Region
 
         private void Delete(RegionOverviewViewModel overview)
         {
-            var dialogResult = MessageBox.Show("Weet u zeker dat u deze regio wilt verwijderen?", "Verwijderen",
-                MessageBoxButtons.YesNo);
-
-            if (dialogResult != DialogResult.Yes) return;
-
             Message = Service.Delete(Data) ? "De regio is verwijderd!" : "Er is iets misgegaan tijdens het verwijderen.";
 
             _dialog.ShowMessage("Regio verwijderen", Message);

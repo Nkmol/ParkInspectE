@@ -20,7 +20,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         private readonly Employee Data;
 
-        public bool InspectorSelected => FormRole?.role1 == "Inspector";
+        public bool InspectorSelected => FormRole?.role1 == "Inspecteur";
 
         private readonly DialogManager _dialog;
 
@@ -58,7 +58,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
             set { Data.Role1 = value; }
         }
 
-        public Region Region
+        public ParkInspect.Region Region
         {
             get { return Data.Region; }
             set { Data.Region = value; }
@@ -141,7 +141,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
             }
         }
 
-        public Region FormRegion { get; set; }
+        public ParkInspect.Region FormRegion { get; set; }
 
         public Employee_Status FormEmployeeStatus { get; set; }
 
@@ -206,6 +206,11 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         private void Save(EmployeeOverviewViewModel overview)
         {
+            if (FormRegion == null && FormRole.role1 == "Inspecteur")
+            {
+                _dialog.ShowMessage("Personeel toevoegen/aanpassen", "U heeft de rol 'Inspecteur' geselecteerd maar geen regio opgegeven!");
+               return;
+            }
             if (Data.id <= 0)
                 Add(overview);
             else
@@ -225,16 +230,16 @@ namespace ParkInspect.ViewModel.EmployeeVM
                 {
                     true, new List<string>()
                     {
-                        "Retired",
-                        "Terminated"
+                        "gepensioneerd",
+                        "beëindigde dienst"
                     }
                 },
                 {
                     false, new List<string>()
                     {
-                        "Available",
-                        "On Non-Pay leave",
-                        "Suspended",
+                        "beschikbaar",
+                        "onbetaald verlof",
+                        "geschorst",
                         null
                     }
                 }
@@ -273,7 +278,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
             {
                 _dialog.ShowMessage("Personeel toevoegen", notification);
                 return;
-            }                
+            }        
 
             Message = Service.Add(Data)
                     ? "Het personeelslid is toegevoegd!"
