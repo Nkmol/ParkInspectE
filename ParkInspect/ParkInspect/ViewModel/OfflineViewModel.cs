@@ -20,7 +20,8 @@ namespace ParkInspect.ViewModel
     public class OfflineViewModel : ViewModelBase
     {
         public InspectionService service;
-        public InspectionViewModel Inspections { get; set; }
+        //public InspectionViewModel Inspections { get; set; }
+        public GlobalViewModel Global { get; set; }
         public ObservableCollection<String> directionItems { get; set; }
         public ObservableCollection<Direction> _directions;
         private PopupManager _popupManager;
@@ -248,7 +249,7 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-        public OfflineViewModel(IRepository context, PopupManager popupManager, DialogManager dialog, InspectionViewModel inspections)
+        public OfflineViewModel(IRepository context, PopupManager popupManager, DialogManager dialog, GlobalViewModel global) //InspectionViewModel inspections)
         {
             Directory.CreateDirectory(runpath + "/directions");
             _dialog = dialog;
@@ -264,7 +265,8 @@ namespace ParkInspect.ViewModel
             CleanFiles();
             LoadDirections();
             _popupManager = popupManager;
-            Inspections = inspections;
+            //Inspections = inspections;
+            Global = global;
         }
 
         private void ShowTemplateView()
@@ -275,14 +277,17 @@ namespace ParkInspect.ViewModel
                 return;
             }
 
-
             var id = int.Parse(_inspection_id);
 
-            var inspection = Inspections.Inspections.ToList().FirstOrDefault(inspec => inspec.id == id);
+            var inspection = Global.Inspections.ToList().FirstOrDefault(inspec => inspec.id == id);
 
             if( inspection == null )
             {
                 _dialog.ShowMessage("Fout", "Kies een geldige inspectie!");
+            }
+            else if (inspection.Form == null)
+            {
+                _dialog.ShowMessage("Fout", "De gekozen inspectie heeft geen vragenlijst");
             }
             else {
                 _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst inzien", new FormPopup(), null);

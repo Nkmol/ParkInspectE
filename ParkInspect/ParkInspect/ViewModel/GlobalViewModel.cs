@@ -66,7 +66,7 @@ namespace ParkInspect.ViewModel
         private ObservableCollection<Inspection> _inspections;
         public ObservableCollection<Inspection> Inspections
         {
-            get { return _inspections ?? (_inspections = new ObservableCollection<Inspection>(_serivce.GetAll<Inspection>())); }
+            get { return _inspections = new ObservableCollection<Inspection>(_serivce.GetAll<Inspection>()); }
             set { _inspections = value; }
         }
 
