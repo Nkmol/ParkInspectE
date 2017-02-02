@@ -96,14 +96,23 @@ namespace ParkInspect.ViewModel
         public void OpenDesignView()
         {
 
-            ReportDesignView view = new ReportDesignView();
-            view.Show();
+            var choice = _dialog.ShowConfirmationDialog("Waarschuwing", "Om een rapport te maken is kennis nodig met betrekking tot SSRS en Syncfusion. Weet u zeker dat u door wilt gaan?");
 
-            //Refresh on close
-            view.Closed += (sender, args) =>
+            if (choice)
             {
-                UpdateReports();
-            };
+                ReportDesignView view = new ReportDesignView();
+                view.Show();
+
+                //Refresh on close
+                view.Closed += (sender, args) =>
+                {
+                    UpdateReports();
+                    
+                };
+
+               
+            }
+            
 
         }
 

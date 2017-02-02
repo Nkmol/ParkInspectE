@@ -85,19 +85,21 @@ namespace ParkInspect.View.UserControls
             {
                 switch (i.state)
                 {
-                    case "Finished":
+                    case "voltooid":
                         addInspectionMarker(i, Brushes.Green);
                         break;
-                    case "In progress":
+                    case "in voortgang":
                         addInspectionMarker(i, Brushes.Orange);
                         break;
-                    case "Halted":
+                    case "onderbroken":
                         addInspectionMarker(i, Brushes.Red);
                         break;
-                    case "Unbegun":
+                    case "onbegonnen":
                         addInspectionMarker(i, Brushes.FloralWhite);
                         break;
-
+                    default:
+                        addInspectionMarker(i, Brushes.Black);
+                        break;
                 }
             }
         }
@@ -207,13 +209,9 @@ namespace ParkInspect.View.UserControls
             }
             if (comboBox.SelectedIndex == 1)
             {
-                initAbsences();
-            }
-            if (comboBox.SelectedIndex == 2)
-            {
                 initParkingLots();
             }
-            if (comboBox.SelectedIndex == 3)
+            if (comboBox.SelectedIndex == 2)
             {
                 initHeatMap();
             }

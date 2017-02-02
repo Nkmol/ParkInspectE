@@ -17,12 +17,14 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.AbsenceVM;
 using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.ClientVM;
 using ParkInspect.ViewModel.EmployeeVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
+using ParkInspect.ViewModel.Region;
 
 namespace ParkInspect.ViewModel
 {
@@ -66,11 +68,11 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
-            SimpleIoc.Default.Register<AbsenceViewModel>();
-            SimpleIoc.Default.Register<RegionViewModel>();
+            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<EmployeeOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
+            SimpleIoc.Default.Register<RegionOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
@@ -110,9 +112,9 @@ namespace ParkInspect.ViewModel
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
 
-        public AbsenceViewModel Absence => ServiceLocator.Current.GetInstance<AbsenceViewModel>();
+        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
 
-        public RegionViewModel Region => ServiceLocator.Current.GetInstance<RegionViewModel>();
+        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 

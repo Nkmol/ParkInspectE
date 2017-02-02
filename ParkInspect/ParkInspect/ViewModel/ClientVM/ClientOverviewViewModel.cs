@@ -6,17 +6,33 @@ using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using ParkInspect.ViewModel.AssignmentVM;
 
 namespace ParkInspect.ViewModel.ClientVM
 {
     public class ClientOverviewViewModel : ViewModelBase
     {
+        private readonly IRepository _context;
+        private readonly DialogManager _dialog;
         private readonly ClientService _service;
 
-        private ObservableCollection<ClientViewModel> Data { get; set; }
-
         private ClientViewModel _selectedClient;
+
+        public ClientOverviewViewModel(IRepository context, DialogManager dialog)
+        {
+            _context = context;
+            _dialog = dialog;
+            _service = new ClientService(context);
+
+            Data =
+                new ObservableCollection<ClientViewModel>(
+                    _service.GetAll<Client>().Select(x => new ClientViewModel(context, x, dialog)));
+            Clients = Data;
+
+            NewCommand = new RelayCommand(NewClient);
+            NewClient();
+        }
+
+        private ObservableCollection<ClientViewModel> Data { get; }
 
         public ObservableCollection<ClientViewModel> Clients { get; set; }
 
@@ -30,7 +46,29 @@ namespace ParkInspect.ViewModel.ClientVM
             }
         }
 
+        public RelayCommand NewCommand { get; set; }
+
+        public void NewClient()
+        {
+            SelectedClient = new ClientViewModel(_context, new Client(), _dialog);
+            RaisePropertyChanged();
+        }
+
+        private void UpdateFilter()
+        {
+            var builder = new FilterBuilder();
+            builder.Add("Name", NameFilter);
+            builder.Add("Phonenumber", PhoneFilter);
+            builder.Add("Email", EmailFilter);
+
+            var result = Data.Where(x => x.Like(builder.Get()));
+
+            Clients = new ObservableCollection<ClientViewModel>(result);
+            RaisePropertyChanged("Clients");
+        }
+
         #region Filter Properties
+
         private string _emailFilter;
         private string _nameFilter;
         private string _phoneFilter;
@@ -64,43 +102,7 @@ namespace ParkInspect.ViewModel.ClientVM
                 UpdateFilter();
             }
         }
+
         #endregion
-
-        public RelayCommand NewCommand { get; set; }
-
-        private readonly IRepository _context;
-        private readonly DialogManager _dialog;
-
-        public ClientOverviewViewModel(IRepository context, DialogManager dialog)
-        {
-            _context = context;
-            _dialog = dialog;
-            _service = new ClientService(context);
-
-            Data = new ObservableCollection<ClientViewModel>(_service.GetAll<Client>().Select(x => new ClientViewModel(context, x, dialog)));
-            Clients = Data;
-
-            NewCommand = new RelayCommand(NewClient);
-            NewClient();
-        }
-
-        public void NewClient()
-        {
-            SelectedClient = new ClientViewModel(_context, new Client(), _dialog);
-            RaisePropertyChanged();
-        }
-
-        private void UpdateFilter()
-        {
-            var builder = new FilterBuilder();
-            builder.Add("Name", NameFilter);
-            builder.Add("Phonenumber", PhoneFilter);
-            builder.Add("Email", EmailFilter);
-
-            var result = Data.Where(x => x.Like(builder.Get()));
-
-            Clients = new ObservableCollection<ClientViewModel>(result);
-            RaisePropertyChanged("Clients");
-        }
     }
 }

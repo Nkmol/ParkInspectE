@@ -1,9 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
-using ParkInspect.ViewModel.ClientVM;
 
 namespace ParkInspect.ViewModel.ContactpersonVM
 {
@@ -19,32 +17,22 @@ namespace ParkInspect.ViewModel.ContactpersonVM
             Service = new ContactpersonService(context);
             Data = data;
             SaveCommand = new RelayCommand<ContactpersonOverviewViewModel>(Save);
+            DeleteCommand = new RelayCommand<ContactpersonOverviewViewModel>(Delete);
             Reset();
-            DeleteContactpersonCommand = new RelayCommand(DeleteContactperson, CanDelete);
-
-            FillForm();
         }
 
-        public ClientViewModel ClientviewModel { get; set; }
-
-        private Contactperson Data { get; }
-
-        public ObservableCollection<Contactperson> Contactpersons { get; set; }
+        public Contactperson Data { get; }
 
         public RelayCommand<ContactpersonOverviewViewModel> SaveCommand { get; set; }
-        public RelayCommand DeleteContactpersonCommand { get; set; }
+        public RelayCommand<ContactpersonOverviewViewModel> DeleteCommand { get; set; }
 
         public string Message { get; set; }
+        public bool CanDelete => Data.id > 0;
 
         public void Reset()
         {
             FillForm();
-        }
-
-        private bool CanDelete()
-        {
-            return (Data != null) && (Data.id > 0);
-        }
+        }        
 
         private void SaveForm()
         {
@@ -66,8 +54,8 @@ namespace ParkInspect.ViewModel.ContactpersonVM
                 Add(overview);
             else
                 Edit();
-
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
+            
+            overview.NewContactperson();
         }
 
         private void Add(ContactpersonOverviewViewModel overview)
@@ -76,12 +64,15 @@ namespace ParkInspect.ViewModel.ContactpersonVM
 
             Data.client_id = Client.id;
 
-            Message = Service.Add(Data)
+            var rs = Service.Add(Data);
+
+            Message = rs
                 ? "De contactpersoon is toegevoegd!"
                 : "Er is iets misgegaan tijdens het toevoegen.";
             _dialog.ShowMessage("Contactpersoon toevoegen", Message);
 
-            overview.Contactpersons.Add(this);
+            if(rs)
+                overview.Contactpersons.Add(this);
         }
 
         private void Edit()
@@ -96,14 +87,16 @@ namespace ParkInspect.ViewModel.ContactpersonVM
             _dialog.ShowMessage("Contactpersoon bewerken", Message);
         }
 
-        private void DeleteContactperson()
+        private void Delete(ContactpersonOverviewViewModel overview)
         {
-            Message = Service.Delete(Data)
+            var message = Service.Delete(Data)
                 ? "De contactpersoon is verwijderd!"
                 : "Er is iets misgegaan tijdens het verwijderen.";
 
-            DeleteContactpersonCommand.RaiseCanExecuteChanged();
-            _dialog.ShowMessage("Contactpersoon verwijderen", Message);           
+            _dialog.ShowMessage("Contactpersoon verwijderen", message);
+
+            overview.Contactpersons.Remove(this);
+            overview.NewContactperson();
         }
 
         #region Properties
