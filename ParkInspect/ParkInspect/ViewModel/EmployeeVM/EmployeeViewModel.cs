@@ -22,6 +22,8 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         public bool InspectorSelected => FormRole?.role1 == "Inspecteur";
 
+        public bool RegionSelected => FormRole?.role1 == "Inspecteur" && FormRegion != null;
+
         private readonly DialogManager _dialog;
 
         public string Message { get; set; }
@@ -137,11 +139,20 @@ namespace ParkInspect.ViewModel.EmployeeVM
             set
             {
                 _formRole = value;
-                RaisePropertyChanged("InspectorSelected");
+                RaisePropertyChanged("InspectorSelected");                
             }
         }
 
-        public ParkInspect.Region FormRegion { get; set; }
+        private ParkInspect.Region _formRegion;
+        public ParkInspect.Region FormRegion
+        {
+            get { return _formRegion; }
+            set
+            {
+                _formRegion = value;
+                RaisePropertyChanged("RegionSelected");
+            }
+        }
 
         public Employee_Status FormEmployeeStatus { get; set; }
 
@@ -206,11 +217,6 @@ namespace ParkInspect.ViewModel.EmployeeVM
 
         private void Save(EmployeeOverviewViewModel overview)
         {
-            if (FormRegion == null && FormRole.role1 == "Inspecteur")
-            {
-                _dialog.ShowMessage("Personeel toevoegen/aanpassen", "U heeft de rol 'Inspecteur' geselecteerd maar geen regio opgegeven!");
-               return;
-            }
             if (Data.id <= 0)
                 Add(overview);
             else
