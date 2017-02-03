@@ -11,14 +11,20 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System.Reflection;
 using System.IO;
 using ParkInspect.Model;
+using Microsoft.Practices.ServiceLocation;
+using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.Popup;
 
 namespace ParkInspect.ViewModel
 {
     public class OfflineViewModel : ViewModelBase
     {
         public InspectionService service;
+        //public InspectionViewModel Inspections { get; set; }
+        public GlobalViewModel Global { get; set; }
         public ObservableCollection<String> directionItems { get; set; }
         public ObservableCollection<Direction> _directions;
+        private PopupManager _popupManager;
 
         public Inspection _selectedInspection;
         public Direction _selectedDirection;
@@ -43,6 +49,7 @@ namespace ParkInspect.ViewModel
         public RelayCommand setDirections { get; set; }
         public RelayCommand next_direction { get; set; }
         public RelayCommand prev_direction { get; set; }
+        public RelayCommand viewTemplateInspection { get; set; }
 
         #region properties
         public string inspection_id
@@ -159,6 +166,7 @@ namespace ParkInspect.ViewModel
 
             }
         }
+
         public String clarification
         {
             get
@@ -241,7 +249,7 @@ namespace ParkInspect.ViewModel
                 base.RaisePropertyChanged();
             }
         }
-        public OfflineViewModel(IRepository context, DialogManager dialog)
+        public OfflineViewModel(IRepository context, PopupManager popupManager, DialogManager dialog, GlobalViewModel global) //InspectionViewModel inspections)
         {
             Directory.CreateDirectory(runpath + "/directions");
             _dialog = dialog;
@@ -252,10 +260,41 @@ namespace ParkInspect.ViewModel
             deleteInspection = new RelayCommand(DeleteInspection);
             next_direction = new RelayCommand(NextDirection);
             prev_direction = new RelayCommand(PrevDirection);
+            viewTemplateInspection = new RelayCommand(ShowTemplateView);
             Reset();
             CleanFiles();
             LoadDirections();
+            _popupManager = popupManager;
+            //Inspections = inspections;
+            Global = global;
         }
+
+        private void ShowTemplateView()
+        {
+            if (String.IsNullOrEmpty(_inspection_id))
+            {
+                _dialog.ShowMessage("Fout", "Kies een geldige inspectie!");
+                return;
+            }
+
+            var id = int.Parse(_inspection_id);
+
+            var inspection = Global.Inspections.ToList().FirstOrDefault(inspec => inspec.id == id);
+
+            if( inspection == null )
+            {
+                _dialog.ShowMessage("Fout", "Kies een geldige inspectie!");
+            }
+            else if (inspection.Form == null)
+            {
+                _dialog.ShowMessage("Fout", "De gekozen inspectie heeft geen vragenlijst");
+            }
+            else {
+                _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst inzien", new FormPopup(), null);
+                ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(inspection);
+            }
+        }
+
         private void PrevDirection()
         {
             if (selectedDirection != null)

@@ -10,6 +10,9 @@ using ParkInspect.Services;
 using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.Popup;
+using Microsoft.Practices.ServiceLocation;
+using System.Threading.Tasks;
+using System.Resources;
 
 namespace ParkInspect.ViewModel
 {
@@ -21,8 +24,29 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class InspectionViewModel : ViewModelBase, ICreateUpdatePopup
     {
-        public Inspection Data;
+        private Inspection _data;
+        public Inspection Data
+        {
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = value;
+                updateFormButtonText();
+                if (_data != null)
+                {
+                    isSaved = true;
+                }
+            }
+        }
 
+
+        public ObservableCollection<Inspection> Inspections { get; set; }
+        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
+        public ObservableCollection<Form> Forms { get; set; }
+        public ObservableCollection<State> States { get; set; }
         public ObservableCollection<Employee> Inspectors { get; set; }
 
         public Employee SelectedInspector { get; set; }
@@ -36,17 +60,32 @@ namespace ParkInspect.ViewModel
         public RelayCommand AssignInspectorCommand { get; set; }
         public RelayCommand UnassignInspecteurCommand { get; set; }
         public RelayCommand SearchFormCommand { get; set; }
+        public RelayCommand FillFormCommand { get; set; }
 
         public Action PopupDone { get; set; }
 
         public object SelectedItemPopup => this;
 
         private readonly InspectionService _service;
-        private readonly PopupManager _popupManager;
+        private PopupManager _popupManager;
 
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
-
+        
+        private string _fillFormText;
+        public string FillFormText
+        {
+           get
+            {
+                return _fillFormText;
+            }
+            set
+            {
+                _fillFormText = value;
+                RaisePropertyChanged("FillFormText");
+            }
+        }
+        
         public DateTime? BoundryStartDate
         {
             get { return _boundryStartDate; }
@@ -164,6 +203,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
+        private bool isSaved;
+
         #endregion
 
         [PreferredConstructor]
@@ -173,7 +214,12 @@ namespace ParkInspect.ViewModel
 
         public InspectionViewModel(IRepository context, PopupManager popupManager, Inspection data = null)
         {
-            Data = data ?? new Inspection();
+            isSaved = true;
+            if (data == null)
+            {
+                isSaved = false;
+            }
+            _data = data ?? new Inspection();
 
             _service = new InspectionService(context);
             _popupManager = popupManager;
@@ -181,20 +227,85 @@ namespace ParkInspect.ViewModel
             // set commands
             ResetCommand = new RelayCommand(EmptyForm);
             SaveCommand = new RelayCommand(Save);
+            FillFormCommand = new RelayCommand(FillForm);
 
             AssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
 
             UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
             AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
             SearchFormCommand = new RelayCommand(SearchCommand);
+            
+            States = new ObservableCollection<State>(_service.GetAll<State>());
+            Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
+            Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
+            Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
+            Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+            updateFormButtonText();
+        }
 
-            LoadInspector();
+        public void updateFormButtonText()
+        {
+            if (Data.Form == null)
+            {
+                FillFormText = "Vragenlijst aanmaken";
+            } else
+            {
+                if (Data.Form.Formfields != null && Data.Form.Formfields.ElementAtOrDefault(0) != null && Data.Form.Formfields.ElementAtOrDefault(0).value != null)
+                {
+                    FillFormText = "Vragenlijst inzien";
+                } else
+                {
+                    FillFormText = "Vragenlijst invullen";
+                }
+            }
+        }
+
+        private bool templatePopupCompleted
+        {
+            set
+            {
+                if (value == true) {
+                    //SimpleIoc.Default.GetInstance<DashboardViewModel>().SelectedTab = 3;
+                    //_popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst invullen", new FormPopup(), null);
+                    ServiceLocator.Current.GetInstance<FormViewModel>().createForm(Data);
+                    ServiceLocator.Current.GetInstance<FormViewModel>().saveForm(true);
+                    updateFormButtonText();
+                }
+            }
+        }
+
+        public async void FillForm()
+        {   
+            if (Data == null || !isSaved)
+            {
+                ServiceLocator.Current.GetInstance<DialogManager>().ShowMessage("Vragenlijst", "Gelieve eerst de inspectie op te slaan voor aanmaken vragenlijst.");
+                return;
+            }
+            if (_popupManager == null)
+            {
+                _popupManager = SimpleIoc.Default.GetInstance<PopupManager>();
+            }
+            if (this.Data.Form == null)
+            {
+                await _popupManager.ShowPopup<FormViewModel>("Template selecteren", new SelectTemplatePopup(), x => templatePopupCompleted = (x.TemplatesViewModel.SelectedVersion != null) );
+            } else
+            {
+                _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst inzien", new FormPopup(), null);
+                ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(Data);
+            }
+        }
+
+        public void createForm()
+        {
+            FormViewModel formViewModel = ServiceLocator.Current.GetInstance<FormViewModel>();
+            formViewModel.createForm(Data);
+            //LoadInspector();
         }
 
         // TODO BOB
         private void SearchCommand()
         {
-            //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(), x => Form = x.);
+            //_popupManager.ShowPopup<FormViewModel>("Template", new SelectTemplatePopup(),null);
         }
 
         private void LoadInspector()
@@ -224,6 +335,8 @@ namespace ParkInspect.ViewModel
         private void Save()
         {
             PopupBeforeFinish();
+            isSaved = true;
+            updateFormButtonText();
         }
 
         private void EmptyForm()

@@ -28,14 +28,14 @@ namespace ParkInspect.ViewModel
 {
     public class FormViewModel : ViewModelBase, IPopup
     {
-        public EntityFrameworkRepository<ParkInspectEntities> Context { get; set; }
+        public IRepository Context { get; set; }
         public TemplatesViewModel TemplatesViewModel { get; set; }
         private FormService service { get; set; }
         private Inspection inspection;
         public DialogManager _dialog;
 
-        private FormControl _view;
-        public FormControl View {
+        private FormPopup _view;
+        public FormPopup View {
             get
             {
                 return _view;
@@ -49,7 +49,7 @@ namespace ParkInspect.ViewModel
 
                 //loadForm(inspections.ToArray()[0]);
 
-                createForm(inspections.ToArray()[0], templates.ToArray()[0]);
+                //createForm(inspections.ToArray()[0], templates.ToArray()[0]);
             }
         }
 
@@ -103,7 +103,7 @@ namespace ParkInspect.ViewModel
         public FormViewModel(IRepository context, DialogManager dialog)
         {
             Context = (EntityFrameworkRepository<ParkInspectEntities>)context;
-            service = new FormService(Context, Context);
+            service = new FormService(Context);
             EditorVisibility = Visibility.Hidden;
             TemplatesViewModel = new TemplatesViewModel(this);
             SaveCommand = new RelayCommand(saveForm);
@@ -147,10 +147,10 @@ namespace ParkInspect.ViewModel
                     value = new CachedValue(field.value)
                 };
                 cachedForm.fields.Add(cachedField);
-                View.addFormField(cachedField, i, true);
+                View.addFormField(cachedField, i, false);
                 i++;
             }
-            selectedTab = 0;
+            //selectedTab = 0;
         }
 
         public void createForm(Inspection inspection,Template template)
@@ -160,6 +160,7 @@ namespace ParkInspect.ViewModel
             form.Template = template;
             CachedForm cachedForm = service.createFormFromTemplate(template);
             loadForm(cachedForm);
+            //SelectedTab = 0;
         }
 
         public void createForm(Inspection inspection)
@@ -176,6 +177,10 @@ namespace ParkInspect.ViewModel
 
         public void loadForm(CachedForm form)
         {
+            if (View == null)
+            {
+                new FormPopup();
+            }
             cachedForm = form;
             View.clear();
             int i = 0;
@@ -184,18 +189,23 @@ namespace ParkInspect.ViewModel
                 View.addFormField(field, i, false);
                 i++;
             }
-            selectedTab = 0;
+            //selectedTab = 0;
         }
 
-        public void saveForm()
+        public void saveForm(bool isNew = false)
         {
             Debug.WriteLine("SAVE FORM");
             if (cachedForm == null)
             {
                 return;
             }
-            service.SaveForm(inspection,cachedForm);
+            service.SaveForm(inspection,cachedForm,isNew);
             _dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
+        }
+
+        public void saveForm()
+        {
+            saveForm(false);
         }
 
         public void addAttachment()
@@ -214,6 +224,7 @@ namespace ParkInspect.ViewModel
             string path = fileDialog.FileName;
             string content = File.ReadAllText(path);
             _cachedForm.attachments.Add(content);
+            Debug.WriteLine(content);
             _dialog.ShowMessage("Vragenlijst", "Je bijlage is toegevoegd.");
 
         }
@@ -249,7 +260,7 @@ namespace ParkInspect.ViewModel
 
         public CachedValue(string sourceValue)
         {
-            boolvalue = sourceValue.Replace("[Boolean]", "") == "true";
+            boolvalue = sourceValue.Replace("[Boolean]", "") == "True";
             stringvalue = sourceValue.Replace("[String]", "");
 
             int intvalue;

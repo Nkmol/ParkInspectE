@@ -119,6 +119,11 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Synchronization, Version=2.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data.Server, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data.SqlServer, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data.SqlServerCe, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Chart.Wpf, Version=14.4451.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Chart.WPF451.14.4.0.20\lib\net451\Syncfusion.Chart.Wpf.dll</HintPath>
@@ -245,6 +250,7 @@
     <Compile Include="Contactperson.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataSynchroniser.cs" />
     <Compile Include="Datatype.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
@@ -409,6 +415,9 @@
     <Compile Include="View\UserControls\EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\Popup\FormPopup.xaml.cs">
+      <DependentUpon>FormPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\Popup\UpdateNewPopupWindow.xaml.cs">
       <DependentUpon>UpdateNewPopupWindow.xaml</DependentUpon>
     </Compile>
@@ -520,6 +529,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\EmployeeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Popup\FormPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
