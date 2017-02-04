@@ -65,10 +65,6 @@
             </TabItem>
             <TabItem Header="Contactpersonen">
                 <userControls1:ContactpersonControl />
-
-            </TabItem>
-            <TabItem Header="Regio's">
-                <userControls1:RegionControl/>
             </TabItem>
         </dragablz:TabablzControl>
     </Grid>
