@@ -356,13 +356,13 @@
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AbsenceVM\AbsenceOverviewViewModel.cs" />
+    <Compile Include="ViewModel\AbsenceVM\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientVM\ClientOverviewViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonVM\ContactpersonOverviewViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonVM\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\GlobalViewModel.cs" />
     <Compile Include="ViewModel\OfflineViewModel.cs" />
     <Compile Include="ViewModel\PrepareViewModel.cs" />
-    <Compile Include="ViewModel\AbsenceVM\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\AssignmentVM\AssignmentOverviewViewModel.cs" />
     <Compile Include="ViewModel\ClientVM\ClientViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
@@ -604,19 +604,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Reports\AantalStates.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reports\Afwezigheid.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Reports\InspectieRapport.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reports\InspectiesPerInspecteur.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reports\Klanten.rdl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Reports\WerknemerRapport.rdl">

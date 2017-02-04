@@ -26,6 +26,7 @@ using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
 using ParkInspect.ViewModel.Region;
 
+
 namespace ParkInspect.ViewModel
 {
     /// <summary>
@@ -71,20 +72,18 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<FormViewModel>();
-            SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
-            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
+            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<RegionOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
-            SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ClientOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
@@ -113,15 +112,15 @@ namespace ParkInspect.ViewModel
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 
+        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
+
+        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
+
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
         
         public FormViewModel Forms => ServiceLocator.Current.GetInstance<FormViewModel>();
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
-
-        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
-
-        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
