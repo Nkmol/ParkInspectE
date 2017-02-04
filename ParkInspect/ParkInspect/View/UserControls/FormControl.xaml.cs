@@ -92,7 +92,7 @@ namespace ParkInspect.View.UserControls
                     element = new TextBox();
                     ((TextBox)element).IsReadOnly = isReadonly;
                     Binding stringbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
-                    stringbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
+                    //stringbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, stringbinding);
                     break;
                 case "Time":
@@ -104,7 +104,7 @@ namespace ParkInspect.View.UserControls
                     element = new TextBox();
                     ((TextBox)element).IsReadOnly = isReadonly;
                     Binding defaultbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
-                    defaultbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
+                    //defaultbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, defaultbinding);
                     break;
             }

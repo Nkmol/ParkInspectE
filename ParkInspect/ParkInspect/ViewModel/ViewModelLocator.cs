@@ -18,13 +18,12 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
-using ParkInspect.ViewModel.AbsenceVM;
 using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.ClientVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
-using ParkInspect.ViewModel.Region;
+
 
 namespace ParkInspect.ViewModel
 {
@@ -76,10 +75,8 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
-            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
-            SimpleIoc.Default.Register<RegionOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
@@ -118,10 +115,6 @@ namespace ParkInspect.ViewModel
         public FormViewModel Forms => ServiceLocator.Current.GetInstance<FormViewModel>();
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
-
-        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
-
-        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 

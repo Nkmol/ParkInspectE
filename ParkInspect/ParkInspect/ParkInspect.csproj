@@ -355,14 +355,12 @@
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AbsenceVM\AbsenceOverviewViewModel.cs" />
     <Compile Include="ViewModel\ClientVM\ClientOverviewViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonVM\ContactpersonOverviewViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonVM\ContactpersonViewModel.cs" />
     <Compile Include="ViewModel\GlobalViewModel.cs" />
     <Compile Include="ViewModel\OfflineViewModel.cs" />
     <Compile Include="ViewModel\PrepareViewModel.cs" />
-    <Compile Include="ViewModel\AbsenceVM\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\AssignmentVM\AssignmentOverviewViewModel.cs" />
     <Compile Include="ViewModel\ClientVM\ClientViewModel.cs" />
     <Compile Include="ViewModel\DialogManager.cs" />
@@ -380,8 +378,6 @@
     <Compile Include="ViewModel\Popup\PopupCreateUpdateViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupManager.cs" />
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
-    <Compile Include="ViewModel\Region\RegionOverviewViewModel.cs" />
-    <Compile Include="ViewModel\Region\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\TemplatesViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -604,19 +600,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Reports\AantalStates.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reports\Afwezigheid.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Reports\InspectieRapport.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reports\InspectiesPerInspecteur.rdl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reports\Klanten.rdl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Reports\WerknemerRapport.rdl">
