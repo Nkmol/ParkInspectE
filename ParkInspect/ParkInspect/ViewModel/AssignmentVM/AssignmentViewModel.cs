@@ -208,7 +208,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
         private void ShowEditPopup()
         {
-            _popupManager.ShowUpdateNewPopup("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
+            _popupManager.ShowUpdateNewPopup("Bewerk onderstaande inspectie", new InspectionManageControl(),
                 x =>
                 {
                     RaisePropertyChanged();
