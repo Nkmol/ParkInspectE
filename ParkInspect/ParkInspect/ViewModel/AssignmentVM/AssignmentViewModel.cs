@@ -159,7 +159,12 @@ namespace ParkInspect.ViewModel.AssignmentVM
         }
         private void ShowPreparePopup()
         {
-            _popupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection.Data), null);
+            var Inspection = Data.Inspections.FirstOrDefault(inspec => inspec.id == SelectedInspection.Data.id); 
+            if(Inspection == null)
+            {
+                _dialogManager.ShowMessage("Fout", "Sla geselecteerde inspectie eerst op in de opdracht voordat je voorbereid!");
+            } else
+                _popupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection.Data), null);
         }
 
         // TODO: Improve the way to make a 'property shadow object'. There is need for double property decleration at the moment.
