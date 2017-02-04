@@ -17,7 +17,7 @@
     </UserControl.Resources>
     <Grid>
         <TabControl SelectedIndex="{Binding SelectedTab}">
-            <Custom:MetroTabItem Header="Vragenlijsten" >
+            <Custom:MetroTabItem Header="Vragenlijsten" Visibility="Collapsed" >
                 <ScrollViewer >
                     <Grid Name="FormGrid">
                         <Button x:Name="saveButton" Command = "{Binding SaveCommand}"  Content="Opslaan" Margin="692,10,0,411" Height="32" RenderTransformOrigin="0.5,0.5" Width="138" />

@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParkInspect.View.UserControls.Popup"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="400"
+             DataContext="{Binding Forms, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,15 +14,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <DataGrid ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplateCollection, Mode=TwoWay}" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="161" Width="280">
+    <Grid DataContext="{Binding TemplatesViewModel}" Margin="0,0,0,0">
+        <DataGrid ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplateCollection, Mode=TwoWay}" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="275" Width="380">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Template naam" Binding="{Binding name}"/>
                 <DataGridTextColumn Header="Nieuwste versie" Binding="{Binding highestVersion}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox ItemsSource="{Binding Versions}" SelectedItem="{Binding SelectedVersion}" x:Name="comboBox" HorizontalAlignment="Left" Margin="94,188,0,0" VerticalAlignment="Top" Width="162"/>
-        <Label x:Name="label" Content="Versie" HorizontalAlignment="Left" Margin="12,188,0,0" VerticalAlignment="Top"/>
-        
+        <ComboBox ItemsSource="{Binding Versions}" SelectedItem="{Binding SelectedVersion}" x:Name="comboBox" HorizontalAlignment="Left" Margin="94,315,0,0" VerticalAlignment="Top" Width="162"/>
+        <Label x:Name="label" Content="Versie" HorizontalAlignment="Left" Margin="12,315,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </UserControl>

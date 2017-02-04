@@ -34,7 +34,7 @@
     Add a new bool property in the dashboardViewModel and set it on true in the showAllTabs method.
     -->
     <Grid x:Name="LayoutRoot">
-        <dragablz:TabablzControl>
+        <dragablz:TabablzControl SelectedIndex="{Binding SelectedTab}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController />
             </dragablz:TabablzControl.InterTabController>
@@ -89,6 +89,8 @@
             <Button Command="{Binding LogoutCommand}"
                     Content="Logout"
                     IsEnabled="{Binding LogoutButtonEnabled}" />
+            <Button DataContext="{Binding Dashboard}" Command="{Binding syncCommand}"
+                    Content="Sync"/>
 
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>

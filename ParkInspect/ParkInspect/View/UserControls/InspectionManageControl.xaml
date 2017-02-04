@@ -66,9 +66,8 @@
                         <ComboBox Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" materialDesign:HintAssist.IsFloating="True" Padding="0,10" Width="252"/>
                         <Button Padding="0" Width="32" Content="🔎" DockPanel.Dock="Right" VerticalAlignment="Bottom"></Button>
                     </DockPanel>-->
-                    <ComboBox Text="{Binding Form.Template.name}" ItemsSource="{Binding Global.Forms, Source={StaticResource Locator}}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" materialDesign:HintAssist.IsFloating="True" Padding="0,10" />
-                    
-                <AdornerDecorator>
+
+                    <AdornerDecorator>
                     <ComboBox Name="CbStatus" Text="{Binding State.state1}" ItemsSource="{Binding Global.States, Source={StaticResource Locator}}" DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
                         <ComboBox.SelectedItem>
                             <Binding Path="State">
@@ -128,7 +127,9 @@
             </StackPanel>
             <ComboBox Margin="5,0" ItemsSource="{Binding Inspectors}" DisplayMemberPath="firstname" Text="{Binding SelectedInspector.firstname}" SelectedItem="{Binding SelectedInspector}" 
                       materialDesign:HintAssist.Hint="Selecteer een Inspecteur om toe te kennen" materialDesign:HintAssist.IsFloating="True"/>
-  
+
         </StackPanel>
+        <Button Margin="90,324,10,77" Content="{Binding FillFormText}" Command="{Binding FillFormCommand}" RenderTransformOrigin="-2.844,0.906" />
+
     </Grid>
 </UserControl>

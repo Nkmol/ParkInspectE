@@ -9,11 +9,12 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using ParkInspect.Services;
 using ParkInspect.Repository;
+using ParkInspect.ViewModel;
 using System.Diagnostics;
 
 namespace ParkInspect.ViewModel
 {
-    public class TemplatesViewModel : ViewModelBase
+    public class TemplatesViewModel : ViewModelBase, IPopup
     {
         private TemplateService _service;
         public TemplateService Service
@@ -22,14 +23,14 @@ namespace ParkInspect.ViewModel
             {
                 if (_service == null && superViewModel.Context != null)
                 {
-                    _service = new TemplateService(superViewModel.Context, superViewModel.Context);
+                    _service = new TemplateService(superViewModel.Context);
                 }
                 return _service;
             }
         }
 
         public FormViewModel superViewModel { get; }
-        private EntityFrameworkRepository<ParkInspectEntities> Context { get { return superViewModel.Context; } }
+        private IRepository Context { get { return superViewModel.Context; } }
 
         private ObservableCollection<TemplateCollection> _templates;
         public ObservableCollection<TemplateCollection> Templates
@@ -99,6 +100,16 @@ namespace ParkInspect.ViewModel
         public RelayCommand EditTemplateCommand { get; set; }
         public RelayCommand NewListCommand { get; set; }
 
+        public object SelectedItemPopup
+        {
+            get
+            {
+                TemplateCollection collection = SelectedTemplateCollection;
+                Template template = collection.getTemplateFromVersion(SelectedVersion);
+                return template;
+            }
+        }
+
         public TemplatesViewModel(FormViewModel super)
         {
             superViewModel = super;
@@ -113,6 +124,11 @@ namespace ParkInspect.ViewModel
         public void fillTemplates()
         {
             Templates = new ObservableCollection<TemplateCollection>(new TemplateCollection[]{ });
+            IRepository Context = this.Context;
+            if (!((EntityFrameworkRepository < ParkInspectEntities > )Context).IsConnected())
+            {
+                Context = ViewModelLocator.localRepo;
+            }
             foreach(Template template in Context.GetAll<Template>())
             {
                 bool added = false;

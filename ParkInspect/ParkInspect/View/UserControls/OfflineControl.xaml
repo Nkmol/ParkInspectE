@@ -62,7 +62,8 @@
             <GroupBox x:Name="groupBox6" Header="Kaart" HorizontalAlignment="Left" Margin="299,242,0,-199" VerticalAlignment="Top" Width="695" Height="340">
                 <WindowsPresentation:GMapControl x:Name="gmap_offline" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="681" Margin="0,0,0,-2"/>
             </GroupBox>
-            <Button x:Name="button" Command="{Binding deleteInspection}" Content="Verwijder" Height="25" Margin="10,575,6,-242" Click="button_Click"/>
+            <Button x:Name="button" Command="{Binding deleteInspection}" Content="Verwijder" Height="25" Margin="706,588,158,-230" Click="button_Click"/>
+            <Button x:Name="btnViewTemplate" Command="{Binding viewTemplateInspection}" Content="Vragenlijst" Height="25" Margin="847,588,6,-230" Click="button_Click"/>
         </Grid>
     </TabControl>
 </UserControl>

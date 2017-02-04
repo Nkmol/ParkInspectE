@@ -32,16 +32,21 @@ namespace ParkInspect.View.UserControls
             }
             FormViewModel viewmodel = (FormViewModel) DataContext;
             fields = new List<CachedFormField>();
-            viewmodel.View = this;
+            //viewmodel.View = this;
         }
 
         public void clear()
         {
+            List<Control> toRemoveElements = new List<Control>();
             foreach (Control element in FormGrid.Children) {
-                if (element.Name.IndexOf("FormElement") > 0)
+                if (element.Name.IndexOf("ormElement") > 0)
                 {
-                    FormGrid.Children.Remove(element);
+                    toRemoveElements.Add(element);
                 }
+            }
+            foreach(Control element in toRemoveElements)
+            {
+                FormGrid.Children.Remove(element);
             }
         }
 
@@ -87,7 +92,7 @@ namespace ParkInspect.View.UserControls
                     element = new TextBox();
                     ((TextBox)element).IsReadOnly = isReadonly;
                     Binding stringbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
-                    stringbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
+                    //stringbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, stringbinding);
                     break;
                 case "Time":
@@ -99,16 +104,18 @@ namespace ParkInspect.View.UserControls
                     element = new TextBox();
                     ((TextBox)element).IsReadOnly = isReadonly;
                     Binding defaultbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
-                    defaultbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
+                    //defaultbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, defaultbinding);
                     break;
             }
             Label textLabel = new Label();
             textLabel.Content = field.field_title;
+            textLabel.Name = "formElement" + count * 2;
 
-            textLabel.Margin = new Thickness(50, 50 + fields.Count * 50, 250, 850 - (50 + fields.Count * 50 + 40));
-            element.Margin = new Thickness(250, 50 + fields.Count * 50, 250, 850 - (50 + fields.Count * 50 + 40));
-            element.Name = "FormElement" + count;
+            textLabel.Margin = new Thickness(50, 50 + count * 50, 250, 850 - (50 + count * 50 + 40));
+            element.Margin = new Thickness(250, 50 + count * 50, 250, 850 - (50 + count * 50 + 40));
+            element.Name = "FormElement" + (count*2 + 1);
+            
 
             fields.Add(field);
             FormGrid.Children.Add(textLabel);

@@ -9,6 +9,7 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System;
 using System.Xml.Serialization.Advanced;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
@@ -25,6 +26,7 @@ using ParkInspect.ViewModel.EmployeeVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
 using ParkInspect.ViewModel.Region;
+
 
 namespace ParkInspect.ViewModel
 {
@@ -53,8 +55,15 @@ namespace ParkInspect.ViewModel
             localRepo = new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities());
 
 
-            SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
-            SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            try
+            {
+                SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+                SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            } catch (Exception)
+            {
+                SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities()));
+                SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectLocalEntities>>(() => new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities()));
+            }
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
             SimpleIoc.Default.Register<PopupCoordinator>();
             SimpleIoc.Default.Register<DashboardViewModel>();
@@ -63,21 +72,19 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<FormViewModel>();
-            SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
-            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<EmployeeOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
+            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
             SimpleIoc.Default.Register<RegionOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
-            SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ClientOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
@@ -86,7 +93,7 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<GlobalViewModel>();
         }
 
-        public static IRepository localRepo;
+        public static EntityFrameworkRepository<ParkInspectLocalEntities> localRepo;
         /// <summary>
         /// Gets the Main property.
         /// </summary>
@@ -106,15 +113,15 @@ namespace ParkInspect.ViewModel
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
 
+        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
+
+        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
+
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
         
         public FormViewModel Forms => ServiceLocator.Current.GetInstance<FormViewModel>();
 
         public ParkinglotOverviewViewModel Parkinglots => ServiceLocator.Current.GetInstance<ParkinglotOverviewViewModel>();
-
-        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
-
-        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         public IRepository Context => ServiceLocator.Current.GetInstance<IRepository>();
 
