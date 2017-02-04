@@ -18,11 +18,13 @@ using Microsoft.Practices.ServiceLocation;
 using ParkInspect.Model;
 using ParkInspect.Repository;
 using ParkInspect.View.UserControls.Popup;
+using ParkInspect.ViewModel.AbsenceVM;
 using ParkInspect.ViewModel.AssignmentVM;
 using ParkInspect.ViewModel.ContactpersonVM;
 using ParkInspect.ViewModel.ClientVM;
 using ParkInspect.ViewModel.Popup;
 using ParkInspect.ViewModel.ParkinglotVM;
+using ParkInspect.ViewModel.Region;
 
 
 namespace ParkInspect.ViewModel
@@ -70,18 +72,18 @@ namespace ParkInspect.ViewModel
             SimpleIoc.Default.Register<ReportViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<FormViewModel>();
-            SimpleIoc.Default.Register<ParkinglotViewModel>();
             SimpleIoc.Default.Register<ParkinglotOverviewViewModel>();
             SimpleIoc.Default.Register<OfflineViewModel>();
             SimpleIoc.Default.Register<PrepareViewModel>();
             SimpleIoc.Default.Register<ExportViewModel>();
             SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ContactpersonOverviewViewModel>();
+            SimpleIoc.Default.Register<AbsenceOverviewViewModel>();
+            SimpleIoc.Default.Register<RegionOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
             SimpleIoc.Default.Register<PopupManager>();
             SimpleIoc.Default.Register<DialogManager>();
-            SimpleIoc.Default.Register<AssignmentOverviewViewModel>();
             SimpleIoc.Default.Register<ClientOverviewViewModel>();
 
             SimpleIoc.Default.Register<PopupViewModel>();
@@ -109,6 +111,10 @@ namespace ParkInspect.ViewModel
         public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
 
         public ReportViewModel Reports => ServiceLocator.Current.GetInstance<ReportViewModel>();
+
+        public AbsenceOverviewViewModel Absences => ServiceLocator.Current.GetInstance<AbsenceOverviewViewModel>();
+
+        public RegionOverviewViewModel Regions => ServiceLocator.Current.GetInstance<RegionOverviewViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
         

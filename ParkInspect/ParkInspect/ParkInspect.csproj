@@ -355,6 +355,8 @@
     <Compile Include="Template.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AbsenceVM\AbsenceOverviewViewModel.cs" />
+    <Compile Include="ViewModel\AbsenceVM\AbsenceViewModel.cs" />
     <Compile Include="ViewModel\ClientVM\ClientOverviewViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonVM\ContactpersonOverviewViewModel.cs" />
     <Compile Include="ViewModel\ContactpersonVM\ContactpersonViewModel.cs" />
@@ -378,6 +380,8 @@
     <Compile Include="ViewModel\Popup\PopupCreateUpdateViewModel.cs" />
     <Compile Include="ViewModel\Popup\PopupManager.cs" />
     <Compile Include="ViewModel\Popup\PopupViewModel.cs" />
+    <Compile Include="ViewModel\Region\RegionOverviewViewModel.cs" />
+    <Compile Include="ViewModel\Region\RegionViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\TemplatesViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
