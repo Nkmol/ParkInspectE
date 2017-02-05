@@ -102,7 +102,7 @@
                                   ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}"
                                   DisplayMemberPath="name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
                             <ComboBox.Text>
-                                <Binding Path="FormClient" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="FormClient.name" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                                   ValidatesOnTargetUpdated="True" />
