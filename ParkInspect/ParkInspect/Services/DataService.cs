@@ -12,7 +12,7 @@ namespace ParkInspect.Services
 {
     public class DataService
     {
-        protected IRepository Context;
+        public IRepository Context;
 
         public DataService(IRepository context)
         {

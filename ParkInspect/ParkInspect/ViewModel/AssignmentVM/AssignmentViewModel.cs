@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.SqlServer.ReportingServices2005;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
@@ -11,6 +12,7 @@ using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls;
 using ParkInspect.ViewModel.Popup;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace ParkInspect.ViewModel.AssignmentVM
 {
@@ -197,6 +199,10 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
         private void ShowAddPopup()
         {
+            // TODO Kill me
+            SimpleIoc.Default.Unregister<InspectionViewModel>();
+            SimpleIoc.Default.Register<InspectionViewModel>(() => new InspectionViewModel(_service.Context));
+
             _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
                 x =>
                 {
@@ -213,7 +219,11 @@ namespace ParkInspect.ViewModel.AssignmentVM
 
         private void ShowEditPopup()
         {
-            _popupManager.ShowUpdateNewPopup("Bewerk onderstaande inspectie", new InspectionManageControl(),
+            // TODO Kill me
+            SimpleIoc.Default.Unregister<InspectionViewModel>();
+            SimpleIoc.Default.Register<InspectionViewModel>(() => SelectedInspection);
+
+            _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
                 x =>
                 {
                     RaisePropertyChanged();
@@ -222,8 +232,8 @@ namespace ParkInspect.ViewModel.AssignmentVM
                 {
                     x.BoundryStartDate = FormDate;
                     x.BoundryEndDate = FormDeadline;
-                },
-                SelectedInspection);
+                    if (x.Form != null) x.Form.Template.name = SelectedInspection.Form.Template.name; // Ugly hack :(
+                });
         }
 
         private void UnassignInspection()

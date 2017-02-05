@@ -1,14 +1,14 @@
 ﻿<UserControl x:Class="ParkInspect.View.UserControls.InspectionManageControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:validationRules="clr-namespace:ParkInspect.Model.ValidationRules"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             DataContext="{Binding Inspection, Source={StaticResource Locator}}">
+             mc:Ignorable="d"
+             DataContext="{Binding InspectionKillMe, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,118 +18,144 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
             <StackPanel>
-            <Button Content="Inspectie toekennen" Margin="5,5" Command="{Binding SaveCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="IsEnabled" Value="false" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=CbParkinglot, Path=(Validation.HasError)}" Value="false" />
-                                    <Condition Binding="{Binding ElementName=CbStatus, Path=(Validation.HasError)}" Value="false" />
-                                    <Condition Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}" Value="false" />
-                                    <Condition Binding="{Binding ElementName=DateDeadline, Path=(Validation.HasError)}" Value="false" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="true" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Margin="5,5" Content="Scherm legen" Command="{Binding ResetCommand}" />
-        </StackPanel>
+                <Button Content="Inspectie toekennen" Margin="5,5" Command="{Binding SaveCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="IsEnabled" Value="false" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition
+                                            Binding="{Binding ElementName=CbParkinglot, Path=(Validation.HasError)}"
+                                            Value="false" />
+                                        <Condition Binding="{Binding ElementName=CbStatus, Path=(Validation.HasError)}"
+                                                   Value="false" />
+                                        <Condition
+                                            Binding="{Binding ElementName=DateStart, Path=(Validation.HasError)}"
+                                            Value="false" />
+                                        <Condition
+                                            Binding="{Binding ElementName=DateDeadline, Path=(Validation.HasError)}"
+                                            Value="false" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="true" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Margin="5,5" Content="Scherm legen" Command="{Binding ResetCommand}" />
+            </StackPanel>
         </Border>
         <Border Padding="10" Grid.Column="0" Grid.Row="0">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0">
-            <StackPanel Width="300" VerticalAlignment="Top">
-                <AdornerDecorator>
-                    <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name" ItemsSource="{Binding Global.Parkinglots, Source={StaticResource Locator}}" materialDesign:HintAssist.Hint="Selecteer een parkeerplaats" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
-                        <ComboBox.SelectedItem>
-                            <Binding Path="Parkinglot">
-                                <Binding.ValidationRules>
-                                    <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
-                </AdornerDecorator>
+                <StackPanel Width="300" VerticalAlignment="Top">
+                    <AdornerDecorator>
+                        <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name"
+                                  ItemsSource="{Binding Global.Parkinglots, Source={StaticResource Locator}}"
+                                  materialDesign:HintAssist.Hint="Selecteer een parkeerplaats"
+                                  materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="Parkinglot">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                    </AdornerDecorator>
                     <!--<DockPanel LastChildFill="False">
                         <ComboBox Text="{Binding Form.Template.name}" ItemsSource="{Binding Forms}" DisplayMemberPath="Template.name" SelectedItem="{Binding Form}" materialDesign:HintAssist.Hint="Selecteer een Vragenlijst" materialDesign:HintAssist.IsFloating="True" Padding="0,10" Width="252"/>
                         <Button Padding="0" Width="32" Content="🔎" DockPanel.Dock="Right" VerticalAlignment="Bottom"></Button>
                     </DockPanel>-->
 
                     <AdornerDecorator>
-                    <ComboBox Name="CbStatus" Text="{Binding State.state1}" ItemsSource="{Binding Global.States, Source={StaticResource Locator}}" DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status" materialDesign:HintAssist.IsFloating="True" Padding="0,10">
-                        <ComboBox.SelectedItem>
-                            <Binding Path="State">
+                        <ComboBox Name="CbStatus" Text="{Binding State.state1}"
+                                  ItemsSource="{Binding Global.States, Source={StaticResource Locator}}"
+                                  DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status"
+                                  materialDesign:HintAssist.IsFloating="True" Padding="0,10">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="State">
+                                    <Binding.ValidationRules>
+                                        <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                    </AdornerDecorator>
+                    <ComboBox Text="{Binding FollowUpInspection.Parkinglot.name}"
+                              ItemsSource="{Binding Global.Inspections, Source={StaticResource Locator}}"
+                              DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}"
+                              materialDesign:HintAssist.Hint="Vervolg op een onafgemaakte inspectie"
+                              materialDesign:HintAssist.IsFloating="True" Padding="0,10" />
+                    <ComboBox Text="{Binding SelectedTemplate.name}"
+                              ItemsSource="{Binding Global.Templates, Source={StaticResource Locator}}"
+                              DisplayMemberPath="name" SelectedItem="{Binding SelectedTemplateForm}"
+                              materialDesign:HintAssist.Hint="Selecteer een vragenlijst voor de inspectie"
+                              materialDesign:HintAssist.IsFloating="True" Padding="0,10"
+                              IsEnabled="{Binding SelectTemplateIsEnabled}" />
+                    <Label Content="Datum" Padding="5,10,5,5" />
+                    <controls:DateTimePicker Name="DateStart" DisplayDateEnd="{Binding BoundryEndDate}"
+                                             DisplayDateStart="{Binding BoundryStartDate}">
+                        <controls:DateTimePicker.SelectedDate>
+                            <Binding Path="Date" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True"></validationRules:IsNotEmptyValidationRule>
+                                    <validationRules:IsNotEmptyValidationRule />
+                                    <validationRules:IsValidDateTimeRule />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
-                </AdornerDecorator>
-                    <ComboBox Text="{Binding FollowUpInspection.Parkinglot.name}" 
-                              ItemsSource="{Binding Global.Inspections, Source={StaticResource Locator}}" DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}" 
-                            materialDesign:HintAssist.Hint="Vervolg op een onafgemaakte inspectie" materialDesign:HintAssist.IsFloating="True" Padding="0,10"/>
-                <Label Content="Datum" Padding="5,10,5,5"  />
-                <controls:DateTimePicker Name="DateStart" DisplayDateEnd="{Binding BoundryEndDate}" DisplayDateStart="{Binding BoundryStartDate}" >
-                    <controls:DateTimePicker.SelectedDate >
-                        <Binding Path="Date" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
-                                <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </controls:DateTimePicker.SelectedDate>
-                </controls:DateTimePicker>
-                <Label Content="Deadline" Padding="5,10,5,5" />
-                <controls:DateTimePicker Name="DateDeadline" DisplayDateEnd="{Binding BoundryEndDate}" DisplayDateStart="{Binding BoundryStartDate}">
-                    <controls:DateTimePicker.SelectedDate >
-                        <Binding Path="Deadline" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validationRules:IsNotEmptyValidationRule></validationRules:IsNotEmptyValidationRule>
-                                <validationRules:IsValidDateTimeRule></validationRules:IsValidDateTimeRule>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </controls:DateTimePicker.SelectedDate >
-                </controls:DateTimePicker>
-                <TextBox Name="Clarificationbox" Height="105" Text="{Binding Clarification}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                      materialDesign:HintAssist.Hint="Toelichting" materialDesign:HintAssist.IsFloating="True" />
-            </StackPanel>
-        </ScrollViewer>
+                        </controls:DateTimePicker.SelectedDate>
+                    </controls:DateTimePicker>
+                    <Label Content="Deadline" Padding="5,10,5,5" />
+                    <controls:DateTimePicker Name="DateDeadline" DisplayDateEnd="{Binding BoundryEndDate}"
+                                             DisplayDateStart="{Binding BoundryStartDate}">
+                        <controls:DateTimePicker.SelectedDate>
+                            <Binding Path="Deadline" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule />
+                                    <validationRules:IsValidDateTimeRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:DateTimePicker.SelectedDate>
+                    </controls:DateTimePicker>
+                    <TextBox Name="Clarificationbox" Height="105" Text="{Binding Clarification}" AcceptsReturn="True"
+                             TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                             materialDesign:HintAssist.Hint="Toelichting" materialDesign:HintAssist.IsFloating="True" />
+                </StackPanel>
+            </ScrollViewer>
         </Border>
         <StackPanel Grid.Column="1" Grid.Row="0">
-        <GroupBox x:Name="Inspecteurs" Header="Toegekende inspecteurs" Margin="0,5,0,0" Width="363" Height="304">
-            <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignedInspectors}" SelectedItem="{Binding SelectedAssignedInspector}" AutoGenerateColumns="False" Margin="0,0,-2,0"
-                                    ScrollViewer.CanContentScroll="True" 
-    ScrollViewer.VerticalScrollBarVisibility="Auto"
-    ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="voornaam" Width="*" Binding="{Binding firstname}" />
-                    <DataGridTextColumn  Header="achternaam" Width="*" Binding="{Binding lastname}"/>
-                    <DataGridTextColumn  Header="email" Width="*" Binding="{Binding email}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </GroupBox>
+            <GroupBox x:Name="Inspecteurs" Header="Toegekende inspecteurs" Margin="0,5,0,0" Width="363" Height="304">
+                <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignedInspectors}"
+                          SelectedItem="{Binding SelectedAssignedInspector}" AutoGenerateColumns="False"
+                          Margin="0,0,-2,0"
+                          ScrollViewer.CanContentScroll="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="voornaam" Width="*" Binding="{Binding firstname}" />
+                        <DataGridTextColumn Header="achternaam" Width="*" Binding="{Binding lastname}" />
+                        <DataGridTextColumn Header="email" Width="*" Binding="{Binding email}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
             <StackPanel Orientation="Horizontal" Width="363" Margin="0,10,0,20">
                 <Button Margin="5,5" Content="Inspecteur toekennen" Command="{Binding AssignInspectorCommand}" />
                 <Button Margin="5,0" Content="Inspecteur onttrekken" Command="{Binding UnassignInspecteurCommand}" />
             </StackPanel>
-            <ComboBox Margin="5,0" ItemsSource="{Binding Inspectors}" DisplayMemberPath="firstname" Text="{Binding SelectedInspector.firstname}" SelectedItem="{Binding SelectedInspector}" 
-                      materialDesign:HintAssist.Hint="Selecteer een Inspecteur om toe te kennen" materialDesign:HintAssist.IsFloating="True"/>
+            <ComboBox Margin="5,0" ItemsSource="{Binding Inspectors}" DisplayMemberPath="firstname"
+                      Text="{Binding SelectedInspector.firstname}" SelectedItem="{Binding SelectedInspector}"
+                      materialDesign:HintAssist.Hint="Selecteer een Inspecteur om toe te kennen"
+                      materialDesign:HintAssist.IsFloating="True" />
 
         </StackPanel>
-        <Button Margin="90,324,10,77" Content="{Binding FillFormText}" Command="{Binding FillFormCommand}" RenderTransformOrigin="-2.844,0.906" />
-
     </Grid>
 </UserControl>
