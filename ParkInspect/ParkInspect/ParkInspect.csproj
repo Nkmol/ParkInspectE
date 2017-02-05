@@ -250,6 +250,7 @@
     <Compile Include="Contactperson.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Convertor\BitmapConvertor.cs" />
     <Compile Include="DataSynchroniser.cs" />
     <Compile Include="Datatype.cs">
       <DependentUpon>ParkInspectModel.tt</DependentUpon>
@@ -662,6 +663,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\FormPhotos\" />
     <Folder Include="Model\LocalModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

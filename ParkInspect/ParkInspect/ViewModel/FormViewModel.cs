@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Win32;
 using ParkInspect.Repository;
 using ParkInspect.Services;
 using ParkInspect.View.UserControls.Popup;
@@ -13,6 +15,9 @@ namespace ParkInspect.ViewModel
 {
     public class FormViewModel : ViewModelBase, IPopup
     {
+        private const string FileFilter = "*.jpg;*.jpeg;*.png;";
+
+        private readonly string _fileImagesPath;
         private CachedForm _cachedForm;
 
         private Visibility _editorVisilibty;
@@ -33,7 +38,11 @@ namespace ParkInspect.ViewModel
             AddAttachmentCommand = new RelayCommand(AddAttachment);
             Dialog = dialog;
             _selectedTab = 1;
+
+            _fileImagesPath = $@"{Environment.CurrentDirectory}\Assets\FormPhotos";
         }
+
+        public ObservableCollection<string> ImagePaths { get; set; }
 
         public IRepository Context { get; set; }
         public TemplatesViewModel TemplatesViewModel { get; set; }
@@ -119,6 +128,13 @@ namespace ParkInspect.ViewModel
                 View.addFormField(cachedField, i, false);
                 i++;
             }
+
+            var path = $@"{_fileImagesPath}\{inspection.Form.id}";
+            if (Directory.Exists(path))
+            {
+                ImagePaths = new ObservableCollection<string>(Directory.GetFiles(path));
+                RaisePropertyChanged("ImagePaths");
+            }
             //selectedTab = 0;
         }
 
@@ -174,20 +190,23 @@ namespace ParkInspect.ViewModel
         {
             var fileDialog = new OpenFileDialog();
             fileDialog.DefaultExt = ".png"; // Required file extension 
-            fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;"; // Optional file extensions
+            fileDialog.Filter = $@"Image Files| {FileFilter}"; // Optional file extensions
 
-            var result = fileDialog.ShowDialog();
-            if (result == false)
-                return;
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var path = $@"{_fileImagesPath}\{_inspection.Form.id}";
+                Directory.CreateDirectory(path);
+                File.Copy(fileDialog.FileName, $@"{path}\{fileDialog.SafeFileName}", true);
 
-
-            var path = fileDialog.FileName;
-            var content = File.ReadAllText(path);
-            _cachedForm.Attachments.Add(content);
-            Debug.WriteLine(content);
-            Dialog.ShowMessage("Vragenlijst", "Je bijlage is toegevoegd.");
+                ImagePaths.Add($@"{path}\{fileDialog.SafeFileName}");
+                Dialog.ShowMessage("Vragenlijst foto bijlage", "Je bijlage is toegevoegd.");
+            }
+            else
+                Dialog.ShowMessage("Vragenlijst foto bijlage",
+                    "Er is iets misgegaan tijdens het toevoegen van de bijlage.");
         }
     }
+
 
     public class CachedForm
     {
@@ -224,8 +243,8 @@ namespace ParkInspect.ViewModel
             int.TryParse(sourceValue.Replace("[Integer]", ""), out intvalue);
             double.TryParse(sourceValue.Replace("[Double]", ""), out doublevalue);
 
-            this.Intvalue = intvalue;
-            this.Doublevalue = doublevalue;
+            Intvalue = intvalue;
+            Doublevalue = doublevalue;
 
             if (sourceValue.IndexOf("[Boolean]") >= 0)
                 Type = "Boolean";
