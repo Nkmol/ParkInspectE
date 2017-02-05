@@ -211,8 +211,8 @@ namespace ParkInspect.ViewModel
         public void addAttachment()
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.DefaultExt = ".*"; // Required file extension 
-            fileDialog.Filter = "Any file (.*)|*.*"; // Optional file extensions
+            fileDialog.DefaultExt = ".png"; // Required file extension 
+            fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;"; // Optional file extensions
 
             var result = fileDialog.ShowDialog();
             if (result == false)
