@@ -5,9 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
-             mc:Ignorable="d" d:DesignWidth="900"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1000"
              Name="Window"
-             DataContext="{Binding Forms, Source={StaticResource Locator}}" Height="341.176">
+             DataContext="{Binding Forms, Source={StaticResource Locator}}"
+             Height="600" Width="800"
+             >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
