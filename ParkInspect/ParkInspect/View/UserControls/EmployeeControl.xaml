@@ -208,7 +208,7 @@
                                     materialDesign:HintAssist.Hint="Rol"
                                     materialDesign:HintAssist.IsFloating="True" Name="Role">
                                     <ComboBox.Text>
-                                        <Binding Path="FormRole" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="FormRole.role1" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule
                                                     ValidationStep="RawProposedValue"
@@ -226,7 +226,7 @@
                                     materialDesign:HintAssist.Hint="Status"
                                     materialDesign:HintAssist.IsFloating="True" Name="Status">
                                     <ComboBox.Text>
-                                        <Binding Path="FormEmployeeStatus"
+                                        <Binding Path="FormEmployeeStatus.employee_status1"
                                                  UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule
@@ -309,7 +309,7 @@
                         materialDesign:HintAssist.IsFloating="True" Name="RegioBox" Grid.Column="1"
                         Margin="45.4,55.2,201.4,133.8" Grid.Row="1" Width="250">
                         <ComboBox.Text>
-                            <Binding Path="FormRegion" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="FormRegion.name" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
