@@ -247,7 +247,7 @@ namespace ParkInspect.ViewModel
         {
             // TODO Automatic injection without Current.GetInstance
             Inspectors = new ObservableCollection<Employee>(ServiceLocator.Current.GetInstance<GlobalViewModel>().Employees
-                .Where(x => x.role == "Inspector")
+                .Where(x => x.role == "Inspecteur")
                 .OrderBy(x => x.firstname)
                 );
         }
