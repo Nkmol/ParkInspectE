@@ -23,7 +23,7 @@
                     <StackPanel Name="FormGrid" />
 
                     <UniformGrid Rows="1" Margin="0,10,0,0">
-                        <Button x:Name="saveButton" Command="{Binding SaveCommand}" Content="Opslaan" Margin="10" />
+                        <Button x:Name="saveButton" Command="{Binding SaveCommand}" Content="Vragenlijst Opslaan" Margin="10" />
                         <Button x:Name="addAttachmentButton" Command="{Binding AddAttachmentCommand}"
                                 Content="Bijlage toevoegen" Margin="0,0,10,0" />
                     </UniformGrid>
@@ -37,21 +37,28 @@
                             <ItemsControl ItemsSource="{Binding ImagePaths}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Height="600"/>
+                                        <UniformGrid Height="600" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Image Source="{Binding ., Converter={StaticResource BitmapConvertor}}" Stretch="UniformToFill"/>
-                                            <Button Height="36" Width="36" Content="✖" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="1" Command="{Binding DataContext.RemoveImageCommand, ElementName=Window}" CommandParameter="{Binding .}">
+                                            <Image Source="{Binding ., Converter={StaticResource BitmapConvertor}}"
+                                                   Stretch="UniformToFill" />
+                                            <Button Height="36" Width="36" Content="✖" HorizontalAlignment="Right" Cursor="Hand"
+                                                    VerticalAlignment="Top" Opacity="1"
+                                                    Command="{Binding DataContext.RemoveImageCommand, ElementName=Window}"
+                                                    CommandParameter="{Binding .}">
                                                 <Button.Style>
-                                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignMenuCommandButtonStyle}">
-                                                        <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
+                                                    <Style TargetType="{x:Type Button}"
+                                                           BasedOn="{StaticResource MaterialDesignMenuCommandButtonStyle}">
+                                                        <Setter Property="Background"
+                                                                Value="{DynamicResource FlatButtonBackgroundBrush}" />
                                                         <Style.Triggers>
                                                             <Trigger Property="IsMouseOver" Value="true">
-                                                                <Setter Property="Background" Value="#FFFF4242"/>
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+                                                                <Setter Property="Background" Value="#FFFF4242" />
+                                                                <Setter Property="Foreground"
+                                                                        Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
                                                             </Trigger>
                                                         </Style.Triggers>
                                                     </Style>

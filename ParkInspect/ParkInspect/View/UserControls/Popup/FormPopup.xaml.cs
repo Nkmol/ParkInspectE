@@ -55,12 +55,13 @@ namespace ParkInspect.View.UserControls.Popup
                 addAttachmentButton.Visibility = Visibility.Visible;
             }
             Control element = null;
+            string fieldValPath = $"CachedForm.Fields[{count}].Value";
             switch (field.Datatype)
             {
                 case "Boolean":
                     element = new CheckBox();
                     ((CheckBox) element).IsHitTestVisible = !isReadonly;
-                    var binding = new Binding("cachedForm.fields[" + count + "].value.boolvalue");
+                    var binding = new Binding($"{fieldValPath}.Boolvalue");
                     BindingOperations.SetBinding(element, ToggleButton.IsCheckedProperty, binding);
                     break;
                 case "Date":
@@ -68,26 +69,26 @@ namespace ParkInspect.View.UserControls.Popup
                     ((DatePicker) element).Focusable = !isReadonly;
                     ((DatePicker) element).IsHitTestVisible = !isReadonly;
                     BindingOperations.SetBinding(element, TextBox.TextProperty,
-                        new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
+                        new Binding($"{fieldValPath}.Stringvalue"));
                     break;
                 case "Double":
                     element = new TextBox();
                     ((TextBox) element).IsReadOnly = isReadonly;
-                    var doubleBinding = new Binding("cachedForm.fields[" + count + "].value.doublevalue");
+                    var doubleBinding = new Binding($"{fieldValPath}.Doublevalue");
                     doubleBinding.ValidationRules.Add(new StringToIntValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, doubleBinding);
                     break;
                 case "Integer":
                     element = new TextBox();
                     ((TextBox) element).IsReadOnly = isReadonly;
-                    var intBinding = new Binding("cachedForm.fields[" + count + "].value.intvalue");
+                    var intBinding = new Binding($"{fieldValPath}.Intvalue");
                     intBinding.ValidationRules.Add(new StringToIntValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, intBinding);
                     break;
                 case "String":
                     element = new TextBox();
                     ((TextBox) element).IsReadOnly = isReadonly;
-                    var stringbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
+                    var stringbinding = new Binding($"{fieldValPath}.Stringvalue");
                     stringbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, stringbinding);
                     break;
@@ -95,12 +96,12 @@ namespace ParkInspect.View.UserControls.Popup
                     element = new TextBox();
                     ((TextBox) element).IsReadOnly = isReadonly;
                     BindingOperations.SetBinding(element, TextBox.TextProperty,
-                        new Binding("cachedForm.fields[" + count + "].value.stringvalue"));
+                        new Binding($"{fieldValPath}.Stringvalue"));
                     break;
                 default:
                     element = new TextBox();
                     ((TextBox) element).IsReadOnly = isReadonly;
-                    var defaultbinding = new Binding("cachedForm.fields[" + count + "].value.stringvalue");
+                    var defaultbinding = new Binding($"{fieldValPath}.Stringvalue");
                     defaultbinding.ValidationRules.Add(new IsNotEmptyValidationRule());
                     BindingOperations.SetBinding(element, TextBox.TextProperty, defaultbinding);
                     break;

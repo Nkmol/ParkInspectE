@@ -94,6 +94,7 @@ namespace ParkInspect.ViewModel
             _selectedTab = 1;
 
             RemoveImageCommand = new RelayCommand<string>(RemoveImage);
+            ImagePaths = new ObservableCollection<string>();
         }
 
         private void RemoveImage(string imagePath)
@@ -101,9 +102,12 @@ namespace ParkInspect.ViewModel
             if (Dialog.ShowConfirmationDialog("Foto verwijderen",
                 "Weet je zeker dat je de foto wilt verwijdern van de vragenlijst?"))
             {
-                File.SetAttributes(imagePath, FileAttributes.Normal);
-                File.Delete(imagePath);
-                ImagePaths.Remove(imagePath);
+                if (File.Exists(imagePath))
+                {
+                    File.SetAttributes(imagePath, FileAttributes.Normal);
+                    File.Delete(imagePath);
+                    ImagePaths.Remove(imagePath);
+                }
             }
         }
 
@@ -187,9 +191,9 @@ namespace ParkInspect.ViewModel
 
         public void SaveForm(bool isNew = false)
         {
-            Debug.WriteLine("SAVE FORM");
             if (CachedForm == null)
                 return;
+
             Service.SaveForm(_inspection, CachedForm, isNew);
             Dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
         }

@@ -40,13 +40,6 @@ namespace ParkInspect.Services
                     // If a Form was already saved, remove old one first
                     if (inspection.Form != null)
                     {
-                        var fields = inspection.Form.Formfields.ToList();
-                        foreach (var formFields in fields)
-                        {
-                            Delete(formFields);
-                        }
-                        Delete(inspection.Form);
-
                         //Delete old Attachements of Form
                         var path = $@"{FormViewModel.FileImagesPath}\{inspection.Form.id}";
                         if (Directory.Exists(path))
@@ -54,7 +47,12 @@ namespace ParkInspect.Services
                             Directory.Delete(path, true);
                         }
 
-                        inspection.Form = null;
+                        var fields = inspection.Form.Formfields.ToList();
+                        foreach (var formFields in fields)
+                        {
+                            Delete(formFields);
+                        }
+                        Delete(inspection.Form);
                     }
 
                     inspection.Form = new Form() {template_id = inspection.SelectedTemplate.id};
