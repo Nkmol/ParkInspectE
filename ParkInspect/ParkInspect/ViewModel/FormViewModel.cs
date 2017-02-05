@@ -28,18 +28,6 @@ namespace ParkInspect.ViewModel
         private FormPopup _view;
         public DialogManager Dialog;
 
-        public FormViewModel(IRepository context, DialogManager dialog)
-        {
-            Context = (EntityFrameworkRepository<ParkInspectEntities>) context;
-            Service = new FormService(Context);
-            EditorVisibility = Visibility.Hidden;
-            TemplatesViewModel = new TemplatesViewModel(this);
-            SaveCommand = new RelayCommand(SaveForm);
-            AddAttachmentCommand = new RelayCommand(AddAttachment);
-            Dialog = dialog;
-            _selectedTab = 1;
-        }
-
         public ObservableCollection<string> ImagePaths { get; set; }
 
         public IRepository Context { get; set; }
@@ -52,8 +40,8 @@ namespace ParkInspect.ViewModel
             set
             {
                 _view = value;
-                var templates = (List<Template>) Context.GetAll<Template>();
-                var inspections = (List<Inspection>) Context.GetAll<Inspection>();
+                var templates = (List<Template>)Context.GetAll<Template>();
+                var inspections = (List<Inspection>)Context.GetAll<Inspection>();
             }
         }
 
@@ -92,7 +80,34 @@ namespace ParkInspect.ViewModel
 
         public object SelectedItemPopup => this;
 
-        public void EnableEditor()
+        public RelayCommand<string> RemoveImageCommand { get; set; }
+
+        public FormViewModel(IRepository context, DialogManager dialog)
+        {
+            Context = (EntityFrameworkRepository<ParkInspectEntities>) context;
+            Service = new FormService(Context);
+            EditorVisibility = Visibility.Hidden;
+            TemplatesViewModel = new TemplatesViewModel(this);
+            SaveCommand = new RelayCommand(SaveForm);
+            AddAttachmentCommand = new RelayCommand(AddAttachment);
+            Dialog = dialog;
+            _selectedTab = 1;
+
+            RemoveImageCommand = new RelayCommand<string>(RemoveImage);
+        }
+
+        private void RemoveImage(string imagePath)
+        {
+            if (Dialog.ShowConfirmationDialog("Foto verwijderen",
+                "Weet je zeker dat je de foto wilt verwijdern van de vragenlijst?"))
+            {
+                File.SetAttributes(imagePath, FileAttributes.Normal);
+                File.Delete(imagePath);
+                ImagePaths.Remove(imagePath);
+            }
+        }
+
+      public void EnableEditor()
         {
             EditorVisibility = Visibility.Visible;
             SelectedTab = 2;

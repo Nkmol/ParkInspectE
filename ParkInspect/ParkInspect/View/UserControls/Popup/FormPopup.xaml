@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
              xmlns:convertor="clr-namespace:ParkInspect.Convertor"
              mc:Ignorable="d" d:DesignWidth="900"
+             Name="Window"
              DataContext="{Binding Forms, Source={StaticResource Locator}}" Height="341.176">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -21,7 +22,7 @@
                 <StackPanel>
                     <StackPanel Name="FormGrid" />
 
-                    <UniformGrid Rows="1">
+                    <UniformGrid Rows="1" Margin="0,10,0,0">
                         <Button x:Name="saveButton" Command="{Binding SaveCommand}" Content="Opslaan" Margin="10" />
                         <Button x:Name="addAttachmentButton" Command="{Binding AddAttachmentCommand}"
                                 Content="Bijlage toevoegen" Margin="0,0,10,0" />
@@ -36,12 +37,27 @@
                             <ItemsControl ItemsSource="{Binding ImagePaths}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Height="600" />
+                                        <UniformGrid Height="600"/>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Image Source="{Binding ., Converter={StaticResource BitmapConvertor}}" />
+                                        <Grid>
+                                            <Image Source="{Binding ., Converter={StaticResource BitmapConvertor}}" Stretch="UniformToFill"/>
+                                            <Button Height="36" Width="36" Content="✖" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="1" Command="{Binding DataContext.RemoveImageCommand, ElementName=Window}" CommandParameter="{Binding .}">
+                                                <Button.Style>
+                                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignMenuCommandButtonStyle}">
+                                                        <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Background" Value="#FFFF4242"/>
+                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
