@@ -52,13 +52,13 @@ namespace ParkInspect.Services
                     // Assign assiociated fields
                     foreach (var templateField in inspection.SelectedTemplate.Fields)
                     {
-                        inspection.Form.Formfields.Add(new Formfield()
+                        inspection.Form.Formfields.Add(item: new Formfield()
                         {
                             field_template_id = inspection.SelectedTemplate.id,
                             Form = inspection.Form,
                             Field = templateField,
                             field_title = templateField.title,
-                            // value == empty
+                            value = "[" + templateField.datatype + "]",
                         });
                     }
                 }
