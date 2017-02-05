@@ -802,7 +802,7 @@
             <Left>0.5in</Left>
             <Top>2.625in</Top>
             <Height>3.25in</Height>
-            <Width>3.5in</Width>
+            <Width>3.75in</Width>
             <Style>
               <BackgroundColor>White</BackgroundColor>
               <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
@@ -814,22 +814,7 @@
             <ChartSeriesHierarchy>
               <ChartMembers>
                 <ChartMember>
-                  <Group Name="Chart10_SeriesGroup1">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!year.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!year.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <ChartMembers>
-                    <ChartMember>
-                      <Label>aantal_inspections</Label>
-                    </ChartMember>
-                  </ChartMembers>
-                  <Label>=Fields!year.Value</Label>
+                  <Label>Column2</Label>
                 </ChartMember>
               </ChartMembers>
             </ChartSeriesHierarchy>
@@ -838,25 +823,25 @@
                 <ChartMember>
                   <Group Name="Chart10_CategoryGroup1">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!year.Value</GroupExpression>
+                      <GroupExpression>=Fields!Column1.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!year.Value</Value>
+                      <Value>=Fields!Column1.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <Label>=Fields!year.Value</Label>
+                  <Label>=Fields!Column1.Value</Label>
                 </ChartMember>
               </ChartMembers>
             </ChartCategoryHierarchy>
             <ChartData>
               <ChartSeriesCollection>
-                <ChartSeries Name="aantal_inspections">
+                <ChartSeries Name="Column2">
                   <ChartDataPoints>
                     <ChartDataPoint>
                       <ChartDataPointValues>
-                        <Y>=Sum(Fields!aantal_inspections.Value)</Y>
+                        <Y>=Sum(Fields!Column2.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
                         <Rotation>0</Rotation>
@@ -1124,7 +1109,7 @@
             </ChartAreas>
             <ChartLegends>
               <ChartLegend Name="ChartLegend">
-                <Hidden>false</Hidden>
+                <Hidden>true</Hidden>
                 <Style>
                   <Color>Black</Color>
                   <Border>
@@ -1143,6 +1128,20 @@
                 <TextWrapThreshold>0</TextWrapThreshold>
               </ChartLegend>
             </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Aantal inspecties per jaar</Caption>
+                <Hidden>false</Hidden>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontWeight>Normal</FontWeight>
+                  <Color>Black</Color>
+                </Style>
+                <Position>TopCenter</Position>
+                <DockOffset>0</DockOffset>
+                <TextOrientation>Auto</TextOrientation>
+              </ChartTitle>
+            </ChartTitles>
             <ChartNoDataMessage Name="NoDataMessage">
               <Caption>No Data Available</Caption>
               <Hidden>false</Hidden>
@@ -1522,21 +1521,22 @@ order by aantal_inspections desc</CommandText>
     </DataSet>
     <DataSet Name="TotalInspectionsEachYear">
       <Fields>
-        <Field Name="year">
-          <DataField>year</DataField>
+        <Field Name="Column1">
+          <DataField>Column1</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="aantal_inspections">
-          <DataField>aantal_inspections</DataField>
+        <Field Name="Column2">
+          <DataField>Column2</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <Query>
         <DataSourceName>ParkInspect</DataSourceName>
         <CommandType>Text</CommandType>
-        <CommandText>select year(inspection.[date]) as [year], count(inspection.id) as aantal_inspections
+        <CommandText>select year(inspection.[date]), count(inspection.id) 
 from asignment
 inner join inspection on inspection.assignment_id = asignment.id
+where year(inspection.[date]) IS NOT NULL
 group by year(inspection.[date])</CommandText>
       </Query>
     </DataSet>
