@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ParkInspect.Repository;
+using ParkInspect.ViewModel;
 using ParkInspect.ViewModel.AssignmentVM;
 
 namespace ParkInspect.Services
@@ -44,6 +46,14 @@ namespace ParkInspect.Services
                             Delete(formFields);
                         }
                         Delete(inspection.Form);
+
+                        //Delete old Attachements of Form
+                        var path = $@"{FormViewModel.FileImagesPath}\{inspection.Form.id}";
+                        if (Directory.Exists(path))
+                        {
+                            Directory.Delete(path, true);
+                        }
+
                         inspection.Form = null;
                     }
 

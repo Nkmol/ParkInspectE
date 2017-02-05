@@ -17,7 +17,7 @@ namespace ParkInspect.ViewModel
     {
         private const string FileFilter = "*.jpg;*.jpeg;*.png;";
 
-        private readonly string _fileImagesPath;
+        public static readonly string FileImagesPath = $@"{Environment.CurrentDirectory}\Assets\FormPhotos";
         private CachedForm _cachedForm;
 
         private Visibility _editorVisilibty;
@@ -38,8 +38,6 @@ namespace ParkInspect.ViewModel
             AddAttachmentCommand = new RelayCommand(AddAttachment);
             Dialog = dialog;
             _selectedTab = 1;
-
-            _fileImagesPath = $@"{Environment.CurrentDirectory}\Assets\FormPhotos";
         }
 
         public ObservableCollection<string> ImagePaths { get; set; }
@@ -129,7 +127,7 @@ namespace ParkInspect.ViewModel
                 i++;
             }
 
-            var path = $@"{_fileImagesPath}\{inspection.Form.id}";
+            var path = $@"{FileImagesPath}\{inspection.Form.id}";
             if (Directory.Exists(path))
             {
                 ImagePaths = new ObservableCollection<string>(Directory.GetFiles(path));
@@ -194,7 +192,7 @@ namespace ParkInspect.ViewModel
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                var path = $@"{_fileImagesPath}\{_inspection.Form.id}";
+                var path = $@"{FileImagesPath}\{_inspection.Form.id}";
                 Directory.CreateDirectory(path);
                 File.Copy(fileDialog.FileName, $@"{path}\{fileDialog.SafeFileName}", true);
 
@@ -202,8 +200,10 @@ namespace ParkInspect.ViewModel
                 Dialog.ShowMessage("Vragenlijst foto bijlage", "Je bijlage is toegevoegd.");
             }
             else
+            {
                 Dialog.ShowMessage("Vragenlijst foto bijlage",
                     "Er is iets misgegaan tijdens het toevoegen van de bijlage.");
+            }
         }
     }
 
