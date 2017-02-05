@@ -59,17 +59,18 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0">
                 <StackPanel Width="300" VerticalAlignment="Top">
                     <AdornerDecorator>
-                        <ComboBox Name="CbParkinglot" Text="{Binding Parkinglot.name}" DisplayMemberPath="name"
+                        <ComboBox Name="CbParkinglot" DisplayMemberPath="name"
+                                  SelectedItem="Parkinglot"
                                   ItemsSource="{Binding Global.Parkinglots, Source={StaticResource Locator}}"
                                   materialDesign:HintAssist.Hint="Selecteer een parkeerplaats"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
-                            <ComboBox.SelectedItem>
-                                <Binding Path="Parkinglot">
+                            <ComboBox.Text>
+                                <Binding Path="Parkinglot.name">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ComboBox.SelectedItem>
+                            </ComboBox.Text>
                         </ComboBox>
                     </AdornerDecorator>
                     <!--<DockPanel LastChildFill="False">
@@ -78,17 +79,17 @@
                     </DockPanel>-->
 
                     <AdornerDecorator>
-                        <ComboBox Name="CbStatus" Text="{Binding State.state1}"
+                        <ComboBox Name="CbStatus" SelectedItem="{Binding State}"
                                   ItemsSource="{Binding Global.States, Source={StaticResource Locator}}"
                                   DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
-                            <ComboBox.SelectedItem>
-                                <Binding Path="State">
+                            <ComboBox.Text>
+                                <Binding Path="State.state1">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ComboBox.SelectedItem>
+                            </ComboBox.Text>
                         </ComboBox>
                     </AdornerDecorator>
                     <ComboBox Text="{Binding FollowUpInspection.Parkinglot.name}"
