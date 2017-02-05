@@ -291,7 +291,7 @@ namespace ParkInspect.ViewModel
             }
             else {
                 _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst inzien", new FormPopup(), null);
-                ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(inspection);
+                ServiceLocator.Current.GetInstance<FormViewModel>().LoadForm(inspection);
             }
         }
 

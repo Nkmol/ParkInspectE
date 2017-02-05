@@ -1,96 +1,81 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
-using ParkInspect.Repository;
-using ParkInspect.View.UserControls;
-using ParkInspect.Services;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Microsoft.Win32;
-using System.IO;
-using Microsoft.Practices.ServiceLocation;
+using ParkInspect.Repository;
+using ParkInspect.Services;
 using ParkInspect.View.UserControls.Popup;
-using ParkInspect.ViewModel.Popup;
-
-/*
-using Microsoft.Practices.ServiceLocation;
-
-    ServiceLocator.Current.GetInstance<PopupManager>().ShowPopup<SelectTemplatePopup>("Template", new SelectTemplatePopup(), // line below here //);
-    ServiceLocator.Current.GetInstance<FormViewModel>().createForm(SelectedInspection);
-   
-    ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(SelectedInspection);
-*/
 
 namespace ParkInspect.ViewModel
 {
     public class FormViewModel : ViewModelBase, IPopup
     {
-        public IRepository Context { get; set; }
-        public TemplatesViewModel TemplatesViewModel { get; set; }
-        private FormService service { get; set; }
-        private Inspection inspection;
-        public DialogManager _dialog;
+        private CachedForm _cachedForm;
+
+        private Visibility _editorVisilibty;
+        private Inspection _inspection;
+
+        private int _selectedTab;
 
         private FormPopup _view;
-        public FormPopup View {
-            get
-            {
-                return _view;
-            }
+        public DialogManager Dialog;
+
+        public FormViewModel(IRepository context, DialogManager dialog)
+        {
+            Context = (EntityFrameworkRepository<ParkInspectEntities>) context;
+            Service = new FormService(Context);
+            EditorVisibility = Visibility.Hidden;
+            TemplatesViewModel = new TemplatesViewModel(this);
+            SaveCommand = new RelayCommand(SaveForm);
+            AddAttachmentCommand = new RelayCommand(AddAttachment);
+            Dialog = dialog;
+            _selectedTab = 1;
+        }
+
+        public IRepository Context { get; set; }
+        public TemplatesViewModel TemplatesViewModel { get; set; }
+        private FormService Service { get; }
+
+        public FormPopup View
+        {
+            get { return _view; }
             set
             {
                 _view = value;
-                List<Template> templates = (List<Template>)Context.GetAll<Template>();
-                List<Inspection> inspections = (List<Inspection>)Context.GetAll<Inspection>();
-
-
-                //loadForm(inspections.ToArray()[0]);
-
-                //createForm(inspections.ToArray()[0], templates.ToArray()[0]);
+                var templates = (List<Template>) Context.GetAll<Template>();
+                var inspections = (List<Inspection>) Context.GetAll<Inspection>();
             }
         }
 
-        private Visibility editorVisilibty;
         public Visibility EditorVisibility
         {
-            get
-            {
-                return editorVisilibty;
-            }
+            get { return _editorVisilibty; }
             set
             {
-                editorVisilibty = value;
+                _editorVisilibty = value;
                 RaisePropertyChanged("EditorVisibility");
             }
         }
 
-        private int selectedTab;
         public int SelectedTab
         {
-            get
-            {
-                return selectedTab;
-            }
+            get { return _selectedTab; }
             set
             {
-                selectedTab = value;
+                _selectedTab = value;
                 RaisePropertyChanged("SelectedTab");
             }
         }
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand AddAttachmentCommand { get; set; }
-        
-        private CachedForm _cachedForm;
-        public CachedForm cachedForm
+
+        public CachedForm CachedForm
         {
-            get
-            {
-                return _cachedForm;
-            }
+            get { return _cachedForm; }
             set
             {
                 _cachedForm = value;
@@ -100,91 +85,70 @@ namespace ParkInspect.ViewModel
 
         public object SelectedItemPopup => this;
 
-        public FormViewModel(IRepository context, DialogManager dialog)
-        {
-            Context = (EntityFrameworkRepository<ParkInspectEntities>)context;
-            service = new FormService(Context);
-            EditorVisibility = Visibility.Hidden;
-            TemplatesViewModel = new TemplatesViewModel(this);
-            SaveCommand = new RelayCommand(saveForm);
-            AddAttachmentCommand = new RelayCommand(addAttachment);
-            _dialog = dialog;
-            selectedTab = 1;
-        }
-
-        public void enableEditor()
+        public void EnableEditor()
         {
             EditorVisibility = Visibility.Visible;
             SelectedTab = 2;
         }
 
-        public void disableEditor()
+        public void DisableEditor()
         {
             if (SelectedTab == 2)
-            {
                 SelectedTab = 1;
-            }
             EditorVisibility = Visibility.Hidden;
         }
 
-        public void loadForm(Inspection inspection)
+        public void LoadForm(Inspection inspection)
         {
-            this.inspection = inspection;
-            Form form = inspection.Form;
+            _inspection = inspection;
+            var form = inspection.Form;
             if (form == null)
-            {
                 return;
-            }
             View.clear();
-            int i = 0;
-            cachedForm = new CachedForm();
-            foreach (Formfield field in form.Formfields)
+            var i = 0;
+            CachedForm = new CachedForm();
+            foreach (var field in form.Formfields)
             {
-                CachedFormField cachedField = new CachedFormField()
+                var cachedField = new CachedFormField
                 {
-                    field_title = field.field_title,
-                    datatype = field.Field.datatype,
-                    value = new CachedValue(field.value)
+                    FieldTitle = field.field_title,
+                    Datatype = field.Field.datatype,
+                    Value = new CachedValue(field.value)
                 };
-                cachedForm.fields.Add(cachedField);
+                CachedForm.Fields.Add(cachedField);
                 View.addFormField(cachedField, i, false);
                 i++;
             }
             //selectedTab = 0;
         }
 
-        public void createForm(Inspection inspection,Template template)
+        public void CreateForm(Inspection inspection, Template template)
         {
-            this.inspection = inspection;
-            Form form = new Form();
+            _inspection = inspection;
+            var form = new Form();
             form.Template = template;
-            CachedForm cachedForm = service.createFormFromTemplate(template);
-            loadForm(cachedForm);
+            var cachedForm = Service.createFormFromTemplate(template);
+            LoadForm(cachedForm);
             //SelectedTab = 0;
         }
 
-        public void createForm(Inspection inspection)
+        public void CreateForm(Inspection inspection)
         {
-
-            TemplateCollection collection = TemplatesViewModel.SelectedTemplateCollection;
-            Template template = collection.getTemplateFromVersion(TemplatesViewModel.SelectedVersion);
+            var collection = TemplatesViewModel.SelectedTemplateCollection;
+            var template = collection.getTemplateFromVersion(TemplatesViewModel.SelectedVersion);
             if (template == null)
-            {
                 return;
-            }
-            createForm(inspection, template);
+            CreateForm(inspection, template);
         }
 
-        public void loadForm(CachedForm form)
+        public void LoadForm(CachedForm form)
         {
             if (View == null)
-            {
                 new FormPopup();
-            }
-            cachedForm = form;
+            CachedForm = form;
             View.clear();
-            int i = 0;
-            foreach (CachedFormField field in form.fields)
+            var i = 0;
+            foreach (var field in form.Fields)
             {
                 View.addFormField(field, i, false);
                 i++;
@@ -192,76 +156,67 @@ namespace ParkInspect.ViewModel
             //selectedTab = 0;
         }
 
-        public void saveForm(bool isNew = false)
+        public void SaveForm(bool isNew = false)
         {
             Debug.WriteLine("SAVE FORM");
-            if (cachedForm == null)
-            {
+            if (CachedForm == null)
                 return;
-            }
-            service.SaveForm(inspection,cachedForm,isNew);
-            _dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
+            Service.SaveForm(_inspection, CachedForm, isNew);
+            Dialog.ShowMessage("Vragenlijst", "Je vragenlijst is opgeslagen.");
         }
 
-        public void saveForm()
+        public void SaveForm()
         {
-            saveForm(false);
+            SaveForm(false);
         }
 
-        public void addAttachment()
+        public void AddAttachment()
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            var fileDialog = new OpenFileDialog();
             fileDialog.DefaultExt = ".png"; // Required file extension 
             fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;"; // Optional file extensions
 
             var result = fileDialog.ShowDialog();
             if (result == false)
-            {
                 return;
-            }
-            
 
-            string path = fileDialog.FileName;
-            string content = File.ReadAllText(path);
-            _cachedForm.attachments.Add(content);
+
+            var path = fileDialog.FileName;
+            var content = File.ReadAllText(path);
+            _cachedForm.Attachments.Add(content);
             Debug.WriteLine(content);
-            _dialog.ShowMessage("Vragenlijst", "Je bijlage is toegevoegd.");
-
+            Dialog.ShowMessage("Vragenlijst", "Je bijlage is toegevoegd.");
         }
     }
 
     public class CachedForm
     {
-        public Form form;
-        public List<CachedFormField> fields { get; set; }
-        public List<string> attachments { get; set; }
-        public int template_id;
+        public Form Form;
+        public int TemplateId;
 
         public CachedForm()
         {
-            fields = new List<CachedFormField>();
-            attachments = new List<string>();
+            Fields = new List<CachedFormField>();
+            Attachments = new List<string>();
         }
+
+        public List<CachedFormField> Fields { get; set; }
+        public List<string> Attachments { get; set; }
     }
 
     public class CachedFormField
     {
-        public string field_title;
-        public CachedValue value { get; set; }
-        public string datatype;
+        public string Datatype;
+        public string FieldTitle;
+        public CachedValue Value { get; set; }
     }
 
-    public class CachedValue{
-        public bool boolvalue { get; set; }
-        public string stringvalue { get; set; }
-        public int intvalue { get; set; }
-        public double doublevalue { get; set; }
-        public string type { get; set; }
-
+    public class CachedValue
+    {
         public CachedValue(string sourceValue)
         {
-            boolvalue = sourceValue.Replace("[Boolean]", "") == "True";
-            stringvalue = sourceValue.Replace("[String]", "");
+            Boolvalue = sourceValue.Replace("[Boolean]", "") == "True";
+            Stringvalue = sourceValue.Replace("[String]", "");
 
             int intvalue;
             double doublevalue;
@@ -269,43 +224,41 @@ namespace ParkInspect.ViewModel
             int.TryParse(sourceValue.Replace("[Integer]", ""), out intvalue);
             double.TryParse(sourceValue.Replace("[Double]", ""), out doublevalue);
 
-            this.intvalue = intvalue;
-            this.doublevalue = doublevalue;
+            this.Intvalue = intvalue;
+            this.Doublevalue = doublevalue;
 
             if (sourceValue.IndexOf("[Boolean]") >= 0)
-            {
-                type = "Boolean";
-            } else if (sourceValue.IndexOf("[String]") >= 0)
-            {
-                type = "String";
-            }
+                Type = "Boolean";
+            else if (sourceValue.IndexOf("[String]") >= 0)
+                Type = "String";
             else if (sourceValue.IndexOf("[Integer]") >= 0)
-            {
-                type = "Integer";
-            }
+                Type = "Integer";
             else if (sourceValue.IndexOf("[Double]") >= 0)
-            {
-                type = "Double";
-            } else {
-                type = "unknown";
-            }
+                Type = "Double";
+            else Type = "unknown";
         }
+
+        public bool Boolvalue { get; set; }
+        public string Stringvalue { get; set; }
+        public int Intvalue { get; set; }
+        public double Doublevalue { get; set; }
+        public string Type { get; set; }
 
 
         public override string ToString()
         {
-            switch (type)
+            switch (Type)
             {
                 case "Boolean":
-                    return "[" + type + "]" + boolvalue.ToString();
+                    return "[" + Type + "]" + Boolvalue;
                 case "String":
-                    return "[" + type + "]" + stringvalue;
+                    return "[" + Type + "]" + Stringvalue;
                 case "Integer":
-                    return "[" + type + "]" + intvalue.ToString();
+                    return "[" + Type + "]" + Intvalue;
                 case "Double":
-                    return "[" + type + "]" + doublevalue.ToString();
+                    return "[" + Type + "]" + Doublevalue;
             }
-            return "[string]" + stringvalue;
+            return "[string]" + Stringvalue;
         }
     }
 }

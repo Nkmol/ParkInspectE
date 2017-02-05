@@ -21,12 +21,12 @@ namespace ParkInspect.Services
         public CachedForm createFormFromTemplate(Template fromTemplate)
         {
             CachedForm form = new CachedForm() {
-                fields = new List<CachedFormField>(),
-                template_id = fromTemplate.id
+                Fields = new List<CachedFormField>(),
+                TemplateId = fromTemplate.id
             };
             foreach(Field f in fromTemplate.Fields)
             {
-                form.fields.Add(new CachedFormField() { field_title = f.title, value = new CachedValue("[" + f.datatype + "]"), datatype = f.datatype});
+                form.Fields.Add(new CachedFormField() { FieldTitle = f.title, Value = new CachedValue("[" + f.datatype + "]"), Datatype = f.datatype});
             }
             return form;
         }
@@ -41,8 +41,8 @@ namespace ParkInspect.Services
         public void SaveForm(Inspection inspection,CachedForm cachedForm,bool isNew)
         {
             Form form = new Form();
-            form.template_id = cachedForm.template_id;
-            foreach(string attachment in cachedForm.attachments)
+            form.template_id = cachedForm.TemplateId;
+            foreach(string attachment in cachedForm.Attachments)
             {
                 Image image = new Image()
                 {
@@ -50,16 +50,16 @@ namespace ParkInspect.Services
                 };
                 form.Image = image;
             }
-            foreach(CachedFormField field in cachedForm.fields)
+            foreach(CachedFormField field in cachedForm.Fields)
             {
                 Formfield formField = new Formfield()
                 {
-                    field_title = field.field_title,
-                    value = field.value.ToString(),
-                    field_template_id = cachedForm.template_id
+                    field_title = field.FieldTitle,
+                    value = field.Value.ToString(),
+                    field_template_id = cachedForm.TemplateId
 
                 };
-                Debug.WriteLine(field.field_title + " : " + field.value.ToString() + "(" + field.value.type + ")");
+                Debug.WriteLine(field.FieldTitle + " : " + field.Value.ToString() + "(" + field.Value.Type + ")");
                 form.Formfields.Add(formField);
             }
             if (isNew)

@@ -267,8 +267,8 @@ namespace ParkInspect.ViewModel
                 if (value == true) {
                     //SimpleIoc.Default.GetInstance<DashboardViewModel>().SelectedTab = 3;
                     //_popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst invullen", new FormPopup(), null);
-                    ServiceLocator.Current.GetInstance<FormViewModel>().createForm(Data);
-                    ServiceLocator.Current.GetInstance<FormViewModel>().saveForm(true);
+                    ServiceLocator.Current.GetInstance<FormViewModel>().CreateForm(Data);
+                    ServiceLocator.Current.GetInstance<FormViewModel>().SaveForm(true);
                     updateFormButtonText();
                 }
             }
@@ -291,14 +291,14 @@ namespace ParkInspect.ViewModel
             } else
             {
                 _popupManager.ShowPopupNoButton<FormViewModel>("Vragenlijst inzien", new FormPopup(), null);
-                ServiceLocator.Current.GetInstance<FormViewModel>().loadForm(Data);
+                ServiceLocator.Current.GetInstance<FormViewModel>().LoadForm(Data);
             }
         }
 
         public void createForm()
         {
             FormViewModel formViewModel = ServiceLocator.Current.GetInstance<FormViewModel>();
-            formViewModel.createForm(Data);
+            formViewModel.CreateForm(Data);
             //LoadInspector();
         }
 
