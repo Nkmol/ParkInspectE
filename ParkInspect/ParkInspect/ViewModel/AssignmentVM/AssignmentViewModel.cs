@@ -223,7 +223,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             SimpleIoc.Default.Unregister<InspectionViewModel>();
             SimpleIoc.Default.Register<InspectionViewModel>(() => SelectedInspection);
 
-            _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Voeg een inspectie toe aan de huidige Opdracht", new InspectionManageControl(),
+            _popupManager.ShowUpdateNewPopup<InspectionViewModel>("Bewerk onderstaande inspectie", new InspectionManageControl(),
                 x =>
                 {
                     RaisePropertyChanged();
