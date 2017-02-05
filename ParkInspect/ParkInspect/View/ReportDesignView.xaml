@@ -6,14 +6,12 @@
         xmlns:ignore="http://www.galasoft.ch/ignore"            
         xmlns:popup="clr-namespace:ParkInspect.View.UserControls.Popup"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         mc:Ignorable="d ignore"
         Height="600"
         Width="1010"
         Title="ParkInspect"
         BorderThickness="1"
-        popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}"
-        dialogs:DialogParticipation.Register="{Binding Dialog, Source={StaticResource Locator}}">
+        popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}">
     <Grid>
         <syncfusion:ReportDesigner Name="Designer" syncfusion:SkinStorage.VisualStyle="Metro" Margin="0,55,0,0"/>
     </Grid>

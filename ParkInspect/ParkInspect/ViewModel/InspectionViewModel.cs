@@ -10,7 +10,6 @@ using ParkInspect.Services;
 using ParkInspect.View.UserControls;
 using ParkInspect.View.UserControls.Popup;
 using ParkInspect.ViewModel.Popup;
-using Microsoft.Practices.ServiceLocation;
 using System.Threading.Tasks;
 using System.Resources;
 
@@ -41,11 +40,6 @@ namespace ParkInspect.ViewModel
             }
         }
 
-
-        public ObservableCollection<Inspection> Inspections { get; set; }
-        public ObservableCollection<Parkinglot> Parkinglots { get; set; }
-        public ObservableCollection<Form> Forms { get; set; }
-        public ObservableCollection<State> States { get; set; }
         public ObservableCollection<Employee> Inspectors { get; set; }
 
         public Employee SelectedInspector { get; set; }
@@ -58,15 +52,13 @@ namespace ParkInspect.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand AssignInspectorCommand { get; set; }
         public RelayCommand UnassignInspecteurCommand { get; set; }
-        public RelayCommand SearchFormCommand { get; set; }
-        public RelayCommand FillFormCommand { get; set; }
 
         public Action PopupDone { get; set; }
 
         public object SelectedItemPopup => this;
 
         private readonly InspectionService _service;
-        private PopupManager _popupManager;
+        private readonly PopupManager _popupManager;
 
         private DateTime? _boundryStartDate;
         private DateTime? _boundryEndDate;
@@ -199,8 +191,6 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        private bool isSaved;
-
         #endregion
 
         private Template _selectedTemplate;
@@ -219,6 +209,8 @@ namespace ParkInspect.ViewModel
             get { return _selectedTemplateForm; }
             set { _selectedTemplateForm = value; }
         }
+
+        private bool isSaved;
 
         #endregion
 
@@ -244,12 +236,8 @@ namespace ParkInspect.ViewModel
 
             UnassignInspecteurCommand = new RelayCommand(UnassignInspecteur, () => SelectedAssignedInspector != null);
             AssignInspectorCommand = new RelayCommand(AssignInspector, () => SelectedInspector != null);
-            
-            States = new ObservableCollection<State>(_service.GetAll<State>());
-            Inspections = new ObservableCollection<Inspection>(_service.GetAll<Inspection>());
-            Parkinglots = new ObservableCollection<Parkinglot>(_service.GetAll<Parkinglot>());
-            Forms = new ObservableCollection<Form>(_service.GetAll<Form>());
-            Inspectors = new ObservableCollection<Employee>(_service.GetAll<Employee>().OrderBy(x => x.firstname));
+
+            LoadInspector();
 
             SelectedTemplate = Data.Form?.Template;
             SelectedTemplateForm = Data.Form?.Template;

@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Command;
 using ParkInspect.Model.Factory;
 using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Repository;
+using ParkInspect.Services;
 
 namespace ParkInspect.ViewModel.ContactpersonVM
 {
@@ -45,10 +46,10 @@ namespace ParkInspect.ViewModel.ContactpersonVM
 
         public RelayCommand NewCommand { get; set; }
 
-        private void NewContactperson()
+        public void NewContactperson()
         {
             SelectedContactperson = new ContactpersonViewModel(_context, new Contactperson(), _dialog);
-            RaisePropertyChanged();
+            RaisePropertyChanged("Contactpersons");
         }
 
         private void UpdateContactpersons()

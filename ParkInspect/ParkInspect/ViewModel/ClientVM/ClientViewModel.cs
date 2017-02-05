@@ -159,10 +159,13 @@ namespace ParkInspect.ViewModel.ClientVM
             Password = Data.password;
             FormPassword = Password;
 
-            Message = Service.Add(Data) ? "De klant is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
+            var rs = Service.Add(Data);
+
+            Message = rs ? "De klant is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
             _dialog.ShowMessage("Klant toevoegen", Message);
 
-            overview.Clients.Add(this);
+            if(rs)
+                overview.Clients.Add(this);
         }
 
         public void Edit()
