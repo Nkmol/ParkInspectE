@@ -91,6 +91,13 @@ namespace ParkInspect.ViewModel
             set { _regions = value; }
         }
 
+        private ObservableCollection<Template> _templates;
+        public ObservableCollection<Template> Templates
+        {
+            get { return _templates ?? (_templates = new ObservableCollection<Template>(_serivce.GetAll<Template>())); }
+            set { _templates = value; }
+        }
+
         public GlobalViewModel(IRepository repository)
         {
             _serivce = new DataService(repository);

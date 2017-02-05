@@ -31,6 +31,37 @@ namespace ParkInspect.Services
                 }
                 // Add Inspections to POCO assignment
                 viewModel.Data.Inspections.Add(inspection.Data);
+
+                // tranform Template to Form, once user confirms choice
+                if (inspection.SelectedTemplate != null)
+                {
+                    // If a Form was already saved, remove old one first
+                    if (inspection.Form != null)
+                    {
+                        var fields = inspection.Form.Formfields.ToList();
+                        foreach (var formFields in fields)
+                        {
+                            Delete(formFields);
+                        }
+                        Delete(inspection.Form);
+                        inspection.Form = null;
+                    }
+
+                    inspection.Form = new Form() {template_id = inspection.SelectedTemplate.id};
+
+                    // Assign assiociated fields
+                    foreach (var templateField in inspection.SelectedTemplate.Fields)
+                    {
+                        inspection.Form.Formfields.Add(new Formfield()
+                        {
+                            field_template_id = inspection.SelectedTemplate.id,
+                            Form = inspection.Form,
+                            Field = templateField,
+                            field_title = templateField.title,
+                            // value == empty
+                        });
+                    }
+                }
             }
 
             return viewModel;

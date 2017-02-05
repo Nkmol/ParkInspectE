@@ -105,6 +105,7 @@ namespace ParkInspect.ViewModel
         public EmployeeViewModel Employees => ServiceLocator.Current.GetInstance<EmployeeViewModel>();
 
         public InspectionViewModel Inspection => new InspectionViewModel(SimpleIoc.Default.GetInstance<IRepository>());
+        public InspectionViewModel InspectionKillMe => ServiceLocator.Current.GetInstance<InspectionViewModel>();
         public OfflineViewModel Offline => ServiceLocator.Current.GetInstance<OfflineViewModel>();
         public PrepareViewModel Prepare => ServiceLocator.Current.GetInstance<PrepareViewModel>();
         public InspectionViewModel Inspections => ServiceLocator.Current.GetInstance<InspectionViewModel>();
