@@ -92,7 +92,7 @@
                                       SelectedItem="{Binding FormEmployee}" DisplayMemberPath="firstname"
                                       Name="CbEmployee">
                                 <ComboBox.Text>
-                                    <Binding Path="FormEmployee" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="FormEmployee.firstname" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validationrules:IsNotEmptyValidationRule
                                                 ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True" />

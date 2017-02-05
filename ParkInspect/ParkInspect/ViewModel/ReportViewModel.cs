@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-// using Microsoft.SqlServer.ReportingServices2005;
 using ParkInspect.Repository;
 using Syncfusion.Windows.Reports.Viewer;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
-using MahApps.Metro.Controls.Dialogs;
-using ParkInspect.Model.Factory.Builder;
 using ParkInspect.Services;
 
 
@@ -199,8 +187,8 @@ namespace ParkInspect.ViewModel
         public void UpdateReports()
         {
 
-            List<Report> list = new List<Report>();
-            foreach (string s in Directory.GetFiles("reports", "*.rdl"))
+            var list = new List<Report>();
+            foreach (var s in Directory.GetFiles("Reports", "*.rdl"))
             {
                 list.Add(new Report(s));
             }
