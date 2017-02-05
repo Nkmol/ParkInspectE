@@ -162,7 +162,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
             var Inspection = Data.Inspections.FirstOrDefault(inspec => inspec.id == SelectedInspection.Data.id); 
             if(Inspection == null)
             {
-                _dialogManager.ShowMessage("Fout", "Sla geselecteerde inspectie eerst op in de opdracht voordat je voorbereid!");
+                _dialogManager.ShowMessage("Fout", "Sla de opdracht eerst op voordat je je inspectie gaat voorbereiden!");
             } else
                 _popupManager.ShowPopupNoButton<PrepareViewModel>("Voorbereiden", new PrepareControl(SelectedInspection.Data), null);
         }
