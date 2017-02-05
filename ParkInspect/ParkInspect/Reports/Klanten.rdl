@@ -1437,7 +1437,7 @@
   <DataSources>
     <DataSource Name="ParkInspect">
       <ConnectionProperties>
-        <DataProvider>SQL</DataProvider>
+        <DataProvider>SQLAZURE</DataProvider>
         <ConnectString>Data Source=bhooff.database.windows.net;Initial Catalog=Parkinspect;User Id=bhooff;password=Wachtwoord123</ConnectString>
       </ConnectionProperties>
     </DataSource>
