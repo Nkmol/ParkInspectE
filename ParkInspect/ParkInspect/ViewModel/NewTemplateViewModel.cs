@@ -125,7 +125,7 @@ namespace ParkInspect.ViewModel
             {
                 if (f.title == FieldLabel)
                 {
-                    superViewModel.superViewModel._dialog.ShowMessage("Template editor", "Een vragenlijst kan niet 2 keer dezelfde vraag bevatten");
+                    superViewModel.superViewModel.Dialog.ShowMessage("Template editor", "Een vragenlijst kan niet 2 keer dezelfde vraag bevatten");
                     return;
                 }
             }
@@ -180,9 +180,9 @@ namespace ParkInspect.ViewModel
         public void SaveTemplate()
         {
             Service.SaveTemplate(Template);
-            superViewModel.superViewModel.disableEditor();
+            superViewModel.superViewModel.DisableEditor();
             superViewModel.fillTemplates();
-            superViewModel.superViewModel._dialog.ShowMessage("Template editor","Je template is opgeslagen als versie " + Template.version_number);
+            superViewModel.superViewModel.Dialog.ShowMessage("Template editor","Je template is opgeslagen als versie " + Template.version_number);
         }
 
         public bool CanSaveTemplate()

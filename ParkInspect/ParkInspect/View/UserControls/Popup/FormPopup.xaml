@@ -1,26 +1,79 @@
 ﻿<UserControl x:Class="ParkInspect.View.UserControls.Popup.FormPopup"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ParkInspect.View.UserControls"
-             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d" d:DesignWidth="900"
-             DataContext="{Binding Forms, Source={StaticResource Locator}}" Height="341.176"
+             xmlns:convertor="clr-namespace:ParkInspect.Convertor"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1000"
+             Name="Window"
+             DataContext="{Binding Forms, Source={StaticResource Locator}}"
+             Height="600" Width="800"
              >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <convertor:BitmapConvertor x:Key="BitmapConvertor" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ScrollViewer >
-            <Grid Name="FormGrid">
-                <Button x:Name="saveButton" Command = "{Binding SaveCommand}"  Content="Opslaan" Margin="700,10,45,411" Height="32" RenderTransformOrigin="0.5,0.5" Width="138" />
-                <Button x:Name="addAttachmentButton" Command = "{Binding AddAttachmentCommand}"  Content="Bijlage toevoegen" Margin="516,10,218,411" Height="32" RenderTransformOrigin="0.5,0.5" />
-            </Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel>
+                    <StackPanel Name="FormGrid" />
+
+                    <UniformGrid Rows="1" Margin="0,10,0,0">
+                        <Button x:Name="saveButton" Command="{Binding SaveCommand}" Content="Vragenlijst Opslaan" Margin="10" />
+                        <Button x:Name="addAttachmentButton" Command="{Binding AddAttachmentCommand}"
+                                Content="Bijlage toevoegen" Margin="0,0,10,0" />
+                    </UniformGrid>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="18" FontWeight="Bold">Bijlage overzicht</TextBlock>
+                        </Expander.Header>
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding ImagePaths}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Height="600" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Image Source="{Binding ., Converter={StaticResource BitmapConvertor}}"
+                                                   Stretch="UniformToFill" />
+                                            <Button Height="36" Width="36" Content="✖" HorizontalAlignment="Right" Cursor="Hand"
+                                                    VerticalAlignment="Top" Opacity="1"
+                                                    Command="{Binding DataContext.RemoveImageCommand, ElementName=Window}"
+                                                    CommandParameter="{Binding .}">
+                                                <Button.Style>
+                                                    <Style TargetType="{x:Type Button}"
+                                                           BasedOn="{StaticResource MaterialDesignMenuCommandButtonStyle}">
+                                                        <Setter Property="Background"
+                                                                Value="{DynamicResource FlatButtonBackgroundBrush}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Background" Value="#FFFF4242" />
+                                                                <Setter Property="Foreground"
+                                                                        Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                </ScrollViewer>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

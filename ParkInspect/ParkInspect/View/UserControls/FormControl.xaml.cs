@@ -60,7 +60,7 @@ namespace ParkInspect.View.UserControls
                 saveButton.Visibility = Visibility.Visible;
             }
             Control element = null;
-            switch (field.datatype)
+            switch (field.Datatype)
             {
                 case "Boolean":
                     element = new CheckBox();
@@ -109,7 +109,7 @@ namespace ParkInspect.View.UserControls
                     break;
             }
             Label textLabel = new Label();
-            textLabel.Content = field.field_title;
+            textLabel.Content = field.FieldTitle;
             textLabel.Name = "formElement" + count * 2;
 
             textLabel.Margin = new Thickness(50, 50 + count * 50, 250, 850 - (50 + count * 50 + 40));

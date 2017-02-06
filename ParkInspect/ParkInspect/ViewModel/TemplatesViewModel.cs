@@ -156,14 +156,14 @@ namespace ParkInspect.ViewModel
         public void newTemplate()
         {
             // create new template
-            superViewModel.enableEditor();
+            superViewModel.EnableEditor();
             NewTemplateViewModel.newTemplate();
         }
 
         public void editTemplate()
         {
             // edit from template
-            superViewModel.enableEditor();
+            superViewModel.EnableEditor();
             TemplateCollection collection = SelectedTemplateCollection;
             Template template = collection.getTemplateFromVersion(SelectedVersion);
             NewTemplateViewModel.SetTemplate(Service.editTemplate(template));

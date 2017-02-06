@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ParkInspect.Repository;
+using ParkInspect.ViewModel;
 using ParkInspect.ViewModel.AssignmentVM;
 
 namespace ParkInspect.Services
@@ -38,13 +40,19 @@ namespace ParkInspect.Services
                     // If a Form was already saved, remove old one first
                     if (inspection.Form != null)
                     {
+                        //Delete old Attachements of Form
+                        var path = $@"{FormViewModel.FileImagesPath}\{inspection.Form.id}";
+                        if (Directory.Exists(path))
+                        {
+                            Directory.Delete(path, true);
+                        }
+
                         var fields = inspection.Form.Formfields.ToList();
                         foreach (var formFields in fields)
                         {
                             Delete(formFields);
                         }
                         Delete(inspection.Form);
-                        inspection.Form = null;
                     }
 
                     inspection.Form = new Form() {template_id = inspection.SelectedTemplate.id};
