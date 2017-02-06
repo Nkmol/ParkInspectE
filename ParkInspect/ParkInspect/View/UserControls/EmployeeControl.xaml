@@ -95,7 +95,7 @@
                         <StackPanel>
                             <AdornerDecorator>
                                 <TextBox materialDesign:HintAssist.Hint="Voornaam"
-                                         materialDesign:HintAssist.IsFloating="True" Name="FirstName">
+                                         materialDesign:HintAssist.IsFloating="True" Name="FirstName" Margin="0,-15,0,0">
                                     <TextBox.Text>
                                         <Binding Path="FormFirstname" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -112,7 +112,7 @@
                             </AdornerDecorator>
                             <AdornerDecorator>
                                 <TextBox materialDesign:HintAssist.Hint="Achternaam"
-                                         materialDesign:HintAssist.IsFloating="True" Name="LastName">
+                                         materialDesign:HintAssist.IsFloating="True" Name="LastName" Margin="0, 20, 0, 0">
                                     <TextBox.Text>
                                         <Binding Path="FormLastname" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -129,7 +129,7 @@
                             </AdornerDecorator>
                             <AdornerDecorator>
                                 <TextBox materialDesign:HintAssist.Hint="Email"
-                                         materialDesign:HintAssist.IsFloating="True" Name="Email">
+                                         materialDesign:HintAssist.IsFloating="True" Name="Email" Margin="0, 20, 0, 0">
                                     <TextBox.Text>
                                         <Binding Path="FormEmail" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -146,7 +146,7 @@
                             </AdornerDecorator>
                             <AdornerDecorator>
                                 <TextBox materialDesign:HintAssist.Hint="Telefoonnummer"
-                                         materialDesign:HintAssist.IsFloating="True" Name="Phonenumber">
+                                         materialDesign:HintAssist.IsFloating="True" Name="Phonenumber" Margin="0, 20, 0, 0">
                                     <TextBox.Text>
                                         <Binding Path="FormPhonenumber" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -163,7 +163,7 @@
                             </AdornerDecorator>
                             <AdornerDecorator>
                                 <TextBox materialDesign:HintAssist.Hint="Password"
-                                         materialDesign:HintAssist.IsFloating="True" Name="Password">
+                                         materialDesign:HintAssist.IsFloating="True" Name="Password" Margin="0, 20, 0, 0">
                                     <TextBox.Text>
                                         <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -177,7 +177,7 @@
                             </AdornerDecorator>
                             <AdornerDecorator>
                                 <DatePicker materialDesign:HintAssist.Hint="Datum gestart"
-                                            materialDesign:HintAssist.IsFloating="True" Name="StartDate">
+                                            materialDesign:HintAssist.IsFloating="True" Name="StartDate" Margin="0, 30, 0, 0">
                                     <DatePicker.SelectedDate>
                                         <Binding Path="FormInServiceDate" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -189,39 +189,22 @@
                                     </DatePicker.SelectedDate>
                                 </DatePicker>
                             </AdornerDecorator>
-                            <StackPanel Orientation="Horizontal" Margin="-3, 10, 0, -5">
+                            <StackPanel Orientation="Horizontal" Margin="-3, 20, 0, -5">
                                 <Label Content="In dienst (contract loopt nog)" />
                                 <CheckBox IsChecked="{Binding FormActive}" />
                             </StackPanel>
                             <DatePicker materialDesign:HintAssist.Hint="Datum uit dienst"
-                                        materialDesign:HintAssist.IsFloating="True">
+                                        materialDesign:HintAssist.IsFloating="True" Margin="0, 10, 0, 0">
                                 <DatePicker.SelectedDate>
                                     <Binding Path="FormOutServiceDate" UpdateSourceTrigger="PropertyChanged" />
                                 </DatePicker.SelectedDate>
                             </DatePicker>
 
-                            <AdornerDecorator>
-                                <ComboBox
-                                    ItemsSource="{Binding Global.Roles, Source={StaticResource Locator}}"                                  
-                                    DisplayMemberPath="role1"
-                                    SelectedItem="{Binding FormRole}"
-                                    materialDesign:HintAssist.Hint="Rol"
-                                    materialDesign:HintAssist.IsFloating="True" Name="Role">
-                                    <ComboBox.Text>
-                                        <Binding Path="FormRole.role1" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validationRules:IsNotEmptyValidationRule
-                                                    ValidationStep="RawProposedValue"
-                                                    ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </ComboBox.Text>
-                                </ComboBox>
-                            </AdornerDecorator>
+                            <AdornerDecorator/>
                             <AdornerDecorator>
                                 <ComboBox
                                     ItemsSource="{Binding Global.EmployeeStates, Source={StaticResource Locator}}"
-                                    DisplayMemberPath="employee_status1"
+                                    DisplayMemberPath="employee_status1" Margin="0, 0, 0, 0"
                                     SelectedItem="{Binding FormEmployeeStatus}"
                                     materialDesign:HintAssist.Hint="Status"
                                     materialDesign:HintAssist.IsFloating="True" Name="Status">
@@ -254,7 +237,7 @@
                     <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0">
 
                         <Button
-                            Command="{Binding SaveCommand}" Content="Opslaan" Margin="0,10,0.4,0" CommandParameter="{Binding DataContext, ElementName=Window}">
+                            Command="{Binding SaveCommand}" Content="Opslaan" Margin="0,20,0.4,0" CommandParameter="{Binding DataContext, ElementName=Window}">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -295,10 +278,9 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-
                         <Button DataContext="{Binding Employees, Source={StaticResource Locator}}"
                                 Command="{Binding NewCommand}"
-                                Content="Scherm legen" Margin="0,10,0,0" />
+                                Content="Scherm legen" Margin="0,10,0.4,0" />
                     </StackPanel>
                     <ComboBox
                         ItemsSource="{Binding Global.Regions, Source={StaticResource Locator}}"
@@ -307,12 +289,28 @@
                         SelectedItem="{Binding FormRegion}"
                         materialDesign:HintAssist.Hint="Regio"
                         materialDesign:HintAssist.IsFloating="True" Name="RegioBox" Grid.Column="1"
-                        Margin="45.4,55.2,201.4,133.8" Grid.Row="1" Width="250">
+                        Margin="113.4,172.8,133.4,78.6" Grid.Row="1" Width="250">
                         <ComboBox.Text>
                             <Binding Path="FormRegion.name" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationRules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
                                                                               ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.Text>
+                    </ComboBox>
+                    <ComboBox
+                                    ItemsSource="{Binding Global.Roles, Source={StaticResource Locator}}"                                  
+                                    DisplayMemberPath="role1"
+                                    SelectedItem="{Binding FormRole}"
+                                    materialDesign:HintAssist.Hint="Rol"
+                                    materialDesign:HintAssist.IsFloating="True" x:Name="Role" Grid.Column="1" Margin="113.4,77.8,133.4,172.6" Grid.Row="1">
+                        <ComboBox.Text>
+                            <Binding Path="FormRole.role1" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:IsNotEmptyValidationRule
+                                                    ValidationStep="RawProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </ComboBox.Text>
