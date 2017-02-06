@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,7 +15,7 @@ namespace ParkInspect.ViewModel.ParkinglotVM
         private readonly DialogManager _dialog;
         private ParkinglotViewModel _selectedParkinglot;
 
-        private IEnumerable<ParkinglotViewModel> Data { get; set; }
+        private ObservableCollection<ParkinglotViewModel> Data { get; set; }
         public ObservableCollection<ParkinglotViewModel> Parkinglots { get; set; }
 
         #region filter Properties
@@ -90,17 +89,16 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 
         #endregion
 
-
         public ParkinglotOverviewViewModel(IRepository context, DialogManager dialog)
         {
             _dialog = dialog;
             _context = context;
-            NewCommand = new RelayCommand(() => NewParkinglot(context, dialog));
+            NewCommand = new RelayCommand(NewParkinglot);
 
             Service = new ParkinglotService(context);
-            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(context, x, dialog));
+            Data = new ObservableCollection<ParkinglotViewModel>(Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(context, x, dialog)));
             Parkinglots = new ObservableCollection<ParkinglotViewModel>(Data);
-            NewParkinglot(context, dialog);
+            NewParkinglot();
         }
 
         public ParkinglotViewModel SelectedParkinglot
@@ -118,8 +116,6 @@ namespace ParkInspect.ViewModel.ParkinglotVM
 
         public void UpdateParkinglots()
         {
-            Data = Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(_context, x, _dialog));
-
             var builder = new FilterBuilder();
             builder.Add("Name", NameFilter);
             builder.Add("Region", RegionFilter);
@@ -134,9 +130,16 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             RaisePropertyChanged("Parkinglots");
         }
 
-        private void NewParkinglot(IRepository context, DialogManager dialog)
+        public void NewParkinglot()
         {
-            SelectedParkinglot = new ParkinglotViewModel(context, new Parkinglot(), dialog);
+            SelectedParkinglot = new ParkinglotViewModel(_context, new Parkinglot(), _dialog);
+        }
+
+        public void ParkinglotsChanged()
+        {
+            Data = new ObservableCollection<ParkinglotViewModel>(Service.GetAll<Parkinglot>().Select(x => new ParkinglotViewModel(_context, x, _dialog)));
+            Parkinglots = Data;
+            RaisePropertyChanged("Parkinglots");
         }
     }
 }

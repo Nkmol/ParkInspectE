@@ -11,7 +11,7 @@ namespace ParkInspect.ViewModel.AbsenceVM
     public class AbsenceOverviewViewModel : ViewModelBase
     {
         private readonly IRepository _context;
-        private readonly DialogManager _dialog;
+        private readonly DialogManager _dialog;        
 
         private AbsenceViewModel _selectedAbsence;
 
@@ -29,7 +29,7 @@ namespace ParkInspect.ViewModel.AbsenceVM
             NewAbsence();
         }
 
-        private ObservableCollection<AbsenceViewModel> Data { get; }
+        private ObservableCollection<AbsenceViewModel> Data { get; set; }
 
         public ObservableCollection<AbsenceViewModel> Absences { get; set; }
 
@@ -48,6 +48,13 @@ namespace ParkInspect.ViewModel.AbsenceVM
         public void NewAbsence()
         {
             SelectedAbsence = new AbsenceViewModel(_context, new Absence(), _dialog);
+            RaisePropertyChanged();
+        }
+
+        public void AbsencesChanged()
+        {
+            Data = new ObservableCollection<AbsenceViewModel>(_context.GetAll<Absence>().Select(x => new AbsenceViewModel(_context, x, _dialog)));
+            Absences = Data;
             RaisePropertyChanged("Absences");
         }
 

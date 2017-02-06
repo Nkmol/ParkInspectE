@@ -30,7 +30,7 @@ namespace ParkInspect.ViewModel.ContactpersonVM
             NewContactperson();
         }
 
-        private ObservableCollection<ContactpersonViewModel> Data { get; }
+        private ObservableCollection<ContactpersonViewModel> Data { get; set; }
 
         public ObservableCollection<ContactpersonViewModel> Contactpersons { get; set; }
 
@@ -49,6 +49,13 @@ namespace ParkInspect.ViewModel.ContactpersonVM
         public void NewContactperson()
         {
             SelectedContactperson = new ContactpersonViewModel(_context, new Contactperson(), _dialog);
+            RaisePropertyChanged();
+        }
+
+        public void ContactpersonsChanged()
+        {
+            Data = new ObservableCollection<ContactpersonViewModel>(_context.GetAll<Contactperson>().Select(x => new ContactpersonViewModel(_context, x, _dialog)));
+            Contactpersons = Data;
             RaisePropertyChanged("Contactpersons");
         }
 

@@ -248,6 +248,9 @@ namespace ParkInspect.ViewModel.AssignmentVM
                 Add(overView);
             else
                 Edit();
+
+            overView.NewAssignment();
+            overView.AssignmentsChanged();
         }
 
         public void Add(AssignmentOverviewViewModel overview)

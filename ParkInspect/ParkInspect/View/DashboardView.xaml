@@ -11,7 +11,7 @@
         xmlns:convertor="clr-namespace:ParkInspect.Convertor"
         xmlns:userControls1="clr-namespace:ParkInspect.View.UserControls"
         mc:Ignorable="d ignore"
-        Height="700"
+        Height="750"
         Width="1010"
         Title="ParkInspect"
         GlowBrush="{DynamicResource AccentColorBrush}"

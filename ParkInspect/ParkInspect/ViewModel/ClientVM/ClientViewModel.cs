@@ -132,18 +132,19 @@ namespace ParkInspect.ViewModel.ClientVM
 
         private void Save(ClientOverviewViewModel overview)
         {
+            SaveForm();
+
             if (Data.id <= 0)
                 Add(overview);
             else
                 Edit();
 
             overview.NewClient();
+            overview.ClientsChanged();
         }     
 
         public void Add(ClientOverviewViewModel overview)
         {
-            SaveForm();
-
             SHA256 sha = SHA256.Create();
 
             byte[] bytes = new byte[Data.password.Length * sizeof(char)];
@@ -170,7 +171,6 @@ namespace ParkInspect.ViewModel.ClientVM
 
         public void Edit()
         {
-            SaveForm();
             Message = Service.Update(Data) ? "De klant is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
 
             _dialog.ShowMessage("Klant bewerken", Message);

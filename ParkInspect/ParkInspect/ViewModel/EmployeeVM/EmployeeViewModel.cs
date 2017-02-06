@@ -98,6 +98,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
                 Edit();
 
             overview.NewEmployee();
+            overview.EmployeesChanged();
         }
 
         private void Add(EmployeeOverviewViewModel overview)

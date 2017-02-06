@@ -32,7 +32,7 @@ namespace ParkInspect.ViewModel.ClientVM
             NewClient();
         }
 
-        private ObservableCollection<ClientViewModel> Data { get; }
+        private ObservableCollection<ClientViewModel> Data { get; set; }
 
         public ObservableCollection<ClientViewModel> Clients { get; set; }
 
@@ -51,7 +51,13 @@ namespace ParkInspect.ViewModel.ClientVM
         public void NewClient()
         {
             SelectedClient = new ClientViewModel(_context, new Client(), _dialog);
-            RaisePropertyChanged();
+        }
+
+        public void ClientsChanged()
+        {
+            Data = new ObservableCollection<ClientViewModel>(_service.GetAll<Client>().Select(x => new ClientViewModel(_context, x, _dialog)));
+            Clients = Data;
+            RaisePropertyChanged("Clients");
         }
 
         private void UpdateFilter()

@@ -129,31 +129,31 @@
                                 </controls:DateTimePicker.SelectedDate>
                             </controls:DateTimePicker>
                             <AdornerDecorator>
-                                <ComboBox Text="{Binding State.state1}"
+                                <ComboBox SelectedItem="{Binding FormState}"
                                           ItemsSource="{Binding Global.States, Source={StaticResource Locator}}" DisplayMemberPath="state1"
                                           x:Name="cbState" materialDesign:HintAssist.Hint="Selecteer een Status"
                                           materialDesign:HintAssist.IsFloating="True">
-                                    <ComboBox.SelectedItem>
-                                        <Binding Path="FormState">
+                                    <ComboBox.Text>
+                                        <Binding Path="FormState.state1">
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </ComboBox.SelectedItem>
+                                    </ComboBox.Text>
                                 </ComboBox>
                             </AdornerDecorator>
                             <AdornerDecorator>
-                                <ComboBox Text="{Binding Client.name}"
+                                <ComboBox SelectedItem="{Binding FormClient}"
                                           ItemsSource="{Binding Global.Clients, Source={StaticResource Locator}}" DisplayMemberPath="name" x:Name="cbClient"
                                           materialDesign:HintAssist.Hint="Selecteer een Klant"
                                           materialDesign:HintAssist.IsFloating="True">
-                                    <ComboBox.SelectedItem>
-                                        <Binding Path="FormClient">
+                                    <ComboBox.Text>
+                                        <Binding Path="FormClient.name">
                                             <Binding.ValidationRules>
                                                 <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </ComboBox.SelectedItem>
+                                    </ComboBox.Text>
                                 </ComboBox>
                             </AdornerDecorator>    
                             <TextBox Name="Clarificationbox" Text="{Binding FormClarification}" AcceptsReturn="True"

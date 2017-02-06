@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
 using ParkInspect.Services;
@@ -123,29 +121,35 @@ namespace ParkInspect.ViewModel.ParkinglotVM
             Streetname = FormStreetname;
         }
 
+        private void Add(ParkinglotOverviewViewModel overview)
+        {
+            Message = Service.Add(_parkinglot)
+                    ? "De parkeerplaats is toegevoegd!"
+                    : "Er is iets misgegaan tijdens het toevoegen.";
+
+            _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
+
+            overview.Parkinglots.Add(this);
+        }
+
+        private void Edit()
+        {
+            Message = Service.Update(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+
+            _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
+        }
+
         private void Save(ParkinglotOverviewViewModel overview)
         {
             SaveForm();
 
             if (_parkinglot.id <= 0)
-            {
-                Message = Service.Add(_parkinglot)
-                    ? "De parkeerplaats is toegevoegd!"
-                    : "Er is iets misgegaan tijdens het toevoegen.";
-
-                _dialogManager.ShowMessage("Parkeerplaats toevoegen", Message);
-
-                overview.Parkinglots.Add(this);
-            }
+                Add(overview);            
             else
-            {
-                Message = Service.Update(_parkinglot) ? "De parkeerplaats is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+                Edit();            
 
-                _dialogManager.ShowMessage("Parkeerplaats bewerken", Message);
-
-                overview.NewCommand.RaiseCanExecuteChanged();
-            }
-
+            overview.NewParkinglot();
+            overview.ParkinglotsChanged();
         }
     }
 }
