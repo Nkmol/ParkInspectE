@@ -17,8 +17,7 @@
         Title="ParkInspect"
         GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
-        DataContext="{Binding Reports, Source={StaticResource Locator}}"
-        popup:PopupParticipation.Register="{Binding PopupManager, Source={StaticResource Locator}}">
+        DataContext="{Binding Reports, Source={StaticResource Locator}}">
     <Grid>
         <!-- <syncfusion:ReportViewer x:Name="Viewer" ReportPath="{Binding Report.ReportPath}"/> -->
         <syncfusion:ReportViewer x:Name="Viewer" ReportPath="{Binding Report.ReportPath}"/>
