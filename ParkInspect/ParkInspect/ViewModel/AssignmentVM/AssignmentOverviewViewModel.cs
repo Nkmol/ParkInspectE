@@ -108,10 +108,17 @@ namespace ParkInspect.ViewModel.AssignmentVM
             NewAssignment();
         }
 
-        private void NewAssignment()
+        public void NewAssignment()
         {
             SelectedAssignment = new AssignmentViewModel(_context, new Asignment(), _popup, _dialog);
             RaisePropertyChanged();
+        }
+
+        public void AssignmentsChanged()
+        {
+            Data = new ObservableCollection<AssignmentViewModel>(_service.GetAll<Asignment>().Select(x => new AssignmentViewModel(_context, x, _popup, _dialog)));
+            Assignments = Data;
+            RaisePropertyChanged("Assignments");
         }
 
         private void UpdateFilter()

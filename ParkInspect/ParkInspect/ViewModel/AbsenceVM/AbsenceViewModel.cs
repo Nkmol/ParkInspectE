@@ -51,18 +51,19 @@ namespace ParkInspect.ViewModel.AbsenceVM
 
         private void Save(AbsenceOverviewViewModel overview)
         {
+            SaveForm();
+
             if (Data.employee_id <= 0)
                 Add(overview);
             else
                 Edit();
 
             overview.NewAbsence();
+            overview.AbsencesChanged();
         }
 
         private void Add(AbsenceOverviewViewModel overview)
         {
-            SaveForm();
-
             if (Data.start >= Data.end)
             {
                 _dialog.ShowMessage("Er ging iets fout!", "De einddatum  mag niet voor de begindatum liggen!");
@@ -82,8 +83,6 @@ namespace ParkInspect.ViewModel.AbsenceVM
 
         private void Edit()
         {
-            SaveForm();
-
             Message = Service.Update(Data)
                 ? "De absentie is aangepast!"
                 : "Er is iets misgegaan tijdens het aanpassen.";
@@ -93,14 +92,19 @@ namespace ParkInspect.ViewModel.AbsenceVM
 
         private void Delete(AbsenceOverviewViewModel overview)
         {
-            var message = Service.Delete(Data)
+            var rs = Service.Delete(Data);
+            var message = rs
                 ? "De Absentie is verwijderd!"
                 : "Er is iets misgegaan tijdens het verwijderen.";
 
             _dialog.ShowMessage("Absentie verwijderen", message);
 
-            overview.Absences.Remove(this);
-            overview.NewAbsence();
+            if (rs)
+            {
+                overview.Absences.Remove(this);
+                overview.NewAbsence();
+                overview.AbsencesChanged();
+            }            
         }
 
         #region Properties

@@ -63,9 +63,8 @@
                 <StackPanel>
                     <Label Content="Klant" FontSize="18" />
                     <Separator Margin="0,2,0,10" />
-                    <Label x:Name="NameLabel" Content="Naam" />
                     <AdornerDecorator>
-                        <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                        <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250" materialDesign:HintAssist.Hint="Naam" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -79,9 +78,8 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
-                    <Label x:Name="EmailLabel" Content="Emailadres" />
                     <AdornerDecorator>
-                        <TextBox x:Name="Email" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                        <TextBox x:Name="Email" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250"  materialDesign:HintAssist.Hint="Emailadres" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="FormEmail" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -93,9 +91,8 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
-                    <Label x:Name="TelnrLabel" Content="Telefoonnummer" />
                     <AdornerDecorator>
-                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250">
+                        <TextBox x:Name="Telnr" HorizontalAlignment="Left" Margin="5,0,0,15" Width="250" materialDesign:HintAssist.Hint="Telefoonnummer" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="FormPhonenumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -106,9 +103,8 @@
                             </TextBox.Text>
                         </TextBox>
                     </AdornerDecorator>
-                    <Label Content="Wachtwoord:" />
                     <AdornerDecorator>
-                        <TextBox x:Name="Password" Width="250" HorizontalAlignment="Left" Margin="5,0,0,15" IsEnabled="{Binding PasswordEnabled}">
+                        <TextBox x:Name="Password" Width="250" HorizontalAlignment="Left" Margin="5,0,0,15" IsEnabled="{Binding PasswordEnabled}" materialDesign:HintAssist.Hint="Wachtwoord" materialDesign:HintAssist.IsFloating="True">
                             <TextBox.Text>
                                 <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>

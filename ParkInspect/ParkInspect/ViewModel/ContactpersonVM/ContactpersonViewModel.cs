@@ -18,7 +18,7 @@ namespace ParkInspect.ViewModel.ContactpersonVM
             Data = data;
             SaveCommand = new RelayCommand<ContactpersonOverviewViewModel>(Save);
             DeleteCommand = new RelayCommand<ContactpersonOverviewViewModel>(Delete);
-            Reset();
+            FillForm();
         }
 
         public Contactperson Data { get; }
@@ -50,18 +50,19 @@ namespace ParkInspect.ViewModel.ContactpersonVM
 
         private void Save(ContactpersonOverviewViewModel overview)
         {
+            SaveForm();
+
             if (Data.id <= 0)
                 Add(overview);
             else
                 Edit();
             
             overview.NewContactperson();
+            overview.ContactpersonsChanged();
         }
 
         private void Add(ContactpersonOverviewViewModel overview)
         {
-            SaveForm();
-
             Data.client_id = Client.id;
 
             var rs = Service.Add(Data);
@@ -77,8 +78,6 @@ namespace ParkInspect.ViewModel.ContactpersonVM
 
         private void Edit()
         {
-            SaveForm();
-
             Data.client_id = Client.id;
             Message = Service.Update(Data)
                 ? "De contactpersoon is aangepast!"
@@ -89,14 +88,19 @@ namespace ParkInspect.ViewModel.ContactpersonVM
 
         private void Delete(ContactpersonOverviewViewModel overview)
         {
-            var message = Service.Delete(Data)
+            var rs = Service.Delete(Data);
+            var message = rs
                 ? "De contactpersoon is verwijderd!"
                 : "Er is iets misgegaan tijdens het verwijderen.";
 
             _dialog.ShowMessage("Contactpersoon verwijderen", message);
 
-            overview.Contactpersons.Remove(this);
-            overview.NewContactperson();
+            if (rs)
+            {
+                overview.Contactpersons.Remove(this);
+                overview.NewContactperson();
+                overview.ContactpersonsChanged();                    
+            }
         }
 
         #region Properties
