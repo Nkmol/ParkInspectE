@@ -385,9 +385,13 @@ namespace ParkInspect.ViewModel
             FormClarification = Clarification;
             FormDeadline = Deadline;
             FormForm = Form;
+            FormBoundryStartDate = BoundryStartDate;
+            FormBoundryEndDate = BoundryEndDate;
             FormSelectedTemplate = SelectedTemplate;
             FormAssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
             RaisePropertyChanged("FormAssignedInspectors");
+            RaisePropertyChanged("FormBoundryStartDate");
+            RaisePropertyChanged("FormBoundryEndDate");
 
             base.RaisePropertyChanged();
         }

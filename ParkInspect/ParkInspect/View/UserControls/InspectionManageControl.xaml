@@ -65,7 +65,7 @@
                                   materialDesign:HintAssist.Hint="Selecteer een parkeerplaats"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
                             <ComboBox.Text>
-                                <Binding Path="Parkinglot.name">
+                                <Binding Path="FormParkinglot.name">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -84,7 +84,7 @@
                                   DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
                             <ComboBox.Text>
-                                <Binding Path="State.state1">
+                                <Binding Path="FormState.state1">
                                     <Binding.ValidationRules>
                                         <validationRules:IsNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
