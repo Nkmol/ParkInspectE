@@ -387,6 +387,7 @@ namespace ParkInspect.ViewModel
             FormForm = Form;
             FormSelectedTemplate = SelectedTemplate;
             FormAssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
+            RaisePropertyChanged("FormAssignedInspectors");
 
             base.RaisePropertyChanged();
         }
