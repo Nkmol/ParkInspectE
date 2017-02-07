@@ -132,7 +132,7 @@
                             <UniformGrid Rows="1">
                                 <AdornerDecorator>
                                     <TextBox Name="StreetnameBox"  materialDesign:HintAssist.Hint="Parkeerplaats straatnaam"
-                                         materialDesign:HintAssist.IsFloating="True" Margin="0,5,5,5">
+                                         materialDesign:HintAssist.IsFloating="True">
                                         <TextBox.Text>
                                             <Binding Path="FormStreetname" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>

@@ -24,5 +24,15 @@ namespace ParkInspect.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void RegioBox_SelectionChanged()
+        {
+
+        }
+
+        private void DataGrid_SelectionChanged()
+        {
+
+        }
     }
 }

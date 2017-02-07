@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Security.Cryptography;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ParkInspect.Repository;
@@ -26,8 +26,83 @@ namespace ParkInspect.ViewModel.ClientVM
 
             FillForm();
         }
+
         public ObservableCollection<Asignment> Assignments { get; set; }
         public ObservableCollection<Contactperson> Contactpersons { get; set; }
+
+        public string Message { get; set; }
+        public bool PasswordEnabled => Data.id <= 0;
+
+        public RelayCommand<ClientOverviewViewModel> SaveCommand { get; set; }
+
+        private void SaveForm()
+        {
+            Name = FormName;
+            Phonenumber = FormPhonenumber;
+            Email = FormEmail;
+
+            if(Data.id <= 0) // Can only be set once with a new client
+                Password = FormPassword;
+        }
+
+        private void FillForm()
+        {
+            FormName = Name;
+            FormEmail = Email;
+            FormPassword = Password;
+            FormPhonenumber = Phonenumber;
+        }
+
+        public void Reset()
+        {
+            FillForm();
+        }
+
+        private void Save(ClientOverviewViewModel overview)
+        {
+            if (Data.id <= 0)
+                Add(overview);
+            else
+                Edit();
+
+            overview.NewClient();
+        }
+
+        public void Add(ClientOverviewViewModel overview)
+        {
+            SaveForm();
+
+            var sha = SHA256.Create();
+
+            var bytes = new byte[Data.password.Length * sizeof(char)];
+            Buffer.BlockCopy(Data.password.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+            sha.ComputeHash(bytes);
+
+            var chars = new char[sha.Hash.Length / sizeof(char)];
+            Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
+
+            Data.password = new string(chars);
+
+            Password = Data.password;
+            FormPassword = Password;
+
+            var rs = Service.Add(Data);
+
+            Message = rs ? "De klant is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
+            _dialog.ShowMessage("Klant toevoegen", Message);
+
+            if (rs)
+                overview.Clients.Add(this);
+        }
+
+        public void Edit()
+        {
+            SaveForm();
+            Message = Service.Update(Data) ? "De klant is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
+
+            _dialog.ShowMessage("Klant bewerken", Message);
+        }
 
         #region ViewModel Poco properties      
 
@@ -37,6 +112,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.name = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -46,6 +122,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.phonenumber = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -55,6 +132,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.email = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -64,8 +142,10 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.password = value;
+                RaisePropertyChanged();
             }
         }
+
         #endregion
 
         #region Property Form
@@ -98,82 +178,15 @@ namespace ParkInspect.ViewModel.ClientVM
 
         public string FormPassword
         {
-            get { return _formPassword; }
+            get
+            {
+                return Data.id > 0
+                    ? "Wachtwoord is via de website in te zien en te veranderen."
+                    : _formPassword;
+            }
             set { Set(ref _formPassword, value); }
         }
 
         #endregion
-
-        public string Message { get; set; }
-        public bool PasswordEnabled => Data.id <= 0;
-
-        public RelayCommand<ClientOverviewViewModel> SaveCommand { get; set; }
-
-        private void SaveForm()
-        {
-            Name = FormName;
-            Phonenumber = FormPhonenumber;
-            Email = FormEmail;
-            Password = FormPassword;
-        }
-
-        private void FillForm()
-        {
-            FormName = Name;
-            FormEmail = Email;
-            FormPassword = Password;
-            FormPhonenumber = Phonenumber;
-        }
-
-        public void Reset()
-        {
-            FillForm();
-        }
-
-        private void Save(ClientOverviewViewModel overview)
-        {
-            if (Data.id <= 0)
-                Add(overview);
-            else
-                Edit();
-
-            overview.NewClient();
-        }     
-
-        public void Add(ClientOverviewViewModel overview)
-        {
-            SaveForm();
-
-            SHA256 sha = SHA256.Create();
-
-            byte[] bytes = new byte[Data.password.Length * sizeof(char)];
-            System.Buffer.BlockCopy(Data.password.ToCharArray(), 0, bytes, 0, bytes.Length);
-
-            sha.ComputeHash(bytes);
-
-            char[] chars = new char[sha.Hash.Length / sizeof(char)];
-            System.Buffer.BlockCopy(sha.Hash, 0, chars, 0, sha.Hash.Length);
-
-            Data.password = new string(chars);
-
-            Password = Data.password;
-            FormPassword = Password;
-
-            var rs = Service.Add(Data);
-
-            Message = rs ? "De klant is toegevoegd!" : "Er is iets misgegaan tijdens het toevoegen.";
-            _dialog.ShowMessage("Klant toevoegen", Message);
-
-            if(rs)
-                overview.Clients.Add(this);
-        }
-
-        public void Edit()
-        {
-            SaveForm();
-            Message = Service.Update(Data) ? "De klant is aangepast!" : "Er is iets misgegaan tijdens het aanpassen.";
-
-            _dialog.ShowMessage("Klant bewerken", Message);
-        }
     }
 }

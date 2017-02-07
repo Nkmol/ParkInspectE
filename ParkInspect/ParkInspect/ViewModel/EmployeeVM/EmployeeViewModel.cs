@@ -36,7 +36,8 @@ namespace ParkInspect.ViewModel.EmployeeVM
         //Service
         protected EmployeeService Service { get; set; }
 
-        public bool InspectorSelected => FormRole?.role1 == "Inspecteur";
+        public bool IsRegionEnabled => FormRole?.role1 == "Inspecteur";
+
 
         public bool RegionSelected => (FormRole?.role1 == "Inspecteur") && (FormRegion != null);
 
@@ -273,9 +274,7 @@ namespace ParkInspect.ViewModel.EmployeeVM
             set
             {
                 _formRole = value;
-                RaisePropertyChanged("InspectorSelected");
-                RaisePropertyChanged("RegionSelected");
-                RaisePropertyChanged("CanSave");
+                RaisePropertyChanged("");
             }
         }
 
