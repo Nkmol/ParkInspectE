@@ -59,14 +59,15 @@
     <!-- Custom -->
     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}">
         <Setter Property="Padding" Value="0, 10" />
+        <Setter Property="Margin" Value="0, 10" />
     </Style>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
-        <Setter Property="Margin" Value="0, 5" />
+        <Setter Property="Margin" Value="0, 10" />
     </Style>
     <Style TargetType="{x:Type controls:DateTimePicker}" BasedOn="{StaticResource {x:Type controls:DateTimePicker}}">
-        <Setter Property="Margin" Value="0, 10" />
+        <Setter Property="Margin" Value="0,20,0,10" />
     </Style>
     <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource MaterialDesignDatePicker}">
-        <Setter Property="Margin" Value="0, 10" />
+        <Setter Property="Margin" Value="0,20,0,10" />
     </Style>
 </ResourceDictionary>
