@@ -37,6 +37,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.name = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -46,6 +47,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.phonenumber = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -55,6 +57,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.email = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -64,6 +67,7 @@ namespace ParkInspect.ViewModel.ClientVM
             set
             {
                 Data.password = value;
+                RaisePropertyChanged();
             }
         }
         #endregion
