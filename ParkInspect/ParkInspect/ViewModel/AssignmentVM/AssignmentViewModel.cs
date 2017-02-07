@@ -227,6 +227,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
                 x =>
                 {
                     RaisePropertyChanged();
+                    x.FillForm();
                 },
                 x =>
                 {

@@ -368,18 +368,7 @@ namespace ParkInspect.ViewModel
 
         private void Save()
         {
-            Parkinglot = FormParkinglot;
-            State = FormState;
-            FollowUpInspection = FormFollowUpInspection;
-            BoundryStartDate = FormBoundryStartDate;
-            BoundryEndDate = FormBoundryEndDate;
-            Date = FormDate;
-            Clarification = FormClarification;
-            Deadline = FormDeadline;
-            Form = FormForm;
-            SelectedTemplate = FormSelectedTemplate;
-            AssignedInspectors = FormAssignedInspectors;
-
+            SaveForm();
             //SelectedTemplate = SelectedTemplateForm;
             PopupBeforeFinish();
             isSaved = true;
@@ -395,7 +384,21 @@ namespace ParkInspect.ViewModel
             FormDeadline = Deadline;
             FormForm = Form;
             FormSelectedTemplate = SelectedTemplate;
-            FormAssignedInspectors = AssignedInspectors;
+        }
+
+        private void SaveForm()
+        {
+            Parkinglot = FormParkinglot;
+            State = FormState;
+            FollowUpInspection = FormFollowUpInspection;
+            BoundryStartDate = FormBoundryStartDate;
+            BoundryEndDate = FormBoundryEndDate;
+            Date = FormDate;
+            Clarification = FormClarification;
+            Deadline = FormDeadline;
+            Form = FormForm;
+            SelectedTemplate = FormSelectedTemplate;
+            AssignedInspectors = FormAssignedInspectors;
         }
 
 
