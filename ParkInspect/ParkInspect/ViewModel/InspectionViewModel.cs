@@ -354,14 +354,14 @@ namespace ParkInspect.ViewModel
 
         private void AssignInspector()
         {
-            AssignedInspectors.Add(SelectedInspector);
+            FormAssignedInspectors.Add(SelectedInspector);
             Inspectors.Remove(SelectedInspector);
         }
 
         private void UnassignInspecteur()
         {
             Inspectors.Add(SelectedAssignedInspector);
-            AssignedInspectors.Remove(SelectedAssignedInspector);
+            FormAssignedInspectors.Remove(SelectedAssignedInspector);
 
             LoadInspector();
             RaisePropertyChanged(() => Inspectors);
