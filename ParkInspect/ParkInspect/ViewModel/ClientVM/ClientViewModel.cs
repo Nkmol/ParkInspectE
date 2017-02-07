@@ -40,7 +40,9 @@ namespace ParkInspect.ViewModel.ClientVM
             Name = FormName;
             Phonenumber = FormPhonenumber;
             Email = FormEmail;
-            Password = FormPassword;
+
+            if(Data.id <= 0) // Can only be set once with a new client
+                Password = FormPassword;
         }
 
         private void FillForm()

@@ -111,8 +111,8 @@
                                 </TextBox>
                             </AdornerDecorator>
                             <AdornerDecorator>
-                                <TextBox x:Name="Password" IsEnabled="{Binding PasswordEnabled}"
-                                         materialDesign:HintAssist.Hint="Password"
+                                <TextBox x:Name="Wachtwoord" IsEnabled="{Binding PasswordEnabled}"
+                                         materialDesign:HintAssist.Hint="Wachtwoord"
                                          materialDesign:HintAssist.IsFloating="True">
                                     <TextBox.Text>
                                         <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">

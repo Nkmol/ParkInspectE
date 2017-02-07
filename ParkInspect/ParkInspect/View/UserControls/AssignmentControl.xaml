@@ -102,7 +102,7 @@
                             </Button.Style>
                         </Button>
                         <Button Content="Scherm legen" Command="{Binding DataContext.NewCommand, ElementName=Window}"
-                                Margin="5,0,7,10" />
+                                Margin="5,0,5,10" />
                     </StackPanel>
                     <Border Grid.Column="0" Grid.Row="0" Padding="10">
                         <StackPanel>
@@ -117,7 +117,7 @@
                                     </Binding>
                                 </controls:DateTimePicker.SelectedDate>
                             </controls:DateTimePicker>
-                            <Label Content="Deadline" Padding="5,10,5,5" />
+                            <Label Content="Deadline" />
                             <controls:DateTimePicker x:Name="DateEnd">
                                 <controls:DateTimePicker.SelectedDate>
                                     <Binding Path="FormDeadline" UpdateSourceTrigger="PropertyChanged">

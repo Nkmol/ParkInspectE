@@ -103,7 +103,7 @@
                               materialDesign:HintAssist.Hint="Selecteer een vragenlijst voor de inspectie"
                               materialDesign:HintAssist.IsFloating="True" Padding="0,10"
                               IsEnabled="{Binding SelectTemplateIsEnabled}" />
-                    <Label Content="Datum" Padding="5,10,5,5" />
+                    <Label Content="Datum" />
                     <controls:DateTimePicker Name="DateStart" DisplayDateEnd="{Binding BoundryEndDate}"
                                              DisplayDateStart="{Binding BoundryStartDate}">
                         <controls:DateTimePicker.SelectedDate>
@@ -115,7 +115,7 @@
                             </Binding>
                         </controls:DateTimePicker.SelectedDate>
                     </controls:DateTimePicker>
-                    <Label Content="Deadline" Padding="5,10,5,5" />
+                    <Label Content="Deadline" />
                     <controls:DateTimePicker Name="DateDeadline" DisplayDateEnd="{Binding BoundryEndDate}"
                                              DisplayDateStart="{Binding BoundryStartDate}">
                         <controls:DateTimePicker.SelectedDate>
