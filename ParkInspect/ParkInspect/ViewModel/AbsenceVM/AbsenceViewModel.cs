@@ -19,6 +19,12 @@ namespace ParkInspect.ViewModel.AbsenceVM
             Data = data;
             SaveCommand = new RelayCommand<AbsenceOverviewViewModel>(Save);
             DeleteCommand = new RelayCommand<AbsenceOverviewViewModel>(Delete);
+
+            // Default values
+            End = End ?? DateTime.Now.AddDays(1);
+            if (Start == DateTime.MinValue)
+                Start = DateTime.Now;
+
             Reset();
         }
 
@@ -56,7 +62,7 @@ namespace ParkInspect.ViewModel.AbsenceVM
             else
                 Edit();
 
-            overview.NewAbsence();
+            //overview.NewAbsence();
         }
 
         private void Add(AbsenceOverviewViewModel overview)
@@ -82,9 +88,11 @@ namespace ParkInspect.ViewModel.AbsenceVM
 
         private void Edit()
         {
+            var oldEmployeeAssigned = Data.Employee;
+
             SaveForm();
 
-            Message = Service.Update(Data)
+            Message = Service.Update(oldEmployeeAssigned, Data)
                 ? "De absentie is aangepast!"
                 : "Er is iets misgegaan tijdens het aanpassen.";
 
@@ -108,19 +116,31 @@ namespace ParkInspect.ViewModel.AbsenceVM
         public DateTime Start
         {
             get { return Data.start; }
-            set { Data.start = value; }
+            set
+            {
+                Data.start = value; 
+                RaisePropertyChanged();
+            }
         }
 
         public DateTime? End
         {
             get { return Data.end; }
-            set { Data.end = value; }
+            set
+            {
+                Data.end = value;
+                RaisePropertyChanged();
+            }
         }
 
         public Employee Employee
         {
             get { return Data.Employee; }
-            set { Data.Employee = value; }
+            set
+            {
+                Data.Employee = value;
+                RaisePropertyChanged();
+            }
         }
 
         #endregion

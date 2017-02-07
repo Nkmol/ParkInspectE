@@ -20,6 +20,14 @@ namespace ParkInspect.Services
 
         }
 
-
+        public bool Update(Employee oldEmployeeAssigned, Absence model)
+        {
+            // Way to bypass editing PK by EF
+            var newEmployee = model.Employee;
+            model.Employee = oldEmployeeAssigned;
+            Delete(model);
+            model.Employee = newEmployee;
+            return Add(model);
+        }
     }
 }
