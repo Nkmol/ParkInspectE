@@ -339,7 +339,8 @@ namespace ParkInspect.ViewModel
 
             SelectedTemplate = Data.Form?.Template;
             SelectedTemplateForm = Data.Form?.Template;
-            
+
+            FillForm();
         }
 
         private void LoadInspector()
@@ -384,6 +385,9 @@ namespace ParkInspect.ViewModel
             FormDeadline = Deadline;
             FormForm = Form;
             FormSelectedTemplate = SelectedTemplate;
+            FormAssignedInspectors = new ObservableCollection<Employee>(Data.Employees);
+
+            base.RaisePropertyChanged();
         }
 
         private void SaveForm()
