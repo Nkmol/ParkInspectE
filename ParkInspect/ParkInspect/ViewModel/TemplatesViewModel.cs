@@ -125,10 +125,10 @@ namespace ParkInspect.ViewModel
         {
             Templates = new ObservableCollection<TemplateCollection>(new TemplateCollection[]{ });
             IRepository Context = this.Context;
-            if (!((EntityFrameworkRepository < ParkInspectEntities > )Context).IsConnected())
+            /*if (!((EntityFrameworkRepository < ParkInspectEntities > )Context).IsConnected())
             {
                 Context = ViewModelLocator.localRepo;
-            }
+            }*/
             foreach(Template template in Context.GetAll<Template>())
             {
                 bool added = false;

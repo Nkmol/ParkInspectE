@@ -10,6 +10,7 @@
 */
 
 using System;
+using System.Net;
 using System.Xml.Serialization.Advanced;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
@@ -38,6 +39,24 @@ namespace ParkInspect.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    using (var stream = client.OpenRead("http://www.google.com"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -53,16 +72,17 @@ namespace ParkInspect.ViewModel
 
             localRepo = new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities());
 
-
-            try
-            {
-                SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
-                SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
-            } catch (Exception)
+            if (!CheckForInternetConnection())
             {
                 SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities()));
                 SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectLocalEntities>>(() => new EntityFrameworkRepository<ParkInspectLocalEntities>(new ParkInspectLocalEntities()));
             }
+            else
+            {
+                SimpleIoc.Default.Register<IRepository>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+                SimpleIoc.Default.Register<EntityFrameworkRepository<ParkInspectEntities>>(() => new EntityFrameworkRepository<ParkInspectEntities>(new ParkInspectEntities()));
+            }
+            
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
             SimpleIoc.Default.Register<PopupCoordinator>();
             SimpleIoc.Default.Register<DashboardViewModel>();

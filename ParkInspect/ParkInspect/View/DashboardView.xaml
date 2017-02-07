@@ -85,7 +85,7 @@
             <Button Command="{Binding LogoutCommand}"
                     Content="Logout"
                     IsEnabled="{Binding LogoutButtonEnabled}" />
-            <Button DataContext="{Binding Dashboard}" Command="{Binding syncCommand}"
+            <Button DataContext="{Binding Dashboard, Source={StaticResource Locator}}" Command="{Binding SyncCommand}"
                     Content="Sync"/>
 
         </controls:WindowCommands>

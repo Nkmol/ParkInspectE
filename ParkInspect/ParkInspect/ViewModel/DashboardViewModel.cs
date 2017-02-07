@@ -221,8 +221,8 @@ namespace ParkInspect.ViewModel
             }
         }
 
-        public DataSync.DataSynchroniser synchroniser;
-        public RelayCommand syncCommand;
+        public DataSynchroniser synchroniser;
+        public RelayCommand SyncCommand { get; set; }
 
         private int _selectedTab;
         public int SelectedTab
@@ -250,12 +250,20 @@ namespace ParkInspect.ViewModel
                         InspectionTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
                         ClientTabs = new ObservableCollection<bool>(Enumerable.Repeat(true, 2));
             */
-            TabStatus = new ObservableCollection<bool>(Enumerable.Repeat(true, 30));
-            ShowDefaultTabs();
+            TabStatus = new ObservableCollection<bool>(Enumerable.Repeat(false, 30));
+
+            if (ViewModelLocator.CheckForInternetConnection())
+            {
+                ShowDefaultTabs();
+            }
+            else
+            {
+                ShowOfflineTab();
+            }
 
             PossibleRoles = _employeeService.GetAllRoles().ToList();
-            synchroniser = new DataSync.DataSynchroniser();
-            syncCommand = new RelayCommand(synchroniser.synchronise);
+            synchroniser = new DataSynchroniser();
+            SyncCommand = new RelayCommand(synchroniser.synchronise);
         }
 
         public void ChangeAuthorization(Role role)
@@ -313,6 +321,7 @@ namespace ParkInspect.ViewModel
             {
                 TabStatus[i] = true;
             }
+            TabStatus[1] = false;
         }
 
         private void ShowDefaultTabs()
@@ -325,6 +334,11 @@ namespace ParkInspect.ViewModel
             TabStatus[5] = false;
             TabStatus[6] = false;
             TabStatus[7] = false;
+        }
+
+        private void ShowOfflineTab()
+        {
+            TabStatus[8] = true;
         }
 
 

@@ -84,7 +84,7 @@ namespace ParkInspect.ViewModel
 
         public FormViewModel(IRepository context, DialogManager dialog)
         {
-            Context = (EntityFrameworkRepository<ParkInspectEntities>) context;
+            Context = context;
             Service = new FormService(Context);
             EditorVisibility = Visibility.Hidden;
             TemplatesViewModel = new TemplatesViewModel(this);
