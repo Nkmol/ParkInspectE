@@ -66,46 +66,67 @@
                     <Border Padding="10">
                         <StackPanel>
                             <AdornerDecorator>
-                                <TextBox x:Name="Name" materialDesign:HintAssist.Hint="Naam" materialDesign:HintAssist.IsFloating="True">
+                                <TextBox x:Name="Name" materialDesign:HintAssist.Hint="Naam"
+                                         materialDesign:HintAssist.IsFloating="True">
                                     <TextBox.Text>
                                         <Binding Path="FormName" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validationrules:IsNotEmptyValidationRule ValidationStep="RawProposedValue"
-                                                                                  ValidatesOnTargetUpdated="True" />
+                                                <validationrules:IsNotEmptyValidationRule
+                                                    ValidationStep="RawProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
                                                 <validationrules:IsNotIntegerValidationRule
-                                            ValidationStep="RawProposedValue"
-                                            ValidatesOnTargetUpdated="True" />
+                                                    ValidationStep="RawProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
                             <AdornerDecorator>
-                                <TextBox x:Name="Email" materialDesign:HintAssist.Hint="Emailadres" materialDesign:HintAssist.IsFloating="True">
+                                <TextBox x:Name="Email" materialDesign:HintAssist.Hint="Emailadres"
+                                         materialDesign:HintAssist.IsFloating="True">
                                     <TextBox.Text>
                                         <Binding Path="FormEmail" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validationrules:IsValidEmailValidationRule
-                                            ValidationStep="ConvertedProposedValue"
-                                            ValidatesOnTargetUpdated="True" />
+                                                    ValidationStep="ConvertedProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
                             <AdornerDecorator>
-                                <TextBox x:Name="Telnr" materialDesign:HintAssist.Hint="Telefoonnummer" materialDesign:HintAssist.IsFloating="True">
+                                <TextBox x:Name="Telnr" materialDesign:HintAssist.Hint="Telefoonnummer"
+                                         materialDesign:HintAssist.IsFloating="True">
                                     <TextBox.Text>
                                         <Binding Path="FormPhonenumber" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validationrules:IsValidPhoneNumberRule ValidationStep="RawProposedValue"
-                                                                                ValidatesOnTargetUpdated="True" />
+                                                <validationrules:IsValidPhoneNumberRule
+                                                    ValidationStep="RawProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
-                            <Button Command="{Binding SaveCommand}" CommandParameter="{Binding DataContext, ElementName=Window}" Content="Opslaan"
+                            <AdornerDecorator>
+                                <TextBox x:Name="Password" IsEnabled="{Binding PasswordEnabled}"
+                                         materialDesign:HintAssist.Hint="Password"
+                                         materialDesign:HintAssist.IsFloating="True">
+                                    <TextBox.Text>
+                                        <Binding Path="FormPassword" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:IsNotEmptyValidationRule
+                                                    ValidationStep="RawProposedValue"
+                                                    ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
+                            <Button Command="{Binding SaveCommand}"
+                                    CommandParameter="{Binding DataContext, ElementName=Window}" Content="Opslaan"
                                     Margin="0, 15, 0, 10">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -114,14 +135,17 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Name}"
-                                                    Value="false" />
+                                                        Binding="{Binding (Validation.HasError), ElementName=Name}"
+                                                        Value="false" />
                                                     <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Telnr}"
-                                                    Value="false" />
+                                                        Binding="{Binding (Validation.HasError), ElementName=Telnr}"
+                                                        Value="false" />
                                                     <Condition
-                                                    Binding="{Binding (Validation.HasError), ElementName=Email}"
-                                                    Value="False" />
+                                                        Binding="{Binding (Validation.HasError), ElementName=Email}"
+                                                        Value="False" />
+                                                    <Condition
+                                                        Binding="{Binding (Validation.HasError), ElementName=Password}"
+                                                        Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="true" />
                                             </MultiDataTrigger>
@@ -129,7 +153,8 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button Command="{Binding DataContext.NewCommand, ElementName=Window}" Content="Scherm legen" />
+                            <Button Command="{Binding DataContext.NewCommand, ElementName=Window}"
+                                    Content="Scherm legen" />
                         </StackPanel>
                     </Border>
                 </StackPanel>
