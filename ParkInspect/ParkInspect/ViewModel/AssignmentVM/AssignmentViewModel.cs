@@ -232,6 +232,7 @@ namespace ParkInspect.ViewModel.AssignmentVM
                 {
                     x.BoundryStartDate = FormDate;
                     x.BoundryEndDate = FormDeadline;
+                    x.FillForm();
                     if (x.Form != null) x.Form.Template.name = SelectedInspection.Form.Template.name; // Ugly hack :(
                 });
         }

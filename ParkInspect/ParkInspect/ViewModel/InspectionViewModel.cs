@@ -214,6 +214,104 @@ namespace ParkInspect.ViewModel
 
         #endregion
 
+        #region Property Form
+
+        private Parkinglot _formParkinglot;
+
+        public Parkinglot FormParkinglot
+        {
+            get { return _formParkinglot; }
+            set { Set(ref _formParkinglot, value); }
+        }
+
+        private State _formState;
+
+        public State FormState
+        {
+            get { return _formState; }
+            set { Set(ref _formState, value); }
+        }
+
+        private DateTime? _formBoundryStartDate;
+
+        public DateTime? FormBoundryStartDate
+        {
+            get { return _formBoundryStartDate; }
+            set
+            {
+                if (_boundryStartDate != value)
+                {
+                    Set(ref _formBoundryStartDate, value);
+                }
+            }
+        }
+
+        private DateTime? _formBoundryEndDate;
+
+        public DateTime? FormBoundryEndDate
+        {
+            get { return _formBoundryEndDate; }
+            set
+            {
+                if (_formBoundryEndDate != value)
+                {
+                    Set(ref _formBoundryEndDate, value);
+                }
+            }
+        }
+
+        private DateTime? _formDate;
+
+        public DateTime? FormDate
+        {
+            get { return _formDate; }
+            set { Set(ref _formDate, value); }
+        }
+
+        private string _formClarification;
+
+        public string FormClarification
+        {
+            get { return _formClarification; }
+            set { Set(ref _formClarification, value); }
+        }
+
+        private DateTime? _formDeadline;
+
+        public DateTime? FormDeadline
+        {
+            get { return _formDeadline; }
+            set { Set(ref _formDeadline, value); }
+        }
+
+        private Inspection _formFollowUpInspection;
+
+        public Inspection FormFollowUpInspection
+        {
+            get { return _formFollowUpInspection; }
+            set { Set(ref _formFollowUpInspection, value); }
+        }
+
+        private Form _formForm;
+
+        public Form FormForm
+        {
+            get { return _formForm; }
+            set { Set(ref _formForm, value); }
+        }
+
+        public ObservableCollection<Employee> FormAssignedInspectors { get; set; }
+
+        private Template _formSelectedTemplate;
+
+        public Template FormSelectedTemplate
+        {
+            get { return _formSelectedTemplate; }
+            set { _formSelectedTemplate = value; }
+        }
+
+        #endregion
+
         public bool SelectTemplateIsEnabled => Data.id <= 0 || !(State.state1 == "voltooid" && Form == null);
 
         [PreferredConstructor]
@@ -241,6 +339,7 @@ namespace ParkInspect.ViewModel
 
             SelectedTemplate = Data.Form?.Template;
             SelectedTemplateForm = Data.Form?.Template;
+            
         }
 
         private void LoadInspector()
@@ -274,17 +373,41 @@ namespace ParkInspect.ViewModel
             isSaved = true;
         }
 
+        public void FillForm()
+        {
+            FormParkinglot = Parkinglot;
+            FormState = State;
+            FormFollowUpInspection = FollowUpInspection;
+            FormDate = Date;
+            FormClarification = Clarification;
+            FormDeadline = Deadline;
+            FormForm = Form;
+            FormSelectedTemplate = SelectedTemplate;
+            FormAssignedInspectors = AssignedInspectors;
+        }
+
+
         private void EmptyForm()
         {
-            Parkinglot = null;
-            Form = null;
-            State = null;
-            FollowUpInspection = null;
-            Date = null;
-            Deadline = null;
-            Clarification = null;
-            AssignedInspectors = new ObservableCollection<Employee>();
+            FormParkinglot = null;
+            FormForm = null;
+            FormState = null;
+            FormFollowUpInspection = null;
+            FormDate = null;
+            FormDeadline = null;
+            FormClarification = null;
+            FormAssignedInspectors = new ObservableCollection<Employee>();
             SelectedInspector = null;
+
+            //Parkinglot = null;
+            //Form = null;
+            //State = null;
+            //FollowUpInspection = null;
+            //Date = null;
+            //Deadline = null;
+            //Clarification = null;
+            //AssignedInspectors = new ObservableCollection<Employee>();
+            //SelectedInspector = null;
 
             base.RaisePropertyChanged();
         }

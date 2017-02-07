@@ -60,7 +60,7 @@
                 <StackPanel Width="300" VerticalAlignment="Top">
                     <AdornerDecorator>
                         <ComboBox Name="CbParkinglot" DisplayMemberPath="name"
-                                  SelectedItem="{Binding Parkinglot}"
+                                  SelectedItem="{Binding FormParkinglot}"
                                   ItemsSource="{Binding Global.Parkinglots, Source={StaticResource Locator}}"
                                   materialDesign:HintAssist.Hint="Selecteer een parkeerplaats"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
@@ -79,7 +79,7 @@
                     </DockPanel>-->
 
                     <AdornerDecorator>
-                        <ComboBox Name="CbStatus" SelectedItem="{Binding State}"
+                        <ComboBox Name="CbStatus" SelectedItem="{Binding FormState}"
                                   ItemsSource="{Binding Global.States, Source={StaticResource Locator}}"
                                   DisplayMemberPath="state1" materialDesign:HintAssist.Hint="Selecteer een Status"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
@@ -92,22 +92,22 @@
                             </ComboBox.Text>
                         </ComboBox>
                     </AdornerDecorator>
-                    <ComboBox Text="{Binding FollowUpInspection.Parkinglot.name}"
+                    <ComboBox Text="{Binding FormFollowUpInspection.Parkinglot.name}"
                               ItemsSource="{Binding Global.Inspections, Source={StaticResource Locator}}"
-                              DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FollowUpInspection}"
+                              DisplayMemberPath="Parkinglot.name" SelectedItem="{Binding FormFollowUpInspection}"
                               materialDesign:HintAssist.Hint="Vervolg op een onafgemaakte inspectie"
                               materialDesign:HintAssist.IsFloating="True" Padding="0,10" />
-                    <ComboBox Text="{Binding SelectedTemplate.name}"
+                    <ComboBox Text="{Binding FormSelectedTemplate.name}"
                               ItemsSource="{Binding Global.Templates, Source={StaticResource Locator}}"
-                              DisplayMemberPath="name" SelectedItem="{Binding SelectedTemplateForm}"
+                              DisplayMemberPath="name" SelectedItem="{Binding FormSelectedTemplate}"
                               materialDesign:HintAssist.Hint="Selecteer een vragenlijst voor de inspectie"
                               materialDesign:HintAssist.IsFloating="True" Padding="0,10"
                               IsEnabled="{Binding SelectTemplateIsEnabled}" />
                     <Label Content="Datum" Padding="5,10,5,5" />
-                    <controls:DateTimePicker Name="DateStart" DisplayDateEnd="{Binding BoundryEndDate}"
-                                             DisplayDateStart="{Binding BoundryStartDate}">
+                    <controls:DateTimePicker Name="DateStart" DisplayDateEnd="{Binding FormBoundryEndDate}"
+                                             DisplayDateStart="{Binding FormBoundryStartDate}">
                         <controls:DateTimePicker.SelectedDate>
-                            <Binding Path="Date" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="FormDate" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationRules:IsNotEmptyValidationRule />
                                     <validationRules:IsValidDateTimeRule />
@@ -116,10 +116,10 @@
                         </controls:DateTimePicker.SelectedDate>
                     </controls:DateTimePicker>
                     <Label Content="Deadline" Padding="5,10,5,5" />
-                    <controls:DateTimePicker Name="DateDeadline" DisplayDateEnd="{Binding BoundryEndDate}"
-                                             DisplayDateStart="{Binding BoundryStartDate}">
+                    <controls:DateTimePicker Name="DateDeadline" DisplayDateEnd="{Binding FormBoundryEndDate}"
+                                             DisplayDateStart="{Binding FormBoundryStartDate}">
                         <controls:DateTimePicker.SelectedDate>
-                            <Binding Path="Deadline" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="FormDeadline" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validationRules:IsNotEmptyValidationRule />
                                     <validationRules:IsValidDateTimeRule />
@@ -127,7 +127,7 @@
                             </Binding>
                         </controls:DateTimePicker.SelectedDate>
                     </controls:DateTimePicker>
-                    <TextBox Name="Clarificationbox" Height="105" Text="{Binding Clarification}" AcceptsReturn="True"
+                    <TextBox Name="Clarificationbox" Height="105" Text="{Binding FormClarification}" AcceptsReturn="True"
                              TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                              materialDesign:HintAssist.Hint="Toelichting" materialDesign:HintAssist.IsFloating="True" />
                 </StackPanel>
@@ -135,7 +135,7 @@
         </Border>
         <StackPanel Grid.Column="1" Grid.Row="0">
             <GroupBox x:Name="Inspecteurs" Header="Toegekende inspecteurs" Margin="0,5,0,0" Width="363" Height="304">
-                <DataGrid IsReadOnly="True" ItemsSource="{Binding AssignedInspectors}"
+                <DataGrid IsReadOnly="True" ItemsSource="{Binding FormAssignedInspectors}"
                           SelectedItem="{Binding SelectedAssignedInspector}" AutoGenerateColumns="False"
                           Margin="0,0,-2,0"
                           ScrollViewer.CanContentScroll="True"
