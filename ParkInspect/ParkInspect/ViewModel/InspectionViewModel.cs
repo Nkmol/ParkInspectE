@@ -355,6 +355,7 @@ namespace ParkInspect.ViewModel
         private void AssignInspector()
         {
             FormAssignedInspectors.Add(SelectedInspector);
+            RaisePropertyChanged("FormAssignedInspectors");
             Inspectors.Remove(SelectedInspector);
         }
 
@@ -362,7 +363,7 @@ namespace ParkInspect.ViewModel
         {
             Inspectors.Add(SelectedAssignedInspector);
             FormAssignedInspectors.Remove(SelectedAssignedInspector);
-
+            RaisePropertyChanged("FormAssignedInspectors");
             LoadInspector();
             RaisePropertyChanged(() => Inspectors);
         }
@@ -416,6 +417,7 @@ namespace ParkInspect.ViewModel
             FormDeadline = null;
             FormClarification = null;
             FormAssignedInspectors = new ObservableCollection<Employee>();
+            RaisePropertyChanged("FormAssignedInspectors");
             SelectedInspector = null;
 
             //Parkinglot = null;
