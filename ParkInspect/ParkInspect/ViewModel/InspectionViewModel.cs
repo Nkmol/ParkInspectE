@@ -368,7 +368,19 @@ namespace ParkInspect.ViewModel
 
         private void Save()
         {
-            SelectedTemplate = SelectedTemplateForm;
+            Parkinglot = FormParkinglot;
+            State = FormState;
+            FollowUpInspection = FormFollowUpInspection;
+            BoundryStartDate = FormBoundryStartDate;
+            BoundryEndDate = FormBoundryEndDate;
+            Date = FormDate;
+            Clarification = FormClarification;
+            Deadline = FormDeadline;
+            Form = FormForm;
+            SelectedTemplate = FormSelectedTemplate;
+            AssignedInspectors = FormAssignedInspectors;
+
+            //SelectedTemplate = SelectedTemplateForm;
             PopupBeforeFinish();
             isSaved = true;
         }
