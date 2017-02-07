@@ -60,7 +60,7 @@
                 <StackPanel Width="300" VerticalAlignment="Top">
                     <AdornerDecorator>
                         <ComboBox Name="CbParkinglot" DisplayMemberPath="name"
-                                  SelectedItem="Parkinglot"
+                                  SelectedItem="{Binding Parkinglot}"
                                   ItemsSource="{Binding Global.Parkinglots, Source={StaticResource Locator}}"
                                   materialDesign:HintAssist.Hint="Selecteer een parkeerplaats"
                                   materialDesign:HintAssist.IsFloating="True" Padding="0,10">
