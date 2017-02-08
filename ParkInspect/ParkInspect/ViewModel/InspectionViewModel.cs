@@ -58,6 +58,7 @@ namespace ParkInspect.ViewModel
         public object SelectedItemPopup => this;
 
         private readonly InspectionService _service;
+        private readonly IRepository _context;
         private readonly PopupManager _popupManager;
 
         private DateTime? _boundryStartDate;
@@ -323,6 +324,7 @@ namespace ParkInspect.ViewModel
         {
             _data = data ?? new Inspection();
 
+            _context = context;
             _service = new InspectionService(context);
             _popupManager = popupManager;
 
@@ -374,6 +376,9 @@ namespace ParkInspect.ViewModel
             //SelectedTemplate = SelectedTemplateForm;
             PopupBeforeFinish();
             isSaved = true;
+            Data.Employees = AssignedInspectors;
+            _context.Update(Data);
+            _context.Save();
         }
 
         public void FillForm()
