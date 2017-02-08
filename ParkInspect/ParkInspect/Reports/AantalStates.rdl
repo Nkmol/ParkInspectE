@@ -55,6 +55,8 @@
                         <Y>=Sum(Fields!Aantal_States.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                         <Rotation>0</Rotation>
                       </ChartDataLabel>
                       <Style>
@@ -446,6 +448,8 @@
                         <Y>=Sum(Fields!Aantal_States.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                         <Rotation>0</Rotation>
                       </ChartDataLabel>
                       <Style>

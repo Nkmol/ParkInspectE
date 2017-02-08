@@ -87,6 +87,8 @@
                         <Y>=Sum(Fields!aantal_inspecties.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                         <Rotation>0</Rotation>
                       </ChartDataLabel>
                       <Style>
@@ -96,7 +98,7 @@
                         </Border>
                       </Style>
                       <ChartMarker>
-                        <Type>None</Type>
+                        <Size>0pt</Size>
                         <Style />
                       </ChartMarker>
                     </ChartDataPoint>
@@ -844,6 +846,8 @@
                         <Y>=Sum(Fields!Column2.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                         <Rotation>0</Rotation>
                       </ChartDataLabel>
                       <Style>
@@ -853,7 +857,7 @@
                         </Border>
                       </Style>
                       <ChartMarker>
-                        <Type>None</Type>
+                        <Size>0pt</Size>
                         <Style />
                       </ChartMarker>
                     </ChartDataPoint>
@@ -1135,6 +1139,7 @@
                 <Style>
                   <BackgroundColor>White</BackgroundColor>
                   <FontWeight>Normal</FontWeight>
+                  <FontStyle>Normal</FontStyle>
                   <Color>Black</Color>
                 </Style>
                 <Position>TopCenter</Position>
