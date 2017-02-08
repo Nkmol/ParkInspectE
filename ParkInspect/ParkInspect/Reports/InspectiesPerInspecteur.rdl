@@ -24,7 +24,7 @@
             <ChartSeriesHierarchy>
               <ChartMembers>
                 <ChartMember>
-                  <Label>Aantal_Inspecties_Klaar</Label>
+                  <Label>Aantal_Inspecties_Afgerond</Label>
                 </ChartMember>
               </ChartMembers>
             </ChartSeriesHierarchy>
@@ -47,13 +47,15 @@
             </ChartCategoryHierarchy>
             <ChartData>
               <ChartSeriesCollection>
-                <ChartSeries Name="Aantal_Inspecties_Klaar">
+                <ChartSeries Name="Aantal_Inspecties_Afgerond">
                   <ChartDataPoints>
                     <ChartDataPoint>
                       <ChartDataPointValues>
-                        <Y>=Sum(Fields!Aantal_Inspecties_Klaar.Value)</Y>
+                        <Y>=Sum(Fields!Aantal_Inspecties_Afgerond.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                         <Rotation>0</Rotation>
                       </ChartDataLabel>
                       <Style>
@@ -63,7 +65,7 @@
                         </Border>
                       </Style>
                       <ChartMarker>
-                        <Type>None</Type>
+                        <Size>0pt</Size>
                         <Style />
                       </ChartMarker>
                     </ChartDataPoint>
@@ -446,6 +448,8 @@
                         <Y>=Sum(Fields!Aantal_Inspecties_Bezig.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                         <Rotation>0</Rotation>
                       </ChartDataLabel>
                       <Style>
@@ -455,7 +459,7 @@
                         </Border>
                       </Style>
                       <ChartMarker>
-                        <Type>None</Type>
+                        <Size>0pt</Size>
                         <Style />
                       </ChartMarker>
                     </ChartDataPoint>
@@ -791,215 +795,10 @@
               <TextOrientation>Auto</TextOrientation>
             </ChartNoDataMessage>
           </Chart>
-          <Tablix Name="Tablix5">
-            <Left>0.5in</Left>
-            <Top>6.125in</Top>
-            <Height>1.125in</Height>
-            <Width>3.875in</Width>
-            <Style>
-              <Color>Black</Color>
-              <NumeralVariant>1</NumeralVariant>
-            </Style>
-            <DataSetName>DataSet1</DataSetName>
-            <TablixBody>
-              <TablixColumns>
-                <TablixColumn>
-                  <Width>1.9375in</Width>
-                </TablixColumn>
-              </TablixColumns>
-              <TablixRows>
-                <TablixRow>
-                  <Height>0.5625in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="TextBox23">
-                          <Style>
-                            <BackgroundColor>#0F2540</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                            <Border>
-                              <Color>Gray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                          </Style>
-                          <CanGrow>true</CanGrow>
-                          <IsNoRowMessage>false</IsNoRowMessage>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Aantal_Inspecties_Klaar</Value>
-                                  <Style>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                    <FontStyle>Normal</FontStyle>
-                                    <Color>#FFFFFF</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.5625in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="TextBox24">
-                          <Style>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                            <Border>
-                              <Color>Gray</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                          </Style>
-                          <CanGrow>true</CanGrow>
-                          <IsNoRowMessage>false</IsNoRowMessage>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Aantal_Inspecties_Klaar.Value</Value>
-                                  <Style>
-                                    <FontWeight>Normal</FontWeight>
-                                    <FontStyle>Normal</FontStyle>
-                                    <Color>#000000</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-              </TablixRows>
-            </TablixBody>
-            <TablixColumnHierarchy>
-              <TablixMembers>
-                <TablixMember />
-              </TablixMembers>
-            </TablixColumnHierarchy>
-            <TablixRowHierarchy>
-              <TablixMembers>
-                <TablixMember>
-                  <TablixHeader>
-                    <Size>1.9375in</Size>
-                    <CellContents>
-                      <Textbox Name="TextBox21">
-                        <Style>
-                          <BackgroundColor>#0F2540</BackgroundColor>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <Border>
-                            <Color>Gray</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                        <CanGrow>true</CanGrow>
-                        <IsNoRowMessage>false</IsNoRowMessage>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>Voornaam</Value>
-                                <Style>
-                                  <FontSize>11pt</FontSize>
-                                  <FontWeight>Bold</FontWeight>
-                                  <FontStyle>Normal</FontStyle>
-                                  <Color>#FFFFFF</Color>
-                                </Style>
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
-                  <TablixMembers>
-                    <TablixMember />
-                  </TablixMembers>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <Group Name="Voornaam0">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!Voornaam.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!Voornaam.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <TablixHeader>
-                    <Size>1.9375in</Size>
-                    <CellContents>
-                      <Textbox Name="TextBox22">
-                        <Style>
-                          <BackgroundColor>#4F81BD</BackgroundColor>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <Border>
-                            <Color>Gray</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                        <CanGrow>true</CanGrow>
-                        <IsNoRowMessage>false</IsNoRowMessage>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!Voornaam.Value</Value>
-                                <Style>
-                                  <FontWeight>Normal</FontWeight>
-                                  <FontStyle>Normal</FontStyle>
-                                  <Color>#000000</Color>
-                                </Style>
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
-                  <TablixMembers>
-                    <TablixMember>
-                      <Group Name="Detalis1" />
-                    </TablixMember>
-                  </TablixMembers>
-                </TablixMember>
-              </TablixMembers>
-            </TablixRowHierarchy>
-          </Tablix>
           <Tablix Name="Tablix6">
-            <Left>4.875in</Left>
-            <Top>6.125in</Top>
-            <Height>1.125in</Height>
+            <Left>5.625in</Left>
+            <Top>6.25in</Top>
+            <Height>1in</Height>
             <Width>4.25in</Width>
             <Style>
               <Color>Black</Color>
@@ -1014,7 +813,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.5625in</Height>
+                  <Height>0.5in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1055,7 +854,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.5625in</Height>
+                  <Height>0.5in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1418,6 +1217,211 @@
             <Source>Embedded</Source>
             <Sizing>FitProportional</Sizing>
           </Image>
+          <Tablix Name="Tablix3">
+            <Left>0.5in</Left>
+            <Top>6.25in</Top>
+            <Height>1in</Height>
+            <Width>4.375in</Width>
+            <Style>
+              <Color>Black</Color>
+              <NumeralVariant>1</NumeralVariant>
+            </Style>
+            <DataSetName>DataSet1</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>2.1875in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.5in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox17">
+                          <Style>
+                            <BackgroundColor>#0F2540</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>Gray</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <IsNoRowMessage>false</IsNoRowMessage>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Aantal_Inspecties_Afgerond</Value>
+                                  <Style>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontStyle>Normal</FontStyle>
+                                    <Color>#FFFFFF</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.5in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox18">
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>Gray</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <IsNoRowMessage>false</IsNoRowMessage>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Aantal_Inspecties_Afgerond.Value</Value>
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                    <FontStyle>Normal</FontStyle>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>2.1875in</Size>
+                    <CellContents>
+                      <Textbox Name="TextBox15">
+                        <Style>
+                          <BackgroundColor>#0F2540</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                          <Border>
+                            <Color>Gray</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                        </Style>
+                        <CanGrow>true</CanGrow>
+                        <IsNoRowMessage>false</IsNoRowMessage>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Voornaam</Value>
+                                <Style>
+                                  <FontSize>11pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                  <FontStyle>Normal</FontStyle>
+                                  <Color>#FFFFFF</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Voornaam">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Voornaam.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Voornaam.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>2.1875in</Size>
+                    <CellContents>
+                      <Textbox Name="TextBox16">
+                        <Style>
+                          <BackgroundColor>#4F81BD</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                          <Border>
+                            <Color>Gray</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                        </Style>
+                        <CanGrow>true</CanGrow>
+                        <IsNoRowMessage>false</IsNoRowMessage>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!Voornaam.Value</Value>
+                                <Style>
+                                  <FontWeight>Normal</FontWeight>
+                                  <FontStyle>Normal</FontStyle>
+                                  <Color>#000000</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Group Name="Detalis0" />
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
         </ReportItems>
         <Height>10.1042in</Height>
       </Body>
@@ -1451,15 +1455,15 @@
           <DataField>Voornaam</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Aantal_Inspecties_Klaar">
-          <DataField>Aantal_Inspecties_Klaar</DataField>
+        <Field Name="Aantal_Inspecties_Afgerond">
+          <DataField>Aantal_Inspecties_Afgerond</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <Query>
         <DataSourceName>DataSource1</DataSourceName>
         <CommandType>Text</CommandType>
-        <CommandText>SELECT e.firstname Voornaam, COUNT(*) Aantal_Inspecties_Klaar
+        <CommandText>SELECT e.firstname Voornaam, COUNT(*) Aantal_Inspecties_Afgerond
 FROM dbo.Employee e
 JOIN dbo.[Inspector_has_Inspection] i on i.[employee_id] = e.id
 JOIN dbo.Inspection ins on ins.id = i.[inspection_id]
